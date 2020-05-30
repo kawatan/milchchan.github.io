@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title>chat.milchchan.com</title>
+    <title>ミルヒちゃんねる</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" type="text/css"
@@ -81,6 +81,10 @@
             margin-right: auto;
         }
 
+        .media-content .level {
+            margin: 0px 0px 8px 0px;
+        }
+
         .media-content p {
             word-wrap: break-word;
             white-space: normal;
@@ -89,15 +93,35 @@
         .media-content .has-text-left .balloon {
             display: inline-block;
             padding: 8px 16px 8px 16px;
-            border-radius: 500px 500px 500px 0px;
-            background-color: #ffa6bb;
+            border-radius: 0px 500px 500px 500px;
+            background-image: url('https://wonderland.kawatan.net/images/Stripes.png');
+            background-repeat: repeat;
         }
 
         .media-content .has-text-right .balloon {
             display: inline-block;
             padding: 8px 16px 8px 16px;
-            border-radius: 500px 500px 0px 500px;
-            background-color: #5bcbe1;
+            border-radius: 500px 0px 500px 500px;
+            background-image: url('https://wonderland.kawatan.net/images/Stripes.png');
+            background-repeat: repeat;
+        }
+
+        .navbar {
+            background-color: transparent;
+        }
+
+        .navbar:first-child {
+            position: fixed;
+            z-index: 1;
+            margin: env(safe-area-inset-top) 0px 0px 0px;
+        }
+
+        .navbar:first-child .navbar-item {
+            padding: 32px 0px 16px 0px;
+        }
+
+        .navbar-item img {
+            max-height: none;
         }
 
         .updating {
@@ -113,42 +137,102 @@
                 transform: rotate(-360deg);
             }
         }
+
+        @media screen and (-webkit-min-device-pixel-ratio:2),
+        (min-resolution: 2dppx) {
+            .media-content .has-text-left .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 0px 500px 500px 500px;
+                background-image: url(https://wonderland.kawatan.net/images/Stripes@2x.png);
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+
+            .media-content .has-text-right .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 500px 0px 500px 500px;
+                background-image: url(https://wonderland.kawatan.net/images/Stripes@2x.png);
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio:3),
+        (min-resolution: 3dppx) {
+            .media-content .has-text-left .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 0px 500px 500px 500px;
+                background-image: url(https://wonderland.kawatan.net/images/Stripes@3x.png);
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+
+            .media-content .has-text-right .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 500px 0px 500px 500px;
+                background-image: url(https://wonderland.kawatan.net/images/Stripes@3x.png);
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
+        <nav id="heading" class="navbar is-fixed-top" role="navigation">
+            <div class="navbar-item is-expanded columns is-desktop">
+                <div class="column is-half has-content-centered" v-cloak>
+                    <div class="control has-text-centered">
+                        <nav class="level">
+                            <div class="level-item has-text-centered">
+                                <div>
+                                    <p class="heading">教えてもらった会話数</p>
+                                    <p class="title is-size-1" v-bind:class="{'is-invisible': trainCount === -1}">{{ trainCount }}</p>
+                                </div>
+                            </div>
+                        </nav>
+                        <button class="button is-white has-background-white has-text-black is-rounded"
+                            v-bind:class="{'is-hidden': isLearning}" v-on:click="learn">
+                            <span class="icon is-small">
+                                <i class="fas fa-plus"></i>
+                            </span>
+                            <span class="has-text-weight-bold">会話を教える</span>
+                        </button>
+                        <button class="button is-white has-background-danger has-text-white is-rounded"
+                            v-bind:class="{'is-hidden': !isLearning}" v-on:click="learn" v-cloak>
+                            <span class="icon is-small">
+                                <i class="fas fa-ban"></i>
+                            </span>
+                            <span class="has-text-weight-bold">学習をキャンセル</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </nav>
         <div id="container">
             <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
                 <div class="column is-half has-content-centered">
                     <hr class="is-invisible">
-                    <article class="media" v-if="message.isOwner" v-cloak>
-                        <div class="media-content">
-                            <div class="content has-text-right">
-                                <div class="balloon">
-                                    <p class="has-text-weight-bold has-text-white">
-                                        {{ message.text }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <figure class="media-right is-hidden">
-                            <p class="image is-64x64">
-                                <img class="is-rounded"
-                                    src="https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg">
-                            </p>
-                        </figure>
-                    </article>
-                    <article class="media" v-else v-cloak>
+                    <article class="media" v-if="message.author" v-cloak>
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                <img class="is-rounded"
-                                    src="https://pbs.twimg.com/profile_images/1218460676529651712/EyXd29pZ_400x400.jpg">
+                                <img class="is-rounded" v-bind:src="message.avatar" alt="Avatar">
                             </p>
                         </figure>
                         <div class="media-content">
+                            <div class="level is-mobile">
+                                <div class="level-left">
+                                    <span
+                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.author }}</span>
+                                </div>
+                            </div>
                             <div class="content has-text-left">
-                                <div class="balloon">
+                                <div class="balloon" v-bind:style="{ backgroundColor: message.tint }">
                                     <p class="has-text-weight-bold has-text-white">
                                         <span v-bind:class="{'is-hidden':message.text}">
                                             <i class="fas fa-spinner updating"></i>
@@ -158,6 +242,22 @@
                                 </div>
                             </div>
                         </div>
+                    </article>
+                    <article class="media" v-else v-cloak>
+                        <div class="media-content">
+                            <div class="content has-text-right">
+                                <div class="balloon" v-bind:style="{ backgroundColor: message.tint }">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <figure class="media-right" v-if="message.avatar">
+                            <p class="image is-64x64">
+                                <img class="is-rounded" v-bind:src="message.avatar" alt="Avatar">
+                            </p>
+                        </figure>
                     </article>
                 </div>
             </div>
@@ -182,6 +282,9 @@
                 </div>
             </div>
         </div>
+        <audio id="popup" preload="auto">
+            <source src="https://chat.github.io/sounds/popup.wav" type="audio/wav" />
+        </audio>
     </div>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
@@ -209,7 +312,6 @@
 
         let databaseRoot = 'chat/';
         let database = firebase.database();
-        let logsRef = database.ref(databaseRoot + "logs");
 
         function random(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -218,70 +320,172 @@
         var app = new Vue({
             el: '#app',
             data: {
-                input: "",
+                input: '',
                 messages: [],
-                scrollRequired: false
+                scrollRequired: false,
+                isLearning: false,
+                trainCount: -1
             },
             methods: {
                 send: function (event) {
                     if (this.input.length > 0) {
-                        let log = { input: this.input };
-                        const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
+                        if (this.isLearning) {
+                            if ('source' in this.messages[this.messages.length - 1]) {
+                                let trainData = { source: this.messages[this.messages.length - 1].source, target: this.input, timestamp: new Date().toISOString() };
 
-                        this.messages.push({ id: this.messages.length, text: this.input, timestamp: new Date(), isOwner: true });
-                        this.input = "";
-                        this.scrollRequired = true;
+                                this.messages.push({ id: this.messages.length, text: this.input, tint: '#30c0f5', timestamp: new Date() });
+                                this.messages.push({ id: this.messages.length, text: '教えてくれて嬉しいよぉ！また教えてね', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
 
-                        window.setTimeout(async function () {
-                            let replyMessage = { id: app.messages.length, text: null, timestamp: null, isOwner: false };
+                                database.ref(databaseRoot + 'train').push(trainData);
+                                database.ref(databaseRoot + "train_count").once('value', snapshot => {
+                                    const count = snapshot.val();
 
-                            app.messages.push(replyMessage);
-                            app.scrollRequired = true;
-
-                            try {
-                                const response = await fetch(encodeURI(url), {
-                                    mode: "cors",
-                                    method: "GET",
-                                    headers: {
-                                        "Content-Type": "application/x-www-form-urlencoded"
+                                    if (count === null) {
+                                        database.ref(databaseRoot).update({ 'train_count': 1 })
+                                    }
+                                    else {
+                                        database.ref(databaseRoot).update({ 'train_count': count + 1 })
                                     }
                                 });
 
-                                if (response.ok) {
-                                    const json = await response.json();
+                                this.isLearning = false;
+                            } else {
+                                this.messages.push({ id: this.messages.length, text: this.input, tint: '#30c0f5', timestamp: new Date() });
+                                this.messages.push({ id: this.messages.length, text: '次にミルヒちゃんに言ってもらいたいことを教えて欲しいよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date(), source: this.input });
+                            }
 
-                                    replyMessage.text = json.text;
-                                    replyMessage.timestamp = Date.parse(json.timestamp);
+                            this.input = '';
+                            this.scrollRequired = true;
+                            this.$el.querySelector("#popup").play();
+                        } else {
+                            let log = { input: this.input };
+                            const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
 
-                                    app.$set(app.messages, replyMessage.id, replyMessage);
+                            this.messages.push({ id: this.messages.length, text: this.input, tint: '#30c0f5', timestamp: new Date() });
+                            this.input = '';
+                            this.scrollRequired = true;
+
+                            window.setTimeout(async function () {
+                                let replyMessage = { id: app.messages.length, text: null, tint: '#ffa6bb', avatar: 'https://pbs.twimg.com/profile_images/1218460676529651712/EyXd29pZ_400x400.jpg', author: 'ミルヒちゃん', timestamp: null };
+
+                                app.messages.push(replyMessage);
+                                app.scrollRequired = true;
+
+                                try {
+                                    const response = await fetch(encodeURI(url), {
+                                        mode: "cors",
+                                        method: "GET",
+                                        headers: {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        }
+                                    });
+
+                                    if (response.ok) {
+                                        const json = await response.json();
+
+                                        if (json.text.length > 0) {
+                                            replyMessage.text = json.text;
+                                            replyMessage.timestamp = Date.parse(json.timestamp);
+
+                                            app.$set(app.messages, replyMessage.id, replyMessage);
+                                        }
+                                        else {
+                                            var index = -1;
+                                            var i = 0;
+
+                                            for (let message of app.messages) {
+                                                if (message.id === replyMessage.id) {
+                                                    index = i;
+
+                                                    break;
+                                                }
+
+                                                i++;
+                                            }
+
+                                            if (index >= 0) {
+                                                app.messages.splice(index, 1);
+                                            }
+
+                                            app.messages.push({ id: app.messages.length, text: 'ミルヒちゃん、困ってるみたいだからメッセージを変えて送るといいと思うよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                                        }
+
+                                        app.scrollRequired = true;
+                                        app.$el.querySelector("#popup").play();
+
+                                        log.output = json.text;
+                                        log.timestamp = new Date().toISOString();
+
+                                        database.ref(databaseRoot + "logs").push(log);
+                                    }
+                                    else {
+                                        throw new Error(response.statusText);
+                                    }
+                                }
+                                catch (e) {
+                                    var index = -1;
+                                    var i = 0;
+
+                                    for (let message of app.messages) {
+                                        if (message.id === replyMessage.id) {
+                                            index = i;
+
+                                            break;
+                                        }
+
+                                        i++;
+                                    }
+
+                                    if (index >= 0) {
+                                        app.messages.splice(index, 1);
+                                    }
+
+                                    app.messages.push({ id: app.messages.length, text: 'エラーだよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
                                     app.scrollRequired = true;
-
-                                    log.output = json.text;
-                                    log.timestamp = new Date().toISOString();
-
-                                    logsRef.push(log);
+                                    app.$el.querySelector("#popup").play();
                                 }
-                                else {
-                                    throw new Error(response.statusText);
-                                }
-                            }
-                            catch (e) {
-                                console.error(e);
-                            }
-                        }, random(500, 1000));
+                            }, random(500, 1000));
+                        }
                     }
                 },
+                learn: function () {
+                    if (this.isLearning) {
+                        this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                        this.isLearning = false;
+                    } else {
+                        this.messages.push({ id: this.messages.length, text: '最初にミルヒちゃんに送るメッセージを教えて欲しいよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                        this.isLearning = true;
+                    }
+
+                    this.$el.querySelector("#popup").play();
+                },
                 scrollToEnd: function () {
-                    var container = this.$el.querySelector("#container");
+                    let container = this.$el.querySelector("#container");
 
                     container.scrollTop = container.scrollHeight;
                 }
             },
             updated: function () {
+                this.$el.querySelector("#container").style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+
                 if (this.scrollRequired) {
                     this.scrollToEnd();
                     this.scrollRequired = false;
                 }
+            },
+            mounted: function () {
+                this.messages.push({ id: -1, text: 'ミルヒだよ', tint: '#ffa6bb', avatar: 'https://pbs.twimg.com/profile_images/1218460676529651712/EyXd29pZ_400x400.jpg', author: 'ミルヒちゃん', timestamp: new Date() });
+                this.$el.querySelector("#container").style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                this.scrollRequired = true;
+                this.$el.querySelector("#popup").play();
+
+                database.ref(databaseRoot + "train_count").on('value', snapshot => {
+                    const count = snapshot.val();
+
+                    if (count !== null) {
+                        this.trainCount = count;
+                    }
+                });
             }
         });
     </script>
