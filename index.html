@@ -1,0 +1,398 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>chat.milchchan.com</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" type="text/css"
+        media="screen" />
+    <style>
+        [v-cloak] {
+            display: none;
+        }
+
+        .wf-notosansjapanese {
+            font-family: "Noto Sans JP";
+        }
+
+        html {
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            position: relative;
+            overflow: hidden;
+            background-color: #f6f6f6;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+            scroll-behavior: smooth;
+        }
+
+        #app {
+            display: flex;
+            z-index: 0;
+            position: relative;
+            margin: 0;
+            height: 100%;
+            height: 100vh;
+            width: 100%;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        #container {
+            position: relative;
+            margin: 0;
+            padding: 0px 16px 0px 16px;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        #input {
+            position: relative;
+            margin: 0;
+            padding: 0px env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            height: auto;
+            overflow: hidden;
+        }
+
+        #input .columns {
+            margin: 0px 0px 0px 0px;
+            padding: 16px 0px 16px 0px;
+        }
+
+        #input .column {
+            padding: 0px 16px 0px 16px;
+        }
+
+        #input .control .is-primary {
+            background-color: #30c0f5;
+        }
+
+        .progress {
+            z-index: 2;
+            position: absolute;
+            overflow: hidden;
+            margin: 0;
+            width: 0%;
+            height: 5px;
+            top: 0;
+            left: 0;
+            background-color: #ffc547;
+            /*background-image: url(../milchchan/images/Progress.png);*/
+            background-repeat: repeat;
+            animation: progress 5s linear 0s infinite;
+        }
+
+        .has-content-centered {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .capture {
+            display: flex;
+            justify-content: flex-end;
+            /*position: absolute;*/
+            margin-left: auto;
+            margin-right: 16px;
+            margin-top: 16px;
+            /*margin: 0;
+            display: none;
+            transform: scaleX(-1);*/
+            background-color: transparent;
+        }
+
+        .capture video {
+            width: 128px;
+            height: 128px;
+            object-position: right top;
+            object-fit: cover;
+            background-color: transparent;
+            border-radius: 50%;
+        }
+
+        .media-content p {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .media-content .has-text-left .balloon {
+            display: inline-block;
+            padding: 8px 16px 8px 16px;
+            border-radius: 500px 500px 500px 0px;
+            background-color: #ffa6bb;
+        }
+
+        .media-content .has-text-right .balloon {
+            display: inline-block;
+            padding: 8px 16px 8px 16px;
+            border-radius: 500px 500px 0px 500px;
+            background-color: #5bcbe1;
+        }
+
+        .updating {
+            animation: updating 1s linear infinite;
+        }
+
+        .navbar {
+            background-color: transparent;
+        }
+
+        .navbar:first-child {
+            pointer-events: none;
+            position: fixed;
+            z-index: 1;
+            margin: env(safe-area-inset-top) 0px 0px 0px;
+        }
+
+        .navbar:last-child {
+            z-index: 1;
+            padding: 0px env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        .navbar:last-child .columns {
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 16px 0px;
+        }
+
+        .navbar:last-child .column {
+            padding: 0px 0px 0px 0px;
+            line-height: 0px;
+        }
+
+        .navbar-item img {
+            max-height: none;
+        }
+
+        .video-wrapper {
+            display: flex;
+            justify-content: center;
+            position: relative;
+            /*width: 100%;*/
+            height: 100%;
+            height: 100vh;
+        }
+
+        .video-wrapper video {
+            width: 100%;
+            /*min-width: 100%;
+            min-width: 100vw;*/
+            min-height: 100%;
+            min-height: 100vh;
+            object-position: center center;
+            object-fit: cover;
+            background-color: transparent;
+        }
+
+        @keyframes progress {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: -100% 0%;
+            }
+        }
+
+        @keyframes updating {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div class="progress" v-if="progress > 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
+        </div>
+        <nav class="navbar is-fixed-top" role="navigation">
+            <div class="control capture">
+                <video id="capture" v-if="capturedStream" v-on:loadeddata="onloadeddata"
+                    v-bind:src-object.prop.camel="capturedStream" muted autoplay playsinline></video>
+            </div>
+        </nav>
+        <div id="container">
+            <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
+                <div class="column is-half has-content-centered">
+                    <hr class="is-invisible">
+                    <article class="media" v-if="message.isOwner" v-cloak>
+                        <div class="media-content">
+                            <div class="content has-text-right">
+                                <div class="balloon">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <figure class="media-right is-hidden">
+                            <p class="image is-64x64">
+                                <img class="is-rounded"
+                                    src="https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg">
+                            </p>
+                        </figure>
+                    </article>
+                    <article class="media" v-else v-cloak>
+                        <figure class="media-left">
+                            <p class="image is-64x64">
+                                <img class="is-rounded"
+                                    src="https://pbs.twimg.com/profile_images/1218460676529651712/EyXd29pZ_400x400.jpg">
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="content has-text-left">
+                                <div class="balloon">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        <span v-bind:class="{'is-hidden':message.text}">
+                                            <i class="fas fa-spinner updating"></i>
+                                        </span>
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div id="input">
+            <div class="columns is-desktop">
+                <div class="column is-half has-content-centered">
+                    <form onsubmit="return false;">
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                                <input class="input is-rounded" type="text" v-model="input">
+                            </div>
+                            <div class="control">
+                                <button class="button is-rounded is-primary" type="submit" @click="send"><span
+                                        class="icon is-small">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script type="text/javascript">
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDTVxDJj7rqG9L-Clvba2Tao9B0hkcxjcE",
+            authDomain: "milchchan.firebaseapp.com",
+            databaseURL: "https://milchchan.firebaseio.com",
+            projectId: "milchchan",
+            storageBucket: "milchchan.appspot.com",
+            messagingSenderId: "355698971889",
+            appId: "1:355698971889:web:e3653c5c31bd7289cd4550",
+            measurementId: "G-3998FJYNWX"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        let databaseRoot = 'chat/';
+        let database = firebase.database();
+        let logsRef = database.ref(databaseRoot + "logs");
+
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                progress: 0.0,
+                input: "",
+                messages: [],
+                isConnected: false,
+                capturedStream: null,
+                scrollRequired: false
+            },
+            methods: {
+                send: function (event) {
+                    if (this.input.length > 0) {
+                        let log = { input: this.input };
+                        const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
+
+                        this.messages.push({ id: this.messages.length, text: this.input, timestamp: new Date(), isOwner: true });
+                        this.input = "";
+                        this.scrollRequired = true;
+
+                        window.setTimeout(async function () {
+                            let replyMessage = { id: app.messages.length, text: null, timestamp: null, isOwner: false };
+
+                            app.messages.push(replyMessage);
+                            app.scrollRequired = true;
+
+                            try {
+                                const response = await fetch(encodeURI(url), {
+                                    mode: "cors",
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type": "application/x-www-form-urlencoded"
+                                    }
+                                });
+
+                                if (response.ok) {
+                                    const json = await response.json();
+
+                                    replyMessage.text = json.text;
+                                    replyMessage.timestamp = Date.parse(json.timestamp);
+
+                                    app.$set(app.messages, replyMessage.id, replyMessage);
+                                    app.scrollRequired = true;
+
+                                    log.output = json.text;
+                                    log.timestamp = new Date().toISOString();
+
+                                    logsRef.push(log);
+                                }
+                                else {
+                                    throw new Error(response.statusText);
+                                }
+                            }
+                            catch (e) {
+                                console.error(e);
+                            }
+                        }, random(500, 1000));
+                    }
+                },
+                scrollToEnd: function () {
+                    var container = this.$el.querySelector("#container");
+
+                    container.scrollTop = container.scrollHeight;
+                }
+            },
+            updated: function () {
+                if (this.scrollRequired) {
+                    this.scrollToEnd();
+                    this.scrollRequired = false;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
