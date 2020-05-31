@@ -21,28 +21,25 @@
 
         html {
             overflow: hidden;
+            width: 100%;
+            height: 100%;
         }
 
         body {
-            display: flex;
             position: relative;
             overflow: hidden;
             background-color: #f6f6f6;
             margin: 0;
-            align-items: center;
-            justify-content: center;
-            scroll-behavior: smooth;
+            width: 100%;
+            height: 100%;
         }
 
         #app {
-            display: flex;
             z-index: 0;
             position: relative;
             margin: 0;
-            height: 100%;
             width: 100%;
-            flex-direction: column;
-            justify-content: flex-end;
+            height: 100%;
         }
 
         #container {
@@ -52,6 +49,7 @@
             height: 100%;
             overflow-x: hidden;
             overflow-y: auto;
+            scroll-behavior: smooth;
         }
 
         #container .column hr {
