@@ -55,14 +55,6 @@
             overflow-y: auto;
         }
 
-        #input {
-            position: relative;
-            margin: 0;
-            padding: 0px env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            height: auto;
-            overflow: hidden;
-        }
-
         #input .columns {
             margin: 0px 0px 0px 0px;
             padding: 16px 0px 16px 0px;
@@ -94,7 +86,7 @@
             display: inline-block;
             padding: 8px 16px 8px 16px;
             border-radius: 0px 500px 500px 500px;
-            background-image: url('https://wonderland.kawatan.net/images/Stripes.png');
+            background-image: url('/images/Stripes.png');
             background-repeat: repeat;
         }
 
@@ -102,7 +94,7 @@
             display: inline-block;
             padding: 8px 16px 8px 16px;
             border-radius: 500px 0px 500px 500px;
-            background-image: url('https://wonderland.kawatan.net/images/Stripes.png');
+            background-image: url('/images/Stripes.png');
             background-repeat: repeat;
         }
 
@@ -118,6 +110,21 @@
 
         .navbar:first-child .navbar-item {
             padding: 32px 0px 16px 0px;
+        }
+
+        .navbar:last-child {
+            z-index: 1;
+            padding: 0px env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        .navbar:last-child .columns {
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 16px 0px;
+        }
+
+        .navbar:last-child .column {
+            padding: 0px 0px 0px 0px;
+            line-height: 0px;
         }
 
         .navbar-item img {
@@ -144,7 +151,7 @@
                 display: inline-block;
                 padding: 8px 16px 8px 16px;
                 border-radius: 0px 500px 500px 500px;
-                background-image: url(https://wonderland.kawatan.net/images/Stripes@2x.png);
+                background-image: url('/images/Stripes@2x.png');
                 background-repeat: repeat;
                 background-size: 20px 20px;
             }
@@ -153,7 +160,7 @@
                 display: inline-block;
                 padding: 8px 16px 8px 16px;
                 border-radius: 500px 0px 500px 500px;
-                background-image: url(https://wonderland.kawatan.net/images/Stripes@2x.png);
+                background-image: url('/images/Stripes@2x.png');
                 background-repeat: repeat;
                 background-size: 20px 20px;
             }
@@ -165,7 +172,7 @@
                 display: inline-block;
                 padding: 8px 16px 8px 16px;
                 border-radius: 0px 500px 500px 500px;
-                background-image: url(https://wonderland.kawatan.net/images/Stripes@3x.png);
+                background-image: url('/images/Stripes@3x.png');
                 background-repeat: repeat;
                 background-size: 20px 20px;
             }
@@ -174,7 +181,7 @@
                 display: inline-block;
                 padding: 8px 16px 8px 16px;
                 border-radius: 500px 0px 500px 500px;
-                background-image: url(https://wonderland.kawatan.net/images/Stripes@3x.png);
+                background-image: url('/images/Stripes@3x.png');
                 background-repeat: repeat;
                 background-size: 20px 20px;
             }
@@ -192,7 +199,8 @@
                             <div class="level-item has-text-centered">
                                 <div>
                                     <p class="heading">教えてもらった会話数</p>
-                                    <p class="title is-size-1" v-bind:class="{'is-invisible': trainCount === -1}">{{ trainCount }}</p>
+                                    <p class="title is-size-1" v-bind:class="{'is-invisible': trainCount === -1}">
+                                        {{ trainCount }}</p>
                                 </div>
                             </div>
                         </nav>
@@ -262,8 +270,8 @@
                 </div>
             </div>
         </div>
-        <div id="input">
-            <div class="columns is-desktop">
+        <nav id="input" class="navbar is-fixed-bottom" role="navigation">
+            <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered">
                     <form onsubmit="return false;">
                         <div class="field has-addons">
@@ -281,7 +289,7 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </nav>
         <audio id="popup" preload="auto">
             <source src="https://chat.milchchan.com/sounds/popup.wav" type="audio/wav" />
         </audio>
@@ -312,6 +320,9 @@
 
         let databaseRoot = 'chat/';
         let database = firebase.database();
+        const user = { tint: '#30c0f5' };
+        const milch = { name: 'ミルヒちゃん', tint: '#ffa6bb', avatar: 'https://pbs.twimg.com/profile_images/1218460676529651712/EyXd29pZ_400x400.jpg' };
+        const merku = { name: 'メルクちゃん', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg' };
 
         function random(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -333,8 +344,8 @@
                             if ('source' in this.messages[this.messages.length - 1]) {
                                 let trainData = { source: this.messages[this.messages.length - 1].source, target: this.input, timestamp: new Date().toISOString() };
 
-                                this.messages.push({ id: this.messages.length, text: this.input, tint: '#30c0f5', timestamp: new Date() });
-                                this.messages.push({ id: this.messages.length, text: '教えてくれて嬉しいよぉ！また教えてね', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                                this.messages.push({ id: this.messages.length, text: this.input, tint: user.tint, timestamp: new Date() });
+                                this.messages.push({ id: this.messages.length, text: '教えてくれて嬉しいよぉ！また教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
 
                                 database.ref(databaseRoot + 'train').push(trainData);
                                 database.ref(databaseRoot + "train_count").once('value', snapshot => {
@@ -350,8 +361,8 @@
 
                                 this.isLearning = false;
                             } else {
-                                this.messages.push({ id: this.messages.length, text: this.input, tint: '#30c0f5', timestamp: new Date() });
-                                this.messages.push({ id: this.messages.length, text: '次にミルヒちゃんに言ってもらいたいことを教えて欲しいよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date(), source: this.input });
+                                this.messages.push({ id: this.messages.length, text: this.input, tint: user.tint, timestamp: new Date() });
+                                this.messages.push({ id: this.messages.length, text: '次にミルヒちゃんに言ってもらいたいことを教えて欲しいよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date(), source: this.input });
                             }
 
                             this.input = '';
@@ -361,12 +372,12 @@
                             let log = { input: this.input };
                             const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
 
-                            this.messages.push({ id: this.messages.length, text: this.input, tint: '#30c0f5', timestamp: new Date() });
+                            this.messages.push({ id: this.messages.length, text: this.input, tint: user.tint, timestamp: new Date() });
                             this.input = '';
                             this.scrollRequired = true;
 
                             window.setTimeout(async function () {
-                                let replyMessage = { id: app.messages.length, text: null, tint: '#ffa6bb', avatar: 'https://pbs.twimg.com/profile_images/1218460676529651712/EyXd29pZ_400x400.jpg', author: 'ミルヒちゃん', timestamp: null };
+                                let replyMessage = { id: app.messages.length, text: null, tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: null };
 
                                 app.messages.push(replyMessage);
                                 app.scrollRequired = true;
@@ -407,7 +418,7 @@
                                                 app.messages.splice(index, 1);
                                             }
 
-                                            app.messages.push({ id: app.messages.length, text: 'ミルヒちゃん、困ってるみたいだからメッセージを変えて送るといいと思うよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                                            app.messages.push({ id: app.messages.length, text: 'ミルヒちゃん、困ってるみたいだからメッセージを変えて送るといいと思うよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                                         }
 
                                         app.scrollRequired = true;
@@ -440,7 +451,7 @@
                                         app.messages.splice(index, 1);
                                     }
 
-                                    app.messages.push({ id: app.messages.length, text: 'エラーだよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                                    app.messages.push({ id: app.messages.length, text: 'エラーだよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                                     app.scrollRequired = true;
                                     app.$el.querySelector("#popup").play();
                                 }
@@ -450,10 +461,10 @@
                 },
                 learn: function () {
                     if (this.isLearning) {
-                        this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                        this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
                     } else {
-                        this.messages.push({ id: this.messages.length, text: '最初にミルヒちゃんに送るメッセージを教えて欲しいよぉ', tint: '#5bcbe1', avatar: 'https://pbs.twimg.com/profile_images/1244746400799158272/alknLSUi_400x400.jpg', author: 'メルクちゃん', timestamp: new Date() });
+                        this.messages.push({ id: this.messages.length, text: '最初にミルヒちゃんに送るメッセージを教えて欲しいよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = true;
                     }
 
@@ -467,7 +478,10 @@
                 }
             },
             updated: function () {
-                this.$el.querySelector("#container").style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                let container = this.$el.querySelector("#container");
+
+                container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
 
                 if (this.scrollRequired) {
                     this.scrollToEnd();
@@ -475,8 +489,11 @@
                 }
             },
             mounted: function () {
-                this.messages.push({ id: -1, text: 'ミルヒだよ', tint: '#ffa6bb', avatar: 'https://pbs.twimg.com/profile_images/1218460676529651712/EyXd29pZ_400x400.jpg', author: 'ミルヒちゃん', timestamp: new Date() });
-                this.$el.querySelector("#container").style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                let container = this.$el.querySelector("#container");
+
+                this.messages.push({ id: -1, text: 'ミルヒだよ', tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: new Date() });
+                container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
                 this.scrollRequired = true;
                 this.$el.querySelector("#popup").play();
 
