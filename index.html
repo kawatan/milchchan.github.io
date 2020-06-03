@@ -351,7 +351,7 @@
                                 this.messages.push({ id: this.messages.length, text: '教えてくれて嬉しいよぉ！また教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
 
                                 database.ref(databaseRoot + 'train').push(trainData);
-                                database.ref(databaseRoot + "train_count").once('value', snapshot => {
+                                /*database.ref(databaseRoot + "train_count").once('value', snapshot => {
                                     const count = snapshot.val();
 
                                     if (count === null) {
@@ -360,7 +360,7 @@
                                     else {
                                         database.ref(databaseRoot).update({ 'train_count': count + 1 })
                                     }
-                                });
+                                });*/
 
                                 this.isLearning = false;
                             } else {
