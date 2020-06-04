@@ -6,7 +6,6 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title>ミルヒちゃんねる</title>
-    <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" type="text/css"
         media="screen" />
@@ -34,12 +33,22 @@
             height: 100%;
         }
 
+        p,
+        span,
+        input {
+            font-family: "Noto Sans JP";
+        }
+
         #app {
             z-index: 0;
             position: relative;
             margin: 0;
             width: 100%;
             height: 100%;
+        }
+
+        #heading .title {
+            font-family: "Gotham";
         }
 
         #container {
@@ -189,6 +198,18 @@
                 background-size: 20px 20px;
             }
         }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url('/fonts/Gotham-Book.woff') format('woff');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url('/fonts/Gotham-Bold.woff') format('woff');
+            font-weight: bold;
+        }
     </style>
 </head>
 
@@ -198,6 +219,11 @@
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered" v-cloak>
                     <div class="control has-text-centered">
+                        <nav class="level">
+                            <div class="level-item has-text-centered image">
+                                <a href="/"><img src="/images/Logo.png" srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x" alt="milchchan.com"></a>
+                            </div>
+                        </nav>
                         <nav class="level">
                             <div class="level-item has-text-centered">
                                 <div>
