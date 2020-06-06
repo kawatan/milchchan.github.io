@@ -49,13 +49,50 @@
             height: 100%;
         }
 
+        #heading .columns {
+            margin: 16px 0px 0px 0px;
+            padding: 0;
+        }
+
+        #heading .columns>.column {
+            padding: 0;
+        }
+
         #heading .title {
             font-family: "Gotham";
         }
 
-        #heading .navbar-item:first-child .level:first-child .level-item {
+        #heading .navbar-item .level {
+            margin: 16px 16px 16px 16px;
+            padding: 0px 0px 0px 0px;
+        }
+
+        #heading .navbar-item .level:nth-child(2) {
+            margin: 8px 8px 8px 8px;
+            padding: 0px;
+        }
+
+        #heading .navbar-item .level .level-item {
             margin: 0px 0px 0px 0px;
-            padding: 0px 16px 0px 16px;
+            padding: 0px 0px 0px 0px;
+        }
+
+        #heading .navbar-item .tags>.control {
+            margin: 0px 0px 0px 0px;
+            padding: 8px 8px 8px 8px;
+        }
+
+        #heading .tags {
+            margin: 0;
+            padding: 0px 0px 0px 0px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        #heading .tag {
+            font-family: "Gotham";
+            margin: 0;
+            padding: 0px 8px 0px 8px;
         }
 
         #container {
@@ -124,11 +161,12 @@
         .navbar:first-child {
             position: fixed;
             z-index: 1;
-            margin: env(safe-area-inset-top) 0px 0px 0px;
+            padding: env(safe-area-inset-top) 0px 0px 0px;
         }
 
         .navbar:first-child .navbar-item {
-            padding: 32px 0px 16px 0px;
+            margin: 0;
+            padding: 0;
         }
 
         .navbar:last-child {
@@ -231,6 +269,33 @@
                                 <a href="/"><img src="/images/Logo.png"
                                         srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
                                         alt="milchchan.com"></a>
+                            </div>
+                        </nav>
+                        <nav class="level is-hidden">
+                            <div class="level-item has-text-centered">
+                                <div class="tags are-normal field is-grouped is-grouped-multiline">
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag is-white"><a class="has-text-black"
+                                                    href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
+                                            <span class="tag is-black">Windows</span>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag is-white"><a class="has-text-black"
+                                                    href="https://clock.milchchan.com/">Clock</a></span>
+                                            <span class="tag is-black">Web</span>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag is-white"><a class="has-text-black"
+                                                    href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
+                                            <span class="tag is-black">iOS</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </nav>
                         <nav class="level">
