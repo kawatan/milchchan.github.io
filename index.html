@@ -560,6 +560,10 @@
                                 }
                             }
 
+                            if (!message.user.accent) {
+                                message.user.accent = user.accent;
+                            }
+
                             if (index >= 0) {
                                 this.$set(this.messages, key, { id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
                             }
