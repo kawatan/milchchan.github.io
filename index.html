@@ -6,7 +6,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#f6f6f6">
-    <title>ミルヒちゃんねる</title>
+    <title>チャット</title>
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" type="text/css"
@@ -470,12 +470,14 @@
             methods: {
                 send: async function (event) {
                     if (this.input.length > 0) {
+                        const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
+                        
                         database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
                         this.input = '';
 
                         try {
-                            const response = await fetch(encodeURI('https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9'), {
+                            const response = await fetch(encodeURI(url), {
                                 mode: "cors",
                                 method: "GET",
                                 headers: {
