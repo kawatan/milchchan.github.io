@@ -260,7 +260,7 @@
 
 <body>
     <div id="app">
-        <nav id="heading" class="navbar is-fixed-top" role="navigation">
+        <nav id="heading" class="navbar is-fixed-top is-hidden" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered" v-cloak>
                     <div class="control has-text-centered">
@@ -329,17 +329,33 @@
             <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
                 <div class="column is-half has-content-centered">
                     <hr class="is-invisible">
-                    <article class="media" v-if="message.author" v-cloak>
+                    <article class="media" v-if="user.uid === message.user.id" v-cloak>
+                        <div class="media-content">
+                            <div class="content has-text-right">
+                                <div class="balloon" v-bind:style="{ backgroundColor: message.tint }">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <figure class="media-right" v-if="message.user.image">
+                            <p class="image is-64x64">
+                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                            </p>
+                        </figure>
+                    </article>
+                    <article class="media" v-else v-cloak>
                         <figure class="media-left">
                             <p class="image is-64x64">
-                                <img class="is-rounded" v-bind:src="message.avatar" alt="Avatar">
+                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
                             </p>
                         </figure>
                         <div class="media-content">
                             <div class="level is-mobile">
                                 <div class="level-left">
                                     <span
-                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.author }}</span>
+                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
                                 </div>
                             </div>
                             <div class="content has-text-left">
@@ -354,22 +370,6 @@
                             </div>
                         </div>
                     </article>
-                    <article class="media" v-else v-cloak>
-                        <div class="media-content">
-                            <div class="content has-text-right">
-                                <div class="balloon" v-bind:style="{ backgroundColor: message.tint }">
-                                    <p class="has-text-weight-bold has-text-white">
-                                        {{ message.text }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <figure class="media-right" v-if="message.avatar">
-                            <p class="image is-64x64">
-                                <img class="is-rounded" v-bind:src="message.avatar" alt="Avatar">
-                            </p>
-                        </figure>
-                    </article>
                 </div>
             </div>
         </div>
@@ -382,8 +382,8 @@
                                 <input class="input is-rounded" type="text" v-model="input">
                             </div>
                             <div class="control">
-                                <button class="button is-rounded is-primary" type="submit" @click="send"><span
-                                        class="icon is-small">
+                                <button class="button is-rounded is-primary" v-bind:class="{'is-static': user === null}"
+                                    type="submit" @click="send"><span class="icon is-small">
                                         <i class="fas fa-paper-plane"></i>
                                     </span>
                                 </button>
@@ -394,11 +394,12 @@
             </div>
         </nav>
         <audio id="popup" preload="auto">
-            <source src="https://chat.milchchan.com/sounds/popup.wav" type="audio/wav" />
+            <source src="/sounds/popup.wav" type="audio/wav" />
         </audio>
     </div>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
@@ -421,19 +422,45 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
-        let databaseRoot = 'chat/';
+        const channel = window.location.hash.substring(1);
+        const databaseRoot = 'chat/';
+        const databaseMessages = databaseRoot + (channel.length > 0 ? 'channels/' + channel + '/messages' : 'messages');
         let database = firebase.database();
         const user = { tint: '#30c0f5' };
-        const milch = { name: 'ミルヒちゃん', tint: '#ffa6bb', avatar: '/images/Milch.png' };
+        const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', tint: '#5bcbe1', avatar: '/images/Merku.png' };
+
+
+
+        //databaseRoot.remove();
+
+        /*databaseRoot.remove().orderByChild('timestamp')
+            .startAt(1).limitToFirst(2)
+            .once('value', function (snapshot) { console.log(snapshot.val()) })*/
 
         function random(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+            var results = regex.exec(window.location.href);
+
+            if (results == null) {
+                return null;
+            }
+
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        //var channel = getParameterByName("channel") || getParameterByName("ch") || "";
+
         var app = new Vue({
             el: '#app',
             data: {
+                user: null,
                 input: '',
                 messages: [],
                 scrollRequired: false,
@@ -441,129 +468,39 @@
                 trainCount: -1
             },
             methods: {
-                send: function (event) {
+                send: async function (event) {
                     if (this.input.length > 0) {
-                        if (this.isLearning) {
-                            if ('source' in this.messages[this.messages.length - 1]) {
-                                let trainData = { source: this.messages[this.messages.length - 1].source, target: this.input, timestamp: new Date().toISOString() };
+                        database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
-                                this.messages.push({ id: this.messages.length, text: this.input, tint: user.tint, timestamp: new Date() });
-                                this.messages.push({ id: this.messages.length, text: '教えてくれて嬉しいよぉ！また教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
+                        this.input = '';
 
-                                database.ref(databaseRoot + 'train').push(trainData);
-                                /*database.ref(databaseRoot + "train_count").once('value', snapshot => {
-                                    const count = snapshot.val();
+                        try {
+                            const response = await fetch(encodeURI('https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9'), {
+                                mode: "cors",
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                }
+                            });
 
-                                    if (count === null) {
-                                        database.ref(databaseRoot).update({ 'train_count': 1 })
-                                    }
-                                    else {
-                                        database.ref(databaseRoot).update({ 'train_count': count + 1 })
-                                    }
-                                });*/
+                            if (response.ok) {
+                                const json = await response.json();
 
-                                this.isLearning = false;
-                            } else {
-                                this.messages.push({ id: this.messages.length, text: this.input, tint: user.tint, timestamp: new Date() });
-                                this.messages.push({ id: this.messages.length, text: '次にミルヒちゃんに言ってもらいたいことを教えて欲しいよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date(), source: this.input });
+                                if (json.text.length > 0) {
+                                    //database.ref(databaseMessages).push({ text: json.text, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                                }
                             }
-
-                            this.input = '';
-                            this.scrollRequired = true;
-                            this.$el.querySelector("#popup").play();
-                        } else {
-                            let log = { input: this.input };
-                            const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
-
-                            this.messages.push({ id: this.messages.length, text: this.input, tint: user.tint, timestamp: new Date() });
-                            this.input = '';
-                            this.scrollRequired = true;
-
-                            window.setTimeout(async function () {
-                                let replyMessage = { id: app.messages.length, text: null, tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: null };
-
-                                app.messages.push(replyMessage);
-                                app.scrollRequired = true;
-
-                                try {
-                                    const response = await fetch(encodeURI(url), {
-                                        mode: "cors",
-                                        method: "GET",
-                                        headers: {
-                                            "Content-Type": "application/x-www-form-urlencoded"
-                                        }
-                                    });
-
-                                    if (response.ok) {
-                                        const json = await response.json();
-
-                                        if (json.text.length > 0) {
-                                            replyMessage.text = json.text;
-                                            replyMessage.timestamp = Date.parse(json.timestamp);
-
-                                            app.$set(app.messages, replyMessage.id, replyMessage);
-                                        }
-                                        else {
-                                            var index = -1;
-                                            var i = 0;
-
-                                            for (let message of app.messages) {
-                                                if (message.id === replyMessage.id) {
-                                                    index = i;
-
-                                                    break;
-                                                }
-
-                                                i++;
-                                            }
-
-                                            if (index >= 0) {
-                                                app.messages.splice(index, 1);
-                                            }
-
-                                            app.messages.push({ id: app.messages.length, text: 'ミルヒちゃん、困ってるみたいだからメッセージを変えて送るといいと思うよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
-                                        }
-
-                                        app.scrollRequired = true;
-                                        app.$el.querySelector("#popup").play();
-
-                                        log.output = json.text;
-                                        log.timestamp = new Date().toISOString();
-
-                                        database.ref(databaseRoot + "logs").push(log);
-                                    }
-                                    else {
-                                        throw new Error(response.statusText);
-                                    }
-                                }
-                                catch (e) {
-                                    var index = -1;
-                                    var i = 0;
-
-                                    for (let message of app.messages) {
-                                        if (message.id === replyMessage.id) {
-                                            index = i;
-
-                                            break;
-                                        }
-
-                                        i++;
-                                    }
-
-                                    if (index >= 0) {
-                                        app.messages.splice(index, 1);
-                                    }
-
-                                    app.messages.push({ id: app.messages.length, text: 'エラーだよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
-                                    app.scrollRequired = true;
-                                    app.$el.querySelector("#popup").play();
-                                }
-                            }, random(500, 1000));
+                            else {
+                                throw new Error(response.statusText);
+                            }
+                        }
+                        catch (e) {
+                            console.error(e.message);
                         }
                     }
                 },
                 learn: function () {
-                    if (this.isLearning) {
+                    /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
                     } else {
@@ -572,7 +509,7 @@
                     }
 
                     this.scrollRequired = true;
-                    this.$el.querySelector("#popup").play();
+                    this.$el.querySelector("#popup").play();*/
                 },
                 scrollToEnd: function () {
                     let container = this.$el.querySelector("#container");
@@ -591,16 +528,67 @@
                     this.scrollRequired = false;
                 }
             },
+            created: function () {
+            },
             mounted: function () {
                 let container = this.$el.querySelector("#container");
 
-                this.messages.push({ id: -1, text: 'ミルヒだよ', tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: new Date() });
+                //this.messages.push({ id: -1, text: 'ミルヒだよ', tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: new Date() });
                 container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
                 container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
-                this.scrollRequired = true;
-                this.$el.querySelector("#popup").play();
 
-                database.ref(databaseRoot + "train_count").on('value', snapshot => {
+                database.ref(databaseMessages).limitToLast(10).on('value', snapshot => {
+                    const messageDictionary = snapshot.val();
+
+                    if (messageDictionary) {
+                        let hasNew = false;
+
+                        for (let key in messageDictionary) {
+                            const message = messageDictionary[key];
+                            let index = -1;
+
+                            //console.log(date.toISOString());
+                            //console.log(date.toLocaleTimeString());
+
+                            for (let i = 0; i < this.messages.length; i++) {
+                                if (key === this.messages[i].id) {
+                                    index = i;
+
+                                    break;
+                                }
+                            }
+
+                            if (index >= 0) {
+                                this.$set(this.messages, key, { id: key, text: message.text, tint: user.tint, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                            }
+                            else {
+                                this.messages.push({ id: key, text: message.text, tint: user.tint, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                hasNew = true;
+                            }
+                        }
+
+                        this.scrollRequired = true;
+
+                        if (hasNew) {
+                            this.$el.querySelector("#popup").play();
+                        }
+                    }
+                });
+                firebase.auth().signInAnonymously().catch(function (error) {
+                    console.error(error.code, error.message);
+                });
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        // User is signed in.
+                        app.user = user;
+
+                    } else {
+                        // User is signed out.
+                        app.user = null;
+                    }
+                });
+
+                /*database.ref(databaseRoot + "train_count").on('value', snapshot => {
                     const count = snapshot.val();
 
                     if (count !== null) {
@@ -608,7 +596,10 @@
                     } else {
                         this.trainCount = 0;
                     }
-                });
+                });*/
+            },
+            destroyed: function () {
+                database.ref(databaseMessages).off('value');
             }
         });
     </script>
