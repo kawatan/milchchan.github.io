@@ -346,13 +346,13 @@
                         </figure>
                     </article>
                     <article class="media" v-else v-cloak>
-                        <figure class="media-left">
+                        <figure class="media-left is-hidden">
                             <p class="image is-64x64">
                                 <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
                             </p>
                         </figure>
                         <div class="media-content">
-                            <div class="level is-mobile">
+                            <div class="level is-mobile is-hidden">
                                 <div class="level-left">
                                     <span
                                         class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
@@ -471,7 +471,7 @@
                 send: async function (event) {
                     if (this.input.length > 0) {
                         const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
-                        
+
                         database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
                         this.input = '';
@@ -489,7 +489,7 @@
                                 const json = await response.json();
 
                                 if (json.text.length > 0) {
-                                    //database.ref(databaseMessages).push({ text: json.text, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                                    database.ref(databaseMessages).push({ text: json.text, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
                                 }
                             }
                             else {
