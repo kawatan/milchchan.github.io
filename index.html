@@ -475,7 +475,7 @@
 
                         database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
-                        this.input = '';
+                        this.input = '';/*
 
                         try {
                             const response = await fetch(encodeURI(url), {
@@ -499,7 +499,7 @@
                         }
                         catch (e) {
                             console.error(e.message);
-                        }
+                        }*/
                     }
                 },
                 learn: function () {
