@@ -471,7 +471,7 @@
             methods: {
                 send: async function (event) {
                     if (this.input.length > 0) {
-                        const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.9';
+                        const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.95';
 
                         database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
