@@ -42,8 +42,24 @@
             font-family: "Noto Sans JP";
         }
 
-        #app {
+        #particles-js {
+            position: absolute;
             z-index: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+
+        .columns .is-vcentered {
+            align-items: center;
+        }
+
+        .is-vcentered .column:first-child button {
+            margin: 0px 8px 0px 0px;
+        }
+
+        #app {
+            z-index: 1;
             position: relative;
             margin: 0;
             width: 100%;
@@ -55,7 +71,7 @@
             padding: 0;
         }
 
-        #heading .columns>.column {
+        #heading>.columns>.column {
             padding: 0;
         }
 
@@ -260,12 +276,13 @@
 </head>
 
 <body>
+    <div id="particles-js"></div>
     <div id="app">
-        <nav id="heading" class="navbar is-fixed-top is-hidden" role="navigation">
+        <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered" v-cloak>
                     <div class="control has-text-centered">
-                        <nav class="level">
+                        <nav class="level is-hidden">
                             <div class="level-item has-text-centered image">
                                 <a href="/"><img src="/images/Logo.png"
                                         srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
@@ -301,27 +318,22 @@
                         </nav>
                         <nav class="level">
                             <div class="level-item has-text-centered">
-                                <div>
-                                    <p class="heading">教えてもらった会話数</p>
-                                    <p class="title is-size-1" v-bind:class="{'is-invisible': trainCount === -1}">
-                                        {{ trainCount }}</p>
+                                <div class="columns is-gapless is-vcentered">
+                                    <div class="column">
+                                        <button class="button is-white has-background-white has-text-black is-rounded"
+                                            v-bind:disabled="!isReady" v-on:click="like">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-star"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                    <div class="column">
+                                        <span class="title is-size-1" v-bind:class="{'is-invisible': likes === -1}">
+                                            {{ likes }}</span>
+                                    </div>
                                 </div>
                             </div>
                         </nav>
-                        <button class="button is-white has-background-white has-text-black is-rounded"
-                            v-bind:class="{'is-hidden': isLearning}" v-on:click="learn">
-                            <span class="icon is-small">
-                                <i class="fas fa-plus"></i>
-                            </span>
-                            <span class="has-text-weight-bold">会話を教える</span>
-                        </button>
-                        <button class="button is-white has-background-danger has-text-white is-rounded"
-                            v-bind:class="{'is-hidden': !isLearning}" v-on:click="learn" v-cloak>
-                            <span class="icon is-small">
-                                <i class="fas fa-ban"></i>
-                            </span>
-                            <span class="has-text-weight-bold">学習をキャンセル</span>
-                        </button>
                     </div>
                 </div>
             </div>
@@ -383,9 +395,8 @@
                                 <input class="input is-rounded" type="text" v-model="input">
                             </div>
                             <div class="control">
-                                <button class="button is-rounded is-primary"
-                                    v-bind:disabled="user === null" type="submit" @click="send"><span
-                                        class="icon is-small">
+                                <button class="button is-rounded is-primary" v-bind:disabled="user === null"
+                                    type="submit" @click="send"><span class="icon is-small">
                                         <i class="fas fa-paper-plane"></i>
                                     </span>
                                 </button>
@@ -408,6 +419,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/js/particles.js"></script>
     <script type="text/javascript">
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -426,13 +438,12 @@
 
         const channel = window.location.hash.substring(1);
         const databaseRoot = 'chat/';
-        const databaseMessages = databaseRoot + (channel.length > 0 ? 'channels/' + channel + '/messages' : 'messages');
+        const databaseChannel = channel.length > 0 ? databaseRoot + 'channels/' + channel : databaseRoot;
+        const databaseMessages = databaseChannel + '/messages';
         let database = firebase.database();
         const user = { accent: '#30c0f5' };
         const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
-
-
 
         //databaseRoot.remove();
 
@@ -462,12 +473,13 @@
         var app = new Vue({
             el: '#app',
             data: {
+                isReady: false,
                 user: null,
                 input: '',
                 messages: [],
                 scrollRequired: false,
                 isLearning: false,
-                trainCount: -1
+                likes: -1
             },
             methods: {
                 send: async function (event) {
@@ -503,7 +515,7 @@
                         }*/
                     }
                 },
-                learn: function () {
+                like: function () {
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
@@ -513,7 +525,24 @@
                     }
 
                     this.scrollRequired = true;
-                    this.$el.querySelector("#popup").play();*/
+                    */
+                    window.pJSDom[0].pJS.fn.modes.pushParticles(10);
+
+                    /*database.ref(databaseChannel + "likes").transaction(function (count) {
+                        return (count || 0) + 1;
+                    });*/
+                    /*database.ref(databaseChannel + "likes").once('value', snapshot => {
+                        const count = snapshot.val();
+
+                        if (count === null) {
+                            database.ref(databaseChannel + "likes").update({ 'likes': 1 })
+                        }
+                        else {
+                            database.ref(databaseChannel).update({ 'likes': count + 1 })
+                        }
+                    });*/
+
+                    this.$el.querySelector("#popup").play();
                 },
                 scrollToEnd: function () {
                     let container = this.$el.querySelector("#container");
@@ -533,14 +562,15 @@
                 }
             },
             created: function () {
-            },
-            mounted: function () {
-                let container = this.$el.querySelector("#container");
+                database.ref(databaseChannel + "likes").on('value', snapshot => {
+                    const count = snapshot.val();
 
-                //this.messages.push({ id: -1, text: 'ミルヒだよ', tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: new Date() });
-                container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
-                container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
-
+                    if (count !== null) {
+                        this.likes = count;
+                    } else {
+                        this.likes = 0;
+                    }
+                });
                 database.ref(databaseMessages).limitToLast(10).on('value', snapshot => {
                     const messageDictionary = snapshot.val();
 
@@ -582,6 +612,14 @@
                         }
                     }
                 });
+            },
+            mounted: function () {
+                let container = this.$el.querySelector("#container");
+
+                //this.messages.push({ id: -1, text: 'ミルヒだよ', tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: new Date() });
+                container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
+
                 firebase.auth().signInAnonymously().catch(function (error) {
                     console.error(error.code, error.message);
                 });
@@ -595,18 +633,9 @@
                         app.user = null;
                     }
                 });
-
-                /*database.ref(databaseRoot + "train_count").on('value', snapshot => {
-                    const count = snapshot.val();
-
-                    if (count !== null) {
-                        this.trainCount = count;
-                    } else {
-                        this.trainCount = 0;
-                    }
-                });*/
             },
             destroyed: function () {
+                database.ref(databaseChannel + "likes").off('value');
                 database.ref(databaseMessages).off('value');
             }
         });
@@ -617,6 +646,10 @@
             container.style.paddingTop = app.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
             container.style.paddingBottom = app.$el.querySelector("#input").getBoundingClientRect().height + 'px';
         };
+
+        particlesJS.load('particles-js', '/js/particlesjs-config.json', function () {
+            app.isReady = true;
+        });
     </script>
 </body>
 
