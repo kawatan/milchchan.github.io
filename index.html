@@ -489,10 +489,6 @@
                 scrollRequired: false,
                 likes: -1
             },
-            /*computed: {
-                formatDate: function () {
-                }
-            },*/
             methods: {
                 send: async function (event) {
                     if (this.input.length > 0) {
@@ -568,7 +564,8 @@
                         return moment(event).format('LLL');
                     }
 
-                    return moment(event).startOf('hour').fromNow();
+                    //return moment(event).startOf('hour').fromNow();
+                    return moment(event).format('LT');
                 }
             },
             updated: function () {
@@ -601,6 +598,7 @@
 
                     if (messageDictionary) {
                         let hasNew = false;
+                        //let keys = [];
 
                         for (let key in messageDictionary) {
                             const message = messageDictionary[key];
@@ -628,10 +626,18 @@
                                 this.messages.push({ id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
                                 hasNew = true;
                             }
+
+                            //keys.push(key);
                         }
 
-                        this.scrollRequired = true;
+                        /*for (let message of this.messages) {
+                            if (!keys.includes(message.id)) {
+                                this.$set(this.messages, message.id, message);
+                            }
+                        }*/
 
+                        this.scrollRequired = true;
+                        
                         if (hasNew) {
                             this.$el.querySelector("#popup").play();
                         }
