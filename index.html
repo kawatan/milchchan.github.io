@@ -526,11 +526,11 @@
 
                     this.scrollRequired = true;
                     */
-                    window.pJSDom[0].pJS.fn.modes.pushParticles(10);
+                    
 
-                    /*database.ref(databaseChannel + "likes").transaction(function (count) {
+                    database.ref(databaseChannel + "likes").transaction(function (count) {
                         return (count || 0) + 1;
-                    });*/
+                    });
                     /*database.ref(databaseChannel + "likes").once('value', snapshot => {
                         const count = snapshot.val();
 
@@ -565,10 +565,12 @@
                 database.ref(databaseChannel + "likes").on('value', snapshot => {
                     const count = snapshot.val();
 
-                    if (count !== null) {
-                        this.likes = count;
-                    } else {
+                    if (count === null) {
                         this.likes = 0;
+                    } else if (this.likes !== count) {
+                        this.likes = count;
+
+                        window.pJSDom[0].pJS.fn.modes.pushParticles(8);
                     }
                 });
                 database.ref(databaseMessages).limitToLast(10).on('value', snapshot => {
