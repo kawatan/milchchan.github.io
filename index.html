@@ -350,6 +350,10 @@
                                         {{ message.text }}
                                     </p>
                                 </div>
+                                <div>
+                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                        {{ formatDate(message.timestamp) }}</p>
+                                </div>
                             </div>
                         </div>
                         <figure class="media-right" v-if="message.user.image">
@@ -359,7 +363,7 @@
                         </figure>
                     </article>
                     <article class="media" v-else v-cloak>
-                        <figure class="media-left is-hidden">
+                        <figure class="media-left" v-if="message.user.image">
                             <p class="image is-64x64">
                                 <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
                             </p>
@@ -374,11 +378,15 @@
                             <div class="content has-text-left">
                                 <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
                                     <p class="has-text-weight-bold has-text-white">
-                                        <span v-bind:class="{'is-hidden':message.text}">
+                                        <span v-bind:class="{'is-hidden': message.text}">
                                             <i class="fas fa-spinner updating"></i>
                                         </span>
                                         {{ message.text }}
                                     </p>
+                                </div>
+                                <div>
+                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                        {{ formatDate(message.timestamp) }}</p>
                                 </div>
                             </div>
                         </div>
@@ -419,6 +427,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="/js/moment-with-locales.js"></script>
     <script src="/js/particles.js"></script>
     <script type="text/javascript">
         // Your web app's Firebase configuration
@@ -478,9 +487,12 @@
                 input: '',
                 messages: [],
                 scrollRequired: false,
-                isLearning: false,
                 likes: -1
             },
+            /*computed: {
+                formatDate: function () {
+                }
+            },*/
             methods: {
                 send: async function (event) {
                     if (this.input.length > 0) {
@@ -526,7 +538,7 @@
 
                     this.scrollRequired = true;
                     */
-                    
+
 
                     database.ref(databaseChannel + "likes").transaction(function (count) {
                         return (count || 0) + 1;
@@ -548,6 +560,15 @@
                     let container = this.$el.querySelector("#container");
 
                     container.scrollTop = container.scrollHeight;
+                },
+                formatDate: function (event) {
+                    moment.locale(window.navigator.language);
+
+                    if (event.getTime() / 1000 <= Math.round(new Date().getTime() / 1000) - 24 * 3600) {
+                        return moment(event).format('LLL');
+                    }
+
+                    return moment(event).startOf('minutes').fromNow();
                 }
             },
             updated: function () {
@@ -567,10 +588,12 @@
 
                     if (count === null) {
                         this.likes = 0;
-                    } else if (this.likes !== count) {
-                        this.likes = count;
+                    } else {
+                        if (this.likes >= 0) {
+                            window.pJSDom[0].pJS.fn.modes.pushParticles(8);
+                        }
 
-                        window.pJSDom[0].pJS.fn.modes.pushParticles(8);
+                        this.likes = count;
                     }
                 });
                 database.ref(databaseMessages).limitToLast(10).on('value', snapshot => {
