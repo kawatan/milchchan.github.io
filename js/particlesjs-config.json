@@ -56,12 +56,12 @@
       "enable": true,
       "speed": 6,
       "direction": "top",
-      "random": true,
+      "random": false,
       "straight": true,
       "out_mode": "destroy",
       "bounce": false,
       "attract": {
-        "enable": false,
+        "enable": true,
         "rotateX": 600,
         "rotateY": 1200
       }
