@@ -10,6 +10,7 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" type="text/css"
         media="screen" />
     <style>
@@ -76,7 +77,7 @@
         }
 
         #heading .title {
-            font-family: "Gotham";
+            font-family: 'Roboto Condensed', sans-serif;
         }
 
         #heading .navbar-item .level {
@@ -135,6 +136,13 @@
 
         #input .column {
             padding: 0px 16px 0px 16px;
+        }
+
+        #input .columns .column>div:first-child {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0px 0px 4px 0px;
         }
 
         #input .control .is-primary {
@@ -328,8 +336,8 @@
                                         </button>
                                     </div>
                                     <div class="column">
-                                        <span class="title is-size-1" v-bind:class="{'is-invisible': likes === -1}">
-                                            {{ likes }}</span>
+                                        <span class="title is-size-1" v-bind:class="{'is-invisible': words === -1}">
+                                            {{ words }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -397,10 +405,16 @@
         <nav id="input" class="navbar is-fixed-bottom" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered">
+                    <div>
+                        <span class="is-size-7 has-text-weight-normal has-text-grey">
+                            {{ currentInputLength }}/{{ maxInputLength }}
+                        </span>
+                    </div>
                     <form onsubmit="return false;">
                         <div class="field has-addons">
                             <div class="control is-expanded">
-                                <input class="input is-rounded" type="text" v-model="input">
+                                <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
+                                    v-model="input" @input="change">
                             </div>
                             <div class="control">
                                 <button class="button is-rounded is-primary" v-bind:disabled="user === null"
@@ -429,6 +443,7 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="/js/moment-with-locales.js"></script>
     <script src="/js/particles.js"></script>
+    <script src="/js/tiny-segmenter.js"></script>
     <script type="text/javascript">
         // Your web app's Firebase configuration
         var firebaseConfig = {
@@ -453,6 +468,7 @@
         const user = { accent: '#30c0f5' };
         const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
+        let segmenter = new TinySegmenter();
 
         //databaseRoot.remove();
 
@@ -485,16 +501,38 @@
                 isReady: false,
                 user: null,
                 input: '',
+                currentInputLength: 0,
+                maxInputLength: 100,
+                inputHasError: false,
                 messages: [],
                 scrollRequired: false,
+                words: -1,
                 likes: -1
             },
             methods: {
                 send: async function (event) {
-                    if (this.input.length > 0) {
+                    if (this.input.length > 0 && this.input.length <= this.maxInputLength) {
                         const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.95';
 
                         database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
+
+                        for (let token of segmenter.segment(this.input)) {
+                            database.ref(databaseRoot + "/dictionary/" + token).transaction(function (word) {
+                                if (word === null) {
+                                    return { timestamp: Math.floor(new Date() / 1000) };
+                                }
+
+                                return;
+                            }, function (error, committed, snapshot) {
+                                if (committed) {
+                                    database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
+                                        return (count || 0) + 1;
+                                    });
+                                } else if (error) {
+                                    console.error(error);
+                                }
+                            });
+                        }
 
                         this.input = '';/*
 
@@ -523,6 +561,15 @@
                         }*/
                     }
                 },
+                change: function (event) {
+                    this.currentInputLength = this.input.length;
+
+                    if (this.currentInputLength <= this.maxInputLength) {
+                        this.inputHasError = false;
+                    } else {
+                        this.inputHasError = true;
+                    }
+                },
                 like: function () {
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
@@ -535,13 +582,16 @@
                     this.scrollRequired = true;
                     */
 
+                    const newWord = "Test";
 
-                    database.ref(databaseChannel + "/likes").transaction(function (count) {
+
+
+                    /*database.ref(databaseChannel + "/likes").transaction(function (count) {
                         return (count || 0) + 1;
-                    });
+                    });*/
                     /*database.ref(databaseChannel + "likes").once('value', snapshot => {
                         const count = snapshot.val();
-
+            
                         if (count === null) {
                             database.ref(databaseChannel + "likes").update({ 'likes': 1 })
                         }
@@ -575,6 +625,15 @@
                 }
             },
             created: function () {
+                database.ref(databaseRoot + "/dictionary/count").on('value', snapshot => {
+                    const count = snapshot.val();
+
+                    if (count === null) {
+                        this.words = 0;
+                    } else {
+                        this.words = count;
+                    }
+                });
                 database.ref(databaseChannel + "/likes").on('value', snapshot => {
                     const count = snapshot.val();
 
@@ -632,7 +691,7 @@
                         }*/
 
                         this.scrollRequired = true;
-                        
+
                         if (hasNew) {
                             this.$el.querySelector("#popup").play();
                         }
@@ -661,6 +720,7 @@
                 });
             },
             destroyed: function () {
+                database.ref(databaseRoot + "/dictionary/count").off('value')
                 database.ref(databaseChannel + "/likes").off('value');
                 database.ref(databaseMessages).off('value');
             }
