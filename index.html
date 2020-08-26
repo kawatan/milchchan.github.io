@@ -55,7 +55,7 @@
             align-items: center;
         }
 
-        .is-vcentered .column:first-child button {
+        #heading .level .level-item .field span.icon {
             margin: 0px 8px 0px 0px;
         }
 
@@ -326,7 +326,14 @@
                         </nav>
                         <nav class="level">
                             <div class="level-item has-text-centered">
-                                <div class="columns is-mobile is-gapless is-vcentered">
+                                <div class="field is-grouped is-vcentered">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-book"></i>
+                                    </span>
+                                    <span class="title is-size-4" v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
+                                </div>
+
+                                <!--<div class="columns is-mobile is-gapless is-vcentered">
                                     <div class="column">
                                         <button class="button is-white has-background-white has-text-black is-rounded"
                                             v-bind:disabled="!isReady" v-on:click="like">
@@ -334,12 +341,14 @@
                                                 <i class="fas fa-star"></i>
                                             </span>
                                         </button>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-book"></i>
+                                        </span>
                                     </div>
                                     <div class="column">
-                                        <span class="title is-size-1" v-bind:class="{'is-invisible': words === -1}">
-                                            {{ words }}</span>
+                                        
                                     </div>
-                                </div>
+                            </div>-->
                             </div>
                         </nav>
                     </div>
