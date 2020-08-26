@@ -330,7 +330,8 @@
                                     <span class="icon is-small">
                                         <i class="fas fa-book"></i>
                                     </span>
-                                    <span class="title is-size-4" v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
+                                    <span class="title is-size-4"
+                                        v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
                                 </div>
 
                                 <!--<div class="columns is-mobile is-gapless is-vcentered">
@@ -421,6 +422,13 @@
                     </div>
                     <form onsubmit="return false;">
                         <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-rounded" type="button" @click="like"><span
+                                        class="icon is-small">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </button>
+                            </div>
                             <div class="control is-expanded">
                                 <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
                                     v-model="input" @input="change">
@@ -591,13 +599,13 @@
                     this.scrollRequired = true;
                     */
 
-                    const newWord = "Test";
+                    
 
 
 
-                    /*database.ref(databaseChannel + "/likes").transaction(function (count) {
+                    database.ref(databaseChannel + "/likes").transaction(function (count) {
                         return (count || 0) + 1;
-                    });*/
+                    });
                     /*database.ref(databaseChannel + "likes").once('value', snapshot => {
                         const count = snapshot.val();
             
