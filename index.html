@@ -446,8 +446,8 @@
         firebase.analytics();
 
         const channel = window.location.hash.substring(1);
-        const databaseRoot = 'chat/';
-        const databaseChannel = channel.length > 0 ? databaseRoot + 'channels/' + channel : databaseRoot;
+        const databaseRoot = 'chat';
+        const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
         const databaseMessages = databaseChannel + '/messages';
         let database = firebase.database();
         const user = { accent: '#30c0f5' };
@@ -536,7 +536,7 @@
                     */
 
 
-                    database.ref(databaseChannel + "likes").transaction(function (count) {
+                    database.ref(databaseChannel + "/likes").transaction(function (count) {
                         return (count || 0) + 1;
                     });
                     /*database.ref(databaseChannel + "likes").once('value', snapshot => {
@@ -560,11 +560,6 @@
                 formatDate: function (event) {
                     moment.locale(window.navigator.language);
 
-                    if (event.getTime() / 1000 <= Math.round(new Date().getTime() / 1000) - 24 * 3600) {
-                        return moment(event).format('LLL');
-                    }
-
-                    //return moment(event).startOf('hour').fromNow();
                     return moment(event).format('LT');
                 }
             },
@@ -580,7 +575,7 @@
                 }
             },
             created: function () {
-                database.ref(databaseChannel + "likes").on('value', snapshot => {
+                database.ref(databaseChannel + "/likes").on('value', snapshot => {
                     const count = snapshot.val();
 
                     if (count === null) {
@@ -666,7 +661,7 @@
                 });
             },
             destroyed: function () {
-                database.ref(databaseChannel + "likes").off('value');
+                database.ref(databaseChannel + "/likes").off('value');
                 database.ref(databaseMessages).off('value');
             }
         });
