@@ -534,7 +534,7 @@
                         database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
                         for (let token of segmenter.segment(this.input)) {
-                            database.ref(databaseRoot + "/dictionary/" + token).transaction(function (word) {
+                            database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
                                 if (word === null) {
                                     return { timestamp: Math.floor(new Date() / 1000) };
                                 }
