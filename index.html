@@ -477,7 +477,7 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
-        const channel = window.location.hash.substring(1);
+        const channel = decodeURIComponent(window.location.hash.substring(1));
         const databaseRoot = 'chat';
         const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
         const databaseMessages = databaseChannel + '/messages';
@@ -529,14 +529,16 @@
             methods: {
                 send: async function (event) {
                     if (this.input.length > 0 && this.input.length <= this.maxInputLength) {
-                        const url = 'https://api.milchchan.com/talk?text=' + this.input + '&threshold=0.95';
+                        const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=0.95';
 
-                        database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
+                        let ref = database.ref(databaseMessages).push();
+                        
+                        ref.set({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
                         for (let token of segmenter.segment(this.input)) {
                             database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
                                 if (word === null) {
-                                    return { timestamp: Math.floor(new Date() / 1000) };
+                                    return ref.key;
                                 }
 
                                 return;
@@ -556,7 +558,7 @@
                         /*
 
                         try {
-                            const response = await fetch(encodeURI(url), {
+                            const response = await fetch(url, {
                                 mode: "cors",
                                 method: "GET",
                                 headers: {
