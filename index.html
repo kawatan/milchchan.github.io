@@ -551,7 +551,9 @@
                             });
                         }
 
-                        this.input = '';/*
+                        this.input = '';
+                        this.currentInputLength = 0;
+                        /*
 
                         try {
                             const response = await fetch(encodeURI(url), {
