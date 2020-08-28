@@ -147,7 +147,6 @@
             align-items: center;
             justify-content: center;
             border-radius: 500px 500px 500px 500px;
-            background-color: #30c0f5;
             background-image: url('/images/Stripes.png');
             background-repeat: repeat;
             padding: 8px 16px 8px 16px;
@@ -445,7 +444,7 @@
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered">
                     <div class="notification is-info is-light" v-if="notification">
-                        <article class="media">
+                        <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
                             <figure class="media-left" v-if="notification.image">
                                 <span class="image is-32x32">
                                     <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
@@ -578,7 +577,7 @@
                     if (this.input.length > 0 && this.input.length <= this.maxInputLength) {
                         function format(format) {
                             var args = arguments;
-                            
+
                             return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
                         }
 
@@ -612,11 +611,13 @@
                                 completed++;
 
                                 if (completed == tokens.length && learned > 0) {
-                                    app.notification = { text: format('+{0}', learned) };
+                                    app.notification = { text: format('+{0}', learned), accent: merku.accent };
 
                                     window.setTimeout(async function () {
                                         app.notification = null;
                                     }, 3000);
+
+                                    window.pJSDom[0].pJS.fn.modes.pushParticles(learned);
                                 }
                             });
                         }
