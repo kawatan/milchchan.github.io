@@ -129,8 +129,32 @@
             height: 0;
         }
 
-        #input .notification .media {
+        #input .notification {
+            display: flex;
             align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            margin: 0px 0px 16px 0px;
+            padding: 0;
+        }
+
+        #input .is-info {
+            color: #ffffff;
+        }
+
+        #input .notification .media {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 500px 500px 500px 500px;
+            background-color: #30c0f5;
+            background-image: url('/images/Stripes.png');
+            background-repeat: repeat;
+            padding: 8px 16px 8px 16px;
+        }
+
+        #input .notification .media .media-left {
+            margin: 0px 8px 0px 0px;
         }
 
         #input .columns {
@@ -374,7 +398,8 @@
                                 </div>
                                 <div>
                                     <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                        {{ formatDate(message.timestamp) }}</p>
+                                        {{ formatDate(message.timestamp) }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -422,15 +447,15 @@
                     <div class="notification is-info is-light" v-if="notification">
                         <article class="media">
                             <figure class="media-left" v-if="notification.image">
-                                <p class="image is-32x32">
+                                <span class="image is-32x32">
                                     <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
-                                </p>
+                                </span>
                             </figure>
                             <div class="media-content">
                                 <div class="content has-text-left">
-                                    <p class="has-text-weight-bold">
+                                    <span class="has-text-weight-bold">
                                         {{ notification.text }}
-                                    </p>
+                                    </span>
                                 </div>
                             </div>
                         </article>
@@ -639,10 +664,6 @@
 
                     this.scrollRequired = true;
                     */
-
-
-
-
                     database.ref(databaseChannel + "/likes").transaction(function (count) {
                         return (count || 0) + 1;
                     });
