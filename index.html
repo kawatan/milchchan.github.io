@@ -407,6 +407,12 @@
                     <hr class="is-invisible">
                     <article class="media" v-if="user.uid === message.user.id" v-cloak>
                         <div class="media-content">
+                            <div class="level is-mobile" v-if="message.user.name">
+                                <div class="level-left">
+                                    <span
+                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                </div>
+                            </div>
                             <div class="content has-text-right">
                                 <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
                                     <p class="has-text-weight-bold has-text-white">
@@ -433,7 +439,7 @@
                             </p>
                         </figure>
                         <div class="media-content">
-                            <div class="level is-mobile is-hidden">
+                            <div class="level is-mobile" v-if="message.user.name">
                                 <div class="level-left">
                                     <span
                                         class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
