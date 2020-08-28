@@ -576,16 +576,10 @@
             methods: {
                 send: async function (event) {
                     if (this.input.length > 0 && this.input.length <= this.maxInputLength) {
-                        function template(strings, ...keys) {
-                            return (function (...values) {
-                                let dict = values[values.length - 1] || {};
-                                let result = [strings[0]];
-                                keys.forEach(function (key, i) {
-                                    let value = Number.isInteger(key) ? values[key] : dict[key];
-                                    result.push(value, strings[i + 1]);
-                                });
-                                return result.join('');
-                            });
+                        function format(format) {
+                            var args = arguments;
+                            
+                            return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
                         }
 
                         const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=0.95';
@@ -597,8 +591,7 @@
                         let tokens = segmenter.segment(this.input);
                         let completed = 0;
                         let learned = 0;
-                        let format = template`+${0}`;
-
+                        
                         for (let token of tokens) {
                             database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
                                 if (word === null) {
@@ -619,7 +612,7 @@
                                 completed++;
 
                                 if (completed == tokens.length && learned > 0) {
-                                    app.notification = { text: format(learned) };
+                                    app.notification = { text: format('+{0}', learned) };
 
                                     window.setTimeout(async function () {
                                         app.notification = null;
