@@ -1,70 +1,872 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html>
 
 <head>
     <meta charset="utf-8" />
-    <title>Milchchan.js</title>
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="theme-color" content="#f6f6f6">
+    <title>チャット</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" type="text/css"
+        media="screen" />
     <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-        }
-
-        canvas {
-            position: absolute;
-            z-index: 0;
-            display: block;
-        }
-
         [v-cloak] {
             display: none;
         }
 
-        #capture {
-            position: absolute;
-            z-index: -1;
+        .wf-notosansjapanese {
+            font-family: "Noto Sans JP";
+        }
+
+        html {
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            position: relative;
+            overflow: hidden;
+            background-color: #f6f6f6;
             margin: 0;
-            display: none;
-            transform: scaleX(-1);
+            width: 100%;
+            height: 100%;
+        }
+
+        p,
+        span,
+        input {
+            font-family: "Noto Sans JP";
+        }
+
+        #particles-js {
+            position: absolute;
+            z-index: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+        }
+
+        .columns .is-vcentered {
+            align-items: center;
+        }
+
+        #heading {
+            overflow: hidden;
+        }
+
+        #heading .level .level-item .field span.icon {
+            margin: 0px 8px 0px 0px;
         }
 
         #app {
-            position: absolute;
             z-index: 1;
-            background-color: rgba(0, 0, 0, 0);
+            position: relative;
             margin: 0;
             width: 100%;
+            height: 100%;
         }
 
-        .progress {
-            background-color: #ffc547;
+        #heading .columns {
+            margin: 16px 0px 0px 0px;
+            padding: 0;
+        }
+
+        #heading>.columns>.column {
+            padding: 0;
+        }
+
+        #heading .title {
+            font-family: 'Roboto Condensed', sans-serif;
+        }
+
+        #heading .navbar-item .level {
+            margin: 16px 16px 16px 16px;
+            padding: 0px 0px 0px 0px;
+        }
+
+        #heading .navbar-item .level:nth-child(2) {
+            margin: 8px 8px 8px 8px;
+            padding: 0px;
+        }
+
+        #heading .navbar-item .level .level-item {
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 0px 0px;
+        }
+
+        #heading .navbar-item .tags>.control {
+            margin: 0px 0px 0px 0px;
+            padding: 8px 8px 8px 8px;
+        }
+
+        #heading .tags {
             margin: 0;
-            width: 0%;
-            height: 2px;
+            padding: 0px 0px 0px 0px;
+            align-items: flex-start;
+            justify-content: center;
+        }
+
+        #heading .tag {
+            font-family: "Gotham";
+            margin: 0;
+            padding: 0px 8px 0px 8px;
+        }
+
+        #container {
+            position: relative;
+            margin: 0;
+            padding: 0px 16px 0px 16px;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+        }
+
+        #container .column hr {
+            margin: 16px 0px 16px 0px;
+            padding: 0;
+            height: 0;
+        }
+
+        #input {
+            overflow: hidden;
+        }
+
+        #input .notification {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            margin: 0px 0px 16px 0px;
+            padding: 0;
+        }
+
+        #input .is-info {
+            color: #ffffff;
+        }
+
+        #input .notification .media {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 500px 500px 500px 500px;
+            background-image: url('/images/Stripes.png');
+            background-repeat: repeat;
+            padding: 8px 16px 8px 16px;
+        }
+
+        #input .notification .media .media-left {
+            margin: 0px 8px 0px 0px;
+        }
+
+        #input .columns {
+            margin: 0px 0px 0px 0px;
+            padding: 16px 0px 16px 0px;
+        }
+
+        #input .column {
+            padding: 0px 16px 0px 16px;
+        }
+
+        #input .columns .column>div:nth-last-child(2) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0px 0px 4px 0px;
+        }
+
+        #input .control .is-primary {
+            background-color: #30c0f5;
+        }
+
+        .has-content-centered {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .media-content .level {
+            margin: 0px 0px 4px 0px;
+        }
+
+        .media-content .content div:last-child {
+            margin: 4px 0px 0px 0px;
+        }
+
+        .media-content p {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        .media-content .has-text-left .balloon {
+            display: inline-block;
+            padding: 8px 16px 8px 16px;
+            border-radius: 0px 500px 500px 500px;
+            background-image: url('/images/Stripes.png');
+            background-repeat: repeat;
+        }
+
+        .media-content .has-text-right .balloon {
+            display: inline-block;
+            padding: 8px 16px 8px 16px;
+            border-radius: 500px 0px 500px 500px;
+            background-image: url('/images/Stripes.png');
+            background-repeat: repeat;
+        }
+
+        .navbar {
+            background-color: transparent;
+        }
+
+        .navbar:first-child {
+            position: fixed;
+            z-index: 1;
+            padding: env(safe-area-inset-top) 0px 0px 0px;
+        }
+
+        .navbar:first-child .navbar-item {
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar:last-child {
+            z-index: 1;
+            padding: 0px env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+        }
+
+        .navbar:last-child .columns {
+            margin: 0px 0px 0px 0px;
+            padding: 0px 0px 16px 0px;
+        }
+
+        .navbar:last-child .column {
+            padding: 0px 0px 0px 0px;
+            line-height: 0px;
+        }
+
+        .navbar-item img {
+            max-height: none;
+        }
+
+        .updating {
+            animation: updating 1s linear infinite;
+        }
+
+        @keyframes updating {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(-360deg);
+            }
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio:2),
+        (min-resolution: 2dppx) {
+            .media-content .has-text-left .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 0px 500px 500px 500px;
+                background-image: url('/images/Stripes@2x.png');
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+
+            .media-content .has-text-right .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 500px 0px 500px 500px;
+                background-image: url('/images/Stripes@2x.png');
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+        }
+
+        @media screen and (-webkit-min-device-pixel-ratio:3),
+        (min-resolution: 3dppx) {
+            .media-content .has-text-left .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 0px 500px 500px 500px;
+                background-image: url('/images/Stripes@3x.png');
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+
+            .media-content .has-text-right .balloon {
+                display: inline-block;
+                padding: 8px 16px 8px 16px;
+                border-radius: 500px 0px 500px 500px;
+                background-image: url('/images/Stripes@3x.png');
+                background-repeat: repeat;
+                background-size: 20px 20px;
+            }
+        }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url('/fonts/Gotham-Book.woff') format('woff');
+            font-weight: normal;
+        }
+
+        @font-face {
+            font-family: "Gotham";
+            src: url('/fonts/Gotham-Bold.woff') format('woff');
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <video id="capture" width="800px" height="600px" autoplay="1"></video>
-    <canvas id="three"></canvas>
+    <div id="particles-js"></div>
     <div id="app">
-        <div class="progress" v-if="isLoading()" v-bind:style="{width: String(100.0 * progress) + '%'}"
-            v-cloak></div>
-    </div>
+        <nav id="heading" class="navbar is-fixed-top" role="navigation">
+            <div class="navbar-item is-expanded columns is-desktop">
+                <div class="column is-half has-content-centered" v-cloak>
+                    <div class="control has-text-centered">
+                        <nav class="level is-hidden">
+                            <div class="level-item has-text-centered image">
+                                <a href="/"><img src="/images/Logo.png"
+                                        srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
+                                        alt="milchchan.com"></a>
+                            </div>
+                        </nav>
+                        <nav class="level is-hidden">
+                            <div class="level-item has-text-centered">
+                                <div class="tags are-normal field is-grouped is-grouped-multiline">
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag is-white"><a class="has-text-black"
+                                                    href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
+                                            <span class="tag is-black">Windows</span>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag is-white"><a class="has-text-black"
+                                                    href="https://clock.milchchan.com/">Clock</a></span>
+                                            <span class="tag is-black">Web</span>
+                                        </div>
+                                    </div>
+                                    <div class="control">
+                                        <div class="tags has-addons">
+                                            <span class="tag is-white"><a class="has-text-black"
+                                                    href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
+                                            <span class="tag is-black">iOS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                        <nav class="level">
+                            <div class="level-item has-text-centered">
+                                
+                                <div class="field is-grouped is-vcentered">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-book"></i>
+                                    </span>
+                                    <span class="title is-size-4"
+                                        v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
+                                </div>
+                                
 
-    <script src="https://unpkg.com/@tensorflow/tfjs"></script>
-    <script src="https://unpkg.com/@tensorflow-models/posenet"></script>
-    <script src="https://unpkg.com/three@0.106.2/build/three.js"></script>
-    <script src="https://unpkg.com/three@0.106.2/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://unpkg.com/three@0.106.2/examples/js/controls/OrbitControls.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
+
+                                <!--
+                                    <div class="column">
+                                        <button class="button is-white has-background-white has-text-black is-rounded"
+                                            v-bind:disabled="!isReady" v-on:click="like">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-star"></i>
+                                            </span>
+                                        </button>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-book"></i>
+                                        </span>
+                                    </div>
+                                    <div class="column">
+                                        
+                                    </div>
+                            </div>-->
+                            </div>
+                        </nav>
+                        <nav class="level">
+                            <div class="level-item has-text-centered">
+                                <div class="field">
+                                    <h6 class="title is-size-6">覚えたことば</h6>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </nav>
+        <div id="container">
+            <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
+                <div class="column is-half has-content-centered">
+                    <hr class="is-invisible">
+                    <article class="media" v-if="user.uid === message.user.id" v-cloak>
+                        <div class="media-content">
+                            <div class="level is-mobile" v-if="message.user.name">
+                                <div class="level-left">
+                                    <span
+                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                </div>
+                            </div>
+                            <div class="content has-text-right">
+                                <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                        {{ formatDate(message.timestamp) }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <figure class="media-right" v-if="message.user.image">
+                            <p class="image is-64x64">
+                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                            </p>
+                        </figure>
+                    </article>
+                    <article class="media" v-else v-cloak>
+                        <figure class="media-left" v-if="message.user.image">
+                            <p class="image is-64x64">
+                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                            </p>
+                        </figure>
+                        <div class="media-content">
+                            <div class="level is-mobile" v-if="message.user.name">
+                                <div class="level-left">
+                                    <span
+                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                </div>
+                            </div>
+                            <div class="content has-text-left">
+                                <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        <span v-bind:class="{'is-hidden': message.text}">
+                                            <i class="fas fa-spinner updating"></i>
+                                        </span>
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                        {{ formatDate(message.timestamp) }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <nav id="input" class="navbar is-fixed-bottom" role="navigation">
+            <div class="navbar-item is-expanded columns is-desktop">
+                <div class="column is-half has-content-centered">
+                    <div class="notification is-info is-light" v-if="notification">
+                        <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
+                            <figure class="media-left" v-if="notification.image">
+                                <span class="image is-32x32">
+                                    <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
+                                </span>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content has-text-left">
+                                    <span class="has-text-weight-bold">
+                                        {{ notification.text }}
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div>
+                        <span class="is-size-7 has-text-weight-normal has-text-grey">
+                            {{ currentInputLength }}/{{ maxInputLength }}
+                        </span>
+                    </div>
+                    <form onsubmit="return false;">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-rounded" type="button" @click="like"><span
+                                        class="icon is-small">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
+                                    v-model="input" @input="change">
+                            </div>
+                            <div class="control">
+                                <button class="button is-rounded is-primary" type="submit" v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
+                                    @click="send"><span class="icon is-small">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <audio id="popup" preload="auto">
+            <source src="/sounds/popup.wav" type="audio/wav" />
+        </audio>
+    </div>
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="js/three-vrm.js"></script>
-    <script src="js/index.js"></script>
+    <script src="/js/moment-with-locales.js"></script>
+    <script src="/js/particles.js"></script>
+    <script src="/js/tiny-segmenter.js"></script>
+    <script type="text/javascript">
+        // Your web app's Firebase configuration
+        var firebaseConfig = {
+            apiKey: "AIzaSyDTVxDJj7rqG9L-Clvba2Tao9B0hkcxjcE",
+            authDomain: "milchchan.firebaseapp.com",
+            databaseURL: "https://milchchan.firebaseio.com",
+            projectId: "milchchan",
+            storageBucket: "milchchan.appspot.com",
+            messagingSenderId: "355698971889",
+            appId: "1:355698971889:web:e3653c5c31bd7289cd4550",
+            measurementId: "G-3998FJYNWX"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        const channel = decodeURIComponent(window.location.hash.substring(1));
+        const databaseRoot = 'chat';
+        const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
+        const databaseMessages = databaseChannel + '/messages';
+        let database = firebase.database();
+        const user = { accent: '#30c0f5' };
+        const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
+        const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
+        let segmenter = new TinySegmenter();
+
+        //databaseRoot.remove();
+
+        /*databaseRoot.remove().orderByChild('timestamp')
+            .startAt(1).limitToFirst(2)
+            .once('value', function (snapshot) { console.log(snapshot.val()) })*/
+
+        function random(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+            var results = regex.exec(window.location.href);
+
+            if (results == null) {
+                return null;
+            }
+
+            return decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        //document.title += ' #' + channel;
+
+        //var channel = getParameterByName("channel") || getParameterByName("ch") || "";
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                isReady: false,
+                isLoading: false,
+                user: null,
+                input: '',
+                currentInputLength: 0,
+                maxInputLength: 100,
+                inputHasError: false,
+                messages: [],
+                maxMessages: 10,
+                scrollRequired: false,
+                words: -1,
+                likes: -1,
+                notification: null
+            },
+            methods: {
+                send: async function (event) {
+                    if (this.input.length > 0 && this.input.length <= this.maxInputLength) {
+                        function format(format) {
+                            var args = arguments;
+
+                            return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
+                        }
+
+                        const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=0.95';
+
+                        let ref = database.ref(databaseMessages).push();
+
+                        ref.set({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
+
+                        let tokens = segmenter.segment(this.input);
+                        let completed = 0;
+                        let learned = 0;
+
+                        for (let token of tokens) {
+                            database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
+                                if (word === null) {
+                                    return ref.key;
+                                }
+
+                                return;
+                            }, function (error, committed, snapshot) {
+                                if (committed) {
+                                    learned++;
+                                    database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
+                                        return (count || 0) + 1;
+                                    });
+                                } else if (error) {
+                                    console.error(error);
+                                }
+
+                                completed++;
+
+                                if (completed == tokens.length && learned > 0) {
+                                    app.notification = { text: format(channel.length == 0 ? '{0}つのことばを覚えたよぉ' : '{0}つのことばを覚えたよ', learned), accent: merku.accent, image: channel.length == 0 ? merku.image : null };
+
+                                    window.setTimeout(async function () {
+                                        app.notification = null;
+                                    }, 3000);
+
+                                    window.pJSDom[0].pJS.fn.modes.pushParticles(learned);
+                                }
+                            });
+                        }
+
+                        this.input = '';
+                        this.currentInputLength = 0;
+                        
+                        if (channel.length > 0) {
+                            return;
+                        }
+
+                        try {
+                            this.isLoading = true;
+
+                            const response = await fetch(url, {
+                                mode: "cors",
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                }
+                            });
+
+                            if (response.ok) {
+                                const json = await response.json();
+
+                                if (json.text.length > 0) {
+                                    database.ref(databaseMessages).push({ text: json.text, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                                }
+                            }
+                            else {
+                                throw new Error(response.statusText);
+                            }
+
+                            this.isLoading = false;
+                        }
+                        catch (e) {
+                            this.isLoading = false;
+
+                            console.error(e.message);
+                        }
+                    }
+                },
+                change: function (event) {
+                    this.currentInputLength = this.input.length;
+
+                    if (this.currentInputLength <= this.maxInputLength) {
+                        this.inputHasError = false;
+                    } else {
+                        this.inputHasError = true;
+                    }
+                },
+                like: function () {
+                    /*if (this.isLearning) {
+                        this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
+                        this.isLearning = false;
+                    } else {
+                        this.messages.push({ id: this.messages.length, text: '最初にミルヒちゃんに送るメッセージを教えて欲しいよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
+                        this.isLearning = true;
+                    }
+
+                    this.scrollRequired = true;
+                    */
+                    database.ref(databaseChannel + "/likes").transaction(function (count) {
+                        return (count || 0) + 1;
+                    });
+                    /*database.ref(databaseChannel + "likes").once('value', snapshot => {
+                        const count = snapshot.val();
+            
+                        if (count === null) {
+                            database.ref(databaseChannel + "likes").update({ 'likes': 1 })
+                        }
+                        else {
+                            database.ref(databaseChannel).update({ 'likes': count + 1 })
+                        }
+                    });*/
+
+                    this.$el.querySelector("#popup").play();
+                },
+                scrollToEnd: function () {
+                    let container = this.$el.querySelector("#container");
+
+                    container.scrollTop = container.scrollHeight;
+                },
+                formatDate: function (event) {
+                    moment.locale(window.navigator.language);
+
+                    return moment(event).format('LT');
+                }
+            },
+            updated: function () {
+                let container = this.$el.querySelector("#container");
+
+                container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
+
+                if (this.scrollRequired) {
+                    this.scrollToEnd();
+                    this.scrollRequired = false;
+                }
+            },
+            created: function () {
+                database.ref(databaseRoot + "/dictionary/count").on('value', snapshot => {
+                    const count = snapshot.val();
+
+                    if (count === null) {
+                        this.words = 0;
+                    } else {
+                        this.words = count;
+                    }
+                });
+                database.ref(databaseChannel + "/likes").on('value', snapshot => {
+                    const count = snapshot.val();
+
+                    if (count === null) {
+                        this.likes = 0;
+                    } else {
+                        if (this.likes >= 0) {
+                            window.pJSDom[0].pJS.fn.modes.pushParticles(1);
+                        }
+
+                        this.likes = count;
+                    }
+                });
+                database.ref(databaseMessages).limitToLast(this.maxMessages).on('value', snapshot => {
+                    const messageDictionary = snapshot.val();
+
+                    if (messageDictionary) {
+                        let hasNew = false;
+                        //let keys = [];
+
+                        for (let key in messageDictionary) {
+                            const message = messageDictionary[key];
+                            let index = -1;
+
+                            //console.log(date.toISOString());
+                            //console.log(date.toLocaleTimeString());
+
+                            for (let i = 0; i < this.messages.length; i++) {
+                                if (key === this.messages[i].id) {
+                                    index = i;
+
+                                    break;
+                                }
+                            }
+
+                            if (!message.user.accent) {
+                                message.user.accent = user.accent;
+                            }
+
+                            if (index >= 0) {
+                                this.$set(this.messages, key, { id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                            }
+                            else {
+                                this.messages.push({ id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
+
+                                if (this.messages.length > this.maxMessages) {
+                                    this.messages.shift();
+                                }
+
+                                hasNew = true;
+                            }
+
+                            //keys.push(key);
+                        }
+
+                        /*for (let message of this.messages) {
+                            if (!keys.includes(message.id)) {
+                                this.$set(this.messages, message.id, message);
+                            }
+                        }*/
+
+                        this.scrollRequired = true;
+
+                        if (hasNew) {
+                            this.$el.querySelector("#popup").play();
+                        }
+                    }
+                });
+            },
+            mounted: function () {
+                let container = this.$el.querySelector("#container");
+
+                //this.messages.push({ id: -1, text: 'ミルヒだよ', tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: new Date() });
+                container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
+
+                firebase.auth().signInAnonymously().catch(function (error) {
+                    console.error(error.code, error.message);
+                });
+                firebase.auth().onAuthStateChanged(function (user) {
+                    if (user) {
+                        // User is signed in.
+                        app.user = user;
+
+                    } else {
+                        // User is signed out.
+                        app.user = null;
+                    }
+                });
+            },
+            destroyed: function () {
+                database.ref(databaseRoot + "/dictionary/count").off('value')
+                database.ref(databaseChannel + "/likes").off('value');
+                database.ref(databaseMessages).off('value');
+            }
+        });
+
+        window.onresize = function (event) {
+            let container = app.$el.querySelector("#container");
+
+            container.style.paddingTop = app.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+            container.style.paddingBottom = app.$el.querySelector("#input").getBoundingClientRect().height + 'px';
+        };
+
+        particlesJS.load('particles-js', '/js/particlesjs-config.json', function () {
+            app.isReady = true;
+        });
+    </script>
 </body>
 
 </html>
