@@ -55,6 +55,10 @@
             align-items: center;
         }
 
+        #heading {
+            overflow: hidden;
+        }
+
         #heading .level .level-item .field span.icon {
             margin: 0px 8px 0px 0px;
         }
@@ -127,6 +131,10 @@
             margin: 16px 0px 16px 0px;
             padding: 0;
             height: 0;
+        }
+
+        #input {
+            overflow: hidden;
         }
 
         #input .notification {
@@ -353,6 +361,7 @@
                         </nav>
                         <nav class="level">
                             <div class="level-item has-text-centered">
+                                
                                 <div class="field is-grouped is-vcentered">
                                     <span class="icon is-small">
                                         <i class="fas fa-book"></i>
@@ -360,8 +369,10 @@
                                     <span class="title is-size-4"
                                         v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
                                 </div>
+                                
 
-                                <!--<div class="columns is-mobile is-gapless is-vcentered">
+
+                                <!--
                                     <div class="column">
                                         <button class="button is-white has-background-white has-text-black is-rounded"
                                             v-bind:disabled="!isReady" v-on:click="like">
@@ -377,6 +388,13 @@
                                         
                                     </div>
                             </div>-->
+                            </div>
+                        </nav>
+                        <nav class="level">
+                            <div class="level-item has-text-centered">
+                                <div class="field">
+                                    <h6 class="title is-size-6">覚えたことば</h6>
+                                </div>
                             </div>
                         </nav>
                     </div>
@@ -554,6 +572,8 @@
             return decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
+        //document.title += ' #' + channel;
+
         //var channel = getParameterByName("channel") || getParameterByName("ch") || "";
 
         var app = new Vue({
@@ -590,7 +610,7 @@
                         let tokens = segmenter.segment(this.input);
                         let completed = 0;
                         let learned = 0;
-                        
+
                         for (let token of tokens) {
                             database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
                                 if (word === null) {
@@ -611,7 +631,7 @@
                                 completed++;
 
                                 if (completed == tokens.length && learned > 0) {
-                                    app.notification = { text: format('+{0}', learned), accent: merku.accent };
+                                    app.notification = { text: format(channel.length == 0 ? '{0}つのことばを覚えたよぉ' : '{0}つのことばを覚えたよ', learned), accent: merku.accent, image: channel.length == 0 ? merku.image : null };
 
                                     window.setTimeout(async function () {
                                         app.notification = null;
@@ -624,7 +644,10 @@
 
                         this.input = '';
                         this.currentInputLength = 0;
-                        /*
+                        
+                        if (channel.length > 0) {
+                            return;
+                        }
 
                         try {
                             const response = await fetch(url, {
@@ -648,7 +671,7 @@
                         }
                         catch (e) {
                             console.error(e.message);
-                        }*/
+                        }
                     }
                 },
                 change: function (event) {
@@ -726,7 +749,7 @@
                         this.likes = 0;
                     } else {
                         if (this.likes >= 0) {
-                            window.pJSDom[0].pJS.fn.modes.pushParticles(8);
+                            window.pJSDom[0].pJS.fn.modes.pushParticles(1);
                         }
 
                         this.likes = count;
