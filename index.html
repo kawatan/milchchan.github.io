@@ -365,7 +365,7 @@
                         </nav>
                         <nav class="level">
                             <div class="level-item has-text-centered">
-                                
+
                                 <div class="field is-grouped is-vcentered">
                                     <span class="icon is-small">
                                         <i class="fas fa-book"></i>
@@ -373,7 +373,7 @@
                                     <span class="title is-size-4"
                                         v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
                                 </div>
-                                
+
 
 
                                 <!--
@@ -506,7 +506,8 @@
                                     v-model="input" @input="change">
                             </div>
                             <div class="control">
-                                <button class="button is-rounded is-primary" type="submit" v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
+                                <button class="button is-rounded is-primary" type="submit"
+                                    v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
                                     @click="send"><span class="icon is-small">
                                         <i class="fas fa-paper-plane"></i>
                                     </span>
@@ -655,7 +656,7 @@
 
                         this.input = '';
                         this.currentInputLength = 0;
-                        
+
                         if (channel.length > 0) {
                             return;
                         }
@@ -686,6 +687,12 @@
                         }
                         catch (e) {
                             this.isLoading = false;
+
+                            app.notification = { text: channel.length == 0 ? 'もう一度試してほしいよぉ' : 'もう一度試してみてね', accent: merku.accent, image: channel.length == 0 ? merku.image : null };
+
+                            window.setTimeout(async function () {
+                                app.notification = null;
+                            }, 3000);
 
                             console.error(e.message);
                         }
