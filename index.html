@@ -612,7 +612,7 @@
                             return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
                         }
 
-                        const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=0.95';
+                        const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=1.0';
 
                         let ref = database.ref(databaseMessages).push();
 
