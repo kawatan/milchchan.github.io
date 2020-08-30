@@ -525,8 +525,14 @@
                 </div>
             </div>
         </nav>
-        <audio id="popup" preload="auto">
-            <source src="/sounds/popup.wav" type="audio/wav" />
+        <audio id="send" preload="auto">
+            <source src="/sounds/plastic_hi.wav" type="audio/wav" />
+        </audio>
+        <audio id="recieve" preload="auto">
+            <source src="/sounds/plastic_lo.wav" type="audio/wav" />
+        </audio>
+        <audio id="like" preload="auto">
+            <source src="/sounds/plastic_up_hi.wav" type="audio/wav" />
         </audio>
     </div>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -873,6 +879,8 @@
                     database.ref(databaseChannel + "/likes").transaction(function (count) {
                         return (count || 0) + 1;
                     });
+
+                    this.animationsQueue.push(this.animations['jump']);
                     /*database.ref(databaseChannel + "likes").once('value', snapshot => {
                         const count = snapshot.val();
             
@@ -884,7 +892,7 @@
                         }
                     });*/
 
-                    this.$el.querySelector("#popup").play();
+                    this.$el.querySelector("#like").play();
                 },
                 scrollToEnd: function () {
                     let container = this.$el.querySelector("#container");
@@ -935,7 +943,8 @@
                     const messageDictionary = snapshot.val();
 
                     if (messageDictionary) {
-                        let hasNew = false;
+                        let isSent = false;
+                        let isReceived = false;
                         //let keys = [];
 
                         for (let key in messageDictionary) {
@@ -967,7 +976,11 @@
                                     this.messages.shift();
                                 }
 
-                                hasNew = true;
+                                if (this.user.uid === message.user.id) {
+                                    isSent = true;
+                                } else {
+                                    isReceived = true
+                                }
                             }
 
                             //keys.push(key);
@@ -981,8 +994,10 @@
 
                         this.scrollRequired = true;
 
-                        if (hasNew) {
-                            this.$el.querySelector("#popup").play();
+                        if (isReceived) {
+                            this.$el.querySelector("#recieve").play();
+                        } else if (isSent) {
+                            this.$el.querySelector("#send").play();
                         }
                     }
                 });
