@@ -100,6 +100,14 @@
             padding: 0px;
         }
 
+        #heading .navbar-item .level:nth-last-child(2) {
+            margin: 16px 0px 4px 0px;
+        }
+
+        #heading .navbar-item .level:last-child {
+            margin: 4px 0px 0px 0px;
+        }
+
         #heading .navbar-item .level .level-item {
             margin: 0px 0px 0px 0px;
             padding: 0px 0px 0px 0px;
@@ -404,7 +412,7 @@
                         <nav class="level">
                             <div class="level-item has-text-centered">
                                 <div class="field">
-                                    <h6 class="title is-size-6">覚えたことば</h6>
+                                    <h6 class="subtitle is-size-7 is-uppercase has-text-weight-bold">覚えたことば</h6>
                                 </div>
                             </div>
                         </nav>
@@ -692,7 +700,7 @@
                                 }
 
                                 currentVrm = vrm;
-                                
+
                                 scene.add(vrm.scene);
 
                                 //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
