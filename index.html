@@ -43,6 +43,12 @@
             font-family: "Noto Sans JP";
         }
 
+        #three {
+            position: absolute;
+            z-index: 0;
+            display: block;
+        }
+
         #particles-js {
             position: absolute;
             z-index: 0;
@@ -323,6 +329,7 @@
 </head>
 
 <body>
+    <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
@@ -530,8 +537,13 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://unpkg.com/three@0.106.2/build/three.js"></script>
+    <script src="https://unpkg.com/three@0.106.2/examples/js/loaders/GLTFLoader.js"></script>
+    <script src="https://unpkg.com/three@0.106.2/examples/js/controls/OrbitControls.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
     <script src="/js/moment-with-locales.js"></script>
+    <script src="/js/three-vrm.js"></script>
     <script src="/js/particles.js"></script>
     <script src="/js/tiny-segmenter.js"></script>
     <script type="text/javascript">
@@ -550,6 +562,7 @@
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
 
+        const debug = getParameterByName("debug") || false;
         const channel = decodeURIComponent(window.location.hash.substring(1));
         const databaseRoot = 'chat';
         const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
@@ -587,6 +600,142 @@
 
         //var channel = getParameterByName("channel") || getParameterByName("ch") || "";
 
+        const renderer = new THREE.WebGLRenderer({
+            canvas: document.getElementById("three"),
+            alpha: true
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setClearColor(0xffffff, 0);
+        
+        if (channel.length > 0) {
+            renderer.domElement.classList.add("is-hidden");
+        }
+
+        const CAMERA_FOV = 60.0;
+        const CAMERA_Z = -1.0;
+        const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / window.innerHeight, 0.1, 1000);
+
+        camera.position.set(0.0, 1.25, CAMERA_Z);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+
+        controls.screenSpacePanning = true;
+        controls.target.set(0.0, 1.0, 0.0);
+        controls.update();
+
+        const scene = new THREE.Scene();
+        const light = new THREE.DirectionalLight(0xffffff);
+
+        light.intensity = 1;
+        light.position.set(0.0, 10.0, -10.0).normalize();
+
+        scene.add(light);
+        //scene.add(new THREE.GridHelper(10, 10));
+        //scene.add(new THREE.AxesHelper(5));
+
+        const lookAtTarget = new THREE.Object3D();
+
+        camera.add(lookAtTarget);
+
+        let currentVrm = null;
+        let currentMixer = null;
+        const loader = new THREE.GLTFLoader();
+
+        loader.crossOrigin = "anonymous";
+        loader.load(
+            "/models/Milch.vrm",
+            (gltf) => {
+                THREE.VRM.from(gltf).then((vrm) => {
+                    console.log(vrm);
+
+                    currentVrm = vrm;
+                    scene.add(vrm.scene);
+
+                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                    //currentMixer = prepareAnimation(vrm);
+
+                    vrm.lookAt.target = lookAtTarget;
+                });
+            },
+            (progress) => app.progress = progress.loaded / progress.total,
+            (error) => console.error(error)
+        );
+
+        /*var dropZone = document.getElementById("three");
+
+        dropZone.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "copy";
+        }, false);
+        dropZone.addEventListener("drop", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+
+            for (let file of event.dataTransfer.files) {
+                let reader = new FileReader();
+
+                reader.addEventListener("load", (e) => {
+                    loader.load(
+                        e.target.result,
+                        (gltf) => {
+                            THREE.VRM.from(gltf).then((vrm) => {
+                                console.log(vrm);
+
+                                if (currentVrm != null) {
+                                    scene.remove(currentVrm.scene);
+                                }
+
+                                currentVrm = vrm;
+                                scene.add(vrm.scene);
+
+                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                                //currentMixer = prepareAnimation(vrm);
+
+                                vrm.lookAt.target = lookAtTarget;
+                            });
+                        },
+                        (progress) => app.progress = progress.loaded / progress.total,
+                        (error) => console.error(error)
+                    );
+                });
+                reader.readAsDataURL(file);
+
+                break;
+            }
+
+        }, false);*/
+
+        /*function prepareAnimation(vrm) {
+            const mixer = new THREE.AnimationMixer(vrm.scene);
+            const blinkTrack = new THREE.NumberKeyframeTrack(
+                vrm.blendShapeProxy.getBlendShapeTrackName(THREE.VRMSchema.BlendShapePresetName.Blink), // name
+                [0.0, 0.5, 1.0], // times
+                [0.0, 1.0, 0.0] // values
+            );
+
+            const clip = new THREE.AnimationClip('blink', 1.0, [blinkTrack]);
+            const action = mixer.clipAction(clip);
+
+            action.play();
+
+            return mixer;
+        }*/
+
+        const stats = new Stats();
+
+        stats.domElement.style.position = "absolute";
+        stats.domElement.style.top = "0px";
+        
+        if (!debug) {
+            stats.domElement.classList.add("is-hidden");
+        }
+
+        document.body.appendChild(stats.domElement);    
+
         var app = new Vue({
             el: '#app',
             data: {
@@ -602,7 +751,10 @@
                 scrollRequired: false,
                 words: -1,
                 likes: -1,
-                notification: null
+                notification: null,
+                animations: null,
+                animationsQueue: [],
+                currentAnimations: []
             },
             methods: {
                 send: async function (event) {
@@ -756,7 +908,7 @@
                     this.scrollRequired = false;
                 }
             },
-            created: function () {
+            created: async function () {
                 database.ref(databaseRoot + "/dictionary/count").on('value', snapshot => {
                     const count = snapshot.val();
 
@@ -834,6 +986,45 @@
                         }
                     }
                 });
+
+                const urls = {
+                    idle1: '/models/animations/animation-idle1.json',
+                    idle2: '/models/animations/animation-idle2.json',
+                    idle3: '/models/animations/animation-idle3.json',
+                    idle4: '/models/animations/animation-idle4.json',
+                    jump: '/models/animations/animation-jump.json',
+                    lose: '/models/animations/animation-lose.json',
+                    run: '/models/animations/animation-run.json',
+                    walk: '/models/animations/animation-walk.json',
+                    win: '/models/animations/animation-win.json'
+                };
+                let animationDictionary = {};
+
+                try {
+                    for (let key in urls) {
+                        const response = await fetch(encodeURI(urls[key]), {
+                            mode: "cors",
+                            method: "GET",
+                            headers: {
+                                "Content-Type": "application/x-www-form-urlencoded"
+                            }
+                        });
+
+                        if (response.ok) {
+                            const json = await response.json();
+
+                            animationDictionary[key] = json.data;
+                        }
+                        else {
+                            throw new Error(response.statusText);
+                        }
+                    }
+
+                    this.animations = animationDictionary;
+                    this.animationsQueue.push(this.animations['jump']);
+                } catch (e) {
+                    console.error(e);
+                }
             },
             mounted: function () {
                 let container = this.$el.querySelector("#container");
@@ -872,6 +1063,346 @@
 
         particlesJS.load('particles-js', '/js/particlesjs-config.json', function () {
             app.isReady = true;
+        });
+
+        const clock = new THREE.Clock();
+
+        let animationIndex = 0;
+        let idleTime = null;
+        let blinkStep = 0.0;
+        let maxBlinkStep = 0.0;
+        const blinkThreshold = 5.0;
+
+        function render() {
+            requestAnimationFrame(render);
+
+            const deltaTime = clock.getDelta();
+
+            if (currentVrm && app.animations) {
+                let messageData;
+
+                if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
+                    messageData = app.currentAnimations[animationIndex];
+                    animationIndex += 2;
+
+                    if (idleTime !== null) {
+                        idleTime += deltaTime;
+
+                        if (idleTime >= blinkThreshold) {
+                            const maxBlinkSteps = [1.0, 2.0];
+
+                            maxBlinkStep = maxBlinkSteps[random(0, 2)];
+                            idleTime = 0.0;
+                        }
+                    }
+                } else {
+                    app.currentAnimations.splice(0);
+
+                    if (app.animationsQueue.length > 0) {
+                        for (let animation of app.animationsQueue.shift()) {
+                            app.currentAnimations.push(animation);
+                        }
+
+                        idleTime = null;
+                    } else {
+                        for (let animation of app.animations['idle1']) {
+                            app.currentAnimations.push(animation);
+                        }
+
+                        if (idleTime === null) {
+                            idleTime = 0.0;
+                        } else {
+                            idleTime += deltaTime;
+
+                            if (idleTime >= blinkThreshold) {
+                                const maxBlinkSteps = [1.0, 2.0];
+
+                                maxBlinkStep = maxBlinkSteps[random(0, 2)];
+                                idleTime = 0.0;
+                            }
+                        }
+                    }
+
+                    animationIndex = 0;
+                    messageData = app.currentAnimations[animationIndex];
+                    animationIndex += 2;
+                }
+
+                if (messageData) {
+                    for (let animation of messageData.animations) {
+                        switch (animation.bone) {
+                            case 'chest':
+                            case 'head':
+                            case 'hips':
+                            case 'jaw':
+                            case 'leftEye':
+                            case 'leftFoot':
+                            case 'leftHand':
+                            case 'leftIndexDistal':
+                            case 'leftIndexIntermediate':
+                            case 'leftIndexProximal':
+                            case 'leftLittleDistal':
+                            case 'leftLittleIntermediate':
+                            case 'leftLittleProximal':
+                            case 'leftLowerArm':
+                            case 'leftLowerLeg':
+                            case 'leftMiddleDistal':
+                            case 'leftMiddleIntermediate':
+                            case 'leftMiddleProximal':
+                            case 'leftRingDistal':
+                            case 'leftRingIntermediate':
+                            case 'leftRingProximal':
+                            case 'leftShoulder':
+                            case 'leftThumbDistal':
+                            case 'leftThumbIntermediate':
+                            case 'leftThumbProximal':
+                            case 'leftToes':
+                            case 'leftUpperArm':
+                            case 'leftUpperLeg':
+                            case 'neck':
+                            case 'rightEye':
+                            case 'rightFoot':
+                            case 'rightHand':
+                            case 'rightIndexDistal':
+                            case 'rightIndexIntermediate':
+                            case 'rightIndexProximal':
+                            case 'rightLittleDistal':
+                            case 'rightLittleIntermediate':
+                            case 'rightLittleProximal':
+                            case 'rightLowerArm':
+                            case 'rightLowerLeg':
+                            case 'rightMiddleDistal':
+                            case 'rightMiddleIntermediate':
+                            case 'rightMiddleProximal':
+                            case 'rightRingDistal':
+                            case 'rightRingIntermediate':
+                            case 'rightRingProximal':
+                            case 'rightShoulder':
+                            case 'rightThumbDistal':
+                            case 'rightThumbIntermediate':
+                            case 'rightThumbProximal':
+                            case 'rightToes':
+                            case 'rightUpperArm':
+                            case 'rightUpperLeg':
+                            case 'spine':
+                            case 'upperChest':
+                                break;
+                            case 'eye.L':
+                                animation.bone = 'leftEye';
+                                break;
+                            case 'foot.L':
+                                animation.bone = 'leftFoot';
+                                break;
+                            case 'hand.L':
+                                animation.bone = 'leftHand';
+                                break;
+                            case 'f_index.03.L':
+                                animation.bone = 'leftIndexDistal';
+                                break;
+                            case 'f_index.02.L':
+                                animation.bone = 'leftIndexIntermediate';
+                                break;
+                            case 'f_index.01.L':
+                                animation.bone = 'leftIndexProximal';
+                                break;
+                            case 'f_pinky.03.L':
+                                animation.bone = 'leftLittleDistal';
+                                break;
+                            case 'f_pinky.02.L':
+                                animation.bone = 'leftLittleIntermediate';
+                                break;
+                            case 'f_pinky.01.L':
+                                animation.bone = 'leftLittleProximal';
+                                break;
+                            case 'lower_arm.L':
+                                animation.bone = 'leftLowerArm';
+                                break;
+                            case 'shin.L':
+                                animation.bone = 'leftLowerLeg';
+                                break;
+                            case 'f_middle.03.L':
+                                animation.bone = 'leftMiddleDistal';
+                                break;
+                            case 'f_middle.02.L':
+                                animation.bone = 'leftMiddleIntermediate';
+                                break;
+                            case 'f_middle.01.L':
+                                animation.bone = 'leftMiddleProximal';
+                                break;
+                            case 'f_ring.03.L':
+                                animation.bone = 'leftRingDistal';
+                                break;
+                            case 'f_ring.02.L':
+                                animation.bone = 'leftRingIntermediate';
+                                break;
+                            case 'f_ring.01.L':
+                                animation.bone = 'leftRingProximal';
+                                break;
+                            case 'shoulder.L':
+                                animation.bone = 'leftShoulder';
+                                break;
+                            case 'thumb_distal.L':
+                                animation.bone = 'leftThumbDistal';
+                                break;
+                            case 'thumb_intermediate.L':
+                                animation.bone = 'leftThumbIntermediate';
+                                break;
+                            case 'thumb_proximal.L':
+                                animation.bone = 'leftThumbProximal';
+                                break;
+                            case 'toe.L':
+                                animation.bone = 'leftToes';
+                                break;
+                            case 'upper_arm.L':
+                                animation.bone = 'leftUpperArm';
+                                break;
+                            case 'thigh.L':
+                                animation.bone = 'leftUpperLeg';
+                                break;
+                            case 'eye.R':
+                                animation.bone = 'rightEye';
+                                break;
+                            case 'foot.R':
+                                animation.bone = 'rightFoot';
+                                break;
+                            case 'hand.R':
+                                animation.bone = 'rightHand';
+                                break;
+                            case 'f_index.03.R':
+                                animation.bone = 'rightIndexDistal';
+                                break;
+                            case 'f_index.02.R':
+                                animation.bone = 'rightIndexIntermediate';
+                                break;
+                            case 'f_index.01.R':
+                                animation.bone = 'rightIndexProximal';
+                                break;
+                            case 'f_pinky.03.R':
+                                animation.bone = 'rightLittleDistal';
+                                break;
+                            case 'f_pinky.02.R':
+                                animation.bone = 'rightLittleIntermediate';
+                                break;
+                            case 'f_pinky.01.R':
+                                animation.bone = 'rightLittleProximal';
+                                break;
+                            case 'lower_arm.R':
+                                animation.bone = 'rightLowerArm';
+                                break;
+                            case 'shin.R':
+                                animation.bone = 'rightLowerLeg';
+                                break;
+                            case 'f_middle.03.R':
+                                animation.bone = 'rightMiddleDistal';
+                                break;
+                            case 'f_middle.02.R':
+                                animation.bone = 'rightMiddleIntermediate';
+                                break;
+                            case 'f_middle.01.R':
+                                animation.bone = 'rightMiddleProximal';
+                                break;
+                            case 'f_ring.03.R':
+                                animation.bone = 'rightRingDistal';
+                                break;
+                            case 'f_ring.02.R':
+                                animation.bone = 'rightRingIntermediate';
+                                break;
+                            case 'f_ring.01.R':
+                                animation.bone = 'rightRingProximal';
+                                break;
+                            case 'shoulder.R':
+                                animation.bone = 'rightShoulder';
+                                break;
+                            case 'thumb_distal.R':
+                                animation.bone = 'rightThumbDistal';
+                                break;
+                            case 'thumb_intermediate.R':
+                                animation.bone = 'rightThumbIntermediate';
+                                break;
+                            case 'thumb_proximal.R':
+                                animation.bone = 'rightThumbProximal';
+                                break;
+                            case 'toe.R':
+                                animation.bone = 'rightToes';
+                                break;
+                            case 'upper_arm.R':
+                                animation.bone = 'rightUpperArm';
+                                break;
+                            case 'thigh.R':
+                                animation.bone = 'rightUpperLeg';
+                                break;
+                            case 'upper_chest':
+                                animation.bone = 'upperChest';
+                                break;
+                            default:
+                                animation.bone = null;
+                        }
+
+                        if (animation.bone && animation.rotation.length == 4) {
+                            try {
+                                currentVrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
+                                currentVrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
+                            } catch (e) {
+                                console.log(animation.bone);
+                            }
+                        }
+                    }
+                }
+
+                if (blinkStep < maxBlinkStep) {
+                    blinkStep += deltaTime * 2.0;
+
+                    if (blinkStep >= maxBlinkStep) {
+                        blinkStep = 0.0;
+                        maxBlinkStep = 0.0;
+                    }
+
+                    const blinkValue = Math.abs(Math.sin(Math.PI * blinkStep));
+
+                    currentVrm.blendShapeProxy.setValue(THREE.VRMSchema.BlendShapePresetName.BlinkL, blinkValue);
+                    currentVrm.blendShapeProxy.setValue(THREE.VRMSchema.BlendShapePresetName.BlinkR, blinkValue);
+                }
+
+                currentVrm.update(deltaTime);
+
+                /*if (currentMixer) {
+                    currentMixer.update(deltaTime);
+                }*/
+
+                renderer.render(scene, camera);
+            }
+
+            stats.update();
+        }
+
+        render();
+
+        const mouseV2 = new THREE.Vector2();
+        const mouseRaycaster = new THREE.Raycaster();
+
+        window.addEventListener('resize', (event) => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(width, height);
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
+        window.addEventListener('mousemove', (event) => {
+            /*if (currentVrm) {
+        
+                const range = CAMERA_Z * Math.tan(CAMERA_FOV / 360.0 * Math.PI);
+                const px = (2.0 * event.clientX - window.innerWidth) / window.innerHeight * range;
+                const py = -(2.0 * event.clientY - window.innerHeight) / window.innerHeight * range;
+        
+                currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
+        
+            }*/
+
+            lookAtTarget.position.x = 10.0 * ((event.clientX - 0.5 * window.innerWidth) / window.innerHeight);
+            lookAtTarget.position.y = -10.0 * ((event.clientY - 0.5 * window.innerHeight) / window.innerHeight);
         });
     </script>
 </body>
