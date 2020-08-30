@@ -654,9 +654,8 @@
             "/models/Milch.vrm",
             (gltf) => {
                 THREE.VRM.from(gltf).then((vrm) => {
-                    console.log(vrm);
-
                     currentVrm = vrm;
+                    
                     scene.add(vrm.scene);
 
                     //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
@@ -688,13 +687,12 @@
                         e.target.result,
                         (gltf) => {
                             THREE.VRM.from(gltf).then((vrm) => {
-                                console.log(vrm);
-
                                 if (currentVrm != null) {
                                     scene.remove(currentVrm.scene);
                                 }
 
                                 currentVrm = vrm;
+                                
                                 scene.add(vrm.scene);
 
                                 //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
