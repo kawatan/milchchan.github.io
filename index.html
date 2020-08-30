@@ -10,7 +10,7 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto+Condensed:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.2/css/bulma.min.css" type="text/css"
         media="screen" />
     <style>
@@ -96,7 +96,7 @@
         }
 
         #heading .title {
-            font-family: 'Roboto Condensed', sans-serif;
+            font-family: 'Roboto', sans-serif;
         }
 
         #heading .navbar-item .level {
@@ -358,12 +358,8 @@
     <div id="particles-js"></div>
     <div id="app">
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
-
-
             <div class="navbar-item is-expanded columns is-desktop">
-
                 <div class="column is-half has-content-centered" v-cloak>
-                    <!---->
                     <div class="columns is-mobile">
                         <div class="column is-1 is-mobile">
                             <button class="button is-white is-hidden" @click="reveal">
@@ -388,7 +384,7 @@
                                             <span class="icon is-small">
                                                 <i class="fas fa-book"></i>
                                             </span>
-                                            <span class="title is-size-4"
+                                            <span class="title is-size-3"
                                                 v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
                                         </div>
 
