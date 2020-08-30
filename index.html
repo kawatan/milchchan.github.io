@@ -61,10 +61,6 @@
             align-items: center;
         }
 
-        #heading {
-            overflow: hidden;
-        }
-
         #heading .level .level-item .field span.icon {
             margin: 0px 8px 0px 0px;
         }
@@ -77,12 +73,25 @@
             height: 100%;
         }
 
-        #heading .columns {
+        #heading>.columns {
             margin: 16px 0px 0px 0px;
             padding: 0;
         }
 
         #heading>.columns>.column {
+            padding: 0;
+        }
+
+        #heading>.columns>.column>.columns {
+            margin: 0;
+            padding: 0;
+        }
+
+        #heading>.columns>.column>.columns>.column:first-child {
+            padding: 0px 0px 0px 16px;
+        }
+
+        #heading>.columns>.column>.columns>.column {
             padding: 0;
         }
 
@@ -100,12 +109,16 @@
             padding: 0px;
         }
 
+        #heading .navbar-item .level:nth-last-child(3) {
+            margin: 0px 0px 4px 0px;
+        }
+
         #heading .navbar-item .level:nth-last-child(2) {
-            margin: 16px 0px 4px 0px;
+            margin: 4px 0px 0px 0px;
         }
 
         #heading .navbar-item .level:last-child {
-            margin: 4px 0px 0px 0px;
+            margin: 16px 0px 0px 0px;
         }
 
         #heading .navbar-item .level .level-item {
@@ -134,11 +147,15 @@
         #container {
             position: relative;
             margin: 0;
-            padding: 0px 16px 0px 16px;
+            padding: 0;
             height: 100%;
             overflow-x: hidden;
             overflow-y: auto;
             scroll-behavior: smooth;
+        }
+
+        #container .columns {
+            margin: 0;
         }
 
         #container .column hr {
@@ -147,8 +164,8 @@
             height: 0;
         }
 
-        #input {
-            overflow: hidden;
+        #container .column {
+            padding: 0px 16px 0px 16px;
         }
 
         #input .notification {
@@ -341,57 +358,43 @@
     <div id="particles-js"></div>
     <div id="app">
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
+
+
             <div class="navbar-item is-expanded columns is-desktop">
+
                 <div class="column is-half has-content-centered" v-cloak>
-                    <div class="control has-text-centered">
-                        <nav class="level is-hidden">
-                            <div class="level-item has-text-centered image">
-                                <a href="/"><img src="/images/Logo.png"
-                                        srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
-                                        alt="milchchan.com"></a>
-                            </div>
-                        </nav>
-                        <nav class="level is-hidden">
-                            <div class="level-item has-text-centered">
-                                <div class="tags are-normal field is-grouped is-grouped-multiline">
-                                    <div class="control">
-                                        <div class="tags has-addons">
-                                            <span class="tag is-white"><a class="has-text-black"
-                                                    href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
-                                            <span class="tag is-black">Windows</span>
-                                        </div>
+                    <!---->
+                    <div class="columns is-mobile">
+                        <div class="column is-1 is-mobile">
+                            <button class="button is-white is-hidden" @click="reveal">
+                                <span class="icon is-small">
+                                    <i class="fas fa-bars"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="column is-10 is-mobile">
+                            <div class="control has-text-centered">
+                                <nav class="level is-hidden">
+                                    <div class="level-item has-text-centered image">
+                                        <a href="/"><img src="/images/Logo.png"
+                                                srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
+                                                alt="milchchan.com"></a>
                                     </div>
-                                    <div class="control">
-                                        <div class="tags has-addons">
-                                            <span class="tag is-white"><a class="has-text-black"
-                                                    href="https://clock.milchchan.com/">Clock</a></span>
-                                            <span class="tag is-black">Web</span>
+                                </nav>
+                                <nav class="level">
+                                    <div class="level-item has-text-centered">
+
+                                        <div class="field is-grouped is-vcentered">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-book"></i>
+                                            </span>
+                                            <span class="title is-size-4"
+                                                v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
                                         </div>
-                                    </div>
-                                    <div class="control">
-                                        <div class="tags has-addons">
-                                            <span class="tag is-white"><a class="has-text-black"
-                                                    href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
-                                            <span class="tag is-black">iOS</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </nav>
-                        <nav class="level">
-                            <div class="level-item has-text-centered">
-
-                                <div class="field is-grouped is-vcentered">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-book"></i>
-                                    </span>
-                                    <span class="title is-size-4"
-                                        v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
-                                </div>
 
 
 
-                                <!--
+                                        <!--
                                     <div class="column">
                                         <button class="button is-white has-background-white has-text-black is-rounded"
                                             v-bind:disabled="!isReady" v-on:click="like">
@@ -407,15 +410,51 @@
                                         
                                     </div>
                             </div>-->
+                                    </div>
+                                </nav>
+                                <nav class="level">
+                                    <div class="level-item has-text-centered">
+                                        <div class="field">
+                                            <h6 class="subtitle is-size-7 is-uppercase has-text-weight-bold">覚えたことば</h6>
+                                        </div>
+                                    </div>
+                                </nav>
+                                <nav class="level" v-bind:class="{'is-hidden': !isRevealed}">
+                                    <div class="level-item has-text-centered">
+                                        <div class="tags are-normal field is-grouped is-grouped-multiline">
+                                            <div class="control">
+                                                <div class="tags has-addons">
+                                                    <span class="tag is-white"><a class="has-text-black"
+                                                            href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
+                                                    <span class="tag is-black">Windows</span>
+                                                </div>
+                                            </div>
+                                            <div class="control">
+                                                <div class="tags has-addons">
+                                                    <span class="tag is-white"><a class="has-text-black"
+                                                            href="https://clock.milchchan.com/">Clock</a></span>
+                                                    <span class="tag is-black">Web</span>
+                                                </div>
+                                            </div>
+                                            <div class="control">
+                                                <div class="tags has-addons">
+                                                    <span class="tag is-white"><a class="has-text-black"
+                                                            href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
+                                                    <span class="tag is-black">iOS</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
                             </div>
-                        </nav>
-                        <nav class="level">
-                            <div class="level-item has-text-centered">
-                                <div class="field">
-                                    <h6 class="subtitle is-size-7 is-uppercase has-text-weight-bold">覚えたことば</h6>
-                                </div>
-                            </div>
-                        </nav>
+                        </div>
+                        <!--<div class="column is-1 is-mobile">
+                            <button class="button is-white">
+                                <span class="icon is-small">
+                                    <i class="fas fa-bars"></i>
+                                </span>
+                            </button>
+                        </div>-->
                     </div>
                 </div>
             </div>
@@ -485,7 +524,7 @@
         </div>
         <nav id="input" class="navbar is-fixed-bottom" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
-                <div class="column is-half has-content-centered">
+                <div class="column is-half has-content-centered is-mobile">
                     <div class="notification is-info is-light" v-if="notification" v-cloak>
                         <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
                             <figure class="media-left" v-if="notification.image" v-cloak>
@@ -663,7 +702,7 @@
             (gltf) => {
                 THREE.VRM.from(gltf).then((vrm) => {
                     currentVrm = vrm;
-                    
+
                     scene.add(vrm.scene);
 
                     //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
@@ -753,6 +792,7 @@
             data: {
                 isReady: false,
                 isLoading: false,
+                isRevealed: false,
                 user: null,
                 input: '',
                 currentInputLength: 0,
@@ -899,6 +939,9 @@
                     });*/
 
                     this.$el.querySelector("#like").play();
+                },
+                reveal: function (event) {
+                    this.isRevealed = !this.isRevealed;
                 },
                 scrollToEnd: function () {
                     let container = this.$el.querySelector("#container");
