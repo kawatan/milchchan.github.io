@@ -614,7 +614,7 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xffffff, 0);
-        
+
         if (channel.length > 0) {
             renderer.domElement.classList.add("is-hidden");
         }
@@ -735,12 +735,12 @@
 
         stats.domElement.style.position = "absolute";
         stats.domElement.style.top = "0px";
-        
+
         if (!debug) {
             stats.domElement.classList.add("is-hidden");
         }
 
-        document.body.appendChild(stats.domElement);    
+        document.body.appendChild(stats.domElement);
 
         var app = new Vue({
             el: '#app',
@@ -1083,9 +1083,10 @@
         const clock = new THREE.Clock();
 
         let animationIndex = 0;
+        const animationSkipFrames = 2;
         let idleTime = null;
-        let blinkStep = 0.0;
-        let maxBlinkStep = 0.0;
+        let blendShapeAnimations = [];
+        let blendShapeAnimationQueue = [];
         const blinkThreshold = 5.0;
 
         function render() {
@@ -1098,15 +1099,16 @@
 
                 if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
                     messageData = app.currentAnimations[animationIndex];
-                    animationIndex += 2;
+                    animationIndex += animationSkipFrames;
 
                     if (idleTime !== null) {
                         idleTime += deltaTime;
 
                         if (idleTime >= blinkThreshold) {
                             const maxBlinkSteps = [1.0, 2.0];
+                            const maxStep = maxBlinkSteps[random(0, 1)];
 
-                            maxBlinkStep = maxBlinkSteps[random(0, 2)];
+                            blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, step: 0.0, max: maxStep, speed: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, step: 0.0, max: maxStep, speed: 2.0 }]);
                             idleTime = 0.0;
                         }
                     }
@@ -1131,8 +1133,9 @@
 
                             if (idleTime >= blinkThreshold) {
                                 const maxBlinkSteps = [1.0, 2.0];
+                                const maxStep = maxBlinkSteps[random(0, 1)];
 
-                                maxBlinkStep = maxBlinkSteps[random(0, 2)];
+                                blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, step: 0.0, max: maxStep, speed: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, step: 0.0, max: maxStep, speed: 2.0 }]);
                                 idleTime = 0.0;
                             }
                         }
@@ -1140,7 +1143,13 @@
 
                     animationIndex = 0;
                     messageData = app.currentAnimations[animationIndex];
-                    animationIndex += 2;
+                    animationIndex += animationSkipFrames;
+                }
+
+                if (blendShapeAnimations.length == 0 && blendShapeAnimationQueue.length > 0) {
+                    for (let blendShapeAnimation of blendShapeAnimationQueue.shift()) {
+                        blendShapeAnimations.push(blendShapeAnimation);
+                    }
                 }
 
                 if (messageData) {
@@ -1364,18 +1373,20 @@
                     }
                 }
 
-                if (blinkStep < maxBlinkStep) {
-                    blinkStep += deltaTime * 2.0;
+                for (let i = blendShapeAnimations.length - 1; i >= 0; i--) {
+                    let blendShapeAnimation = blendShapeAnimations[i];
 
-                    if (blinkStep >= maxBlinkStep) {
-                        blinkStep = 0.0;
-                        maxBlinkStep = 0.0;
+                    if (blendShapeAnimation.step < blendShapeAnimation.max) {
+                        blendShapeAnimation.step += deltaTime * blendShapeAnimation.speed;
+
+                        if (blendShapeAnimation.step >= blendShapeAnimation.max) {
+                            currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, 0.0);
+
+                            blendShapeAnimations.splice(i, 1);
+                        } else {
+                            currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(Math.PI * blendShapeAnimation.step)));
+                        }
                     }
-
-                    const blinkValue = Math.abs(Math.sin(Math.PI * blinkStep));
-
-                    currentVrm.blendShapeProxy.setValue(THREE.VRMSchema.BlendShapePresetName.BlinkL, blinkValue);
-                    currentVrm.blendShapeProxy.setValue(THREE.VRMSchema.BlendShapePresetName.BlinkR, blinkValue);
                 }
 
                 currentVrm.update(deltaTime);
