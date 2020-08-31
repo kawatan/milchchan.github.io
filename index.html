@@ -668,7 +668,7 @@
             renderer.domElement.classList.add("is-hidden");
         }
 
-        threeCanvas.addEventListener('click', function (event) {
+        threeCanvas.addEventListener('click', (event) => {
             lookAtTarget.position.x = (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0;
             lookAtTarget.position.y = (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0;
         });
