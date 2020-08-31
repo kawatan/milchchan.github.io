@@ -1010,43 +1010,45 @@
                     }
                 });
 
-                const urls = {
-                    idle1: '/models/animations/animation-idle1.json',
-                    idle2: '/models/animations/animation-idle2.json',
-                    idle3: '/models/animations/animation-idle3.json',
-                    idle4: '/models/animations/animation-idle4.json',
-                    jump: '/models/animations/animation-jump.json',
-                    lose: '/models/animations/animation-lose.json',
-                    run: '/models/animations/animation-run.json',
-                    walk: '/models/animations/animation-walk.json',
-                    win: '/models/animations/animation-win.json'
-                };
-                let animationDictionary = {};
+                if (channel == 0) {
+                    const urls = {
+                        idle1: '/models/animations/animation-idle1.json',
+                        idle2: '/models/animations/animation-idle2.json',
+                        idle3: '/models/animations/animation-idle3.json',
+                        idle4: '/models/animations/animation-idle4.json',
+                        jump: '/models/animations/animation-jump.json',
+                        lose: '/models/animations/animation-lose.json',
+                        run: '/models/animations/animation-run.json',
+                        walk: '/models/animations/animation-walk.json',
+                        win: '/models/animations/animation-win.json'
+                    };
+                    let animationDictionary = {};
 
-                try {
-                    for (let key in urls) {
-                        const response = await fetch(encodeURI(urls[key]), {
-                            mode: "cors",
-                            method: "GET",
-                            headers: {
-                                "Content-Type": "application/x-www-form-urlencoded"
+                    try {
+                        for (let key in urls) {
+                            const response = await fetch(encodeURI(urls[key]), {
+                                mode: "cors",
+                                method: "GET",
+                                headers: {
+                                    "Content-Type": "application/x-www-form-urlencoded"
+                                }
+                            });
+
+                            if (response.ok) {
+                                const json = await response.json();
+
+                                animationDictionary[key] = json.data;
                             }
-                        });
-
-                        if (response.ok) {
-                            const json = await response.json();
-
-                            animationDictionary[key] = json.data;
+                            else {
+                                throw new Error(response.statusText);
+                            }
                         }
-                        else {
-                            throw new Error(response.statusText);
-                        }
+
+                        this.animations = animationDictionary;
+                        this.animationsQueue.push(this.animations['jump']);
+                    } catch (e) {
+                        console.error(e);
                     }
-
-                    this.animations = animationDictionary;
-                    this.animationsQueue.push(this.animations['jump']);
-                } catch (e) {
-                    console.error(e);
                 }
             },
             mounted: function () {
