@@ -654,9 +654,8 @@
 
         //var channel = getParameterByName("channel") || getParameterByName("ch") || "";
 
-        const threeCanvas = document.getElementById("three");
         const renderer = new THREE.WebGLRenderer({
-            canvas: threeCanvas,
+            canvas: document.getElementById("three"),
             alpha: true
         });
 
@@ -667,11 +666,6 @@
         if (channel.length > 0) {
             renderer.domElement.classList.add("is-hidden");
         }
-
-        threeCanvas.addEventListener('click', (event) => {
-            lookAtTarget.position.x = (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0;
-            lookAtTarget.position.y = (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0;
-        });
 
         const CAMERA_FOV = 60.0;
         const CAMERA_Z = -1.0;
@@ -813,7 +807,9 @@
                 notification: null,
                 animations: null,
                 animationsQueue: [],
-                currentAnimations: []
+                currentAnimations: [],
+                blendShapeAnimations: [],
+                blendShapeAnimationQueue: []
             },
             methods: {
                 send: async function (event) {
@@ -929,11 +925,13 @@
 
                     this.scrollRequired = true;
                     */
-                    database.ref(databaseChannel + "/likes").transaction(function (count) {
+                    /*database.ref(databaseChannel + "/likes").transaction(function (count) {
                         return (count || 0) + 1;
                     });
 
-                    this.animationsQueue.push(this.animations['jump']);
+                    this.animationsQueue.push(this.animations['jump']);*/
+                    this.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, step: 0.0, max: 1.0, speed: 2.0 }]);
+                            
                     /*database.ref(databaseChannel + "likes").once('value', snapshot => {
                         const count = snapshot.val();
             
@@ -1141,9 +1139,8 @@
         let animationIndex = 0;
         const animationSkipFrames = 2;
         let idleTime = null;
-        let blendShapeAnimations = [];
-        let blendShapeAnimationQueue = [];
         const blinkThreshold = 5.0;
+        let lookAnimation = null;
 
         function render() {
             requestAnimationFrame(render);
@@ -1164,7 +1161,7 @@
                             const maxBlinkSteps = [1.0, 2.0];
                             const maxStep = maxBlinkSteps[random(0, 1)];
 
-                            blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, step: 0.0, max: maxStep, speed: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, step: 0.0, max: maxStep, speed: 2.0 }]);
+                            app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, step: 0.0, max: maxStep, speed: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, step: 0.0, max: maxStep, speed: 2.0 }]);
                             idleTime = 0.0;
                         }
                     }
@@ -1191,7 +1188,7 @@
                                 const maxBlinkSteps = [1.0, 2.0];
                                 const maxStep = maxBlinkSteps[random(0, 1)];
 
-                                blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, step: 0.0, max: maxStep, speed: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, step: 0.0, max: maxStep, speed: 2.0 }]);
+                                app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, step: 0.0, max: maxStep, speed: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, step: 0.0, max: maxStep, speed: 2.0 }]);
                                 idleTime = 0.0;
                             }
                         }
@@ -1202,9 +1199,22 @@
                     animationIndex += animationSkipFrames;
                 }
 
-                if (blendShapeAnimations.length == 0 && blendShapeAnimationQueue.length > 0) {
-                    for (let blendShapeAnimation of blendShapeAnimationQueue.shift()) {
-                        blendShapeAnimations.push(blendShapeAnimation);
+                if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
+                    for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
+                        app.blendShapeAnimations.push(blendShapeAnimation);
+                    }
+                }
+
+                if (lookAnimation !== null) {
+                    lookAnimation.step += deltaTime * lookAnimation.speed;
+
+                    if (lookAnimation.step >= 1.0) {
+                        lookAtTarget.position.x = lookAnimation.target.x;
+                        lookAtTarget.position.y = lookAnimation.target.y;
+                        lookAnimation = null;
+                    } else {
+                        lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * lookAnimation.step;
+                        lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * lookAnimation.step;
                     }
                 }
 
@@ -1429,8 +1439,8 @@
                     }
                 }
 
-                for (let i = blendShapeAnimations.length - 1; i >= 0; i--) {
-                    let blendShapeAnimation = blendShapeAnimations[i];
+                for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                    let blendShapeAnimation = app.blendShapeAnimations[i];
 
                     if (blendShapeAnimation.step < blendShapeAnimation.max) {
                         blendShapeAnimation.step += deltaTime * blendShapeAnimation.speed;
@@ -1438,7 +1448,7 @@
                         if (blendShapeAnimation.step >= blendShapeAnimation.max) {
                             currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, 0.0);
 
-                            blendShapeAnimations.splice(i, 1);
+                            app.blendShapeAnimations.splice(i, 1);
                         } else {
                             currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(Math.PI * blendShapeAnimation.step)));
                         }
@@ -1480,11 +1490,12 @@
                 const py = -(2.0 * event.clientY - window.innerHeight) / window.innerHeight * range;
         
                 currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
-        
             }*/
 
-            lookAtTarget.position.x = (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0;
-            lookAtTarget.position.y = (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0;
+            lookAnimation = { step: 0.0, speed: 2.0, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
+        window.addEventListener('click', (event) => {
+            lookAnimation = { step: 0.0, speed: 2.0, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
         });
     </script>
 </body>
