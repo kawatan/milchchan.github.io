@@ -905,9 +905,7 @@
                     this.isRevealed = !this.isRevealed;
                 },
                 scrollToEnd: function () {
-                    let container = this.$el.querySelector("#container");
-
-                    container.scrollTop = container.scrollHeight;
+                    document.documentElement.scrollTop = document.documentElement.scrollHeight;
                 },
                 formatDate: function (event) {
                     moment.locale(window.navigator.language);
