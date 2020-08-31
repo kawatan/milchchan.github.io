@@ -1084,463 +1084,462 @@
             app.isReady = true;
         });
 
-        const loader = new THREE.GLTFLoader();
-
-        loader.crossOrigin = "anonymous";
-        loader.load(
-            "/models/Milch.vrm",
-            (gltf) => {
-                THREE.VRM.from(gltf).then((vrm) => {
-                    currentVrm = vrm;
-
-                    scene.add(vrm.scene);
-
-                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                    //currentMixer = prepareAnimation(vrm);
-
-                    vrm.lookAt.target = lookAtTarget;
-
-                    app.progress = 0.0;
-                });
-            },
-            (progress) => app.progress = progress.loaded / progress.total,
-            (error) => console.error(error)
-        );
-
-        window.addEventListener("dragover", (event) => {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = "copy";
-        }, false);
-        window.addEventListener("drop", (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-
-            for (let file of event.dataTransfer.files) {
-                let reader = new FileReader();
-
-                reader.addEventListener("load", (e) => {
-                    loader.load(
-                        e.target.result,
-                        (gltf) => {
-                            THREE.VRM.from(gltf).then((vrm) => {
-                                if (currentVrm != null) {
-                                    scene.remove(currentVrm.scene);
-                                }
-
-                                currentVrm = vrm;
-
-                                scene.add(vrm.scene);
-
-                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                                //currentMixer = prepareAnimation(vrm);
-
-                                vrm.lookAt.target = lookAtTarget;
-
-                                app.progress = 0.0;
-                            });
-                        },
-                        (progress) => app.progress = progress.loaded / progress.total,
-                        (error) => console.error(error)
-                    );
-                });
-                reader.readAsDataURL(file);
-
-                break;
-            }
-
-        }, false);
-
         if (channel.length > 0) {
-            const clock = new THREE.Clock();
+            const loader = new THREE.GLTFLoader();
 
-            let animationIndex = 0;
-            const animationSkipFrames = 2;
-            let idleTime = null;
-            const blinkThreshold = 5.0;
-            let lookAnimation = null;
-            const mouse = new THREE.Vector2();
-            const mouseRaycaster = new THREE.Raycaster();
+            loader.crossOrigin = "anonymous";
+            loader.load(
+                "/models/Milch.vrm",
+                (gltf) => {
+                    THREE.VRM.from(gltf).then((vrm) => {
+                        currentVrm = vrm;
 
-            function render() {
-                requestAnimationFrame(render);
+                        scene.add(vrm.scene);
 
-                const deltaTime = clock.getDelta();
+                        //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
 
-                if (currentVrm && app.animations) {
-                    let messageData;
-                    let updatedBlendShapeNames = [];
+                        //currentMixer = prepareAnimation(vrm);
 
-                    if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
-                        messageData = app.currentAnimations[animationIndex];
-                        animationIndex += animationSkipFrames;
+                        vrm.lookAt.target = lookAtTarget;
 
-                        if (idleTime !== null) {
-                            if (app.blendShapeAnimationQueue.length > 0) {
-                                idleTime = null;
-                            } else {
-                                idleTime += deltaTime;
+                        app.progress = 0.0;
+                    });
+                },
+                (progress) => app.progress = progress.loaded / progress.total,
+                (error) => console.error(error)
+            );
 
-                                if (idleTime >= blinkThreshold) {
-                                    const durations = [0.5, 1.0];
-                                    const ends = [2.0, 4.0];
-                                    const index = random(0, 1);
-                                    const duration = durations[index];
-                                    const end = ends[index];
+            window.addEventListener("dragover", (event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "copy";
+            }, false);
+            window.addEventListener("drop", (event) => {
+                event.stopPropagation();
+                event.preventDefault();
 
-                                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
-                                    idleTime = 0.0;
-                                }
-                            }
-                        }
-                    } else {
-                        app.currentAnimations.splice(0);
+                for (let file of event.dataTransfer.files) {
+                    let reader = new FileReader();
 
-                        if (app.animationsQueue.length > 0) {
-                            for (let animation of app.animationsQueue.shift()) {
-                                app.currentAnimations.push(animation);
-                            }
+                    reader.addEventListener("load", (e) => {
+                        loader.load(
+                            e.target.result,
+                            (gltf) => {
+                                THREE.VRM.from(gltf).then((vrm) => {
+                                    if (currentVrm != null) {
+                                        scene.remove(currentVrm.scene);
+                                    }
 
-                            idleTime = null;
-                        } else {
-                            for (let animation of app.animations['idle1']) {
-                                app.currentAnimations.push(animation);
-                            }
+                                    currentVrm = vrm;
 
-                            if (idleTime === null) {
-                                idleTime = 0.0;
-                            } else if (app.blendShapeAnimationQueue.length > 0) {
-                                idleTime = null;
-                            } else {
-                                idleTime += deltaTime;
+                                    scene.add(vrm.scene);
 
-                                if (idleTime >= blinkThreshold) {
-                                    const durations = [0.5, 1.0];
-                                    const ends = [2.0, 4.0];
-                                    const index = random(0, 1);
-                                    const duration = durations[index];
-                                    const end = ends[index];
+                                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
 
-                                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
-                                    idleTime = 0.0;
-                                }
-                            }
-                        }
+                                    //currentMixer = prepareAnimation(vrm);
 
-                        animationIndex = 0;
-                        messageData = app.currentAnimations[animationIndex];
-                        animationIndex += animationSkipFrames;
-                    }
+                                    vrm.lookAt.target = lookAtTarget;
 
-                    if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
-                        for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
-                            app.blendShapeAnimations.unshift(blendShapeAnimation);
-                        }
-                    }
+                                    app.progress = 0.0;
+                                });
+                            },
+                            (progress) => app.progress = progress.loaded / progress.total,
+                            (error) => console.error(error)
+                        );
+                    });
+                    reader.readAsDataURL(file);
 
-                    if (lookAnimation !== null) {
-                        lookAnimation.time += deltaTime;
-
-                        if (lookAnimation.time >= lookAnimation.duration) {
-                            lookAtTarget.position.x = lookAnimation.target.x;
-                            lookAtTarget.position.y = lookAnimation.target.y;
-                            lookAnimation = null;
-                        } else {
-                            const rate = lookAnimation.time / lookAnimation.duration;
-
-                            lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
-                            lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
-                        }
-                    }
-
-                    if (messageData) {
-                        for (let animation of messageData.animations) {
-                            switch (animation.bone) {
-                                case 'chest':
-                                case 'head':
-                                case 'hips':
-                                case 'jaw':
-                                case 'leftEye':
-                                case 'leftFoot':
-                                case 'leftHand':
-                                case 'leftIndexDistal':
-                                case 'leftIndexIntermediate':
-                                case 'leftIndexProximal':
-                                case 'leftLittleDistal':
-                                case 'leftLittleIntermediate':
-                                case 'leftLittleProximal':
-                                case 'leftLowerArm':
-                                case 'leftLowerLeg':
-                                case 'leftMiddleDistal':
-                                case 'leftMiddleIntermediate':
-                                case 'leftMiddleProximal':
-                                case 'leftRingDistal':
-                                case 'leftRingIntermediate':
-                                case 'leftRingProximal':
-                                case 'leftShoulder':
-                                case 'leftThumbDistal':
-                                case 'leftThumbIntermediate':
-                                case 'leftThumbProximal':
-                                case 'leftToes':
-                                case 'leftUpperArm':
-                                case 'leftUpperLeg':
-                                case 'neck':
-                                case 'rightEye':
-                                case 'rightFoot':
-                                case 'rightHand':
-                                case 'rightIndexDistal':
-                                case 'rightIndexIntermediate':
-                                case 'rightIndexProximal':
-                                case 'rightLittleDistal':
-                                case 'rightLittleIntermediate':
-                                case 'rightLittleProximal':
-                                case 'rightLowerArm':
-                                case 'rightLowerLeg':
-                                case 'rightMiddleDistal':
-                                case 'rightMiddleIntermediate':
-                                case 'rightMiddleProximal':
-                                case 'rightRingDistal':
-                                case 'rightRingIntermediate':
-                                case 'rightRingProximal':
-                                case 'rightShoulder':
-                                case 'rightThumbDistal':
-                                case 'rightThumbIntermediate':
-                                case 'rightThumbProximal':
-                                case 'rightToes':
-                                case 'rightUpperArm':
-                                case 'rightUpperLeg':
-                                case 'spine':
-                                case 'upperChest':
-                                    break;
-                                case 'eye.L':
-                                    animation.bone = 'leftEye';
-                                    break;
-                                case 'foot.L':
-                                    animation.bone = 'leftFoot';
-                                    break;
-                                case 'hand.L':
-                                    animation.bone = 'leftHand';
-                                    break;
-                                case 'f_index.03.L':
-                                    animation.bone = 'leftIndexDistal';
-                                    break;
-                                case 'f_index.02.L':
-                                    animation.bone = 'leftIndexIntermediate';
-                                    break;
-                                case 'f_index.01.L':
-                                    animation.bone = 'leftIndexProximal';
-                                    break;
-                                case 'f_pinky.03.L':
-                                    animation.bone = 'leftLittleDistal';
-                                    break;
-                                case 'f_pinky.02.L':
-                                    animation.bone = 'leftLittleIntermediate';
-                                    break;
-                                case 'f_pinky.01.L':
-                                    animation.bone = 'leftLittleProximal';
-                                    break;
-                                case 'lower_arm.L':
-                                    animation.bone = 'leftLowerArm';
-                                    break;
-                                case 'shin.L':
-                                    animation.bone = 'leftLowerLeg';
-                                    break;
-                                case 'f_middle.03.L':
-                                    animation.bone = 'leftMiddleDistal';
-                                    break;
-                                case 'f_middle.02.L':
-                                    animation.bone = 'leftMiddleIntermediate';
-                                    break;
-                                case 'f_middle.01.L':
-                                    animation.bone = 'leftMiddleProximal';
-                                    break;
-                                case 'f_ring.03.L':
-                                    animation.bone = 'leftRingDistal';
-                                    break;
-                                case 'f_ring.02.L':
-                                    animation.bone = 'leftRingIntermediate';
-                                    break;
-                                case 'f_ring.01.L':
-                                    animation.bone = 'leftRingProximal';
-                                    break;
-                                case 'shoulder.L':
-                                    animation.bone = 'leftShoulder';
-                                    break;
-                                case 'thumb_distal.L':
-                                    animation.bone = 'leftThumbDistal';
-                                    break;
-                                case 'thumb_intermediate.L':
-                                    animation.bone = 'leftThumbIntermediate';
-                                    break;
-                                case 'thumb_proximal.L':
-                                    animation.bone = 'leftThumbProximal';
-                                    break;
-                                case 'toe.L':
-                                    animation.bone = 'leftToes';
-                                    break;
-                                case 'upper_arm.L':
-                                    animation.bone = 'leftUpperArm';
-                                    break;
-                                case 'thigh.L':
-                                    animation.bone = 'leftUpperLeg';
-                                    break;
-                                case 'eye.R':
-                                    animation.bone = 'rightEye';
-                                    break;
-                                case 'foot.R':
-                                    animation.bone = 'rightFoot';
-                                    break;
-                                case 'hand.R':
-                                    animation.bone = 'rightHand';
-                                    break;
-                                case 'f_index.03.R':
-                                    animation.bone = 'rightIndexDistal';
-                                    break;
-                                case 'f_index.02.R':
-                                    animation.bone = 'rightIndexIntermediate';
-                                    break;
-                                case 'f_index.01.R':
-                                    animation.bone = 'rightIndexProximal';
-                                    break;
-                                case 'f_pinky.03.R':
-                                    animation.bone = 'rightLittleDistal';
-                                    break;
-                                case 'f_pinky.02.R':
-                                    animation.bone = 'rightLittleIntermediate';
-                                    break;
-                                case 'f_pinky.01.R':
-                                    animation.bone = 'rightLittleProximal';
-                                    break;
-                                case 'lower_arm.R':
-                                    animation.bone = 'rightLowerArm';
-                                    break;
-                                case 'shin.R':
-                                    animation.bone = 'rightLowerLeg';
-                                    break;
-                                case 'f_middle.03.R':
-                                    animation.bone = 'rightMiddleDistal';
-                                    break;
-                                case 'f_middle.02.R':
-                                    animation.bone = 'rightMiddleIntermediate';
-                                    break;
-                                case 'f_middle.01.R':
-                                    animation.bone = 'rightMiddleProximal';
-                                    break;
-                                case 'f_ring.03.R':
-                                    animation.bone = 'rightRingDistal';
-                                    break;
-                                case 'f_ring.02.R':
-                                    animation.bone = 'rightRingIntermediate';
-                                    break;
-                                case 'f_ring.01.R':
-                                    animation.bone = 'rightRingProximal';
-                                    break;
-                                case 'shoulder.R':
-                                    animation.bone = 'rightShoulder';
-                                    break;
-                                case 'thumb_distal.R':
-                                    animation.bone = 'rightThumbDistal';
-                                    break;
-                                case 'thumb_intermediate.R':
-                                    animation.bone = 'rightThumbIntermediate';
-                                    break;
-                                case 'thumb_proximal.R':
-                                    animation.bone = 'rightThumbProximal';
-                                    break;
-                                case 'toe.R':
-                                    animation.bone = 'rightToes';
-                                    break;
-                                case 'upper_arm.R':
-                                    animation.bone = 'rightUpperArm';
-                                    break;
-                                case 'thigh.R':
-                                    animation.bone = 'rightUpperLeg';
-                                    break;
-                                case 'upper_chest':
-                                    animation.bone = 'upperChest';
-                                    break;
-                                default:
-                                    animation.bone = null;
-                            }
-
-                            if (animation.bone && animation.rotation.length == 4) {
-                                try {
-                                    currentVrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
-                                    currentVrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
-                                } catch (e) {
-                                    console.log(animation.bone);
-                                }
-                            }
-                        }
-                    }
-
-                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                        let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                        if (!updatedBlendShapeNames.includes(blendShapeAnimation.name)) {
-                            if (blendShapeAnimation.time < blendShapeAnimation.duration) {
-                                blendShapeAnimation.time += deltaTime;
-
-                                if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
-                                    currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
-
-                                    app.blendShapeAnimations.splice(i, 1);
-                                } else {
-                                    currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
-                                }
-                            }
-
-                            updatedBlendShapeNames.push(blendShapeAnimation.name);
-                        }
-                    }
-
-                    currentVrm.update(deltaTime);
-
-                    /*if (currentMixer) {
-                        currentMixer.update(deltaTime);
-                    }*/
-
-                    renderer.render(scene, camera);
+                    break;
                 }
 
-                stats.update();
-            }
+            }, false);
+        }
 
-            render();
+        const clock = new THREE.Clock();
+        const mouseRaycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let animationIndex = 0;
+        const animationSkipFrames = 2;
+        let idleTime = null;
+        const blinkThreshold = 5.0;
+        let lookAnimation = null;
+        
+        function render() {
+            requestAnimationFrame(render);
 
-            window.addEventListener('resize', (event) => {
-                const width = window.innerWidth;
-                const height = window.innerHeight;
+            const deltaTime = clock.getDelta();
 
-                renderer.setPixelRatio(window.devicePixelRatio);
-                renderer.setSize(width, height);
+            if (currentVrm && app.animations) {
+                let messageData;
+                let updatedBlendShapeNames = [];
 
-                camera.aspect = width / height;
-                camera.updateProjectionMatrix();
-            });
-            window.addEventListener('mousemove', (event) => {
-                /*if (currentVrm) {
-            
-                    const range = CAMERA_Z * Math.tan(CAMERA_FOV / 360.0 * Math.PI);
-                    const px = (2.0 * event.clientX - window.innerWidth) / window.innerHeight * range;
-                    const py = -(2.0 * event.clientY - window.innerHeight) / window.innerHeight * range;
-            
-                    currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
+                if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
+                    messageData = app.currentAnimations[animationIndex];
+                    animationIndex += animationSkipFrames;
+
+                    if (idleTime !== null) {
+                        if (app.blendShapeAnimationQueue.length > 0) {
+                            idleTime = null;
+                        } else {
+                            idleTime += deltaTime;
+
+                            if (idleTime >= blinkThreshold) {
+                                const durations = [0.5, 1.0];
+                                const ends = [2.0, 4.0];
+                                const index = random(0, 1);
+                                const duration = durations[index];
+                                const end = ends[index];
+
+                                app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
+                                idleTime = 0.0;
+                            }
+                        }
+                    }
+                } else {
+                    app.currentAnimations.splice(0);
+
+                    if (app.animationsQueue.length > 0) {
+                        for (let animation of app.animationsQueue.shift()) {
+                            app.currentAnimations.push(animation);
+                        }
+
+                        idleTime = null;
+                    } else {
+                        for (let animation of app.animations['idle1']) {
+                            app.currentAnimations.push(animation);
+                        }
+
+                        if (idleTime === null) {
+                            idleTime = 0.0;
+                        } else if (app.blendShapeAnimationQueue.length > 0) {
+                            idleTime = null;
+                        } else {
+                            idleTime += deltaTime;
+
+                            if (idleTime >= blinkThreshold) {
+                                const durations = [0.5, 1.0];
+                                const ends = [2.0, 4.0];
+                                const index = random(0, 1);
+                                const duration = durations[index];
+                                const end = ends[index];
+
+                                app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
+                                idleTime = 0.0;
+                            }
+                        }
+                    }
+
+                    animationIndex = 0;
+                    messageData = app.currentAnimations[animationIndex];
+                    animationIndex += animationSkipFrames;
+                }
+
+                if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
+                    for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
+                        app.blendShapeAnimations.unshift(blendShapeAnimation);
+                    }
+                }
+
+                if (lookAnimation !== null) {
+                    lookAnimation.time += deltaTime;
+
+                    if (lookAnimation.time >= lookAnimation.duration) {
+                        lookAtTarget.position.x = lookAnimation.target.x;
+                        lookAtTarget.position.y = lookAnimation.target.y;
+                        lookAnimation = null;
+                    } else {
+                        const rate = lookAnimation.time / lookAnimation.duration;
+
+                        lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
+                        lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
+                    }
+                }
+
+                if (messageData) {
+                    for (let animation of messageData.animations) {
+                        switch (animation.bone) {
+                            case 'chest':
+                            case 'head':
+                            case 'hips':
+                            case 'jaw':
+                            case 'leftEye':
+                            case 'leftFoot':
+                            case 'leftHand':
+                            case 'leftIndexDistal':
+                            case 'leftIndexIntermediate':
+                            case 'leftIndexProximal':
+                            case 'leftLittleDistal':
+                            case 'leftLittleIntermediate':
+                            case 'leftLittleProximal':
+                            case 'leftLowerArm':
+                            case 'leftLowerLeg':
+                            case 'leftMiddleDistal':
+                            case 'leftMiddleIntermediate':
+                            case 'leftMiddleProximal':
+                            case 'leftRingDistal':
+                            case 'leftRingIntermediate':
+                            case 'leftRingProximal':
+                            case 'leftShoulder':
+                            case 'leftThumbDistal':
+                            case 'leftThumbIntermediate':
+                            case 'leftThumbProximal':
+                            case 'leftToes':
+                            case 'leftUpperArm':
+                            case 'leftUpperLeg':
+                            case 'neck':
+                            case 'rightEye':
+                            case 'rightFoot':
+                            case 'rightHand':
+                            case 'rightIndexDistal':
+                            case 'rightIndexIntermediate':
+                            case 'rightIndexProximal':
+                            case 'rightLittleDistal':
+                            case 'rightLittleIntermediate':
+                            case 'rightLittleProximal':
+                            case 'rightLowerArm':
+                            case 'rightLowerLeg':
+                            case 'rightMiddleDistal':
+                            case 'rightMiddleIntermediate':
+                            case 'rightMiddleProximal':
+                            case 'rightRingDistal':
+                            case 'rightRingIntermediate':
+                            case 'rightRingProximal':
+                            case 'rightShoulder':
+                            case 'rightThumbDistal':
+                            case 'rightThumbIntermediate':
+                            case 'rightThumbProximal':
+                            case 'rightToes':
+                            case 'rightUpperArm':
+                            case 'rightUpperLeg':
+                            case 'spine':
+                            case 'upperChest':
+                                break;
+                            case 'eye.L':
+                                animation.bone = 'leftEye';
+                                break;
+                            case 'foot.L':
+                                animation.bone = 'leftFoot';
+                                break;
+                            case 'hand.L':
+                                animation.bone = 'leftHand';
+                                break;
+                            case 'f_index.03.L':
+                                animation.bone = 'leftIndexDistal';
+                                break;
+                            case 'f_index.02.L':
+                                animation.bone = 'leftIndexIntermediate';
+                                break;
+                            case 'f_index.01.L':
+                                animation.bone = 'leftIndexProximal';
+                                break;
+                            case 'f_pinky.03.L':
+                                animation.bone = 'leftLittleDistal';
+                                break;
+                            case 'f_pinky.02.L':
+                                animation.bone = 'leftLittleIntermediate';
+                                break;
+                            case 'f_pinky.01.L':
+                                animation.bone = 'leftLittleProximal';
+                                break;
+                            case 'lower_arm.L':
+                                animation.bone = 'leftLowerArm';
+                                break;
+                            case 'shin.L':
+                                animation.bone = 'leftLowerLeg';
+                                break;
+                            case 'f_middle.03.L':
+                                animation.bone = 'leftMiddleDistal';
+                                break;
+                            case 'f_middle.02.L':
+                                animation.bone = 'leftMiddleIntermediate';
+                                break;
+                            case 'f_middle.01.L':
+                                animation.bone = 'leftMiddleProximal';
+                                break;
+                            case 'f_ring.03.L':
+                                animation.bone = 'leftRingDistal';
+                                break;
+                            case 'f_ring.02.L':
+                                animation.bone = 'leftRingIntermediate';
+                                break;
+                            case 'f_ring.01.L':
+                                animation.bone = 'leftRingProximal';
+                                break;
+                            case 'shoulder.L':
+                                animation.bone = 'leftShoulder';
+                                break;
+                            case 'thumb_distal.L':
+                                animation.bone = 'leftThumbDistal';
+                                break;
+                            case 'thumb_intermediate.L':
+                                animation.bone = 'leftThumbIntermediate';
+                                break;
+                            case 'thumb_proximal.L':
+                                animation.bone = 'leftThumbProximal';
+                                break;
+                            case 'toe.L':
+                                animation.bone = 'leftToes';
+                                break;
+                            case 'upper_arm.L':
+                                animation.bone = 'leftUpperArm';
+                                break;
+                            case 'thigh.L':
+                                animation.bone = 'leftUpperLeg';
+                                break;
+                            case 'eye.R':
+                                animation.bone = 'rightEye';
+                                break;
+                            case 'foot.R':
+                                animation.bone = 'rightFoot';
+                                break;
+                            case 'hand.R':
+                                animation.bone = 'rightHand';
+                                break;
+                            case 'f_index.03.R':
+                                animation.bone = 'rightIndexDistal';
+                                break;
+                            case 'f_index.02.R':
+                                animation.bone = 'rightIndexIntermediate';
+                                break;
+                            case 'f_index.01.R':
+                                animation.bone = 'rightIndexProximal';
+                                break;
+                            case 'f_pinky.03.R':
+                                animation.bone = 'rightLittleDistal';
+                                break;
+                            case 'f_pinky.02.R':
+                                animation.bone = 'rightLittleIntermediate';
+                                break;
+                            case 'f_pinky.01.R':
+                                animation.bone = 'rightLittleProximal';
+                                break;
+                            case 'lower_arm.R':
+                                animation.bone = 'rightLowerArm';
+                                break;
+                            case 'shin.R':
+                                animation.bone = 'rightLowerLeg';
+                                break;
+                            case 'f_middle.03.R':
+                                animation.bone = 'rightMiddleDistal';
+                                break;
+                            case 'f_middle.02.R':
+                                animation.bone = 'rightMiddleIntermediate';
+                                break;
+                            case 'f_middle.01.R':
+                                animation.bone = 'rightMiddleProximal';
+                                break;
+                            case 'f_ring.03.R':
+                                animation.bone = 'rightRingDistal';
+                                break;
+                            case 'f_ring.02.R':
+                                animation.bone = 'rightRingIntermediate';
+                                break;
+                            case 'f_ring.01.R':
+                                animation.bone = 'rightRingProximal';
+                                break;
+                            case 'shoulder.R':
+                                animation.bone = 'rightShoulder';
+                                break;
+                            case 'thumb_distal.R':
+                                animation.bone = 'rightThumbDistal';
+                                break;
+                            case 'thumb_intermediate.R':
+                                animation.bone = 'rightThumbIntermediate';
+                                break;
+                            case 'thumb_proximal.R':
+                                animation.bone = 'rightThumbProximal';
+                                break;
+                            case 'toe.R':
+                                animation.bone = 'rightToes';
+                                break;
+                            case 'upper_arm.R':
+                                animation.bone = 'rightUpperArm';
+                                break;
+                            case 'thigh.R':
+                                animation.bone = 'rightUpperLeg';
+                                break;
+                            case 'upper_chest':
+                                animation.bone = 'upperChest';
+                                break;
+                            default:
+                                animation.bone = null;
+                        }
+
+                        if (animation.bone && animation.rotation.length == 4) {
+                            try {
+                                currentVrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
+                                currentVrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
+                            } catch (e) {
+                                console.log(animation.bone);
+                            }
+                        }
+                    }
+                }
+
+                for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                    let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                    if (!updatedBlendShapeNames.includes(blendShapeAnimation.name)) {
+                        if (blendShapeAnimation.time < blendShapeAnimation.duration) {
+                            blendShapeAnimation.time += deltaTime;
+
+                            if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
+                                currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+
+                                app.blendShapeAnimations.splice(i, 1);
+                            } else {
+                                currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
+                            }
+                        }
+
+                        updatedBlendShapeNames.push(blendShapeAnimation.name);
+                    }
+                }
+
+                currentVrm.update(deltaTime);
+
+                /*if (currentMixer) {
+                    currentMixer.update(deltaTime);
                 }*/
 
-                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-            });
-            window.addEventListener('touchstart', (event) => {
-                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-            });
-            window.addEventListener('touchmove', (event) => {
-                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-            });
-            window.addEventListener('touchend', (event) => {
-                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-            });
+                renderer.render(scene, camera);
+            }
+
+            stats.update();
         }
+
+        render();
+
+        window.addEventListener('resize', (event) => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(width, height);
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });
+        window.addEventListener('mousemove', (event) => {
+            /*if (currentVrm) {
+        
+                const range = CAMERA_Z * Math.tan(CAMERA_FOV / 360.0 * Math.PI);
+                const px = (2.0 * event.clientX - window.innerWidth) / window.innerHeight * range;
+                const py = -(2.0 * event.clientY - window.innerHeight) / window.innerHeight * range;
+        
+                currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
+            }*/
+
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
+        window.addEventListener('touchstart', (event) => {
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
+        window.addEventListener('touchmove', (event) => {
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
+        window.addEventListener('touchend', (event) => {
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
     </script>
 </body>
 
