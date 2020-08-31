@@ -49,6 +49,12 @@
             margin: 0;
             width: 0%;
             height: 2px;
+            top: 0;
+            left: 0;
+            overflow: hidden;
+            background-image: url('/images/Stripes.png');
+            background-repeat: repeat;
+            animation: progress 5s linear 0s infinite;
         }
 
         #three {
@@ -299,6 +305,16 @@
             animation: updating 1s linear infinite;
         }
 
+        @keyframes progress {
+            0% {
+                background-position: 0% 0%;
+            }
+
+            100% {
+                background-position: -100% 0%;
+            }
+        }
+
         @keyframes updating {
             0% {
                 transform: rotate(0deg);
@@ -311,6 +327,10 @@
 
         @media screen and (-webkit-min-device-pixel-ratio:2),
         (min-resolution: 2dppx) {
+            .progress {
+                background-image: url('/images/Stripes@2x.png');
+            }
+
             .media-content .has-text-left .balloon {
                 display: inline-block;
                 padding: 8px 16px 8px 16px;
@@ -332,6 +352,10 @@
 
         @media screen and (-webkit-min-device-pixel-ratio:3),
         (min-resolution: 3dppx) {
+            .progress {
+                background-image: url('/images/Stripes@3x.png');
+            }
+
             .media-content .has-text-left .balloon {
                 display: inline-block;
                 padding: 8px 16px 8px 16px;
@@ -1055,7 +1079,6 @@
             mounted: function () {
                 let container = this.$el.querySelector("#container");
 
-                //this.messages.push({ id: -1, text: 'ミルヒだよ', tint: milch.tint, avatar: milch.avatar, author: milch.name, timestamp: new Date() });
                 container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
                 container.style.paddingBottom = this.$el.querySelector("#input").getBoundingClientRect().height + 'px';
 
