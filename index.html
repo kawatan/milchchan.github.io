@@ -703,8 +703,6 @@
 
         camera.add(lookAtTarget);
 
-        let currentVrm = null;
-
         const stats = new Stats();
 
         stats.domElement.style.position = "absolute";
@@ -734,6 +732,7 @@
                 words: -1,
                 likes: -1,
                 notification: null,
+                vrm: null,
                 animations: null,
                 animationsQueue: [],
                 currentAnimations: [],
@@ -858,7 +857,7 @@
                         return (count || 0) + 1;
                     });
 
-                    if (this.animations) {
+                    if (this.vrm) {
                         this.animationsQueue.push(this.animations['jump']);
                     }
 
@@ -980,7 +979,7 @@
                         if (received) {
                             this.$el.querySelector("#recieve").play();
 
-                            if (!received.id && currentVrm) {
+                            if (!received.id && this.vrm) {
                                 this.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                             }
                         } else if (isSent) {
@@ -996,62 +995,61 @@
                     loader.load(
                         "/models/Milch.vrm",
                         (gltf) => {
-                            THREE.VRM.from(gltf).then((vrm) => {
-                                currentVrm = vrm;
+                            THREE.VRM.from(gltf).then(async (vrm) => {
+                                const urls = {
+                                    idle1: '/models/animations/animation-idle1.json',
+                                    idle2: '/models/animations/animation-idle2.json',
+                                    idle3: '/models/animations/animation-idle3.json',
+                                    idle4: '/models/animations/animation-idle4.json',
+                                    jump: '/models/animations/animation-jump.json',
+                                    lose: '/models/animations/animation-lose.json',
+                                    //run: '/models/animations/animation-run.json',
+                                    //walk: '/models/animations/animation-walk.json',
+                                    win: '/models/animations/animation-win.json'
+                                };
+                                let animationDictionary = {};
 
-                                scene.add(vrm.scene);
+                                try {
+                                    for (let key in urls) {
+                                        const response = await fetch(encodeURI(urls[key]), {
+                                            mode: "cors",
+                                            method: "GET",
+                                            headers: {
+                                                "Content-Type": "application/x-www-form-urlencoded"
+                                            }
+                                        });
 
-                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+                                        if (response.ok) {
+                                            const json = await response.json();
 
-                                //currentMixer = prepareAnimation(vrm);
+                                            animationDictionary[key] = json.data;
+                                        }
+                                        else {
+                                            throw new Error(response.statusText);
+                                        }
+                                    }
 
-                                vrm.lookAt.target = lookAtTarget;
+                                    app.animations = animationDictionary;
+                                    app.animationsQueue.push(app.animations['jump']);
+                                    app.vrm = vrm;
 
-                                app.progress = 0.0;
+                                    scene.add(vrm.scene);
+
+                                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                                    //currentMixer = prepareAnimation(vrm);
+
+                                    vrm.lookAt.target = lookAtTarget;
+
+                                    app.progress = 0.0;
+                                } catch (e) {
+                                    console.error(e);
+                                }
                             });
                         },
                         (progress) => app.progress = progress.loaded / progress.total,
                         (error) => console.error(error)
                     );
-
-                    const urls = {
-                        idle1: '/models/animations/animation-idle1.json',
-                        idle2: '/models/animations/animation-idle2.json',
-                        idle3: '/models/animations/animation-idle3.json',
-                        idle4: '/models/animations/animation-idle4.json',
-                        jump: '/models/animations/animation-jump.json',
-                        lose: '/models/animations/animation-lose.json',
-                        //run: '/models/animations/animation-run.json',
-                        //walk: '/models/animations/animation-walk.json',
-                        win: '/models/animations/animation-win.json'
-                    };
-                    let animationDictionary = {};
-
-                    try {
-                        for (let key in urls) {
-                            const response = await fetch(encodeURI(urls[key]), {
-                                mode: "cors",
-                                method: "GET",
-                                headers: {
-                                    "Content-Type": "application/x-www-form-urlencoded"
-                                }
-                            });
-
-                            if (response.ok) {
-                                const json = await response.json();
-
-                                animationDictionary[key] = json.data;
-                            }
-                            else {
-                                throw new Error(response.statusText);
-                            }
-                        }
-
-                        this.animations = animationDictionary;
-                        this.animationsQueue.push(this.animations['jump']);
-                    } catch (e) {
-                        console.error(e);
-                    }
                 }
             },
             mounted: function () {
@@ -1096,7 +1094,7 @@
 
             const deltaTime = clock.getDelta();
 
-            if (currentVrm && app.animations) {
+            if (app.vrm) {
                 let messageData;
                 let updatedBlendShapeNames = [];
 
@@ -1132,9 +1130,9 @@
 
                         idleTime = null;
                     } else {
-                        const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
+                        const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
 
-                        for (let animation of app.animations[idles[random(0, 4)]]) {
+                        for (let animation of app.animations[idles[random(0, 9)]]) {
                             app.currentAnimations.push(animation);
                         }
 
@@ -1396,8 +1394,8 @@
 
                         if (animation.bone && animation.rotation.length == 4) {
                             try {
-                                currentVrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
-                                currentVrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
+                                app.vrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
+                                app.vrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
                             } catch (e) {
                                 console.log(animation.bone);
                             }
@@ -1413,11 +1411,11 @@
                             blendShapeAnimation.time += deltaTime;
 
                             if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
-                                currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+                                app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
 
                                 app.blendShapeAnimations.splice(i, 1);
                             } else {
-                                currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
+                                app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
                             }
                         }
 
@@ -1425,7 +1423,7 @@
                     }
                 }
 
-                currentVrm.update(deltaTime);
+                app.vrm.update(deltaTime);
 
                 /*if (currentMixer) {
                     currentMixer.update(deltaTime);
@@ -1494,11 +1492,11 @@
                         e.target.result,
                         (gltf) => {
                             THREE.VRM.from(gltf).then((vrm) => {
-                                if (currentVrm != null) {
-                                    scene.remove(currentVrm.scene);
+                                if (app.vrm != null) {
+                                    scene.remove(app.vrm.scene);
                                 }
 
-                                currentVrm = vrm;
+                                app.vrm = vrm;
 
                                 scene.add(vrm.scene);
 
