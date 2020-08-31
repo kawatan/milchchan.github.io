@@ -654,8 +654,9 @@
 
         //var channel = getParameterByName("channel") || getParameterByName("ch") || "";
 
+        const threeCanvas = document.getElementById("three");
         const renderer = new THREE.WebGLRenderer({
-            canvas: document.getElementById("three"),
+            canvas: threeCanvas,
             alpha: true
         });
 
@@ -666,6 +667,11 @@
         if (channel.length > 0) {
             renderer.domElement.classList.add("is-hidden");
         }
+
+        threeCanvas.addEventListener('click', function (event) {
+            lookAtTarget.position.x = (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0;
+            lookAtTarget.position.y = (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0;
+        });
 
         const CAMERA_FOV = 60.0;
         const CAMERA_Z = -1.0;
@@ -1477,8 +1483,8 @@
         
             }*/
 
-            lookAtTarget.position.x = 10.0 * ((event.clientX - 0.5 * window.innerWidth) / window.innerHeight);
-            lookAtTarget.position.y = -10.0 * ((event.clientY - 0.5 * window.innerHeight) / window.innerHeight);
+            lookAtTarget.position.x = (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0;
+            lookAtTarget.position.y = (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0;
         });
     </script>
 </body>
