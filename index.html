@@ -369,43 +369,41 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
-        <div class="progress" v-if="progress &gt; 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
-        </div>
-    </div>
-    <nav id="heading" class="navbar is-fixed-top" role="navigation">
-        <div class="navbar-item is-expanded columns is-desktop">
-            <div class="column is-half has-content-centered" v-cloak>
-                <div class="columns is-mobile">
-                    <div class="column is-1 is-mobile">
-                        <button class="button is-white is-hidden" @click="reveal">
-                            <span class="icon is-small">
-                                <i class="fas fa-bars"></i>
-                            </span>
-                        </button>
-                    </div>
-                    <div class="column is-10 is-mobile">
-                        <div class="control has-text-centered">
-                            <nav class="level is-hidden">
-                                <div class="level-item has-text-centered image">
-                                    <a href="/"><img src="/images/Logo.png"
-                                            srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
-                                            alt="milchchan.com"></a>
-                                </div>
-                            </nav>
-                            <nav class="level">
-                                <div class="level-item has-text-centered">
-
-                                    <div class="field is-grouped is-vcentered">
-                                        <span class="icon is-small">
-                                            <i class="fas fa-book"></i>
-                                        </span>
-                                        <span class="title is-size-3"
-                                            v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
+        <div class="progress" v-if="progress &gt; 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak></div>
+        <nav id="heading" class="navbar is-fixed-top" role="navigation">
+            <div class="navbar-item is-expanded columns is-desktop">
+                <div class="column is-half has-content-centered" v-cloak>
+                    <div class="columns is-mobile">
+                        <div class="column is-1 is-mobile">
+                            <button class="button is-white is-hidden" @click="reveal">
+                                <span class="icon is-small">
+                                    <i class="fas fa-bars"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="column is-10 is-mobile">
+                            <div class="control has-text-centered">
+                                <nav class="level is-hidden">
+                                    <div class="level-item has-text-centered image">
+                                        <a href="/"><img src="/images/Logo.png"
+                                                srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
+                                                alt="milchchan.com"></a>
                                     </div>
+                                </nav>
+                                <nav class="level">
+                                    <div class="level-item has-text-centered">
+
+                                        <div class="field is-grouped is-vcentered">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-book"></i>
+                                            </span>
+                                            <span class="title is-size-3"
+                                                v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
+                                        </div>
 
 
 
-                                    <!--
+                                        <!--
                                     <div class="column">
                                         <button class="button is-white has-background-white has-text-black is-rounded"
                                             v-bind:disabled="!isReady" v-on:click="like">
@@ -421,176 +419,177 @@
                                         
                                     </div>
                             </div>-->
-                                </div>
-                            </nav>
-                            <nav class="level">
-                                <div class="level-item has-text-centered">
-                                    <div class="field">
-                                        <h6 class="subtitle is-size-7 is-uppercase has-text-weight-bold">覚えたことば</h6>
                                     </div>
-                                </div>
-                            </nav>
-                            <nav class="level" v-bind:class="{'is-hidden': !isRevealed}">
-                                <div class="level-item has-text-centered">
-                                    <div class="tags are-normal field is-grouped is-grouped-multiline">
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-white"><a class="has-text-black"
-                                                        href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
-                                                <span class="tag is-black">Windows</span>
-                                            </div>
-                                        </div>
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-white"><a class="has-text-black"
-                                                        href="https://clock.milchchan.com/">Clock</a></span>
-                                                <span class="tag is-black">Web</span>
-                                            </div>
-                                        </div>
-                                        <div class="control">
-                                            <div class="tags has-addons">
-                                                <span class="tag is-white"><a class="has-text-black"
-                                                        href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
-                                                <span class="tag is-black">iOS</span>
-                                            </div>
+                                </nav>
+                                <nav class="level">
+                                    <div class="level-item has-text-centered">
+                                        <div class="field">
+                                            <h6 class="subtitle is-size-7 is-uppercase has-text-weight-bold">おぼえたことば</h6>
                                         </div>
                                     </div>
-                                </div>
-                            </nav>
+                                </nav>
+                                <nav class="level" v-bind:class="{'is-hidden': !isRevealed}">
+                                    <div class="level-item has-text-centered">
+                                        <div class="tags are-normal field is-grouped is-grouped-multiline">
+                                            <div class="control">
+                                                <div class="tags has-addons">
+                                                    <span class="tag is-white"><a class="has-text-black"
+                                                            href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
+                                                    <span class="tag is-black">Windows</span>
+                                                </div>
+                                            </div>
+                                            <div class="control">
+                                                <div class="tags has-addons">
+                                                    <span class="tag is-white"><a class="has-text-black"
+                                                            href="https://clock.milchchan.com/">Clock</a></span>
+                                                    <span class="tag is-black">Web</span>
+                                                </div>
+                                            </div>
+                                            <div class="control">
+                                                <div class="tags has-addons">
+                                                    <span class="tag is-white"><a class="has-text-black"
+                                                            href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
+                                                    <span class="tag is-black">iOS</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
                         </div>
-                    </div>
-                    <!--<div class="column is-1 is-mobile">
+                        <!--<div class="column is-1 is-mobile">
                             <button class="button is-white">
                                 <span class="icon is-small">
                                     <i class="fas fa-bars"></i>
                                 </span>
                             </button>
                         </div>-->
+                    </div>
                 </div>
             </div>
-        </div>
-    </nav>
-    <div id="container">
-        <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
-            <div class="column is-half has-content-centered">
-                <hr class="is-invisible">
-                <article class="media" v-if="user.uid === message.user.id" v-cloak>
-                    <div class="media-content">
-                        <div class="level is-mobile" v-if="message.user.name">
-                            <div class="level-left">
-                                <span
-                                    class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+        </nav>
+        <div id="container">
+            <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
+                <div class="column is-half has-content-centered">
+                    <hr class="is-invisible">
+                    <article class="media" v-if="user.uid === message.user.id" v-cloak>
+                        <div class="media-content">
+                            <div class="level is-mobile" v-if="message.user.name">
+                                <div class="level-left">
+                                    <span
+                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                </div>
+                            </div>
+                            <div class="content has-text-right">
+                                <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                        {{ formatDate(message.timestamp) }}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                        <div class="content has-text-right">
-                            <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                <p class="has-text-weight-bold has-text-white">
-                                    {{ message.text }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                    {{ formatDate(message.timestamp) }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <figure class="media-right" v-if="message.user.image">
-                        <p class="image is-64x64">
-                            <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                        </p>
-                    </figure>
-                </article>
-                <article class="media" v-else v-cloak>
-                    <figure class="media-left" v-if="message.user.image">
-                        <p class="image is-64x64">
-                            <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                        </p>
-                    </figure>
-                    <div class="media-content">
-                        <div class="level is-mobile" v-if="message.user.name">
-                            <div class="level-left">
-                                <span
-                                    class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                            </div>
-                        </div>
-                        <div class="content has-text-left">
-                            <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                <p class="has-text-weight-bold has-text-white">
-                                    <span v-bind:class="{'is-hidden': message.text}">
-                                        <i class="fas fa-spinner updating"></i>
-                                    </span>
-                                    {{ message.text }}
-                                </p>
-                            </div>
-                            <div>
-                                <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                    {{ formatDate(message.timestamp) }}</p>
-                            </div>
-                        </div>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </div>
-    <nav id="input" class="navbar is-fixed-bottom" role="navigation">
-        <div class="navbar-item is-expanded columns is-desktop">
-            <div class="column is-half has-content-centered is-mobile">
-                <div class="notification is-info is-light" v-if="notification" v-cloak>
-                    <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
-                        <figure class="media-left" v-if="notification.image" v-cloak>
-                            <span class="image is-32x32">
-                                <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
-                            </span>
+                        <figure class="media-right" v-if="message.user.image">
+                            <p class="image is-64x64">
+                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                            </p>
+                        </figure>
+                    </article>
+                    <article class="media" v-else v-cloak>
+                        <figure class="media-left" v-if="message.user.image">
+                            <p class="image is-64x64">
+                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                            </p>
                         </figure>
                         <div class="media-content">
+                            <div class="level is-mobile" v-if="message.user.name">
+                                <div class="level-left">
+                                    <span
+                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                </div>
+                            </div>
                             <div class="content has-text-left">
-                                <span class="has-text-weight-bold" v-cloak>
-                                    {{ notification.text }}
-                                </span>
+                                <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                    <p class="has-text-weight-bold has-text-white">
+                                        <span v-bind:class="{'is-hidden': message.text}">
+                                            <i class="fas fa-spinner updating"></i>
+                                        </span>
+                                        {{ message.text }}
+                                    </p>
+                                </div>
+                                <div>
+                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                        {{ formatDate(message.timestamp) }}</p>
+                                </div>
                             </div>
                         </div>
                     </article>
                 </div>
-                <div>
-                    <span class="is-size-7 has-text-weight-normal has-text-grey" v-cloak>
-                        {{ currentInputLength }}/{{ maxInputLength }}
-                    </span>
-                </div>
-                <form onsubmit="return false;">
-                    <div class="field has-addons">
-                        <div class="control">
-                            <button class="button is-rounded" type="button" @click="like"><span class="icon is-small">
-                                    <i class="fas fa-star"></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="control is-expanded">
-                            <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
-                                v-model="input" @input="change">
-                        </div>
-                        <div class="control">
-                            <button class="button is-rounded is-primary" type="submit"
-                                v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
-                                @click="send"><span class="icon is-small">
-                                    <i class="fas fa-paper-plane"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                </form>
             </div>
         </div>
-    </nav>
-    <audio id="send" preload="auto">
-        <source src="/sounds/plastic_hi.wav" type="audio/wav" />
-    </audio>
-    <audio id="recieve" preload="auto">
-        <source src="/sounds/plastic_lo.wav" type="audio/wav" />
-    </audio>
-    <audio id="like" preload="auto">
-        <source src="/sounds/plastic_up_hi.wav" type="audio/wav" />
-    </audio>
+        <nav id="input" class="navbar is-fixed-bottom" role="navigation">
+            <div class="navbar-item is-expanded columns is-desktop">
+                <div class="column is-half has-content-centered is-mobile">
+                    <div class="notification is-info is-light" v-if="notification" v-cloak>
+                        <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
+                            <figure class="media-left" v-if="notification.image" v-cloak>
+                                <span class="image is-32x32">
+                                    <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
+                                </span>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content has-text-left">
+                                    <span class="has-text-weight-bold" v-cloak>
+                                        {{ notification.text }}
+                                    </span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                    <div>
+                        <span class="is-size-7 has-text-weight-normal has-text-grey" v-cloak>
+                            {{ currentInputLength }}/{{ maxInputLength }}
+                        </span>
+                    </div>
+                    <form onsubmit="return false;">
+                        <div class="field has-addons">
+                            <div class="control">
+                                <button class="button is-rounded" type="button" @click="like"><span
+                                        class="icon is-small">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </button>
+                            </div>
+                            <div class="control is-expanded">
+                                <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
+                                    v-model="input" @input="change">
+                            </div>
+                            <div class="control">
+                                <button class="button is-rounded is-primary" type="submit"
+                                    v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
+                                    @click="send"><span class="icon is-small">
+                                        <i class="fas fa-paper-plane"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+        <audio id="send" preload="auto">
+            <source src="/sounds/plastic_hi.wav" type="audio/wav" />
+        </audio>
+        <audio id="recieve" preload="auto">
+            <source src="/sounds/plastic_lo.wav" type="audio/wav" />
+        </audio>
+        <audio id="like" preload="auto">
+            <source src="/sounds/plastic_up_hi.wav" type="audio/wav" />
+        </audio>
     </div>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
@@ -795,7 +794,7 @@
                                 completed++;
 
                                 if (completed == tokens.length && learned > 0) {
-                                    app.notification = { text: format(channel.length == 0 ? '{0}つのことばを覚えたよぉ' : '{0}つのことばを覚えたよ', learned), accent: merku.accent, image: channel.length == 0 ? merku.image : null };
+                                    app.notification = { text: format(channel.length == 0 ? '{0}つのことばをおぼえたよぉ' : '{0}つのことばをおぼえたよ', learned), accent: merku.accent, image: channel.length == 0 ? merku.image : null };
 
                                     window.setTimeout(async function () {
                                         app.notification = null;
@@ -1152,394 +1151,394 @@
                 }
 
             }, false);
-        }
 
-        const clock = new THREE.Clock();
-        const mouseRaycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        let animationIndex = 0;
-        const animationSkipFrames = 2;
-        let idleTime = null;
-        const blinkThreshold = 5.0;
-        let lookAnimation = null;
-        
-        function render() {
-            requestAnimationFrame(render);
+            const clock = new THREE.Clock();
+            const mouseRaycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            let animationIndex = 0;
+            const animationSkipFrames = 2;
+            let idleTime = null;
+            const blinkThreshold = 5.0;
+            let lookAnimation = null;
 
-            const deltaTime = clock.getDelta();
+            function render() {
+                requestAnimationFrame(render);
 
-            if (currentVrm && app.animations) {
-                let messageData;
-                let updatedBlendShapeNames = [];
+                const deltaTime = clock.getDelta();
 
-                if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
-                    messageData = app.currentAnimations[animationIndex];
-                    animationIndex += animationSkipFrames;
+                if (currentVrm && app.animations) {
+                    let messageData;
+                    let updatedBlendShapeNames = [];
 
-                    if (idleTime !== null) {
-                        if (app.blendShapeAnimationQueue.length > 0) {
-                            idleTime = null;
-                        } else {
-                            idleTime += deltaTime;
+                    if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
+                        messageData = app.currentAnimations[animationIndex];
+                        animationIndex += animationSkipFrames;
 
-                            if (idleTime >= blinkThreshold) {
-                                const durations = [0.5, 1.0];
-                                const ends = [2.0, 4.0];
-                                const index = random(0, 1);
-                                const duration = durations[index];
-                                const end = ends[index];
-
-                                app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
-                                idleTime = 0.0;
-                            }
-                        }
-                    }
-                } else {
-                    app.currentAnimations.splice(0);
-
-                    if (app.animationsQueue.length > 0) {
-                        for (let animation of app.animationsQueue.shift()) {
-                            app.currentAnimations.push(animation);
-                        }
-
-                        idleTime = null;
-                    } else {
-                        for (let animation of app.animations['idle1']) {
-                            app.currentAnimations.push(animation);
-                        }
-
-                        if (idleTime === null) {
-                            idleTime = 0.0;
-                        } else if (app.blendShapeAnimationQueue.length > 0) {
-                            idleTime = null;
-                        } else {
-                            idleTime += deltaTime;
-
-                            if (idleTime >= blinkThreshold) {
-                                const durations = [0.5, 1.0];
-                                const ends = [2.0, 4.0];
-                                const index = random(0, 1);
-                                const duration = durations[index];
-                                const end = ends[index];
-
-                                app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
-                                idleTime = 0.0;
-                            }
-                        }
-                    }
-
-                    animationIndex = 0;
-                    messageData = app.currentAnimations[animationIndex];
-                    animationIndex += animationSkipFrames;
-                }
-
-                if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
-                    for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
-                        app.blendShapeAnimations.unshift(blendShapeAnimation);
-                    }
-                }
-
-                if (lookAnimation !== null) {
-                    lookAnimation.time += deltaTime;
-
-                    if (lookAnimation.time >= lookAnimation.duration) {
-                        lookAtTarget.position.x = lookAnimation.target.x;
-                        lookAtTarget.position.y = lookAnimation.target.y;
-                        lookAnimation = null;
-                    } else {
-                        const rate = lookAnimation.time / lookAnimation.duration;
-
-                        lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
-                        lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
-                    }
-                }
-
-                if (messageData) {
-                    for (let animation of messageData.animations) {
-                        switch (animation.bone) {
-                            case 'chest':
-                            case 'head':
-                            case 'hips':
-                            case 'jaw':
-                            case 'leftEye':
-                            case 'leftFoot':
-                            case 'leftHand':
-                            case 'leftIndexDistal':
-                            case 'leftIndexIntermediate':
-                            case 'leftIndexProximal':
-                            case 'leftLittleDistal':
-                            case 'leftLittleIntermediate':
-                            case 'leftLittleProximal':
-                            case 'leftLowerArm':
-                            case 'leftLowerLeg':
-                            case 'leftMiddleDistal':
-                            case 'leftMiddleIntermediate':
-                            case 'leftMiddleProximal':
-                            case 'leftRingDistal':
-                            case 'leftRingIntermediate':
-                            case 'leftRingProximal':
-                            case 'leftShoulder':
-                            case 'leftThumbDistal':
-                            case 'leftThumbIntermediate':
-                            case 'leftThumbProximal':
-                            case 'leftToes':
-                            case 'leftUpperArm':
-                            case 'leftUpperLeg':
-                            case 'neck':
-                            case 'rightEye':
-                            case 'rightFoot':
-                            case 'rightHand':
-                            case 'rightIndexDistal':
-                            case 'rightIndexIntermediate':
-                            case 'rightIndexProximal':
-                            case 'rightLittleDistal':
-                            case 'rightLittleIntermediate':
-                            case 'rightLittleProximal':
-                            case 'rightLowerArm':
-                            case 'rightLowerLeg':
-                            case 'rightMiddleDistal':
-                            case 'rightMiddleIntermediate':
-                            case 'rightMiddleProximal':
-                            case 'rightRingDistal':
-                            case 'rightRingIntermediate':
-                            case 'rightRingProximal':
-                            case 'rightShoulder':
-                            case 'rightThumbDistal':
-                            case 'rightThumbIntermediate':
-                            case 'rightThumbProximal':
-                            case 'rightToes':
-                            case 'rightUpperArm':
-                            case 'rightUpperLeg':
-                            case 'spine':
-                            case 'upperChest':
-                                break;
-                            case 'eye.L':
-                                animation.bone = 'leftEye';
-                                break;
-                            case 'foot.L':
-                                animation.bone = 'leftFoot';
-                                break;
-                            case 'hand.L':
-                                animation.bone = 'leftHand';
-                                break;
-                            case 'f_index.03.L':
-                                animation.bone = 'leftIndexDistal';
-                                break;
-                            case 'f_index.02.L':
-                                animation.bone = 'leftIndexIntermediate';
-                                break;
-                            case 'f_index.01.L':
-                                animation.bone = 'leftIndexProximal';
-                                break;
-                            case 'f_pinky.03.L':
-                                animation.bone = 'leftLittleDistal';
-                                break;
-                            case 'f_pinky.02.L':
-                                animation.bone = 'leftLittleIntermediate';
-                                break;
-                            case 'f_pinky.01.L':
-                                animation.bone = 'leftLittleProximal';
-                                break;
-                            case 'lower_arm.L':
-                                animation.bone = 'leftLowerArm';
-                                break;
-                            case 'shin.L':
-                                animation.bone = 'leftLowerLeg';
-                                break;
-                            case 'f_middle.03.L':
-                                animation.bone = 'leftMiddleDistal';
-                                break;
-                            case 'f_middle.02.L':
-                                animation.bone = 'leftMiddleIntermediate';
-                                break;
-                            case 'f_middle.01.L':
-                                animation.bone = 'leftMiddleProximal';
-                                break;
-                            case 'f_ring.03.L':
-                                animation.bone = 'leftRingDistal';
-                                break;
-                            case 'f_ring.02.L':
-                                animation.bone = 'leftRingIntermediate';
-                                break;
-                            case 'f_ring.01.L':
-                                animation.bone = 'leftRingProximal';
-                                break;
-                            case 'shoulder.L':
-                                animation.bone = 'leftShoulder';
-                                break;
-                            case 'thumb_distal.L':
-                                animation.bone = 'leftThumbDistal';
-                                break;
-                            case 'thumb_intermediate.L':
-                                animation.bone = 'leftThumbIntermediate';
-                                break;
-                            case 'thumb_proximal.L':
-                                animation.bone = 'leftThumbProximal';
-                                break;
-                            case 'toe.L':
-                                animation.bone = 'leftToes';
-                                break;
-                            case 'upper_arm.L':
-                                animation.bone = 'leftUpperArm';
-                                break;
-                            case 'thigh.L':
-                                animation.bone = 'leftUpperLeg';
-                                break;
-                            case 'eye.R':
-                                animation.bone = 'rightEye';
-                                break;
-                            case 'foot.R':
-                                animation.bone = 'rightFoot';
-                                break;
-                            case 'hand.R':
-                                animation.bone = 'rightHand';
-                                break;
-                            case 'f_index.03.R':
-                                animation.bone = 'rightIndexDistal';
-                                break;
-                            case 'f_index.02.R':
-                                animation.bone = 'rightIndexIntermediate';
-                                break;
-                            case 'f_index.01.R':
-                                animation.bone = 'rightIndexProximal';
-                                break;
-                            case 'f_pinky.03.R':
-                                animation.bone = 'rightLittleDistal';
-                                break;
-                            case 'f_pinky.02.R':
-                                animation.bone = 'rightLittleIntermediate';
-                                break;
-                            case 'f_pinky.01.R':
-                                animation.bone = 'rightLittleProximal';
-                                break;
-                            case 'lower_arm.R':
-                                animation.bone = 'rightLowerArm';
-                                break;
-                            case 'shin.R':
-                                animation.bone = 'rightLowerLeg';
-                                break;
-                            case 'f_middle.03.R':
-                                animation.bone = 'rightMiddleDistal';
-                                break;
-                            case 'f_middle.02.R':
-                                animation.bone = 'rightMiddleIntermediate';
-                                break;
-                            case 'f_middle.01.R':
-                                animation.bone = 'rightMiddleProximal';
-                                break;
-                            case 'f_ring.03.R':
-                                animation.bone = 'rightRingDistal';
-                                break;
-                            case 'f_ring.02.R':
-                                animation.bone = 'rightRingIntermediate';
-                                break;
-                            case 'f_ring.01.R':
-                                animation.bone = 'rightRingProximal';
-                                break;
-                            case 'shoulder.R':
-                                animation.bone = 'rightShoulder';
-                                break;
-                            case 'thumb_distal.R':
-                                animation.bone = 'rightThumbDistal';
-                                break;
-                            case 'thumb_intermediate.R':
-                                animation.bone = 'rightThumbIntermediate';
-                                break;
-                            case 'thumb_proximal.R':
-                                animation.bone = 'rightThumbProximal';
-                                break;
-                            case 'toe.R':
-                                animation.bone = 'rightToes';
-                                break;
-                            case 'upper_arm.R':
-                                animation.bone = 'rightUpperArm';
-                                break;
-                            case 'thigh.R':
-                                animation.bone = 'rightUpperLeg';
-                                break;
-                            case 'upper_chest':
-                                animation.bone = 'upperChest';
-                                break;
-                            default:
-                                animation.bone = null;
-                        }
-
-                        if (animation.bone && animation.rotation.length == 4) {
-                            try {
-                                currentVrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
-                                currentVrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
-                            } catch (e) {
-                                console.log(animation.bone);
-                            }
-                        }
-                    }
-                }
-
-                for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                    let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                    if (!updatedBlendShapeNames.includes(blendShapeAnimation.name)) {
-                        if (blendShapeAnimation.time < blendShapeAnimation.duration) {
-                            blendShapeAnimation.time += deltaTime;
-
-                            if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
-                                currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
-
-                                app.blendShapeAnimations.splice(i, 1);
+                        if (idleTime !== null) {
+                            if (app.blendShapeAnimationQueue.length > 0) {
+                                idleTime = null;
                             } else {
-                                currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
+                                idleTime += deltaTime;
+
+                                if (idleTime >= blinkThreshold) {
+                                    const durations = [0.5, 1.0];
+                                    const ends = [2.0, 4.0];
+                                    const index = random(0, 1);
+                                    const duration = durations[index];
+                                    const end = ends[index];
+
+                                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
+                                    idleTime = 0.0;
+                                }
+                            }
+                        }
+                    } else {
+                        app.currentAnimations.splice(0);
+
+                        if (app.animationsQueue.length > 0) {
+                            for (let animation of app.animationsQueue.shift()) {
+                                app.currentAnimations.push(animation);
+                            }
+
+                            idleTime = null;
+                        } else {
+                            for (let animation of app.animations['idle1']) {
+                                app.currentAnimations.push(animation);
+                            }
+
+                            if (idleTime === null) {
+                                idleTime = 0.0;
+                            } else if (app.blendShapeAnimationQueue.length > 0) {
+                                idleTime = null;
+                            } else {
+                                idleTime += deltaTime;
+
+                                if (idleTime >= blinkThreshold) {
+                                    const durations = [0.5, 1.0];
+                                    const ends = [2.0, 4.0];
+                                    const index = random(0, 1);
+                                    const duration = durations[index];
+                                    const end = ends[index];
+
+                                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
+                                    idleTime = 0.0;
+                                }
                             }
                         }
 
-                        updatedBlendShapeNames.push(blendShapeAnimation.name);
+                        animationIndex = 0;
+                        messageData = app.currentAnimations[animationIndex];
+                        animationIndex += animationSkipFrames;
                     }
+
+                    if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
+                        for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
+                            app.blendShapeAnimations.unshift(blendShapeAnimation);
+                        }
+                    }
+
+                    if (lookAnimation !== null) {
+                        lookAnimation.time += deltaTime;
+
+                        if (lookAnimation.time >= lookAnimation.duration) {
+                            lookAtTarget.position.x = lookAnimation.target.x;
+                            lookAtTarget.position.y = lookAnimation.target.y;
+                            lookAnimation = null;
+                        } else {
+                            const rate = lookAnimation.time / lookAnimation.duration;
+
+                            lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
+                            lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
+                        }
+                    }
+
+                    if (messageData) {
+                        for (let animation of messageData.animations) {
+                            switch (animation.bone) {
+                                case 'chest':
+                                case 'head':
+                                case 'hips':
+                                case 'jaw':
+                                case 'leftEye':
+                                case 'leftFoot':
+                                case 'leftHand':
+                                case 'leftIndexDistal':
+                                case 'leftIndexIntermediate':
+                                case 'leftIndexProximal':
+                                case 'leftLittleDistal':
+                                case 'leftLittleIntermediate':
+                                case 'leftLittleProximal':
+                                case 'leftLowerArm':
+                                case 'leftLowerLeg':
+                                case 'leftMiddleDistal':
+                                case 'leftMiddleIntermediate':
+                                case 'leftMiddleProximal':
+                                case 'leftRingDistal':
+                                case 'leftRingIntermediate':
+                                case 'leftRingProximal':
+                                case 'leftShoulder':
+                                case 'leftThumbDistal':
+                                case 'leftThumbIntermediate':
+                                case 'leftThumbProximal':
+                                case 'leftToes':
+                                case 'leftUpperArm':
+                                case 'leftUpperLeg':
+                                case 'neck':
+                                case 'rightEye':
+                                case 'rightFoot':
+                                case 'rightHand':
+                                case 'rightIndexDistal':
+                                case 'rightIndexIntermediate':
+                                case 'rightIndexProximal':
+                                case 'rightLittleDistal':
+                                case 'rightLittleIntermediate':
+                                case 'rightLittleProximal':
+                                case 'rightLowerArm':
+                                case 'rightLowerLeg':
+                                case 'rightMiddleDistal':
+                                case 'rightMiddleIntermediate':
+                                case 'rightMiddleProximal':
+                                case 'rightRingDistal':
+                                case 'rightRingIntermediate':
+                                case 'rightRingProximal':
+                                case 'rightShoulder':
+                                case 'rightThumbDistal':
+                                case 'rightThumbIntermediate':
+                                case 'rightThumbProximal':
+                                case 'rightToes':
+                                case 'rightUpperArm':
+                                case 'rightUpperLeg':
+                                case 'spine':
+                                case 'upperChest':
+                                    break;
+                                case 'eye.L':
+                                    animation.bone = 'leftEye';
+                                    break;
+                                case 'foot.L':
+                                    animation.bone = 'leftFoot';
+                                    break;
+                                case 'hand.L':
+                                    animation.bone = 'leftHand';
+                                    break;
+                                case 'f_index.03.L':
+                                    animation.bone = 'leftIndexDistal';
+                                    break;
+                                case 'f_index.02.L':
+                                    animation.bone = 'leftIndexIntermediate';
+                                    break;
+                                case 'f_index.01.L':
+                                    animation.bone = 'leftIndexProximal';
+                                    break;
+                                case 'f_pinky.03.L':
+                                    animation.bone = 'leftLittleDistal';
+                                    break;
+                                case 'f_pinky.02.L':
+                                    animation.bone = 'leftLittleIntermediate';
+                                    break;
+                                case 'f_pinky.01.L':
+                                    animation.bone = 'leftLittleProximal';
+                                    break;
+                                case 'lower_arm.L':
+                                    animation.bone = 'leftLowerArm';
+                                    break;
+                                case 'shin.L':
+                                    animation.bone = 'leftLowerLeg';
+                                    break;
+                                case 'f_middle.03.L':
+                                    animation.bone = 'leftMiddleDistal';
+                                    break;
+                                case 'f_middle.02.L':
+                                    animation.bone = 'leftMiddleIntermediate';
+                                    break;
+                                case 'f_middle.01.L':
+                                    animation.bone = 'leftMiddleProximal';
+                                    break;
+                                case 'f_ring.03.L':
+                                    animation.bone = 'leftRingDistal';
+                                    break;
+                                case 'f_ring.02.L':
+                                    animation.bone = 'leftRingIntermediate';
+                                    break;
+                                case 'f_ring.01.L':
+                                    animation.bone = 'leftRingProximal';
+                                    break;
+                                case 'shoulder.L':
+                                    animation.bone = 'leftShoulder';
+                                    break;
+                                case 'thumb_distal.L':
+                                    animation.bone = 'leftThumbDistal';
+                                    break;
+                                case 'thumb_intermediate.L':
+                                    animation.bone = 'leftThumbIntermediate';
+                                    break;
+                                case 'thumb_proximal.L':
+                                    animation.bone = 'leftThumbProximal';
+                                    break;
+                                case 'toe.L':
+                                    animation.bone = 'leftToes';
+                                    break;
+                                case 'upper_arm.L':
+                                    animation.bone = 'leftUpperArm';
+                                    break;
+                                case 'thigh.L':
+                                    animation.bone = 'leftUpperLeg';
+                                    break;
+                                case 'eye.R':
+                                    animation.bone = 'rightEye';
+                                    break;
+                                case 'foot.R':
+                                    animation.bone = 'rightFoot';
+                                    break;
+                                case 'hand.R':
+                                    animation.bone = 'rightHand';
+                                    break;
+                                case 'f_index.03.R':
+                                    animation.bone = 'rightIndexDistal';
+                                    break;
+                                case 'f_index.02.R':
+                                    animation.bone = 'rightIndexIntermediate';
+                                    break;
+                                case 'f_index.01.R':
+                                    animation.bone = 'rightIndexProximal';
+                                    break;
+                                case 'f_pinky.03.R':
+                                    animation.bone = 'rightLittleDistal';
+                                    break;
+                                case 'f_pinky.02.R':
+                                    animation.bone = 'rightLittleIntermediate';
+                                    break;
+                                case 'f_pinky.01.R':
+                                    animation.bone = 'rightLittleProximal';
+                                    break;
+                                case 'lower_arm.R':
+                                    animation.bone = 'rightLowerArm';
+                                    break;
+                                case 'shin.R':
+                                    animation.bone = 'rightLowerLeg';
+                                    break;
+                                case 'f_middle.03.R':
+                                    animation.bone = 'rightMiddleDistal';
+                                    break;
+                                case 'f_middle.02.R':
+                                    animation.bone = 'rightMiddleIntermediate';
+                                    break;
+                                case 'f_middle.01.R':
+                                    animation.bone = 'rightMiddleProximal';
+                                    break;
+                                case 'f_ring.03.R':
+                                    animation.bone = 'rightRingDistal';
+                                    break;
+                                case 'f_ring.02.R':
+                                    animation.bone = 'rightRingIntermediate';
+                                    break;
+                                case 'f_ring.01.R':
+                                    animation.bone = 'rightRingProximal';
+                                    break;
+                                case 'shoulder.R':
+                                    animation.bone = 'rightShoulder';
+                                    break;
+                                case 'thumb_distal.R':
+                                    animation.bone = 'rightThumbDistal';
+                                    break;
+                                case 'thumb_intermediate.R':
+                                    animation.bone = 'rightThumbIntermediate';
+                                    break;
+                                case 'thumb_proximal.R':
+                                    animation.bone = 'rightThumbProximal';
+                                    break;
+                                case 'toe.R':
+                                    animation.bone = 'rightToes';
+                                    break;
+                                case 'upper_arm.R':
+                                    animation.bone = 'rightUpperArm';
+                                    break;
+                                case 'thigh.R':
+                                    animation.bone = 'rightUpperLeg';
+                                    break;
+                                case 'upper_chest':
+                                    animation.bone = 'upperChest';
+                                    break;
+                                default:
+                                    animation.bone = null;
+                            }
+
+                            if (animation.bone && animation.rotation.length == 4) {
+                                try {
+                                    currentVrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
+                                    currentVrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
+                                } catch (e) {
+                                    console.log(animation.bone);
+                                }
+                            }
+                        }
+                    }
+
+                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                        let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                        if (!updatedBlendShapeNames.includes(blendShapeAnimation.name)) {
+                            if (blendShapeAnimation.time < blendShapeAnimation.duration) {
+                                blendShapeAnimation.time += deltaTime;
+
+                                if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
+                                    currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+
+                                    app.blendShapeAnimations.splice(i, 1);
+                                } else {
+                                    currentVrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
+                                }
+                            }
+
+                            updatedBlendShapeNames.push(blendShapeAnimation.name);
+                        }
+                    }
+
+                    currentVrm.update(deltaTime);
+
+                    /*if (currentMixer) {
+                        currentMixer.update(deltaTime);
+                    }*/
+
+                    renderer.render(scene, camera);
                 }
 
-                currentVrm.update(deltaTime);
-
-                /*if (currentMixer) {
-                    currentMixer.update(deltaTime);
-                }*/
-
-                renderer.render(scene, camera);
+                stats.update();
             }
 
-            stats.update();
+            render();
+
+            window.addEventListener('resize', (event) => {
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+
+                renderer.setPixelRatio(window.devicePixelRatio);
+                renderer.setSize(width, height);
+
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+            });
+            window.addEventListener('mousemove', (event) => {
+                /*if (currentVrm) {
+            
+                    const range = CAMERA_Z * Math.tan(CAMERA_FOV / 360.0 * Math.PI);
+                    const px = (2.0 * event.clientX - window.innerWidth) / window.innerHeight * range;
+                    const py = -(2.0 * event.clientY - window.innerHeight) / window.innerHeight * range;
+            
+                    currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
+                }*/
+
+                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            });
+            window.addEventListener('touchstart', (event) => {
+                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            });
+            window.addEventListener('touchmove', (event) => {
+                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            });
+            window.addEventListener('touchend', (event) => {
+                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            });
         }
-
-        render();
-
-        window.addEventListener('resize', (event) => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(width, height);
-
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-        });
-        window.addEventListener('mousemove', (event) => {
-            /*if (currentVrm) {
-        
-                const range = CAMERA_Z * Math.tan(CAMERA_FOV / 360.0 * Math.PI);
-                const px = (2.0 * event.clientX - window.innerWidth) / window.innerHeight * range;
-                const py = -(2.0 * event.clientY - window.innerHeight) / window.innerHeight * range;
-        
-                currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
-            }*/
-
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-        });
-        window.addEventListener('touchstart', (event) => {
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-        });
-        window.addEventListener('touchmove', (event) => {
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-        });
-        window.addEventListener('touchend', (event) => {
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
-        });
     </script>
 </body>
 
