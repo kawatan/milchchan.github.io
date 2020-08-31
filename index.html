@@ -657,7 +657,6 @@
         const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
         const databaseMessages = databaseChannel + '/messages';
         let database = firebase.database();
-        const user = { accent: '#30c0f5' };
         const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
         let segmenter = new TinySegmenter();
@@ -925,92 +924,6 @@
                 }
             },
             created: async function () {
-                database.ref(databaseRoot + "/dictionary/count").on('value', snapshot => {
-                    const count = snapshot.val();
-
-                    if (count === null) {
-                        this.words = 0;
-                    } else {
-                        this.words = count;
-                    }
-                });
-                database.ref(databaseChannel + "/likes").on('value', snapshot => {
-                    const count = snapshot.val();
-
-                    if (count === null) {
-                        this.likes = 0;
-                    } else {
-                        if (this.likes >= 0) {
-                            window.pJSDom[0].pJS.fn.modes.pushParticles(1);
-                        }
-
-                        this.likes = count;
-                    }
-                });
-                database.ref(databaseMessages).limitToLast(this.maxMessages).on('value', snapshot => {
-                    const messageDictionary = snapshot.val();
-
-                    if (messageDictionary) {
-                        let isSent = false;
-                        let received = null;
-
-                        for (let key in messageDictionary) {
-                            const message = messageDictionary[key];
-                            let index = -1;
-
-                            //console.log(date.toISOString());
-                            //console.log(date.toLocaleTimeString());
-
-                            for (let i = 0; i < this.messages.length; i++) {
-                                if (key === this.messages[i].id) {
-                                    index = i;
-
-                                    break;
-                                }
-                            }
-
-                            if (!message.user.accent) {
-                                message.user.accent = user.accent;
-                            }
-
-                            if (index >= 0) {
-                                this.$set(this.messages, key, { id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
-                            }
-                            else {
-                                this.messages.push({ id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
-
-                                if (this.messages.length > this.maxMessages) {
-                                    this.messages.shift();
-                                }
-
-                                if (this.user.uid === message.user.id) {
-                                    isSent = true;
-                                } else {
-                                    received = message.user;
-                                }
-                            }
-                        }
-
-                        for (let i = this.messages.length - 1; i >= 0; i--) {
-                            if (!(this.messages[i].id in messageDictionary)) {
-                                this.messages.splice(i, 1);
-                            }
-                        }
-
-                        this.scrollRequired = true;
-
-                        if (received) {
-                            this.$el.querySelector("#recieve").play();
-
-                            if (!received.id && this.vrm) {
-                                this.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
-                            }
-                        } else if (isSent) {
-                            this.$el.querySelector("#send").play();
-                        }
-                    }
-                });
-
                 if (channel == 0) {
                     const loader = new THREE.GLTFLoader();
 
@@ -1075,6 +988,12 @@
                     );
                 }
             },
+            destroyed: function () {
+                if (this.vrm !== null) {
+                    scene.remove(this.vrm.scene);
+                    this.vrm = null;
+                }
+            },
             mounted: function () {
                 let container = this.$el.querySelector("#container");
 
@@ -1088,16 +1007,101 @@
                     if (user) {
                         // User is signed in.
                         app.user = user;
+
+                        database.ref(databaseRoot + "/dictionary/count").on('value', snapshot => {
+                            const count = snapshot.val();
+
+                            if (count === null) {
+                                app.words = 0;
+                            } else {
+                                app.words = count;
+                            }
+                        });
+                        database.ref(databaseChannel + "/likes").on('value', snapshot => {
+                            const count = snapshot.val();
+
+                            if (count === null) {
+                                app.likes = 0;
+                            } else {
+                                if (app.likes >= 0) {
+                                    window.pJSDom[0].pJS.fn.modes.pushParticles(1);
+                                }
+
+                                app.likes = count;
+                            }
+                        });
+                        database.ref(databaseMessages).limitToLast(app.maxMessages).on('value', snapshot => {
+                            const messageDictionary = snapshot.val();
+
+                            if (messageDictionary) {
+                                let isSent = false;
+                                let received = null;
+
+                                for (let key in messageDictionary) {
+                                    const message = messageDictionary[key];
+                                    let index = -1;
+
+                                    //console.log(date.toISOString());
+                                    //console.log(date.toLocaleTimeString());
+
+                                    for (let i = 0; i < app.messages.length; i++) {
+                                        if (key === app.messages[i].id) {
+                                            index = i;
+
+                                            break;
+                                        }
+                                    }
+
+                                    if (!message.user.accent) {
+                                        message.user.accent = '#30c0f5';
+                                    }
+
+                                    if (index >= 0) {
+                                        app.$set(app.messages, key, { id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                    }
+                                    else {
+                                        app.messages.push({ id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
+
+                                        if (app.messages.length > app.maxMessages) {
+                                            app.messages.shift();
+                                        }
+
+                                        if (app.user.uid === message.user.id) {
+                                            isSent = true;
+                                        } else {
+                                            received = message.user;
+                                        }
+                                    }
+                                }
+
+                                for (let i = app.messages.length - 1; i >= 0; i--) {
+                                    if (!(app.messages[i].id in messageDictionary)) {
+                                        app.messages.splice(i, 1);
+                                    }
+                                }
+
+                                app.scrollRequired = true;
+
+                                if (received) {
+                                    app.$el.querySelector("#recieve").play();
+
+                                    if (!received.id && app.vrm) {
+                                        app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
+                                    }
+                                } else if (isSent) {
+                                    app.$el.querySelector("#send").play();
+                                }
+                            }
+                        });
                     } else {
                         // User is signed out.
+                        database.ref(databaseRoot + "/dictionary/count").off('value')
+                        database.ref(databaseChannel + "/likes").off('value');
+                        database.ref(databaseMessages).off('value');
+
                         app.user = null;
                     }
                 });
-            },
-            destroyed: function () {
-                database.ref(databaseRoot + "/dictionary/count").off('value')
-                database.ref(databaseChannel + "/likes").off('value');
-                database.ref(databaseMessages).off('value');
             }
         });
 
@@ -1539,7 +1543,7 @@
                         e.target.result,
                         (gltf) => {
                             THREE.VRM.from(gltf).then((vrm) => {
-                                if (app.vrm != null) {
+                                if (app.vrm !== null) {
                                     scene.remove(app.vrm.scene);
                                 }
 
