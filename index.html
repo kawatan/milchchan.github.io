@@ -370,7 +370,7 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
-        <div class="progress" v-if="progress &gt; 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
+        <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
