@@ -1081,7 +1081,7 @@
         });
 
         const clock = new THREE.Clock();
-        const mouseRaycaster = new THREE.Raycaster();
+        const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
         let animationIndex = 0;
         const animationSkipFrames = 2;
@@ -1452,6 +1452,17 @@
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
         });
+        window.addEventListener('click', (event) => {
+            raycaster.setFromCamera(mouse, camera);
+
+            for (let intersect of raycaster.intersectObjects(scene.children, true)) {
+                if (intersect.object.name === 'face') {
+                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }]);
+
+                    break;
+                }
+            }
+        });
         window.addEventListener('mousemove', (event) => {
             /*if (currentVrm) {
         
@@ -1461,10 +1472,25 @@
         
                 currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
             }*/
+            mouse.x = (event.clientX / window.innerWidth) * 2.0 - 1.0;
+            mouse.y = -(event.clientY / window.innerHeight) * 2.0 + 1.0;
 
             lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
         });
         window.addEventListener('touchstart', (event) => {
+            mouse.x = (event.changedTouches[0].clientX / window.innerWidth) * 2.0 - 1.0;
+            mouse.y = -(event.changedTouches[0].clientY / window.innerHeight) * 2.0 + 1.0;
+
+            raycaster.setFromCamera(mouse, camera);
+
+            for (let intersect of raycaster.intersectObjects(scene.children, true)) {
+                if (intersect.object.name === 'face') {
+                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }]);
+
+                    break;
+                }
+            }
+
             lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
         });
         window.addEventListener('touchmove', (event) => {
