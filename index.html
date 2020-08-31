@@ -858,7 +858,9 @@
                         return (count || 0) + 1;
                     });
 
-                    this.animationsQueue.push(this.animations['jump']);
+                    if (this.animations) {
+                        this.animationsQueue.push(this.animations['jump']);
+                    }
 
                     //this.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
 
@@ -929,7 +931,6 @@
                     if (messageDictionary) {
                         let isSent = false;
                         let received = null;
-                        //let keys = [];
 
                         for (let key in messageDictionary) {
                             const message = messageDictionary[key];
@@ -966,22 +967,20 @@
                                     received = message.user;
                                 }
                             }
-
-                            //keys.push(key);
                         }
 
-                        /*for (let message of this.messages) {
-                            if (!keys.includes(message.id)) {
-                                this.$set(this.messages, message.id, message);
+                        for (let i = this.messages.length - 1; i >= 0; i--) {
+                            if (!(this.messages[i].id in messageDictionary)) {
+                                this.messages.splice(i, 1);
                             }
-                        }*/
+                        }
 
                         this.scrollRequired = true;
 
                         if (received) {
                             this.$el.querySelector("#recieve").play();
 
-                            if (!received.id) {
+                            if (!received.id && currentVrm) {
                                 this.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                             }
                         } else if (isSent) {
@@ -991,6 +990,30 @@
                 });
 
                 if (channel == 0) {
+                    const loader = new THREE.GLTFLoader();
+
+                    loader.crossOrigin = "anonymous";
+                    loader.load(
+                        "/models/Milch.vrm",
+                        (gltf) => {
+                            THREE.VRM.from(gltf).then((vrm) => {
+                                currentVrm = vrm;
+
+                                scene.add(vrm.scene);
+
+                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                                //currentMixer = prepareAnimation(vrm);
+
+                                vrm.lookAt.target = lookAtTarget;
+
+                                app.progress = 0.0;
+                            });
+                        },
+                        (progress) => app.progress = progress.loaded / progress.total,
+                        (error) => console.error(error)
+                    );
+
                     const urls = {
                         idle1: '/models/animations/animation-idle1.json',
                         idle2: '/models/animations/animation-idle2.json',
@@ -998,8 +1021,8 @@
                         idle4: '/models/animations/animation-idle4.json',
                         jump: '/models/animations/animation-jump.json',
                         lose: '/models/animations/animation-lose.json',
-                        run: '/models/animations/animation-run.json',
-                        walk: '/models/animations/animation-walk.json',
+                        //run: '/models/animations/animation-run.json',
+                        //walk: '/models/animations/animation-walk.json',
                         win: '/models/animations/animation-win.json'
                     };
                     let animationDictionary = {};
@@ -1059,85 +1082,6 @@
             }
         });
 
-        window.onresize = function (event) {
-            let container = app.$el.querySelector("#container");
-
-            container.style.paddingTop = app.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
-            container.style.paddingBottom = app.$el.querySelector("#input").getBoundingClientRect().height + 'px';
-        };
-
-        particlesJS.load('particles-js', '/js/particlesjs-config.json', function () {
-            app.isReady = true;
-        });
-
-        const loader = new THREE.GLTFLoader();
-
-        loader.crossOrigin = "anonymous";
-        loader.load(
-            "/models/Milch.vrm",
-            (gltf) => {
-                THREE.VRM.from(gltf).then((vrm) => {
-                    currentVrm = vrm;
-
-                    scene.add(vrm.scene);
-
-                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                    //currentMixer = prepareAnimation(vrm);
-
-                    vrm.lookAt.target = lookAtTarget;
-
-                    app.progress = 0.0;
-                });
-            },
-            (progress) => app.progress = progress.loaded / progress.total,
-            (error) => console.error(error)
-        );
-
-        window.addEventListener("dragover", (event) => {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = "copy";
-        }, false);
-        window.addEventListener("drop", (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-
-            for (let file of event.dataTransfer.files) {
-                let reader = new FileReader();
-
-                reader.addEventListener("load", (e) => {
-                    loader.load(
-                        e.target.result,
-                        (gltf) => {
-                            THREE.VRM.from(gltf).then((vrm) => {
-                                if (currentVrm != null) {
-                                    scene.remove(currentVrm.scene);
-                                }
-
-                                currentVrm = vrm;
-
-                                scene.add(vrm.scene);
-
-                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                                //currentMixer = prepareAnimation(vrm);
-
-                                vrm.lookAt.target = lookAtTarget;
-
-                                app.progress = 0.0;
-                            });
-                        },
-                        (progress) => app.progress = progress.loaded / progress.total,
-                        (error) => console.error(error)
-                    );
-                });
-                reader.readAsDataURL(file);
-
-                break;
-            }
-
-        }, false);
-
         const clock = new THREE.Clock();
         const mouseRaycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
@@ -1188,7 +1132,9 @@
 
                         idleTime = null;
                     } else {
-                        for (let animation of app.animations['idle1']) {
+                        const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
+
+                        for (let animation of app.animations[idles[random(0, 4)]]) {
                             app.currentAnimations.push(animation);
                         }
 
@@ -1494,6 +1440,11 @@
         render();
 
         window.addEventListener('resize', (event) => {
+            let container = app.$el.querySelector("#container");
+
+            container.style.paddingTop = app.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+            container.style.paddingBottom = app.$el.querySelector("#input").getBoundingClientRect().height + 'px';
+
             const width = window.innerWidth;
             const height = window.innerHeight;
 
@@ -1523,6 +1474,56 @@
         });
         window.addEventListener('touchend', (event) => {
             lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
+        window.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "copy";
+        }, false);
+        window.addEventListener("drop", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+
+            for (let file of event.dataTransfer.files) {
+                let reader = new FileReader();
+
+                reader.addEventListener("load", (e) => {
+                    const loader = new THREE.GLTFLoader();
+
+                    loader.crossOrigin = "anonymous";
+                    loader.load(
+                        e.target.result,
+                        (gltf) => {
+                            THREE.VRM.from(gltf).then((vrm) => {
+                                if (currentVrm != null) {
+                                    scene.remove(currentVrm.scene);
+                                }
+
+                                currentVrm = vrm;
+
+                                scene.add(vrm.scene);
+
+                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                                //currentMixer = prepareAnimation(vrm);
+
+                                vrm.lookAt.target = lookAtTarget;
+
+                                app.progress = 0.0;
+                            });
+                        },
+                        (progress) => app.progress = progress.loaded / progress.total,
+                        (error) => console.error(error)
+                    );
+                });
+                reader.readAsDataURL(file);
+
+                break;
+            }
+
+        }, false);
+
+        particlesJS.load('particles-js', '/js/particlesjs-config.json', function () {
+            app.isReady = true;
         });
     </script>
 </body>
