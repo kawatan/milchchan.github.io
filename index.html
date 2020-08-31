@@ -1510,7 +1510,13 @@
 
             lookAnimation = { step: 0.0, speed: 2.0, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
         });
+        window.addEventListener('touchstart', (event) => {
+            lookAnimation = { step: 0.0, speed: 2.0, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
         window.addEventListener('touchmove', (event) => {
+            lookAnimation = { step: 0.0, speed: 2.0, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+        });
+        window.addEventListener('touchend', (event) => {
             lookAnimation = { step: 0.0, speed: 2.0, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
         });
     </script>
