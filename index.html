@@ -400,7 +400,7 @@
                 <div class="column is-half has-content-centered" v-cloak>
                     <div class="columns is-mobile">
                         <div class="column is-1 is-mobile">
-                            <button class="button is-white is-hidden" @click="reveal">
+                            <button class="button is-white is-hidden" type="button" @click="reveal">
                                 <span class="icon is-small">
                                     <i class="fas fa-bars"></i>
                                 </span>
@@ -483,13 +483,13 @@
                                 </nav>
                             </div>
                         </div>
-                        <!--<div class="column is-1 is-mobile">
-                            <button class="button is-white">
+                        <div class="column is-1 is-mobile">
+                            <button class="button is-white is-hidden" type="button" @click="like">
                                 <span class="icon is-small">
-                                    <i class="fas fa-bars"></i>
+                                    <i class="fas fa-star"></i>
                                 </span>
                             </button>
-                        </div>-->
+                        </div>
                     </div>
                 </div>
             </div>
@@ -583,13 +583,6 @@
                     </div>
                     <form onsubmit="return false;">
                         <div class="field has-addons">
-                            <div class="control">
-                                <button class="button is-rounded" type="button" @click="like"><span
-                                        class="icon is-small">
-                                        <i class="fas fa-star"></i>
-                                    </span>
-                                </button>
-                            </div>
                             <div class="control is-expanded">
                                 <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
                                     v-model="input" @input="change">
