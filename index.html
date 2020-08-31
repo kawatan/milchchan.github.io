@@ -1225,8 +1225,8 @@
 
                 if (lookAnimation !== null) {
                     lookAnimation.time += deltaTime;
-
-                    if (lookAnimation.duration >= lookAnimation.time) {
+                    
+                    if (lookAnimation.time >= lookAnimation.duration) {
                         lookAtTarget.position.x = lookAnimation.target.x;
                         lookAtTarget.position.y = lookAnimation.target.y;
                         lookAnimation = null;
