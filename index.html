@@ -44,6 +44,13 @@
             font-family: "Noto Sans JP";
         }
 
+        .progress {
+            background-color: #ffc547;
+            margin: 0;
+            width: 0%;
+            height: 2px;
+        }
+
         #three {
             position: absolute;
             z-index: 0;
@@ -362,6 +369,8 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
+        <div class="progress" v-if="progress &gt; 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
+            v-cloak></div>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered" v-cloak>
@@ -695,72 +704,7 @@
 
         let currentVrm = null;
         let currentMixer = null;
-        const loader = new THREE.GLTFLoader();
-
-        loader.crossOrigin = "anonymous";
-        loader.load(
-            "/models/Milch.vrm",
-            (gltf) => {
-                THREE.VRM.from(gltf).then((vrm) => {
-                    currentVrm = vrm;
-
-                    scene.add(vrm.scene);
-
-                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                    //currentMixer = prepareAnimation(vrm);
-
-                    vrm.lookAt.target = lookAtTarget;
-                });
-            },
-            (progress) => app.progress = progress.loaded / progress.total,
-            (error) => console.error(error)
-        );
-
-        /*var dropZone = document.getElementById("three");
-
-        dropZone.addEventListener("dragover", (event) => {
-            event.preventDefault();
-            event.dataTransfer.dropEffect = "copy";
-        }, false);
-        dropZone.addEventListener("drop", (event) => {
-            event.stopPropagation();
-            event.preventDefault();
-
-            for (let file of event.dataTransfer.files) {
-                let reader = new FileReader();
-
-                reader.addEventListener("load", (e) => {
-                    loader.load(
-                        e.target.result,
-                        (gltf) => {
-                            THREE.VRM.from(gltf).then((vrm) => {
-                                if (currentVrm != null) {
-                                    scene.remove(currentVrm.scene);
-                                }
-
-                                currentVrm = vrm;
-
-                                scene.add(vrm.scene);
-
-                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                                //currentMixer = prepareAnimation(vrm);
-
-                                vrm.lookAt.target = lookAtTarget;
-                            });
-                        },
-                        (progress) => app.progress = progress.loaded / progress.total,
-                        (error) => console.error(error)
-                    );
-                });
-                reader.readAsDataURL(file);
-
-                break;
-            }
-
-        }, false);*/
-
+        
         /*function prepareAnimation(vrm) {
             const mixer = new THREE.AnimationMixer(vrm.scene);
             const blinkTrack = new THREE.NumberKeyframeTrack(
@@ -794,6 +738,7 @@
                 isReady: false,
                 isLoading: false,
                 isRevealed: false,
+                progress: 0,
                 user: null,
                 input: '',
                 currentInputLength: 0,
@@ -1138,6 +1083,74 @@
         particlesJS.load('particles-js', '/js/particlesjs-config.json', function () {
             app.isReady = true;
         });
+
+        const loader = new THREE.GLTFLoader();
+
+        loader.crossOrigin = "anonymous";
+        loader.load(
+            "/models/Milch.vrm",
+            (gltf) => {
+                THREE.VRM.from(gltf).then((vrm) => {
+                    currentVrm = vrm;
+
+                    scene.add(vrm.scene);
+
+                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                    //currentMixer = prepareAnimation(vrm);
+
+                    vrm.lookAt.target = lookAtTarget;
+
+                    app.progress = 0.0;
+                });
+            },
+            (progress) => app.progress = progress.loaded / progress.total,
+            (error) => console.error(error)
+        );
+
+        window.addEventListener("dragover", (event) => {
+            event.preventDefault();
+            event.dataTransfer.dropEffect = "copy";
+        }, false);
+        window.addEventListener("drop", (event) => {
+            event.stopPropagation();
+            event.preventDefault();
+
+            for (let file of event.dataTransfer.files) {
+                let reader = new FileReader();
+
+                reader.addEventListener("load", (e) => {
+                    loader.load(
+                        e.target.result,
+                        (gltf) => {
+                            THREE.VRM.from(gltf).then((vrm) => {
+                                if (currentVrm != null) {
+                                    scene.remove(currentVrm.scene);
+                                }
+
+                                currentVrm = vrm;
+
+                                scene.add(vrm.scene);
+
+                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                                //currentMixer = prepareAnimation(vrm);
+
+                                vrm.lookAt.target = lookAtTarget;
+
+                                app.progress = 0.0;
+                            });
+                        },
+                        (progress) => app.progress = progress.loaded / progress.total,
+                        (error) => console.error(error)
+                    );
+                });
+                reader.readAsDataURL(file);
+
+                break;
+            }
+
+        }, false);
 
         const clock = new THREE.Clock();
 
