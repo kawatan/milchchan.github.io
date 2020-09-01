@@ -1473,19 +1473,19 @@
             /*if (currentVrm) {
         
                 const range = CAMERA_Z * Math.tan(CAMERA_FOV / 360.0 * Math.PI);
-                const px = (2.0 * event.clientX - window.innerWidth) / window.innerHeight * range;
-                const py = -(2.0 * event.clientY - window.innerHeight) / window.innerHeight * range;
+                const px = (2.0 * event.clientX - window.innerWidth) / window.outerHeight * range;
+                const py = -(2.0 * event.clientY - window.outerHeight) / window.outerHeight * range;
         
                 currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
             }*/
             mouse.x = (event.clientX / window.innerWidth) * 2.0 - 1.0;
-            mouse.y = -(event.clientY / window.innerHeight) * 2.0 + 1.0;
+            mouse.y = -(event.clientY / window.outerHeight) * 2.0 + 1.0;
 
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.clientX - 0.5 * window.innerWidth) / window.outerHeight * 10.0, y: (event.clientY - 0.5 * window.outerHeight) / window.outerHeight * -10.0 } };
         });
         window.addEventListener('touchstart', (event) => {
             mouse.x = (event.changedTouches[0].clientX / window.innerWidth) * 2.0 - 1.0;
-            mouse.y = -(event.changedTouches[0].clientY / window.innerHeight) * 2.0 + 1.0;
+            mouse.y = -(event.changedTouches[0].clientY / window.outerHeight) * 2.0 + 1.0;
 
             raycaster.setFromCamera(mouse, camera);
 
@@ -1497,13 +1497,13 @@
                 }
             }
 
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.outerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.outerHeight) / window.outerHeight * -10.0 } };
         });
         window.addEventListener('touchmove', (event) => {
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.outerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.outerHeight) / window.outerHeight * -10.0 } };
         });
         window.addEventListener('touchend', (event) => {
-            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.innerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.innerHeight) / window.innerHeight * -10.0 } };
+            lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: (event.changedTouches[0].clientX - 0.5 * window.innerWidth) / window.outerHeight * 10.0, y: (event.changedTouches[0].clientY - 0.5 * window.outerHeight) / window.outerHeight * -10.0 } };
         });
         window.addEventListener("dragover", (event) => {
             event.preventDefault();
