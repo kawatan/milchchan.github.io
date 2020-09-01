@@ -74,24 +74,17 @@
             animation: progress 5s linear 0s infinite;
         }
 
-        .background {
-            position: fixed;
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
-
         #three {
-            position: absolute;
+            position: fixed;
+            z-index: 0;
             display: block;
             width: 100%;
             height: 100vh;
         }
 
         #particles-js {
-            position: absolute;
+            position: fixed;
+            z-index: 0;
             width: 100%;
             height: 100vh;
             background-color: transparent;
@@ -393,10 +386,8 @@
 </head>
 
 <body>
-    <div class="background">
-        <canvas id="three"></canvas>
-        <div id="particles-js"></div>
-    </div>
+    <canvas id="three"></canvas>
+    <div id="particles-js"></div>
     <div id="app">
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
