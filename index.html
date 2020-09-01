@@ -841,15 +841,15 @@
                     }
                 },
                 focusin: function (event) {
-                    console.log('focusin');
-                    let body = this.$el.querySelector("body");
+                    let body = this.$el.querySelector("#app");
 
                     //container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
-                    body.style.paddingBottom = '0px';
-                    body.style.marginBottom = '0px';
+                    body.style.marginBottom = '20px';
                 },
                 focusout: function (event) {
-                    //console.log('focusout');
+                    let app = this.$el.querySelector("#app");
+
+                    app.style.marginBottom = '0px';
                 },
                 like: function () {
                     /*if (this.isLearning) {
