@@ -76,7 +76,7 @@
             z-index: 0;
             display: block;
             width: 100%;
-            height: 150%;
+            height: 100%;
         }
 
         #particles-js {
@@ -567,7 +567,7 @@
                         <div class="field has-addons">
                             <div class="control is-expanded">
                                 <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
-                                    v-model="input" @input="change">
+                                    v-model="input" @input="change" @focusin="focusin" @focusout="focusout">
                             </div>
                             <div class="control">
                                 <button class="button is-rounded is-primary" type="submit"
@@ -839,6 +839,16 @@
                     } else {
                         this.inputHasError = true;
                     }
+                },
+                focusin: function (event) {
+                    console.log('focusin');
+                    let body = this.$el.querySelector("body");
+
+                    //container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+                    body.style.paddingBottom = '0px';
+                },
+                focusout: function (event) {
+                    //console.log('focusout');
                 },
                 like: function () {
                     /*if (this.isLearning) {
