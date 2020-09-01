@@ -26,6 +26,7 @@
         html {
             width: 100%;
             height: 100vh;
+            height: -webkit-fill-available;
             overflow-x: hidden;
             overflow-y: scroll;
             scroll-behavior: smooth;
@@ -40,6 +41,7 @@
             top: 0;
             width: 100%;
             height: 100vh;
+            height: -webkit-fill-available;
             background: url('/images/Background.png') 50% 50% repeat;
             content: "";
         }
@@ -77,6 +79,7 @@
             bottom: 0;
             width: 100%;
             height: 100vh;
+            height: -webkit-fill-available;
         }
 
         #particles-js {
@@ -85,6 +88,7 @@
             bottom: 0;
             width: 100%;
             height: 100vh;
+            height: -webkit-fill-available;
             background-color: transparent;
         }
 
@@ -100,6 +104,8 @@
             position: relative;
             margin: 0;
             width: 100%;
+            min-height: 100vh;
+            min-height: -webkit-fill-available;
             overflow: hidden;
         }
 
