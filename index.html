@@ -570,7 +570,7 @@
                         <div class="field has-addons">
                             <div class="control is-expanded">
                                 <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
-                                    v-model="input" @input="change" @focusin="focusin" @focusout="focusout">
+                                    v-model="input" @input="change">
                             </div>
                             <div class="control">
                                 <button class="button is-rounded is-primary" type="submit"
@@ -842,18 +842,6 @@
                     } else {
                         this.inputHasError = true;
                     }
-                },
-                focusin: function (event) {
-                    let body = this.$el.querySelector("#app");
-
-                    //container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
-                    document.documentElement.style.paddingTop = '0px';
-                    document.documentElement.style.marginBottom = '0px';
-                },
-                focusout: function (event) {
-                    let app = this.$el.querySelector("#app");
-
-                    //app.style.marginBottom = '0px';
                 },
                 like: function () {
                     /*if (this.isLearning) {
@@ -1451,7 +1439,22 @@
 
         render();
 
-        window.addEventListener('resize', (event) => {
+        /*window.addEventListener('resize', (event) => {
+            let container = app.$el.querySelector("#container");
+
+            container.style.paddingTop = app.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
+            container.style.paddingBottom = app.$el.querySelector("#input").getBoundingClientRect().height + 'px';
+
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(width, height);
+
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+        });*/
+        document.body.addEventListener('resize', (event) => {
             let container = app.$el.querySelector("#container");
 
             container.style.paddingTop = app.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
