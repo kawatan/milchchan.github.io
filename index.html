@@ -1445,18 +1445,8 @@
             container.style.paddingTop = app.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
             container.style.paddingBottom = app.$el.querySelector("#input").getBoundingClientRect().height + 'px';
 
-            /*const width = window.innerWidth;
-            const height = window.innerHeight;
-
-            renderer.setPixelRatio(window.devicePixelRatio);
-            renderer.setSize(width, height);
-
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();*/
-            //console.log(document.boddocumentElement.clientHeight);
-            //const rect = document.documentElement.getBoundingClientRect();
-            const width = document.documentElement.clientWidth;//document.body.outerWidth;
-            const height = document.documentElement.clientWidth;//document.body.outerHeight;
+            const width = window.innerWidth;
+            const height = window.outerHeight;
 
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(width, height);
