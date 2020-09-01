@@ -33,7 +33,6 @@
             overflow-y: scroll;
             scroll-behavior: smooth;
             background: #f6f6f6;
-            background-color: blue;
         }
 
         body::before {
@@ -848,12 +847,13 @@
                     let body = this.$el.querySelector("#app");
 
                     //container.style.paddingTop = this.$el.querySelector("#heading").getBoundingClientRect().height + 'px';
-                    body.style.marginBottom = '20px';
+                    document.documentElement.style.paddingTop = '0px';
+                    document.documentElement.style.marginBottom = '0px';
                 },
                 focusout: function (event) {
                     let app = this.$el.querySelector("#app");
 
-                    app.style.marginBottom = '0px';
+                    //app.style.marginBottom = '0px';
                 },
                 like: function () {
                     /*if (this.isLearning) {
