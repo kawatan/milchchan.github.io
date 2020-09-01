@@ -76,10 +76,10 @@
 
         #three {
             position: fixed;
-            top: 50%;
+            /*top: 50%;
             left: 50%;
             margin-right: -50%;
-            transform: translate3d(-50%, -50%, 0);
+            transform: translate3d(-50%, -50%, 0);*/
             z-index: 0;
             display: block;
             width: 100%;
@@ -674,7 +674,7 @@
             alpha: true
         });
 
-        renderer.setSize(window.innerWidth, window.outerHeight);
+        renderer.setSize(window.innerWidth, document.documentElement.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xffffff, 0);
 
@@ -684,7 +684,7 @@
 
         const CAMERA_FOV = 60.0;
         const CAMERA_Z = -1.0;
-        const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / window.outerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / document.documentElement.clientHeight, 0.1, 100);
 
         camera.position.set(0.0, 1.25, CAMERA_Z);
 
@@ -885,7 +885,7 @@
                     this.isRevealed = !this.isRevealed;
                 },
                 scrollToEnd: function () {
-                    //document.documentElement.scrollTop = document.documentElement.scrollHeight;
+                    document.documentElement.scrollTop = document.documentElement.scrollHeight;
                 },
                 formatDate: function (event) {
                     moment.locale(window.navigator.language);
