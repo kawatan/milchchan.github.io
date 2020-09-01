@@ -674,7 +674,7 @@
             alpha: true
         });
 
-        renderer.setSize(window.innerWidth, window.outerHeight*2);
+        renderer.setSize(window.innerWidth, window.outerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xffffff, 0);
 
@@ -885,7 +885,7 @@
                     this.isRevealed = !this.isRevealed;
                 },
                 scrollToEnd: function () {
-                    document.documentElement.scrollTop = document.documentElement.scrollHeight;
+                    //document.documentElement.scrollTop = document.documentElement.scrollHeight;
                 },
                 formatDate: function (event) {
                     moment.locale(window.navigator.language);
