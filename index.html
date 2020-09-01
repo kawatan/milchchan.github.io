@@ -63,7 +63,7 @@
             display: block;
             bottom: 0;
             width: 100%;
-            height: 100vh;
+            height: calc(env(safe-area-inset-top, 110px) + 100vh + env(safe-area-inset-bottom, 110px));
         }
 
         #particles-js {
@@ -71,7 +71,7 @@
             z-index: -1;
             bottom: 0;
             width: 100%;
-            height: 100vh;
+            height: calc(env(safe-area-inset-top, 0px) + 100vh + env(safe-area-inset-bottom, 0px));
             background-color: transparent;
         }
 
