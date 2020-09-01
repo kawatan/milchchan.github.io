@@ -480,7 +480,7 @@
                             </div>
                         </div>
                         <div class="column is-1 is-mobile">
-                            <button class="button is-white is-hidden" type="button" @click="like">
+                            <button class="button is-white is-hidden" type="button" v-bind:disabled="user === null" @click="like">
                                 <span class="icon is-small">
                                     <i class="fas fa-star"></i>
                                 </span>
