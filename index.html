@@ -674,7 +674,7 @@
             alpha: true
         });
 
-        renderer.setSize(window.innerWidth, document.documentElement.offsetHeight);
+        renderer.setSize(window.innerWidth, document.body.offsetHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xffffff, 0);
 
@@ -684,7 +684,7 @@
 
         const CAMERA_FOV = 60.0;
         const CAMERA_Z = -1.0;
-        const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / document.documentElement.offsetHeight, 0.1, 100);
+        const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / document.body.offsetHeight, 0.1, 100);
 
         camera.position.set(0.0, 1.25, CAMERA_Z);
 
@@ -692,6 +692,8 @@
 
         controls.screenSpacePanning = true;
         controls.target.set(0.0, 1.0, 0.0);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.1;
         controls.update();
 
         const scene = new THREE.Scene();
