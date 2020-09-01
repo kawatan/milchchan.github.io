@@ -1454,9 +1454,9 @@
             camera.aspect = width / height;
             camera.updateProjectionMatrix();*/
             //console.log(document.boddocumentElement.clientHeight);
-            const rect = document.documentElement.getBoundingClientRect();
-            const width = rect.width;//document.body.outerWidth;
-            const height = rect.height;//document.body.outerHeight;
+            //const rect = document.documentElement.getBoundingClientRect();
+            const width = document.documentElement.clientWidth;//document.body.outerWidth;
+            const height = document.documentElement.clientWidth;//document.body.outerHeight;
 
             renderer.setPixelRatio(window.devicePixelRatio);
             renderer.setSize(width, height);
