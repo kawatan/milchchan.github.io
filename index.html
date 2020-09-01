@@ -674,7 +674,7 @@
             alpha: true
         });
 
-        renderer.setSize(window.innerWidth, document.documentElement.clientHeight);
+        renderer.setSize(window.innerWidth, document.body.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xffffff, 0);
 
@@ -684,7 +684,7 @@
 
         const CAMERA_FOV = 60.0;
         const CAMERA_Z = -1.0;
-        const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / document.documentElement.clientHeight, 0.1, 100);
+        const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / document.body.clientHeight, 0.1, 100);
 
         camera.position.set(0.0, 1.25, CAMERA_Z);
 
