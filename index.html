@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport"
-        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#f6f6f6">
     <title>チャット</title>
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -275,7 +275,7 @@
 
         .navbar:first-child {
             position: fixed;
-            padding: env(safe-area-inset-top) 0px 0px 0px;
+            padding: env(safe-area-inset-top, 0px) 0px 0px 0px;
         }
 
         .navbar:first-child .navbar-item {
@@ -284,7 +284,7 @@
         }
 
         .navbar:last-child {
-            padding: 0px env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
         .navbar:last-child .columns {
@@ -328,11 +328,29 @@
         @media screen and (-webkit-min-device-pixel-ratio:2),
         (min-resolution: 2dppx) {
             html {
+                width: 100%;
+                height: 100vh;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                scroll-behavior: smooth;
+                background-attachment: fixed;
+                background-color: #f6f6f6;
                 background-image: url('/images/Background@2x.png');
+                background-position: top left;
+                background-repeat: repeat;
             }
 
             .progress {
+                background-color: #ffc547;
+                margin: 0;
+                width: 0%;
+                height: 2px;
+                top: 0;
+                left: 0;
+                overflow: hidden;
                 background-image: url('/images/Stripes@2x.png');
+                background-repeat: repeat;
+                animation: progress 5s linear 0s infinite;
             }
 
             .media-content .has-text-left .balloon {
@@ -357,11 +375,29 @@
         @media screen and (-webkit-min-device-pixel-ratio:3),
         (min-resolution: 3dppx) {
             html {
+                width: 100%;
+                height: 100vh;
+                overflow-x: hidden;
+                overflow-y: scroll;
+                scroll-behavior: smooth;
+                background-attachment: fixed;
+                background-color: #f6f6f6;
                 background-image: url('/images/Background@3x.png');
+                background-position: top left;
+                background-repeat: repeat;
             }
 
             .progress {
+                background-color: #ffc547;
+                margin: 0;
+                width: 0%;
+                height: 2px;
+                top: 0;
+                left: 0;
+                overflow: hidden;
                 background-image: url('/images/Stripes@3x.png');
+                background-repeat: repeat;
+                animation: progress 5s linear 0s infinite;
             }
 
             .media-content .has-text-left .balloon {
