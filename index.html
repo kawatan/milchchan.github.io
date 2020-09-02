@@ -763,20 +763,24 @@
                         }
 
                         const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=1.0';
-                        let ref = database.ref(databaseMessages).push();
-
-                        ref.set({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
-
                         let regex = new RegExp('[.#$\\[\\]]');
                         let tokens = [];
-                        let completed = 0;
-                        let learned = 0;
 
                         for (let token of segmenter.segment(this.input)) {
                             if (!regex.test(token)) {
                                 tokens.push(token);
                             }
                         }
+
+                        this.input = '';
+                        this.currentInputLength = 0;
+                        this.$el.querySelector("#popup").play();
+
+                        let ref = database.ref(databaseMessages).push();
+                        let completed = 0;
+                        let learned = 0;
+
+                        ref.set({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
                         
                         for (let token of tokens) {
                             database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
@@ -808,9 +812,6 @@
                                 }
                             });
                         }
-
-                        this.input = '';
-                        this.currentInputLength = 0;
 
                         if (channel.length > 0) {
                             return;
@@ -851,8 +852,6 @@
 
                             console.error(e.message);
                         }
-
-                        this.$el.querySelector("#popup").play();
                     }
                 },
                 change: function (event) {
