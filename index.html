@@ -597,7 +597,12 @@
                 </div>
             </div>
         </nav>
-        <audio id="popup" preload="auto">
+        <audio id="send" preload="auto">
+            <source src="/sounds/plastic_lo.mp3" type="audio/mpeg" />
+            <source src="/sounds/plastic_lo.m4a" type="audio/mp4" />
+            <source src="/sounds/plastic_lo.wav" type="audio/wav" />
+        </audio>
+        <audio id="recieve" preload="auto">
             <source src="/sounds/plastic_hi.mp3" type="audio/mpeg" />
             <source src="/sounds/plastic_hi.m4a" type="audio/mp4" />
             <source src="/sounds/plastic_hi.wav" type="audio/wav" />
@@ -1032,6 +1037,7 @@
                             const messageDictionary = snapshot.val();
 
                             if (messageDictionary) {
+                                let isSent = false;
                                 let received = null;
 
                                 for (let key in messageDictionary) {
@@ -1063,8 +1069,10 @@
                                             app.messages.shift();
                                         }
 
-                                        if (app.user.uid !== message.user.id) {
+                                        if (app.user.uid === message.user.id) {
                                             received = message.user;
+                                        } else {
+                                            isSent = true;
                                         }
                                     }
                                 }
@@ -1082,7 +1090,9 @@
                                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
 
-                                    app.$el.querySelector("#popup").play();
+                                    app.$el.querySelector("#recieve").play();
+                                } else if (isSent) {
+                                    app.$el.querySelector("#send").play();
                                 }
                             }
                         });
