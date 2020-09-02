@@ -762,11 +762,12 @@
                             return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
                         }
 
-                        const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=1.0';
+                        const text = this.input;
+                        const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(text) + '&threshold=1.0';
                         let regex = new RegExp('[.#$\\[\\]]');
                         let tokens = [];
 
-                        for (let token of segmenter.segment(this.input)) {
+                        for (let token of segmenter.segment(text)) {
                             if (!regex.test(token)) {
                                 tokens.push(token);
                             }
@@ -780,7 +781,7 @@
                         let completed = 0;
                         let learned = 0;
 
-                        ref.set({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
+                        ref.set({ text: text, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
                         
                         for (let token of tokens) {
                             database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
