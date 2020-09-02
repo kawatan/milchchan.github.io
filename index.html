@@ -782,7 +782,7 @@
                         let learned = 0;
 
                         ref.set({ text: text, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
-                        
+
                         for (let token of tokens) {
                             database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
                                 if (word === null) {
@@ -1079,7 +1079,7 @@
 
                                 if (received) {
                                     if (!received.id && app.vrm) {
-                                        app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
+                                        app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
 
                                     app.$el.querySelector("#popup").play();
@@ -1476,6 +1476,14 @@
             for (let intersect of raycaster.intersectObjects(scene.children, true)) {
                 if (intersect.object.name === 'face') {
                     app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }]);
+
+                    break;
+                } else if (intersect.object.name.indexOf('breast') >= 0) {
+                    if (random(0, 1) === 0) {
+                        //app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 3.0, start: 0.5, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.5, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 3.0, start: 0.5, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.5, end: 0.0 }]);
+                    } else {
+                        app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Angry, time: 0.0, duration: 0.5, start: 0.0, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.Angry, time: 0.0, duration: 3.0, start: 0.5, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.Angry, time: 0.0, duration: 0.5, start: 0.5, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.O, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.O, time: 0.0, duration: 3.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.O, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
+                    }
 
                     break;
                 }
