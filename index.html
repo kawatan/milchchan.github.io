@@ -760,9 +760,9 @@
 
                         const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(this.input) + '&threshold=1.0';
 
-                        //let ref = database.ref(databaseMessages).push();
+                        let ref = database.ref(databaseMessages).push();
 
-                        //ref.set({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
+                        ref.set({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
                         let regex = new RegExp('[.#$\\[\\]]');
                         let tokens = [];
