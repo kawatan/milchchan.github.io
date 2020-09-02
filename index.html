@@ -795,7 +795,7 @@
 
                                     window.pJSDom[0].pJS.fn.modes.pushParticles(learned);
 
-                                    this.$el.querySelector("#twinkle").play();
+                                    app.$el.querySelector("#twinkle").play();
                                 }
                             });
                         }
@@ -1067,11 +1067,11 @@
                                 app.scrollRequired = true;
 
                                 if (received) {
-                                    app.$el.querySelector("#alert").play();
-
                                     if (!received.id && app.vrm) {
                                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
+
+                                    app.$el.querySelector("#alert").play();
                                 }
                             }
                         });
