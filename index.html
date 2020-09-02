@@ -597,7 +597,7 @@
                 </div>
             </div>
         </nav>
-        <audio id="alert" preload="auto">
+        <audio id="popup" preload="auto">
             <source src="/sounds/plastic_hi.wav" type="audio/wav" />
         </audio>
         <audio id="twinkle" preload="auto">
@@ -1078,7 +1078,7 @@
                                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
 
-                                    app.$el.querySelector("#alert").play();
+                                    app.$el.querySelector("#popup").play();
                                 }
                             }
                         });
