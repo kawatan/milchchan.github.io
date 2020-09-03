@@ -953,7 +953,7 @@
                             let termFrequencies = [];
                             let inverseDocumentFrequency = {};
                             const baseTime = new Date().getTime() - 12 * 60 * 60 * 1000;
-                            const limit = 10;
+                            const limit = 25;
                             let scoreDictionary = {};
                             let scores = [];
                             let maxScore = 0.0;
@@ -1200,7 +1200,7 @@
                                 app.likes = count;
                             }
                         });
-                        database.ref(databaseMessages).limitToLast(25).on('value', snapshot => {
+                        database.ref(databaseMessages).limitToLast(100).on('value', snapshot => {
                             const messageDictionary = snapshot.val();
 
                             if (messageDictionary) {
