@@ -480,7 +480,12 @@
                                     </div>
                                 </nav>
                                 <nav class="level">
-                                    <div class="level-item">
+                                    <div class="level-item" v-if="isUpdating">
+                                        <span class="has-text-black">
+                                            <i class="fas fa-spinner updating"></i>
+                                        </span>
+                                    </div>
+                                    <div class="level-item" v-else>
                                         <!--<div class="tags are-normal field is-grouped is-grouped-multiline is-hidden">
                                             <div class="control">
                                                 <div class="tags has-addons">
