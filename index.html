@@ -166,14 +166,14 @@
             padding: 0;
         }
 
-        #heading .navbar-item .control:last-child .level:nth-last-child(2) {
+        #heading .navbar-item .control:last-child .level:nth-last-child(3) {
             margin: 4px 0px 0px 0px;
             padding: 0;
         }
 
-        #heading .navbar-item .control:last-child .level:last-child {
+        #heading .navbar-item .control:last-child .level:nth-last-child(2) {
             margin: 0;
-            padding: 16px 0px 0px 0px;
+            padding: 16px 0px 16px 0px;
         }
 
         #heading .navbar-item .level .level-item {
@@ -320,7 +320,7 @@
             padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) 0px env(safe-area-inset-left, 0px);
         }
 
-        .navbar:first-of-type .navbar-item .control nav.level:last-child {
+        .navbar:first-of-type .navbar-item .control nav.level:nth-last-child(2) {
             display: block;
         }
 
@@ -329,12 +329,12 @@
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        .navbar-item img {
-            max-height: none;
-        }
-
         .navbar:last-of-type .navbar-item div>div:nth-last-of-type(1)>span {
             font-family: 'Alata', sans-serif;
+        }
+
+        .navbar-item img {
+            max-height: none;
         }
 
         .updating {
@@ -520,6 +520,17 @@
                                         </div>
                                     </div>
                                 </nav>
+                                <nav class="level">
+                                    <div class="level-item">
+                                        <span class="has-text-black">
+                                            <button class="button is-white is-rounded"
+                                                v-bind:class="{'is-selected': isOverlayed, 'is-info': isOverlayed}"
+                                                @click="overlay"><span class="icon is-small">
+                                                    <i class="fas fa-comments"></i>
+                                                </span></button>
+                                        </span>
+                                    </div>
+                                </nav>
                             </div>
                         </div>
                         <div class="column is-2 is-mobile">
@@ -533,7 +544,7 @@
                 </div>
             </div>
         </nav>
-        <div id="container">
+        <div id="container" v-bind:class="{'is-hidden': !isOverlayed}">
             <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
                 <div class="column is-half has-content-centered">
                     <hr class="is-invisible">
@@ -596,7 +607,7 @@
                 </div>
             </div>
         </div>
-        <nav id="input" class="navbar is-fixed-bottom" role="navigation">
+        <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-bind:class="{'is-hidden': !isOverlayed}">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered is-mobile">
                     <div class="notification is-info is-light" v-if="notification" v-cloak>
@@ -776,6 +787,7 @@
                 isLoading: false,
                 isRevealed: false,
                 isUpdating: false,
+                isOverlayed: true,
                 progress: 0,
                 user: null,
                 input: '',
@@ -945,6 +957,9 @@
                 },
                 hint: function (event) {
                     this.input += event.name;
+                },
+                overlay: function () {
+                    this.isOverlayed = !this.isOverlayed;
                 },
                 update: async function (data, max) {
                     this.isUpdating = true;
