@@ -523,8 +523,7 @@
                             </div>
                         </div>
                         <div class="column is-2 is-mobile">
-                            <button class="button is-white" type="button" v-bind:disabled="user === null"
-                                @click="like">
+                            <button class="button is-white" type="button" v-bind:disabled="user === null" @click="like">
                                 <span class="icon is-small">
                                     <i class="fas fa-star"></i>
                                 </span>
@@ -1035,20 +1034,28 @@
                                 }
 
                                 scoreDictionary[key] /= termFrequencies.length;
-
-                                if (scoreDictionary[key] > maxScore) {
-                                    maxScore = scoreDictionary[key];
-                                }
                             }
 
                             for (const key in scoreDictionary) {
-                                scores.push({ term: key, score: scoreDictionary[key] / maxScore });
+                                if (key.length > 1) {
+                                    scores.push({ term: key, value: scoreDictionary[key] });
+                                }
                             }
 
-                            scores.sort((x, y) => y.score - x.score);
+                            scores.sort((x, y) => y.value - x.value);
 
                             if (scores.length > max) {
                                 scores.splice(max);
+                            }
+
+                            for (const score of scores) {
+                                if (score.value > maxScore) {
+                                    maxScore = score.value;
+                                }
+                            }
+
+                            for (const score of scores) {
+                                score.value /= maxScore;
                             }
 
                             scores.sort((x, y) => {
@@ -1067,7 +1074,7 @@
                         this.tags.splice(0);
 
                         for (let i = 0; i < results.length; i++) {
-                            this.tags.push({ index: i, name: results[i].term, score: results[i].score })
+                            this.tags.push({ index: i, name: results[i].term, score: results[i].value })
                         }
                     } catch (e) {
                         console.error(e);
