@@ -812,7 +812,7 @@
     <script src="https://unpkg.com/three@0.106.2/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
     <script src="/js/moment-with-locales.js"></script>
     <script src="/js/three-vrm.js"></script>
     <script src="/js/particles.js"></script>
@@ -934,7 +934,7 @@
                 user: null,
                 input: '',
                 currentInputLength: 0,
-                tweenedCurrentInputLength: 0,
+                animatedCurrentInputLength: 0,
                 maxInputLength: 100,
                 inputHasError: false,
                 messages: [],
@@ -943,7 +943,7 @@
                 maxTags: 10,
                 scrollRequired: false,
                 words: 0,
-                tweenedWords: 0,
+                animatedWords: 0,
                 likes: -1,
                 notification: null,
                 vrm: null,
@@ -954,20 +954,34 @@
                 blendShapeAnimationQueue: [],
                 text: ''
             },
-            computed: {
-                animatedWords: function () {
-                    return this.tweenedWords.toFixed(0);
-                },
-                animatedCurrentInputLength: function () {
-                    return this.tweenedCurrentInputLength.toFixed(0);
-                }
-            },
             watch: {
                 words: function (newValue) {
-                    gsap.to(this.$data, { duration: 0.5, tweenedWords: newValue });
+                    const obj = { n: this.animatedWords };
+
+                    anime({
+                        targets: obj,
+                        n: newValue,
+                        round: 1,
+                        duration: 500,
+                        easing: 'linear',
+                        update: () => {
+                            this.animatedWords = obj.n
+                        }
+                    });
                 },
                 currentInputLength: function (newValue) {
-                    gsap.to(this.$data, { duration: 0.5, tweenedCurrentInputLength: newValue });
+                    const obj = { n: this.animatedCurrentInputLength };
+
+                    anime({
+                        targets: obj,
+                        n: newValue,
+                        round: 1,
+                        duration: 500,
+                        easing: 'linear',
+                        update: () => {
+                            this.animatedCurrentInputLength = obj.n
+                        }
+                    });
                 }
             },
             methods: {
