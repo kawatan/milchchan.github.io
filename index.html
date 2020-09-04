@@ -103,6 +103,19 @@
             animation: progress 5s linear 0s infinite;
         }
 
+        .type {
+            position: fixed;
+            z-index: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: transparent;
+            text-align: center;
+            vertical-align: middle;
+        }
+
         .columns .is-vcentered {
             align-items: center;
         }
@@ -522,6 +535,12 @@
         </transition>
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
+        <div class="type">
+            <span>Hello</span>
+        </div>
+        <!--<transition-group tag="div" class="type">
+            <span v-for="el in text" :key="el.id" class="item" v-text="el.text" />
+        </transition-group>-->
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered" v-cloak>
@@ -548,8 +567,7 @@
                                             <span class="icon is-small">
                                                 <i class="fas fa-book"></i>
                                             </span>
-                                            <span class="title is-size-3"
-                                                v-bind:class="{'is-invisible': words === -1}">{{ words }}</span>
+                                            <span class="title is-size-3">{{ animatedWords }}</span>
                                         </div>
                                     </div>
                                 </nav>
@@ -661,71 +679,69 @@
             </div>
         </nav>
         <transition name="collapse">
-            <div id="container" v-show="isOverlayed && !isSuggested">
-                <transition-group name="message-list" tag="div">
-                    <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
-                        <div class="column is-half has-content-centered">
-                            <hr class="is-invisible">
-                            <article class="media" v-if="user.uid === message.user.id" v-cloak>
-                                <div class="media-content">
-                                    <div class="level is-mobile" v-if="message.user.name">
-                                        <div class="level-left">
-                                            <span
-                                                class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="content has-text-right">
-                                        <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                            <p class="has-text-weight-bold has-text-white">
-                                                {{ message.text }}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                                {{ formatDate(message.timestamp) }}
-                                            </p>
-                                        </div>
+            <transition-group id="container" name="message-list" tag="div" v-show="isOverlayed && !isSuggested">
+                <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
+                    <div class="column is-half has-content-centered">
+                        <hr class="is-invisible">
+                        <article class="media" v-if="user.uid === message.user.id" v-cloak>
+                            <div class="media-content">
+                                <div class="level is-mobile" v-if="message.user.name">
+                                    <div class="level-left">
+                                        <span
+                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
                                     </div>
                                 </div>
-                                <figure class="media-right" v-if="message.user.image">
-                                    <p class="image is-64x64">
-                                        <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                                    </p>
-                                </figure>
-                            </article>
-                            <article class="media" v-else v-cloak>
-                                <figure class="media-left" v-if="message.user.image">
-                                    <p class="image is-64x64">
-                                        <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                                    </p>
-                                </figure>
-                                <div class="media-content">
-                                    <div class="level is-mobile" v-if="message.user.name">
-                                        <div class="level-left">
-                                            <span
-                                                class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                                        </div>
+                                <div class="content has-text-right">
+                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                        <p class="has-text-weight-bold has-text-white">
+                                            {{ message.text }}
+                                        </p>
                                     </div>
-                                    <div class="content has-text-left">
-                                        <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                            <p class="has-text-weight-bold has-text-white">
-                                                <span v-bind:class="{'is-hidden': message.text}">
-                                                    <i class="fas fa-spinner updating"></i>
-                                                </span>
-                                                {{ message.text }}
-                                            </p>
-                                        </div>
-                                        <div>
-                                            <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                                {{ formatDate(message.timestamp) }}</p>
-                                        </div>
+                                    <div>
+                                        <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                            {{ formatDate(message.timestamp) }}
+                                        </p>
                                     </div>
                                 </div>
-                            </article>
-                        </div>
+                            </div>
+                            <figure class="media-right" v-if="message.user.image">
+                                <p class="image is-64x64">
+                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                </p>
+                            </figure>
+                        </article>
+                        <article class="media" v-else v-cloak>
+                            <figure class="media-left" v-if="message.user.image">
+                                <p class="image is-64x64">
+                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="level is-mobile" v-if="message.user.name">
+                                    <div class="level-left">
+                                        <span
+                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                    </div>
+                                </div>
+                                <div class="content has-text-left">
+                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                        <p class="has-text-weight-bold has-text-white">
+                                            <span v-bind:class="{'is-hidden': message.text}">
+                                                <i class="fas fa-spinner updating"></i>
+                                            </span>
+                                            {{ message.text }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                            {{ formatDate(message.timestamp) }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
                     </div>
-                </transition-group>
-            </div>
+                </div>
+            </transition-group>
         </transition>
         <transition name="collapse">
             <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-show="isOverlayed && !isSuggested">
@@ -749,7 +765,7 @@
                         </div>
                         <div>
                             <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
-                                {{ maxInputLength - currentInputLength }}
+                                {{ maxInputLength - animatedCurrentInputLength }}
                             </span>
                         </div>
                         <form onsubmit="return false;">
@@ -796,6 +812,7 @@
     <script src="https://unpkg.com/three@0.106.2/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.5.1/gsap.min.js"></script>
     <script src="/js/moment-with-locales.js"></script>
     <script src="/js/three-vrm.js"></script>
     <script src="/js/particles.js"></script>
@@ -917,6 +934,7 @@
                 user: null,
                 input: '',
                 currentInputLength: 0,
+                tweenedCurrentInputLength: 0,
                 maxInputLength: 100,
                 inputHasError: false,
                 messages: [],
@@ -924,7 +942,8 @@
                 tags: [],
                 maxTags: 10,
                 scrollRequired: false,
-                words: -1,
+                words: 0,
+                tweenedWords: 0,
                 likes: -1,
                 notification: null,
                 vrm: null,
@@ -932,7 +951,24 @@
                 animationsQueue: [],
                 currentAnimations: [],
                 blendShapeAnimations: [],
-                blendShapeAnimationQueue: []
+                blendShapeAnimationQueue: [],
+                text: ''
+            },
+            computed: {
+                animatedWords: function () {
+                    return this.tweenedWords.toFixed(0);
+                },
+                animatedCurrentInputLength: function () {
+                    return this.tweenedCurrentInputLength.toFixed(0);
+                }
+            },
+            watch: {
+                words: function (newValue) {
+                    gsap.to(this.$data, { duration: 0.5, tweenedWords: newValue });
+                },
+                currentInputLength: function (newValue) {
+                    gsap.to(this.$data, { duration: 0.5, tweenedCurrentInputLength: newValue });
+                }
             },
             methods: {
                 send: async function (event) {
