@@ -76,7 +76,7 @@
 
         #three {
             position: fixed;
-            z-index: 0;
+            z-index: -1;
             display: block;
             width: 100%;
             height: 100vh;
@@ -84,10 +84,23 @@
 
         #particles-js {
             position: fixed;
-            z-index: 0;
+            z-index: -1;
             width: 100%;
             height: 100vh;
             background-color: transparent;
+        }
+
+        .cover {
+            position: fixed;
+            z-index: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            transform: translate3d(0, -100%, 0);
+            overflow: hidden;
+            background: #30c0f5 url('/images/Stripes.png') repeat;
+            animation: progress 5s linear 0s infinite;
         }
 
         .columns .is-vcentered {
@@ -372,6 +385,10 @@
                 background: #ffc547 url('/images/Stripes@2x.png') repeat 20px 20px;
             }
 
+            .cover {
+                background: #30c0f5 url('/images/Stripes@2x.png') repeat 20px 20px;
+            }
+
             .media-content .has-text-left .balloon {
                 background: url('/images/Stripes@2x.png') repeat 20px 20px;
             }
@@ -389,6 +406,10 @@
 
             .progress {
                 background: #ffc547 url('/images/Stripes@3x.png') repeat 20px 20px;
+            }
+
+            .cover {
+                background: #30c0f5 url('/images/Stripes@3x.png') repeat 20px 20px;
             }
 
             .media-content .has-text-left .balloon {
@@ -418,6 +439,7 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
+        <div class="cover"></div>
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
