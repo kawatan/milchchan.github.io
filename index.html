@@ -974,7 +974,7 @@
                                 const json = await response.json();
 
                                 if (json.text.length > 0) {
-                                    database.ref(databaseMessages).push({ text: json.text, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                                    database.ref(databaseMessages).push({ text: json.text, timestamp: Math.floor(new Date() / 1000), thread: ref.key, user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
                                 }
                             }
                             else {
