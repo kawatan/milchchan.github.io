@@ -338,12 +338,12 @@
             display: block;
         }
 
-        .navbar:last-of-type {
+        .navbar:nth-of-type(2) {
             margin: 0;
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        .navbar:last-of-type .navbar-item>div>div:nth-last-of-type(1)>span {
+        .navbar:nth-of-type(2) .navbar-item>div>div:nth-last-of-type(1)>span {
             font-family: 'Alata', sans-serif;
         }
 
@@ -353,6 +353,16 @@
 
         .updating {
             animation: updating 1s linear infinite;
+        }
+
+        .fade-enter-active,
+        .fade-leave-active {
+            transition: opacity .5s;
+        }
+
+        .fade-enter,
+        .fade-leave-to {
+            opacity: 0;
         }
 
         .reveal-enter-active,
@@ -370,6 +380,21 @@
         .reveal-leave {
             opacity: 1;
             transform: translate3d(0, 0%, 0);
+        }
+
+        .collapse-enter-active,
+        .collapse-leave-active {
+            transition: all .5s ease;
+        }
+
+        .collapse-enter,
+        .collapse-leave-to {
+            opacity: 0;
+        }
+
+        .collapse-enter-to,
+        .collapse-leave {
+            opacity: 1;
         }
 
         .blind-enter-active,
@@ -559,13 +584,14 @@
                                         </div>
                                     </nav>
                                     <nav class="level">
-                                        <div class="level-item" v-if="isUpdating">
-                                            <span class="has-text-black">
-                                                <i class="fas fa-spinner updating"></i>
-                                            </span>
-                                        </div>
-                                        <div class="level-item" v-else>
-                                            <!--<div class="tags are-normal field is-grouped is-grouped-multiline is-hidden">
+                                        <transition name="fade" mode="out-in">
+                                            <div class="level-item" v-if="isUpdating" key="updating">
+                                                <span class="has-text-black">
+                                                    <i class="fas fa-spinner updating"></i>
+                                                </span>
+                                            </div>
+                                            <div class="level-item" v-else key="updated">
+                                                <!--<div class="tags are-normal field is-grouped is-grouped-multiline is-hidden">
                                                 <div class="control">
                                                     <div class="tags has-addons">
                                                         <span class="tag is-white"><a class="has-text-black"
@@ -588,18 +614,19 @@
                                                     </div>
                                                 </div>
                                             </div>-->
-                                            <div class="tags are-medium field is-grouped is-grouped-multiline">
-                                                <div class="control" v-for="tag in tags" v-bind:key="tag.index">
-                                                    <div class="tags has-addons">
-                                                        <button class="button tag is-black is-rounded" type="button"
-                                                            v-bind:style="{ background: 'rgba(0, 0, 0, ' + (0.5 + 0.5 * tag.score) + ')' }"
-                                                            @click="hint(tag)">{{ tag.name }}</button>
+                                                <div class="tags are-medium field is-grouped is-grouped-multiline">
+                                                    <div class="control" v-for="tag in tags" v-bind:key="tag.index">
+                                                        <div class="tags has-addons">
+                                                            <button class="button tag is-black is-rounded" type="button"
+                                                                v-bind:style="{ background: 'rgba(0, 0, 0, ' + (0.5 + 0.5 * tag.score) + ')' }"
+                                                                @click="hint(tag)">{{ tag.name }}</button>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </transition>
                                     </nav>
-                                    <nav class="level">
+                                    <!--<nav class="level">
                                         <div class="level-item">
                                             <span class="has-text-black">
                                                 <button class="button is-white is-rounded"
@@ -609,130 +636,142 @@
                                                     </span></button>
                                             </span>
                                         </div>
-                                    </nav>
+                                    </nav>-->
                                 </div>
                             </transition>
                         </div>
                         <div class="column is-2 is-mobile">
-                            <button class="button is-white" type="button" v-bind:disabled="user === null" @click="like">
-                                <span class="icon is-small">
-                                    <i class="fas fa-star"></i>
-                                </span>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div id="container" v-bind:class="{'is-hidden': !isOverlayed || isBlinded }">
-            <transition-group name="message-list" tag="div">
-                <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
-                    <div class="column is-half has-content-centered">
-                        <hr class="is-invisible">
-                        <article class="media" v-if="user.uid === message.user.id" v-cloak>
-                            <div class="media-content">
-                                <div class="level is-mobile" v-if="message.user.name">
-                                    <div class="level-left">
-                                        <span
-                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                                    </div>
-                                </div>
-                                <div class="content has-text-right">
-                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                        <p class="has-text-weight-bold has-text-white">
-                                            {{ message.text }}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                            {{ formatDate(message.timestamp) }}
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <figure class="media-right" v-if="message.user.image">
-                                <p class="image is-64x64">
-                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                                </p>
-                            </figure>
-                        </article>
-                        <article class="media" v-else v-cloak>
-                            <figure class="media-left" v-if="message.user.image">
-                                <p class="image is-64x64">
-                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                                </p>
-                            </figure>
-                            <div class="media-content">
-                                <div class="level is-mobile" v-if="message.user.name">
-                                    <div class="level-left">
-                                        <span
-                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                                    </div>
-                                </div>
-                                <div class="content has-text-left">
-                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                        <p class="has-text-weight-bold has-text-white">
-                                            <span v-bind:class="{'is-hidden': message.text}">
-                                                <i class="fas fa-spinner updating"></i>
-                                            </span>
-                                            {{ message.text }}
-                                        </p>
-                                    </div>
-                                    <div>
-                                        <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                            {{ formatDate(message.timestamp) }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-            </transition-group>
-        </div>
-        <nav id="input" class="navbar is-fixed-bottom" role="navigation"
-            v-bind:class="{'is-hidden': !isOverlayed || isBlinded }">
-            <div class="navbar-item is-expanded columns is-desktop">
-                <div class="column is-half has-content-centered is-mobile">
-                    <div class="notification is-info is-light" v-if="notification" v-cloak>
-                        <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
-                            <figure class="media-left" v-if="notification.image" v-cloak>
-                                <span class="image is-32x32">
-                                    <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
-                                </span>
-                            </figure>
-                            <div class="media-content">
-                                <div class="content has-text-left">
-                                    <span class="has-text-weight-bold" v-cloak>
-                                        {{ notification.text }}
-                                    </span>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                    <div>
-                        <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
-                            {{ maxInputLength - currentInputLength }}
-                        </span>
-                    </div>
-                    <form onsubmit="return false;">
-                        <div class="field has-addons">
-                            <div class="control is-expanded">
-                                <input class="input is-rounded" type="text" v-bind:class="{'is-danger': inputHasError}"
-                                    v-model="input" @input="change">
-                            </div>
-                            <div class="control">
-                                <button class="button is-rounded is-primary" type="submit"
-                                    v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
-                                    @click="send"><span class="icon is-small">
-                                        <i class="fas fa-paper-plane"></i>
+                            <transition name="fade" mode="out-in">
+                                <button class="button is-white" type="button" v-bind:disabled="user === null"
+                                    @click="like" v-if="isSuggested" key="cancel">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-times"></i>
                                     </span>
                                 </button>
-                            </div>
+                                <button class="button is-white" type="button" v-bind:disabled="user === null"
+                                    @click="like" v-else key="suggest">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-star"></i>
+                                    </span>
+                                </button>
+                            </transition>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </nav>
+        <transition name="collapse">
+            <div id="container" v-show="isOverlayed && !isSuggested">
+                <transition-group name="message-list" tag="div">
+                    <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
+                        <div class="column is-half has-content-centered">
+                            <hr class="is-invisible">
+                            <article class="media" v-if="user.uid === message.user.id" v-cloak>
+                                <div class="media-content">
+                                    <div class="level is-mobile" v-if="message.user.name">
+                                        <div class="level-left">
+                                            <span
+                                                class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="content has-text-right">
+                                        <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                            <p class="has-text-weight-bold has-text-white">
+                                                {{ message.text }}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                                {{ formatDate(message.timestamp) }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <figure class="media-right" v-if="message.user.image">
+                                    <p class="image is-64x64">
+                                        <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                    </p>
+                                </figure>
+                            </article>
+                            <article class="media" v-else v-cloak>
+                                <figure class="media-left" v-if="message.user.image">
+                                    <p class="image is-64x64">
+                                        <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                    </p>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="level is-mobile" v-if="message.user.name">
+                                        <div class="level-left">
+                                            <span
+                                                class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="content has-text-left">
+                                        <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                            <p class="has-text-weight-bold has-text-white">
+                                                <span v-bind:class="{'is-hidden': message.text}">
+                                                    <i class="fas fa-spinner updating"></i>
+                                                </span>
+                                                {{ message.text }}
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                                {{ formatDate(message.timestamp) }}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </transition-group>
+            </div>
+        </transition>
+        <transition name="collapse">
+            <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-show="isOverlayed && !isSuggested">
+                <div class=" navbar-item is-expanded columns is-desktop">
+                    <div class="column is-half has-content-centered is-mobile">
+                        <div class="notification is-info is-light" v-if="notification" v-cloak>
+                            <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
+                                <figure class="media-left" v-if="notification.image" v-cloak>
+                                    <span class="image is-32x32">
+                                        <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
+                                    </span>
+                                </figure>
+                                <div class="media-content">
+                                    <div class="content has-text-left">
+                                        <span class="has-text-weight-bold" v-cloak>
+                                            {{ notification.text }}
+                                        </span>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                        <div>
+                            <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
+                                {{ maxInputLength - currentInputLength }}
+                            </span>
+                        </div>
+                        <form onsubmit="return false;">
+                            <div class="field has-addons">
+                                <div class="control is-expanded">
+                                    <input class="input is-rounded" type="text"
+                                        v-bind:class="{'is-danger': inputHasError}" v-model="input" @input="change">
+                                </div>
+                                <div class="control">
+                                    <button class="button is-rounded is-primary" type="submit"
+                                        v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
+                                        @click="send"><span class="icon is-small">
+                                            <i class="fas fa-paper-plane"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </nav>
+        </transition>
         <audio id="popup" preload="auto">
             <source src="/sounds/plastic_hi.mp3" type="audio/mpeg" />
             <source src="/sounds/plastic_hi.m4a" type="audio/mp4" />
@@ -872,6 +911,8 @@
                 isUpdating: false,
                 isBlinded: false,
                 isOverlayed: true,
+                isSuggested: false,
+                suggestionQueue: [],
                 progress: 0,
                 user: null,
                 input: '',
@@ -1006,7 +1047,15 @@
                     }
                 },
                 like: function () {
-                    this.isBlinded = !this.isBlinded;
+                    this.isBlinded = true;
+
+                    if (this.isSuggested) {
+                        this.suggestionQueue.splice(0);
+                        this.isSuggested = false;
+                    } else {
+                        this.suggestionQueue.push({ text: 'Hello, world', animation: 'idle2' });
+                        this.isSuggested = true;
+                    }
 
                     return;
                     /*if (this.isLearning) {
@@ -1437,8 +1486,32 @@
                         }
 
                         idleTime = null;
+                    } else if (app.isSuggested) {
+                        const suggestion = app.suggestionQueue.shift();
+
+                        if (app.isBlinded) {
+                            app.isBlinded = false;
+                        }
+
+                        if ('animation' in suggestion) {
+                            for (let animation of app.animations[suggestion.animation]) {
+                                app.currentAnimations.push(animation);
+                            }
+                        }
+
+                        app.suggestionQueue.push(suggestion);
+
+
+
+
+
+                        idleTime = null;
                     } else {
                         const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
+
+                        if (app.isBlinded) {
+                            app.isBlinded = false;
+                        }
 
                         for (let animation of app.animations[idles[random(0, 14)]]) {
                             app.currentAnimations.push(animation);
