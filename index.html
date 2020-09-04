@@ -97,7 +97,7 @@
             left: 0;
             width: 100%;
             height: 100vh;
-            transform: translate3d(0, -100%, 0);
+            transform: translate3d(0, 0%, 0);
             overflow: hidden;
             background: #30c0f5 url('/images/Stripes.png') repeat;
             animation: progress 5s linear 0s infinite;
@@ -175,17 +175,17 @@
             padding: 0;
         }
 
-        #heading .navbar-item .control:last-child .level {
+        #heading .navbar-item .control:nth-child(2) .level {
             margin: 0;
             padding: 0;
         }
 
-        #heading .navbar-item .control:last-child .level:nth-last-child(3) {
+        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(3) {
             margin: 4px 0px 0px 0px;
             padding: 0;
         }
 
-        #heading .navbar-item .control:last-child .level:nth-last-child(2) {
+        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(2) {
             margin: 0;
             padding: 16px 0px 16px 0px;
         }
@@ -355,6 +355,59 @@
             animation: updating 1s linear infinite;
         }
 
+        .reveal-enter-active,
+        .reveal-leave-active {
+            transition: all .5s ease;
+        }
+
+        .reveal-enter,
+        .reveal-leave-to {
+            opacity: 0;
+            transform: translate3d(0, -50%, 0);
+        }
+
+        .reveal-enter-to,
+        .reveal-leave {
+            opacity: 1;
+            transform: translate3d(0, 0%, 0);
+        }
+
+        .blind-enter-active,
+        .blind-leave-active {
+            transition: all .5s ease;
+        }
+
+        .blind-enter {
+            transform: translate3d(0, 100%, 0);
+        }
+
+        .blind-enter-to {
+            transform: translate3d(0, 0%, 0);
+        }
+
+        .blind-leave {
+            transform: translate3d(0, 0%, 0);
+        }
+
+        .blind-leave-to {
+            transform: translate3d(0, -100%, 0);
+        }
+
+        .message-list-enter-active,
+        .message-list-leave-active {
+            transition: all 0.5s ease;
+        }
+
+        .message-list-move {
+            transition: transform 0.5s ease;
+        }
+
+        .message-list-enter,
+        .message-list-leave-to {
+            opacity: 0;
+            transform: translate3d(0%, 50%, 0);
+        }
+
         @keyframes progress {
             0% {
                 background-position: 0% 0%;
@@ -439,7 +492,9 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
-        <div class="cover"></div>
+        <transition name="blind">
+            <div class="cover" v-if="isBlinded" v-cloak></div>
+        </transition>
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
@@ -447,7 +502,7 @@
                 <div class="column is-half has-content-centered" v-cloak>
                     <div class="columns is-mobile">
                         <div class="column is-2 is-mobile">
-                            <button class="button is-white" type="button" @click="reveal">
+                            <button class="button is-white" type="button" @click="isRevealed = !isRevealed">
                                 <span class="icon is-small">
                                     <i class="fas fa-bars"></i>
                                 </span>
@@ -482,79 +537,81 @@
                                     </div>
                                 </nav>
                             </div>
-                            <div class="control has-text-centered" v-bind:class="{'is-hidden': !isRevealed}">
-                                <nav class="level">
-                                    <div class="level-item has-text-centered">
-                                        <div class="field is-grouped is-vcentered">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-star"></i>
+                            <transition name="reveal">
+                                <div class="control has-text-centered" v-if="isRevealed" v-cloak>
+                                    <nav class="level">
+                                        <div class="level-item has-text-centered">
+                                            <div class="field is-grouped is-vcentered">
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-star"></i>
+                                                </span>
+                                                <span class="title is-size-4"
+                                                    v-bind:class="{'is-invisible': words === -1}">{{ likes }}</span>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                    <nav class="level">
+                                        <div class="level-item has-text-centered">
+                                            <div class="field">
+                                                <h6 class="subtitle is-size-6 is-uppercase has-text-weight-bold">いいね
+                                                </h6>
+                                            </div>
+                                        </div>
+                                    </nav>
+                                    <nav class="level">
+                                        <div class="level-item" v-if="isUpdating">
+                                            <span class="has-text-black">
+                                                <i class="fas fa-spinner updating"></i>
                                             </span>
-                                            <span class="title is-size-4"
-                                                v-bind:class="{'is-invisible': words === -1}">{{ likes }}</span>
                                         </div>
-                                    </div>
-                                </nav>
-                                <nav class="level">
-                                    <div class="level-item has-text-centered">
-                                        <div class="field">
-                                            <h6 class="subtitle is-size-6 is-uppercase has-text-weight-bold">いいね
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </nav>
-                                <nav class="level">
-                                    <div class="level-item" v-if="isUpdating">
-                                        <span class="has-text-black">
-                                            <i class="fas fa-spinner updating"></i>
-                                        </span>
-                                    </div>
-                                    <div class="level-item" v-else>
-                                        <!--<div class="tags are-normal field is-grouped is-grouped-multiline is-hidden">
-                                            <div class="control">
-                                                <div class="tags has-addons">
-                                                    <span class="tag is-white"><a class="has-text-black"
-                                                            href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
-                                                    <span class="tag is-black">Windows</span>
+                                        <div class="level-item" v-else>
+                                            <!--<div class="tags are-normal field is-grouped is-grouped-multiline is-hidden">
+                                                <div class="control">
+                                                    <div class="tags has-addons">
+                                                        <span class="tag is-white"><a class="has-text-black"
+                                                                href="https://www.microsoft.com/store/apps/9WZDNCRDT09Q">Apricot</a></span>
+                                                        <span class="tag is-black">Windows</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="control">
-                                                <div class="tags has-addons">
-                                                    <span class="tag is-white"><a class="has-text-black"
-                                                            href="https://clock.milchchan.com/">Clock</a></span>
-                                                    <span class="tag is-black">Web</span>
+                                                <div class="control">
+                                                    <div class="tags has-addons">
+                                                        <span class="tag is-white"><a class="has-text-black"
+                                                                href="https://clock.milchchan.com/">Clock</a></span>
+                                                        <span class="tag is-black">Web</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="control">
-                                                <div class="tags has-addons">
-                                                    <span class="tag is-white"><a class="has-text-black"
-                                                            href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
-                                                    <span class="tag is-black">iOS</span>
+                                                <div class="control">
+                                                    <div class="tags has-addons">
+                                                        <span class="tag is-white"><a class="has-text-black"
+                                                                href="https://apps.apple.com/jp/app/id1130755997">Wonderland</a></span>
+                                                        <span class="tag is-black">iOS</span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </div>-->
-                                        <div class="tags are-medium field is-grouped is-grouped-multiline">
-                                            <div class="control" v-for="tag in tags" v-bind:key="tag.index">
-                                                <div class="tags has-addons">
-                                                    <button class="button tag is-black is-rounded" type="button"
-                                                        v-bind:style="{ background: 'rgba(0, 0, 0, ' + (0.5 + 0.5 * tag.score) + ')' }"
-                                                        @click="hint(tag)">{{ tag.name }}</button>
+                                            </div>-->
+                                            <div class="tags are-medium field is-grouped is-grouped-multiline">
+                                                <div class="control" v-for="tag in tags" v-bind:key="tag.index">
+                                                    <div class="tags has-addons">
+                                                        <button class="button tag is-black is-rounded" type="button"
+                                                            v-bind:style="{ background: 'rgba(0, 0, 0, ' + (0.5 + 0.5 * tag.score) + ')' }"
+                                                            @click="hint(tag)">{{ tag.name }}</button>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </nav>
-                                <nav class="level">
-                                    <div class="level-item">
-                                        <span class="has-text-black">
-                                            <button class="button is-white is-rounded"
-                                                v-bind:class="{'is-selected': isOverlayed, 'is-info': isOverlayed}"
-                                                @click="overlay"><span class="icon is-small">
-                                                    <i class="fas fa-comments"></i>
-                                                </span></button>
-                                        </span>
-                                    </div>
-                                </nav>
-                            </div>
+                                    </nav>
+                                    <nav class="level">
+                                        <div class="level-item">
+                                            <span class="has-text-black">
+                                                <button class="button is-white is-rounded"
+                                                    v-bind:class="{'is-selected': isOverlayed, 'is-info': isOverlayed}"
+                                                    @click="isOverlayed = !isOverlayed"><span class="icon is-small">
+                                                        <i class="fas fa-comments"></i>
+                                                    </span></button>
+                                            </span>
+                                        </div>
+                                    </nav>
+                                </div>
+                            </transition>
                         </div>
                         <div class="column is-2 is-mobile">
                             <button class="button is-white" type="button" v-bind:disabled="user === null" @click="like">
@@ -567,70 +624,73 @@
                 </div>
             </div>
         </nav>
-        <div id="container" v-bind:class="{'is-hidden': !isOverlayed}">
-            <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
-                <div class="column is-half has-content-centered">
-                    <hr class="is-invisible">
-                    <article class="media" v-if="user.uid === message.user.id" v-cloak>
-                        <div class="media-content">
-                            <div class="level is-mobile" v-if="message.user.name">
-                                <div class="level-left">
-                                    <span
-                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+        <div id="container" v-bind:class="{'is-hidden': !isOverlayed || isBlinded }">
+            <transition-group name="message-list" tag="div">
+                <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
+                    <div class="column is-half has-content-centered">
+                        <hr class="is-invisible">
+                        <article class="media" v-if="user.uid === message.user.id" v-cloak>
+                            <div class="media-content">
+                                <div class="level is-mobile" v-if="message.user.name">
+                                    <div class="level-left">
+                                        <span
+                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                    </div>
+                                </div>
+                                <div class="content has-text-right">
+                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                        <p class="has-text-weight-bold has-text-white">
+                                            {{ message.text }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                            {{ formatDate(message.timestamp) }}
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="content has-text-right">
-                                <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                    <p class="has-text-weight-bold has-text-white">
-                                        {{ message.text }}
-                                    </p>
+                            <figure class="media-right" v-if="message.user.image">
+                                <p class="image is-64x64">
+                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                </p>
+                            </figure>
+                        </article>
+                        <article class="media" v-else v-cloak>
+                            <figure class="media-left" v-if="message.user.image">
+                                <p class="image is-64x64">
+                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="level is-mobile" v-if="message.user.name">
+                                    <div class="level-left">
+                                        <span
+                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
+                                    </div>
                                 </div>
-                                <div>
-                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                        {{ formatDate(message.timestamp) }}
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <figure class="media-right" v-if="message.user.image">
-                            <p class="image is-64x64">
-                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                            </p>
-                        </figure>
-                    </article>
-                    <article class="media" v-else v-cloak>
-                        <figure class="media-left" v-if="message.user.image">
-                            <p class="image is-64x64">
-                                <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
-                            </p>
-                        </figure>
-                        <div class="media-content">
-                            <div class="level is-mobile" v-if="message.user.name">
-                                <div class="level-left">
-                                    <span
-                                        class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                                </div>
-                            </div>
-                            <div class="content has-text-left">
-                                <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                    <p class="has-text-weight-bold has-text-white">
-                                        <span v-bind:class="{'is-hidden': message.text}">
-                                            <i class="fas fa-spinner updating"></i>
-                                        </span>
-                                        {{ message.text }}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="is-size-7 has-text-weight-normal has-text-grey">
-                                        {{ formatDate(message.timestamp) }}</p>
+                                <div class="content has-text-left">
+                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
+                                        <p class="has-text-weight-bold has-text-white">
+                                            <span v-bind:class="{'is-hidden': message.text}">
+                                                <i class="fas fa-spinner updating"></i>
+                                            </span>
+                                            {{ message.text }}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="is-size-7 has-text-weight-normal has-text-grey">
+                                            {{ formatDate(message.timestamp) }}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </article>
+                        </article>
+                    </div>
                 </div>
-            </div>
+            </transition-group>
         </div>
-        <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-bind:class="{'is-hidden': !isOverlayed}">
+        <nav id="input" class="navbar is-fixed-bottom" role="navigation"
+            v-bind:class="{'is-hidden': !isOverlayed || isBlinded }">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered is-mobile">
                     <div class="notification is-info is-light" v-if="notification" v-cloak>
@@ -810,6 +870,7 @@
                 isLoading: false,
                 isRevealed: false,
                 isUpdating: false,
+                isBlinded: false,
                 isOverlayed: true,
                 progress: 0,
                 user: null,
@@ -945,6 +1006,9 @@
                     }
                 },
                 like: function () {
+                    this.isBlinded = !this.isBlinded;
+
+                    return;
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
@@ -983,9 +1047,6 @@
                 },
                 hint: function (event) {
                     this.input += event.name;
-                },
-                overlay: function () {
-                    this.isOverlayed = !this.isOverlayed;
                 },
                 update: async function (data, max) {
                     this.isUpdating = true;
@@ -1122,9 +1183,6 @@
                     }
 
                     this.isUpdating = false;
-                },
-                reveal: function (event) {
-                    this.isRevealed = !this.isRevealed;
                 },
                 scrollToEnd: function () {
                     document.documentElement.scrollTop = document.documentElement.scrollHeight;
