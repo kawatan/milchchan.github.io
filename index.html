@@ -108,12 +108,17 @@
             z-index: 0;
             top: 0;
             left: 0;
+            margin: 0;
+            padding: 0;
             width: 100%;
             height: 100vh;
             overflow: hidden;
             background: transparent;
-            text-align: center;
-            vertical-align: middle;
+        }
+
+        .type span {
+            color: rgba(255, 255, 255, 1);
+            text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);
         }
 
         .columns .is-vcentered {
@@ -446,13 +451,34 @@
             transform: translate3d(0%, 50%, 0);
         }
 
+        .type-list-enter-active,
+        .type-list-leave-active {
+            transition: all 0.0s ease;
+        }
+
+        .type-list-move {
+            transition: transform 0.0s ease;
+        }
+
+        .type-list-enter,
+        .type-list-leave-to {
+            opacity: 0;
+            transform: translate3d(0%, 25%, 0);
+        }
+
+        .type-list-enter-to,
+        .type-list-leave {
+            opacity: 1;
+            transform: translate3d(0%, 0%, 0);
+        }
+
         @keyframes progress {
             0% {
-                background-position: 0% 0%;
+                background-position: 0px 0px;
             }
 
             100% {
-                background-position: -100% 0%;
+                background-position: -20px 0px;
             }
         }
 
@@ -535,12 +561,15 @@
         </transition>
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
+        <div class="type columns is-mobile is-vcentered">
+            <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
+                <span class="title is-1" v-for="character in text" :key="character.key">{{ character.value }}</span>
+            </transition-group>
+        </div>
         <!--<div class="type">
             <span>Hello</span>
         </div>
-        <transition-group tag="div" class="type">
-            <span v-for="el in text" :key="el.id" class="item" v-text="el.text" />
-        </transition-group>-->
+        -->
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered" v-cloak>
@@ -952,7 +981,7 @@
                 currentAnimations: [],
                 blendShapeAnimations: [],
                 blendShapeAnimationQueue: [],
-                text: ''
+                text: []
             },
             watch: {
                 words: function (newValue) {
@@ -1103,7 +1132,7 @@
                         this.suggestionQueue.splice(0);
                         this.isSuggested = false;
                     } else {
-                        this.suggestionQueue.push({ text: 'Hello, world', animation: 'idle2' });
+                        this.suggestionQueue.push({ text: 'Hello, world', animation: 'idle2' }, { text: 'Test', animation: 'idle2' });
                         this.isSuggested = true;
                     }
 
@@ -1538,9 +1567,16 @@
                         idleTime = null;
                     } else if (app.isSuggested) {
                         const suggestion = app.suggestionQueue.shift();
+                        const characters = suggestion.text.split('');
 
                         if (app.isBlinded) {
                             app.isBlinded = false;
+                        }
+
+                        app.text.splice(0);
+
+                        for (let i = 0; i < characters.length; i++) {
+                            app.text.push({ key: i, value: characters[i] });
                         }
 
                         if ('animation' in suggestion) {
@@ -1560,6 +1596,7 @@
                         const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
 
                         if (app.isBlinded) {
+                            app.text.splice(0);
                             app.isBlinded = false;
                         }
 
