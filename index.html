@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" type="text/css"
         media="screen" />
     <style>
@@ -32,7 +32,7 @@
             overflow-x: hidden;
             overflow-y: scroll;
             scroll-behavior: smooth;
-            background: #f6f6f6;
+            background: #f5f5f5;
         }
 
         body::before {
@@ -105,20 +105,29 @@
 
         .type {
             position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
             z-index: 0;
             top: 0;
             left: 0;
             margin: 0;
-            padding: 0;
+            padding: 16px 16px 16px 16px;
             width: 100%;
             height: 100vh;
             overflow: hidden;
             background: transparent;
         }
 
+        .type .column {
+            margin: 0;
+            padding: 0;
+        }
+
         .type span {
-            color: rgba(255, 255, 255, 1);
-            text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);
+            color: black;
+            /*color: rgba(255, 255, 255, 1);
+            text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);*/
         }
 
         .columns .is-vcentered {
@@ -160,10 +169,18 @@
             padding: 0px 0px 0px 16px;
         }
 
+        #heading>.columns>.column>.columns>.column:first-child button {
+            border-radius: 290486px;
+        }
+
         #heading>.columns>.column>.columns>.column:last-child {
             margin: 16px 0px 0px 0px;
             padding: 0px 16px 0px 0px;
             text-align: right;
+        }
+
+        #heading>.columns>.column>.columns>.column:last-child button {
+            border-radius: 290486px;
         }
 
         #heading>.columns>.column>.columns>.column {
@@ -171,7 +188,7 @@
         }
 
         #heading .title {
-            font-family: 'Alata', sans-serif;
+            font-family: 'Josefin Sans', sans-serif;
         }
 
         #heading .subtitle {
@@ -336,11 +353,11 @@
         }
 
         .media-content .has-text-left div:nth-last-of-type(1)>p {
-            font-family: 'Alata', sans-serif;
+            font-family: 'Josefin Sans', sans-serif;
         }
 
         .media-content .has-text-right div:nth-last-of-type(1)>p {
-            font-family: 'Alata', sans-serif;
+            font-family: 'Josefin Sans', sans-serif;
         }
 
         .navbar {
@@ -362,7 +379,7 @@
         }
 
         .navbar:nth-of-type(2) .navbar-item>div>div:nth-last-of-type(1)>span {
-            font-family: 'Alata', sans-serif;
+            font-family: 'Josefin Sans', sans-serif;
         }
 
         .navbar-item img {
@@ -453,11 +470,11 @@
 
         .type-list-enter-active,
         .type-list-leave-active {
-            transition: all 0.0s ease;
+            transition: all 0s ease;
         }
 
         .type-list-move {
-            transition: transform 0.0s ease;
+            transition: transform 0s ease;
         }
 
         .type-list-enter,
@@ -556,23 +573,20 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
+        <div class="type columns is-mobile is-centered is-vcentered">
+            <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
+                <span class="title is-2 has-text-weight-bold" v-for="character in text"
+                    v-bind:key="character.key">{{ character.value }}</span>
+            </transition-group>
+        </div>
         <transition name="blind">
             <div class="cover" v-if="isBlinded" v-cloak></div>
         </transition>
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
-        <div class="type columns is-mobile is-vcentered">
-            <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
-                <span class="title is-1" v-for="character in text" :key="character.key">{{ character.value }}</span>
-            </transition-group>
-        </div>
-        <!--<div class="type">
-            <span>Hello</span>
-        </div>
-        -->
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
-                <div class="column is-half has-content-centered" v-cloak>
+                <div class="column is-full has-content-centered" v-cloak>
                     <div class="columns is-mobile">
                         <div class="column is-2 is-mobile">
                             <button class="button is-white" type="button" @click="isRevealed = !isRevealed">
@@ -611,7 +625,7 @@
                             </div>
                             <transition name="reveal">
                                 <div class="control has-text-centered" v-if="isRevealed" v-cloak>
-                                    <nav class="level">
+                                    <!--<nav class="level">
                                         <div class="level-item has-text-centered">
                                             <div class="field is-grouped is-vcentered">
                                                 <span class="icon is-small">
@@ -629,7 +643,7 @@
                                                 </h6>
                                             </div>
                                         </div>
-                                    </nav>
+                                    </nav>-->
                                     <nav class="level">
                                         <transition name="fade" mode="out-in">
                                             <div class="level-item" v-if="isUpdating" key="updating">
@@ -698,7 +712,7 @@
                                 <button class="button is-white" type="button" v-bind:disabled="user === null"
                                     @click="like" v-else key="suggest">
                                     <span class="icon is-small">
-                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-tv"></i>
                                     </span>
                                 </button>
                             </transition>
@@ -939,7 +953,7 @@
 
         const stats = new Stats();
 
-        stats.domElement.style.position = "absolute";
+        stats.domElement.style.position = "fixed";
         stats.domElement.style.top = "0px";
 
         if (!debug) {
@@ -1129,12 +1143,20 @@
                     this.isBlinded = true;
 
                     if (this.isSuggested) {
-                        this.suggestionQueue.splice(0);
+                        this.suggestionQueue[0].type.reverse = true;
                         this.isSuggested = false;
-                    } else {
-                        this.suggestionQueue.push({ text: 'Hello, world', animation: 'idle2' }, { text: 'Test', animation: 'idle2' });
+                    } else if (this.messages.length > 0) {
+                        const a = ['idle2', 'jump', 'win', 'lose'];
+
+                        for (let message of this.messages) {
+                            this.suggestionQueue.push({ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text, animation: a[random(0, 3)] });
+                        }
+
                         this.isSuggested = true;
+                        this.$el.querySelector("#twinkle").play();
                     }
+
+
 
                     return;
                     /*if (this.isLearning) {
@@ -1531,32 +1553,170 @@
             const deltaTime = clock.getDelta();
 
             if (app.vrm) {
-                let messageData;
+                let isActive = false;
+                let messageData = null;
                 let updatedBlendShapeNames = [];
 
                 if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
                     messageData = app.currentAnimations[animationIndex];
                     animationIndex += animationSkipFrames;
+                    isActive = true;
+                }
 
-                    if (idleTime !== null) {
-                        if (app.blendShapeAnimationQueue.length > 0) {
-                            idleTime = null;
+                if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
+                    for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
+                        app.blendShapeAnimations.unshift(blendShapeAnimation);
+                    }
+
+                    isActive = true;
+                }
+
+                if (app.suggestionQueue.length > 0) {
+                    const suggestion = app.suggestionQueue[0];
+                    let loopRequired = true;
+
+                    if (suggestion.type.reverse) {
+                        if (suggestion.type.count > 0) {
+                            suggestion.type.elapsed += deltaTime;
+
+                            if (suggestion.type.elapsed >= suggestion.type.speed / 1000.0) {
+                                let index = suggestion.type.count - 1;
+
+                                if (index < suggestion.text.length) {
+                                    let width = Math.floor(suggestion.text.length / 2);
+
+                                    if (suggestion.type.buffer.length <= width) {
+                                        suggestion.type.count -= 1;
+                                    }
+
+                                    if (suggestion.type.buffer.length > 0) {
+                                        suggestion.type.buffer = suggestion.type.buffer.substring(suggestion.type.buffer.length - 2, suggestion.type.buffer.length - 1);
+                                    }
+                                }
+
+                                suggestion.type.elapsed = 0;
+                            }
+                        } else if (app.isSuggested) {
+                            suggestion.time = 0;
+                            suggestion.type.elapsed = -1;
+                            suggestion.type.reverse = false;
+                            suggestion.type.buffer = '';
+                            suggestion.type.count = 0;
+
+                            app.suggestionQueue.shift();
+                            app.suggestionQueue.push(suggestion);
+                            app.text.splice(0);
+                            app.isBlinded = true;
+                        } else if (app.isBlinded && !isActive) {
+                            app.suggestionQueue.splice(0);
+                            app.isBlinded = false;
+                            loopRequired = false;
+                        }
+                    } else if (suggestion.type.buffer.length < suggestion.text.length) {
+                        if (suggestion.type.elapsed >= 0) {
+                            suggestion.type.elapsed += deltaTime;
+                        } else if (!isActive) {
+                            suggestion.type.elapsed = deltaTime;
+                            app.isBlinded = false;
+                            app.currentAnimations.splice(0);
+
+                            if ('animation' in suggestion) {
+                                const skipFrames = 60 / 12;
+                                let animations = app.animations[suggestion.animation];
+                                let maxFrames = Math.min(animations.length, 60);
+                                let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                let length = Math.round(90 / 24);
+
+                                for (let i = 0; i < maxFrames; i += skipFrames) {
+                                    for (let j = 0; j < length; j++) {
+                                        app.currentAnimations.push(animations[offset + i]);
+                                    }
+                                }
+
+                                for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
+                                    app.currentAnimations.push(animations[offset + i]);
+                                }
+                            }
+
+                            /*if ('blendShapes' in suggestion) {
+                                for (let blendShapeAnimation of suggestion.blendShapes) {
+                                    app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                }
+                            }*/
+                        }
+
+                        if (suggestion.type.elapsed >= suggestion.type.speed / 1000.0) {
+                            let index = suggestion.type.buffer.length;
+                            let width = Math.floor(suggestion.text.length / 2);
+                            let length = suggestion.text.length;
+
+                            if (suggestion.type.count >= width) {
+                                suggestion.type.buffer += suggestion.text.charAt(index);
+                            }
+
+                            if (suggestion.type.count < length) {
+                                suggestion.type.count += 1;
+                            }
+
+                            suggestion.type.elapsed = 0;
+                        }
+                    } else {
+                        suggestion.time += deltaTime;
+
+                        if (suggestion.time >= suggestion.duration) {
+                            suggestion.type.reverse = true;
+                        }
+                    }
+
+                    if (suggestion.text.length === suggestion.type.buffer.length) {
+                        const characters = suggestion.text.split('');
+
+                        app.text.splice(0);
+
+                        for (let i = 0; i < characters.length; i++) {
+                            app.text.push({ key: i, value: characters[i] });
+                        }
+                    } else {
+                        let charArray = new Array();
+                        let randomBuffer = '';
+
+                        for (let i = 0; i < suggestion.text.length; i++) {
+                            if (charArray.indexOf(suggestion.text.charAt(i)) == -1 && suggestion.text.charAt(i).match(/\s/) == null) {
+                                charArray.push(suggestion.text.charAt(i));
+                            }
+                        }
+
+                        for (let i = 0; i < suggestion.type.count; i++) {
+                            if (charArray.length > 0) {
+                                randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                            }
+                        }
+
+                        if (randomBuffer.length > suggestion.type.buffer.length) {
+                            const characters = (suggestion.type.buffer + randomBuffer.substring(suggestion.type.buffer.length, randomBuffer.length)).split('');
+
+                            app.text.splice(0);
+
+                            for (let i = 0; i < characters.length; i++) {
+                                app.text.push({ key: i, value: characters[i] });
+                            }
                         } else {
-                            idleTime += deltaTime;
+                            const characters = suggestion.type.buffer.split('');
 
-                            if (idleTime >= blinkThreshold) {
-                                const durations = [0.5, 1.0];
-                                const ends = [2.0, 4.0];
-                                const index = random(0, 1);
-                                const duration = durations[index];
-                                const end = ends[index];
+                            app.text.splice(0);
 
-                                app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
-                                idleTime = 0.0;
+                            for (let i = 0; i < characters.length; i++) {
+                                app.text.push({ key: i, value: characters[i] });
                             }
                         }
                     }
-                } else {
+
+                    if (loopRequired && messageData === null) {
+                        animationIndex = 0;
+                        messageData = app.currentAnimations[animationIndex];
+                        animationIndex += animationSkipFrames;
+                    }
+                } else if (messageData === null) {
                     app.currentAnimations.splice(0);
 
                     if (app.animationsQueue.length > 0) {
@@ -1565,40 +1725,8 @@
                         }
 
                         idleTime = null;
-                    } else if (app.isSuggested) {
-                        const suggestion = app.suggestionQueue.shift();
-                        const characters = suggestion.text.split('');
-
-                        if (app.isBlinded) {
-                            app.isBlinded = false;
-                        }
-
-                        app.text.splice(0);
-
-                        for (let i = 0; i < characters.length; i++) {
-                            app.text.push({ key: i, value: characters[i] });
-                        }
-
-                        if ('animation' in suggestion) {
-                            for (let animation of app.animations[suggestion.animation]) {
-                                app.currentAnimations.push(animation);
-                            }
-                        }
-
-                        app.suggestionQueue.push(suggestion);
-
-
-
-
-
-                        idleTime = null;
                     } else {
                         const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
-
-                        if (app.isBlinded) {
-                            app.text.splice(0);
-                            app.isBlinded = false;
-                        }
 
                         for (let animation of app.animations[idles[random(0, 14)]]) {
                             app.currentAnimations.push(animation);
@@ -1618,7 +1746,10 @@
                                 const duration = durations[index];
                                 const end = ends[index];
 
-                                app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]);
+                                for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
+                                    app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                }
+
                                 idleTime = 0.0;
                             }
                         }
@@ -1628,10 +1759,25 @@
                     messageData = app.currentAnimations[animationIndex];
                     animationIndex += animationSkipFrames;
                 }
+                else if (idleTime === null) {
+                    idleTime = 0.0;
+                } else if (app.blendShapeAnimationQueue.length > 0) {
+                    idleTime = null;
+                } else {
+                    idleTime += deltaTime;
 
-                if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
-                    for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
-                        app.blendShapeAnimations.unshift(blendShapeAnimation);
+                    if (idleTime >= blinkThreshold) {
+                        const durations = [0.5, 1.0];
+                        const ends = [2.0, 4.0];
+                        const index = random(0, 1);
+                        const duration = durations[index];
+                        const end = ends[index];
+
+                        for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
+                            app.blendShapeAnimations.unshift(blendShapeAnimation);
+                        }
+
+                        idleTime = 0.0;
                     }
                 }
 
