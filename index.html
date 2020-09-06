@@ -604,14 +604,14 @@
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-full has-content-centered" v-cloak>
                     <div class="columns is-mobile">
-                        <div class="column is-2 is-mobile">
+                        <div class="column is-3 is-mobile">
                             <button class="button is-white" type="button" @click="isRevealed = !isRevealed">
                                 <span class="icon is-small">
                                     <i class="fas fa-bars"></i>
                                 </span>
                             </button>
                         </div>
-                        <div class="column is-8 is-mobile">
+                        <div class="column is-6 is-mobile">
                             <div class="control has-text-centered">
                                 <nav class="level is-hidden">
                                     <div class="level-item has-text-centered image">
@@ -717,7 +717,7 @@
                                 </div>
                             </transition>
                         </div>
-                        <div class="column is-2 is-mobile">
+                        <div class="column is-3 is-mobile">
                             <transition name="fade" mode="out-in">
                                 <button class="button is-white" type="button" v-bind:disabled="user === null"
                                     @click="like" v-if="isSuggested" key="cancel">
