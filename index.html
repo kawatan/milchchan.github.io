@@ -103,6 +103,21 @@
             animation: progress 0.5s linear 0s infinite;
         }
 
+        .cover .columns {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 0;
+            top: 0;
+            left: 0;
+            margin: 0;
+            padding: 16px 16px 16px 16px;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            background: transparent;
+        }
+
         .type {
             position: fixed;
             display: flex;
@@ -591,12 +606,18 @@
     <div id="app">
         <div class="type columns is-mobile is-centered is-vcentered">
             <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
-                <span class="title is-2 has-text-weight-bold" v-for="character in text"
+                <span class="title is-1 has-text-weight-bold" v-for="character in text"
                     v-bind:key="character.key">{{ character.value }}</span>
             </transition-group>
         </div>
         <transition name="blind">
-            <div class="cover" v-if="isBlinded" v-cloak></div>
+            <div class="cover" v-if="isBlinded" v-cloak>
+                <div class="columns is-mobile is-centered is-vcentered" v-bind:class="{'is-hidden': highlight.length === 0}">
+                    <div class="column is-full has-text-centered">
+                        <span class="title is-1 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                    </div>
+                </div>
+            </div>
         </transition>
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
         </div>
@@ -1020,6 +1041,7 @@
                 currentAnimations: [],
                 blendShapeAnimations: [],
                 blendShapeAnimationQueue: [],
+                highlight: '',
                 text: []
             },
             watch: {
@@ -1169,6 +1191,7 @@
 
                     if (this.isSuggested) {
                         this.suggestionQueue[0].type.reverse = true;
+                        this.highlight = '';
                         this.isSuggested = false;
                     } else if (this.messages.length > 0) {
                         const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
@@ -1182,6 +1205,7 @@
                             this.suggestionQueue.push({ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text, animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
                         }
 
+                        this.highlight = this.suggestionQueue[0].text;
                         this.isSuggested = true;
                         this.$el.querySelector("#twinkle").play();
                     }
@@ -1575,6 +1599,8 @@
         const animationSkipFrames = 2;
         let idleTime = null;
         const blinkThreshold = 5.0;
+        let waitTime = 0.0;
+        const waitThreshold = 1.0;
         let lookAnimation = null;
 
         function render() {
@@ -1662,6 +1688,7 @@
 
                             app.suggestionQueue.shift();
                             app.suggestionQueue.push(suggestion);
+                            app.highlight = app.suggestionQueue[0].text;
                             app.text.splice(0);
                             app.isBlinded = true;
                         } else if (app.isBlinded && !isActive) {
@@ -1680,47 +1707,55 @@
                         if (suggestion.type.elapsed >= 0) {
                             suggestion.type.elapsed += deltaTime;
                         } else if (!isActive) {
-                            suggestion.type.elapsed = deltaTime;
-                            app.isBlinded = false;
-                            app.currentAnimations.splice(0);
+                            waitTime += deltaTime;
 
-                            if ('animation' in suggestion) {
-                                const skipFrames = 60 / 12;
-                                let animations = app.animations[suggestion.animation];
-                                let maxFrames = Math.min(animations.length, 60);
-                                let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
-                                let length = Math.round(90 / 24);
+                            if (app.highlight === 0 || waitTime >= waitThreshold) {
+                                suggestion.type.elapsed = deltaTime;
+                                app.isBlinded = false;
+                                app.currentAnimations.splice(0);
 
-                                for (let i = 0; i < maxFrames; i += skipFrames) {
-                                    for (let j = 0; j < length; j++) {
+                                if ('animation' in suggestion) {
+                                    const skipFrames = 60 / 12;
+                                    let animations = app.animations[suggestion.animation];
+                                    let maxFrames = Math.min(animations.length, 60);
+                                    let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                    let length = Math.round(90 / 24);
+
+                                    for (let i = 0; i < maxFrames; i += skipFrames) {
+                                        for (let j = 0; j < length; j++) {
+                                            app.currentAnimations.push(animations[offset + i]);
+                                        }
+                                    }
+
+                                    for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
                                         app.currentAnimations.push(animations[offset + i]);
                                     }
                                 }
 
-                                for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                    app.currentAnimations.push(animations[offset + i]);
-                                }
-                            }
+                                if ('morphs' in suggestion) {
+                                    let nameSet = [];
 
-                            if ('morphs' in suggestion) {
-                                let nameSet = [];
+                                    for (let blendShape of suggestion.morphs.defaults) {
+                                        app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                    }
 
-                                for (let blendShape of suggestion.morphs.defaults) {
-                                    app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                }
+                                    for (let blendShapeAnimation of suggestion.morphs.animations) {
+                                        app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                    }
 
-                                for (let blendShapeAnimation of suggestion.morphs.animations) {
-                                    app.blendShapeAnimations.unshift(blendShapeAnimation);
-                                }
+                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                        let blendShapeAnimation = app.blendShapeAnimations[i];
 
-                                for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                    let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                    if (!nameSet.includes(blendShapeAnimation.name)) {
-                                        app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                        nameSet.push(blendShapeAnimation.name);
+                                        if (!nameSet.includes(blendShapeAnimation.name)) {
+                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                            nameSet.push(blendShapeAnimation.name);
+                                        }
                                     }
                                 }
+
+                                waitTime = 0.0;
+                            } else {
+                                loopRequired = false;
                             }
                         }
 
