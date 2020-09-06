@@ -1171,7 +1171,10 @@
                         this.suggestionQueue[0].type.reverse = true;
                         this.isSuggested = false;
                     } else if (this.messages.length > 0) {
-                        const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun }, { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy }, { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy }, { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
+                        const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
+                        { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy },
+                        { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy },
+                        { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
 
                         for (let message of this.messages) {
                             const item = presets[random(0, 3)];
@@ -1607,7 +1610,6 @@
 
                             if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
                                 app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
-
                                 app.blendShapeAnimations.splice(i, 1);
                             } else {
                                 app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
@@ -1651,6 +1653,12 @@
                             suggestion.type.reverse = false;
                             suggestion.type.buffer = '';
                             suggestion.type.count = 0;
+
+                            if ('morphs' in suggestion) {
+                                for (let blendShapeAnimation of suggestion.morphs.animations) {
+                                    blendShapeAnimation.time = 0;
+                                }
+                            }
 
                             app.suggestionQueue.shift();
                             app.suggestionQueue.push(suggestion);
