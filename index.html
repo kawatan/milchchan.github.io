@@ -1170,7 +1170,6 @@
                     if (this.isSuggested) {
                         this.suggestionQueue[0].type.reverse = true;
                         this.isSuggested = false;
-                        this.scrollRequired = true;
                     } else if (this.messages.length > 0) {
                         const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun }, { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy }, { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy }, { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
 
@@ -1666,6 +1665,7 @@
 
                             app.suggestionQueue.splice(0);
                             app.isBlinded = false;
+                            app.scrollRequired = true;
                             loopRequired = false;
                         }
                     } else if (suggestion.type.buffer.length < suggestion.text.length) {
