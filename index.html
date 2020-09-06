@@ -375,7 +375,7 @@
             margin: 0px 8px 0px 0px;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:last-child {
+        .navbar:nth-of-type(2) .navbar-item>div>.control:last-child {
             margin: 0;
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
@@ -1374,7 +1374,7 @@
                 let container = this.$el.querySelector("#container");
 
                 container.style.paddingTop = this.$el.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-                container.style.paddingBottom = this.$el.querySelector("#input .navbar-item .control:last-child").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = this.$el.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
                 if (this.scrollRequired) {
                     this.scrollToEnd();
@@ -1456,7 +1456,7 @@
                 let container = this.$el.querySelector("#container");
 
                 container.style.paddingTop = this.$el.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-                container.style.paddingBottom = this.$el.querySelector("#input .navbar-item .control:last-child").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = this.$el.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
                 firebase.auth().signInAnonymously().catch(function (error) {
                     console.error(error.code, error.message);
@@ -2128,7 +2128,7 @@
             let container = app.$el.querySelector("#container");
 
             container.style.paddingTop = app.$el.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-            container.style.paddingBottom = app.$el.querySelector("#input .navbar-item .control:last-child").getBoundingClientRect().height + 'px';
+            container.style.paddingBottom = app.$el.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
             const width = window.innerWidth;
             const height = window.outerHeight;
