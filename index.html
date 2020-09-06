@@ -283,6 +283,10 @@
             padding: 0px 16px 0px 16px;
         }
 
+        #input .control .is-primary {
+            background-color: #30c0f5;
+        }
+
         .has-content-centered {
             margin-left: auto;
             margin-right: auto;
@@ -341,10 +345,6 @@
             padding: 0;
         }
 
-        .navbar:nth-of-type(2) .control .is-primary {
-            background-color: #30c0f5;
-        }
-
         .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child {
             display: block;
         }
@@ -371,7 +371,7 @@
             background: url('/images/Stripes.png') repeat;
         }
 
-        #input .notification .media .media-left {
+        .navbar:nth-of-type(2) .notification .media .media-left {
             margin: 0px 8px 0px 0px;
         }
 
@@ -380,7 +380,7 @@
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:first-child {
+        #input .navbar-item .control:last-child .level:first-child {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -388,11 +388,11 @@
             padding: 16px 0px 0px 0px;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:first-child>span {
+        #input .navbar-item .control:last-child .level:first-child>span {
             font-family: 'Josefin Sans', sans-serif;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:last-child {
+        #input .navbar-item .control:last-child .level:last-child {
             display: block;
             margin: 0;
             padding: 0px 0px 16px 0px;
@@ -1165,6 +1165,9 @@
                     }
                 },
                 like: function () {
+                    app.notification = { text: "hogehoge", accent: merku.accent, image: channel.length == 0 ? merku.image : null };
+
+                    return;
                     this.isBlinded = true;
 
                     if (this.isSuggested) {
