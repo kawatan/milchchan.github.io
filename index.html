@@ -104,10 +104,10 @@
         }
 
         .cover .columns {
+            position: absolute;
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 0;
             top: 0;
             left: 0;
             margin: 0;
@@ -118,6 +118,19 @@
             background-color: transparent;
             background-position: center center;
             background-size: cover;
+        }
+
+        .cover .column {
+            margin: 0;
+            padding: 0;
+        }
+
+        .cover img.background {
+            position: fixed;
+            top: 100vh;
+            left: 0;
+            margin: 0;
+            padding: 0;
         }
 
         .type {
@@ -425,7 +438,7 @@
 
         .fade-enter-active,
         .fade-leave-active {
-            transition: opacity .5s;
+            transition: opacity 0.5s;
         }
 
         .fade-enter,
@@ -614,11 +627,19 @@
         </div>
         <transition name="blind">
             <div class="cover" v-if="isBlinded" v-cloak>
-                <div class="columns is-mobile is-centered is-vcentered" v-bind:class="{'is-hidden': highlight.length === 0 && cover === null }" v-bind:style="{backgroundImage: cover === null ? 'none' : 'url(' + cover + ')'}">
-                    <div class="column is-full has-text-centered">
-                        <span class="title is-1 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                <img class="background" v-bind:src="cover" @load="load" @error="error" alt="Background"><img>
+                <transition name="fade">
+                    <div class="columns is-mobile is-centered is-vcentered" v-if="isPreloading" key="loading">
+                        <div class="column is-full has-text-centered">
+                            <span class="title is-1 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                        </div>
                     </div>
-                </div>
+                    <div class="columns is-mobile is-centered is-vcentered" v-bind:style="{backgroundImage: cover === null ? 'none' : 'url(' + cover + ')'}" v-else key="loaded">
+                        <div class="column is-full has-text-centered">
+                            <span class="title is-1 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                        </div>
+                    </div>
+                </transition>
             </div>
         </transition>
         <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
@@ -1045,6 +1066,7 @@
                 blendShapeAnimationQueue: [],
                 highlight: '',
                 cover: null,
+                isPreloading: false,
                 text: []
             },
             watch: {
@@ -1190,12 +1212,14 @@
                     }
                 },
                 like: function () {
-                    this.isBlinded = true;
+                    
 
                     if (this.isSuggested) {
+                        this.isBlinded = true;
                         this.suggestionQueue[0].type.reverse = true;
                         this.highlight = '';
                         this.cover = null;
+                        this.isPreloading = false;
                         this.isSuggested = false;
                     } else if (this.messages.length > 0) {
                         const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
@@ -1209,8 +1233,10 @@
                             this.suggestionQueue.push({ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text, animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
                         }
 
+                        this.isBlinded = true;
                         this.highlight = this.suggestionQueue[0].text;
-                        this.cover = '/images/Cover.png';
+                        this.cover = '/images/Cover2.png';
+                        this.isPreloading = false;
                         this.isSuggested = true;
                         this.$el.querySelector("#twinkle").play();
                     }
@@ -1256,6 +1282,13 @@
                 },
                 hint: function (event) {
                     this.input += event.name;
+                },
+                load: function () {
+                    this.isPreloading = false;
+                },
+                error: function () {
+                    this.cover = null;
+                    this.isPreloading = false;
                 },
                 update: async function (data, max) {
                     this.isUpdating = true;
@@ -1695,6 +1728,7 @@
                             app.suggestionQueue.push(suggestion);
                             app.highlight = app.suggestionQueue[0].text;
                             app.cover = '/images/Cover.png';
+                            app.isPreloading = true;
                             app.text.splice(0);
                             app.isBlinded = true;
                         } else if (app.isBlinded && !isActive) {
@@ -1713,7 +1747,9 @@
                         if (suggestion.type.elapsed >= 0) {
                             suggestion.type.elapsed += deltaTime;
                         } else if (!isActive) {
-                            waitTime += deltaTime;
+                            if (!app.isPreloading) {
+                                waitTime += deltaTime;
+                            }
 
                             if (app.highlight === 0 && app.cover === null || waitTime >= waitThreshold) {
                                 suggestion.type.elapsed = deltaTime;
