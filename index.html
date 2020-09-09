@@ -662,7 +662,7 @@
                 </transition>
             </div>
         </transition>
-        <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
+        <div class="progress" v-if="animatedProgress !== 0.0" v-bind:style="{width: String(100.0 * animatedProgress) + '%'}" v-cloak>
         </div>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
@@ -1063,6 +1063,7 @@
                 isSuggested: false,
                 suggestionQueue: [],
                 progress: 0,
+                animatedProgress: 0,
                 user: null,
                 input: '',
                 currentInputLength: 0,
@@ -1090,31 +1091,45 @@
                 text: []
             },
             watch: {
-                words: function (newValue) {
-                    const obj = { n: this.animatedWords };
+                progress: function (newValue) {
+                    const obj = { rate: this.animatedProgress };
 
                     anime({
                         targets: obj,
-                        n: newValue,
+                        rate: newValue,
+                        round: 100,
+                        duration: 500,
+                        easing: 'easeInOutSine',
+                        update: () => {
+                            this.animatedProgress = obj.rate
+                        }
+                    });
+                },
+                words: function (newValue) {
+                    const obj = { count: this.animatedWords };
+
+                    anime({
+                        targets: obj,
+                        count: newValue,
                         round: 1,
                         duration: 500,
                         easing: 'linear',
                         update: () => {
-                            this.animatedWords = obj.n
+                            this.animatedWords = obj.count
                         }
                     });
                 },
                 currentInputLength: function (newValue) {
-                    const obj = { n: this.animatedCurrentInputLength };
+                    const obj = { count: this.animatedCurrentInputLength };
 
                     anime({
                         targets: obj,
-                        n: newValue,
+                        count: newValue,
                         round: 1,
                         duration: 500,
                         easing: 'linear',
                         update: () => {
-                            this.animatedCurrentInputLength = obj.n
+                            this.animatedCurrentInputLength = obj.count
                         }
                     });
                 }
