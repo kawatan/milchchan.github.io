@@ -283,10 +283,12 @@
             padding: 0;
         }
 
-        #heading .tag {
-            font-family: "Gotham";
+        .tags>.tag {
+            /*font-family: "Gotham";*/
             margin: 0;
             padding: 0px 8px 0px 8px;
+            background-image: url('/images/Stripes.png');
+            background-repeat: repeat;
         }
 
         #container {
@@ -575,6 +577,11 @@
                 background: #30c0f5 url('/images/Stripes@2x.png') repeat 20px 20px;
             }
 
+            .tags>.tag {
+                background-image: url('/images/Stripes@2x.png');
+                background-size: 20px 20px;
+            }
+
             .media-content .has-text-left .balloon {
                 background: url('/images/Stripes@2x.png') repeat 20px 20px;
             }
@@ -596,6 +603,11 @@
 
             .cover {
                 background: #30c0f5 url('/images/Stripes@3x.png') repeat 20px 20px;
+            }
+
+            .tags>.tag {
+                background-image: url('/images/Stripes@3x.png');
+                background-size: 20px 20px;
             }
 
             .media-content .has-text-left .balloon {
@@ -747,7 +759,7 @@
                                                     <div class="control" v-for="tag in tags" v-bind:key="tag.index">
                                                         <div class="tags has-addons">
                                                             <button class="button tag is-black is-rounded" type="button"
-                                                                v-bind:style="{ background: 'rgba(0, 0, 0, ' + (0.5 + 0.5 * tag.score) + ')' }"
+                                                                v-bind:style="{ backgroundColor: 'rgba(0, 0, 0, ' + (0.5 + 0.5 * tag.score) + ')' }"
                                                                 @click="hint(tag)">{{ tag.name }}</button>
                                                         </div>
                                                     </div>
@@ -1228,35 +1240,42 @@
                         this.isPreloading = false;
                         this.isSuggested = false;
                     } else if (this.messages.length > 0) {
+                        let segmenter = new TinySegmenter();
                         const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
                         { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy },
                         { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy },
                         { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
 
-                        for (let message of this.messages) {
-                            const item = presets[random(0, 3)];
+                        for (let tag of [].concat(this.tags).sort((x, y) => y.score - x.score)) {
+                            for (let message of this.messages.reverse()) {
+                                if (segmenter.segment(message.text).includes(tag.name)) {
+                                    const item = presets[random(0, 3)];
 
-                            this.suggestionQueue.push({ highlight: { text: '今日のニュース', image: '/images/Cover.png' }, time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text, animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
-                        }
-
-                        if ('highlight' in this.suggestionQueue[0]) {
-                            if ('text' in this.suggestionQueue[0].highlight) {
-                                this.highlight = this.suggestionQueue[0].highlight.text;
-                            } else {
-                                this.highlight = null;
-                            }
-
-                            if ('image' in this.suggestionQueue[0].highlight) {
-                                this.cover = this.suggestionQueue[0].highlight.image;
-                            } else {
-                                this.cover = null;
+                                    this.suggestionQueue.push({ highlight: { text: tag.name, image: '/images/Cover.png' }, time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text, animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
+                                }
                             }
                         }
 
-                        this.isBlinded = true;
-                        this.isPreloading = false;
-                        this.isSuggested = true;
-                        this.$el.querySelector("#twinkle").play();
+                        if (this.suggestionQueue.length > 0) {
+                            if ('highlight' in this.suggestionQueue[0]) {
+                                if ('text' in this.suggestionQueue[0].highlight) {
+                                    this.highlight = this.suggestionQueue[0].highlight.text;
+                                } else {
+                                    this.highlight = null;
+                                }
+
+                                if ('image' in this.suggestionQueue[0].highlight) {
+                                    this.cover = this.suggestionQueue[0].highlight.image;
+                                } else {
+                                    this.cover = null;
+                                }
+                            }
+
+                            this.isBlinded = true;
+                            this.isPreloading = false;
+                            this.isSuggested = true;
+                            this.$el.querySelector("#twinkle").play();
+                        }
                     }
 
 
