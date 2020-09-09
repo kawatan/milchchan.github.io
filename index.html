@@ -1022,6 +1022,7 @@
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
 
+        controls.enableKeys = false;
         controls.screenSpacePanning = true;
         controls.target.set(0.0, 0.95, 0.025);
         controls.update();
