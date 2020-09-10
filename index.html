@@ -1920,14 +1920,14 @@
                             { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
                             let suggestions = [];
                             let tempMessages2 = [];
-                            let ids = [];
+                            let ids1 = [];
+                            let ids2 = [];
 
                             for (let tag of tempTags.sort((x, y) => y.score - x.score)) {
                                 for (let message of tempMessages1.reverse()) {
-                                    if (segmenter.segment(message.text).includes(tag.name)) {
+                                    if (!ids1.includes(message.id) && segmenter.segment(message.text).includes(tag.name)) {
                                         let thread = null;
-                                        const item = presets[random(0, 3)];
-
+                                        
                                         if ('thread' in message) {
                                             for (let m of tempMessages1) {
                                                 if (message.thread === m.id) {
@@ -1941,18 +1941,22 @@
                                         if (thread === null) {
                                             tempMessages2.push(message);
                                         } else {
+                                            const item = presets[random(0, 3)];
+
                                             suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: thread.text }, { time: 0, duration: 5, type: { elapsed: 0, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
 
-                                            if (!ids.includes(thread.id)) {
-                                                ids.push(thread.id);
+                                            if (!ids2.includes(thread.id)) {
+                                                ids2.push(thread.id);
                                             }
                                         }
+
+                                        ids1.push(message.id);
                                     }
                                 }
                             }
 
                             for (const message of tempMessages2) {
-                                if (!ids.includes(message.id)) {
+                                if (!ids2.includes(message.id)) {
                                     const item = presets[random(0, 3)];
 
                                     suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
