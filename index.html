@@ -876,7 +876,7 @@
                     <div class="column is-half has-content-centered is-mobile">
                         <transition-group name="message-list" class="control" tag="div">
                             <nav class="level" v-for="notification in notifications" v-bind:key="notification.id">
-                                <div class="notification is-info is-light" v-if="notification" v-cloak>
+                                <div class="notification is-info is-light" v-cloak>
                                     <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
                                         <figure class="media-left" v-if="notification.image" v-cloak>
                                             <span class="image is-32x32">
@@ -1239,15 +1239,7 @@
                     }
                 },
                 like: function () {
-
-
-
-
-                    return;
-
-
-
-                    /*if (this.isSuggested) {
+                    if (this.isSuggested) {
                         if (this.suggestionQueue.length > 0) {
                             this.suggestionQueue[0].messages[0].type.reverse = true;
                         }
@@ -1265,7 +1257,7 @@
 
 
 
-                    return;*/
+                    return;
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
@@ -1315,6 +1307,7 @@
                     }
 
                     id++;
+                    data['id'] = id;
 
                     this.notifications.push(data);
 
