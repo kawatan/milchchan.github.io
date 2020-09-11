@@ -383,11 +383,13 @@
             padding: 0;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child {
+        .navbar:nth-of-type(2) .navbar-item .control:first-child .level {
             display: block;
+            margin: 0;
+            padding: 16px 0px 0px 0px;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .notification {
+        .navbar:nth-of-type(2) .navbar-item .control:first-child .level .notification {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -396,11 +398,11 @@
             padding: 0;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .is-info {
+        .navbar:nth-of-type(2) .navbar-item .control:first-child .level .is-info {
             color: #ffffff;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .notification .media {
+        .navbar:nth-of-type(2) .navbar-item .control:first-child .level .notification .media {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -872,8 +874,8 @@
             <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-show="isOverlayed && !isSuggested">
                 <div class=" navbar-item is-expanded columns is-desktop">
                     <div class="column is-half has-content-centered is-mobile">
-                        <div class="control">
-                            <nav class="level">
+                        <transition-group name="message-list" class="control" tag="div">
+                            <nav class="level" v-for="notification in notifications" v-bind:key="notification.id">
                                 <div class="notification is-info is-light" v-if="notification" v-cloak>
                                     <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
                                         <figure class="media-left" v-if="notification.image" v-cloak>
@@ -891,7 +893,7 @@
                                     </article>
                                 </div>
                             </nav>
-                        </div>
+                        </transition-group>
                         <div class="control">
                             <nav class="level">
                                 <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
@@ -1080,7 +1082,7 @@
                 words: 0,
                 animatedWords: 0,
                 likes: -1,
-                notification: null,
+                notifications: [],
                 vrm: null,
                 animations: null,
                 animationsQueue: [],
@@ -1157,7 +1159,7 @@
 
                         let ref = database.ref(databaseMessages).push();
                         let completed = 0;
-                        let learned = 0;
+                        let learned = [];
 
                         ref.set({ text: text, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
@@ -1170,7 +1172,8 @@
                                 return;
                             }, function (error, committed, snapshot) {
                                 if (committed) {
-                                    learned++;
+                                    learned.push(token);
+
                                     database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
                                         return (count || 0) + 1;
                                     });
@@ -1180,14 +1183,12 @@
 
                                 completed++;
 
-                                if (completed == tokens.length && learned > 0) {
-                                    app.notification = { text: format(channel.length == 0 ? '{0}つのことばをおぼえたよぉ' : '{0}つのことばをおぼえたよ', learned), accent: merku.accent, image: channel.length == 0 ? merku.image : null };
+                                if (completed == tokens.length && learned.length > 0) {
+                                    for (const word of learned) {
+                                        app.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', word), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                    }
 
-                                    window.setTimeout(async function () {
-                                        app.notification = null;
-                                    }, 3000);
-
-                                    window.pJSDom[0].pJS.fn.modes.pushParticles(learned);
+                                    window.pJSDom[0].pJS.fn.modes.pushParticles(learned.length);
                                 }
                             });
                         }
@@ -1222,12 +1223,7 @@
                         }
                         catch (e) {
                             this.isLoading = false;
-
-                            app.notification = { text: channel.length == 0 ? 'もう一度試してほしいよぉ' : 'もう一度試してみてね', accent: merku.accent, image: channel.length == 0 ? merku.image : null };
-
-                            window.setTimeout(async function () {
-                                app.notification = null;
-                            }, 3000);
+                            this.notify({ text: channel.length == 0 ? 'もう一度試してほしいよぉ' : 'もう一度試してみてね', accent: merku.accent, image: channel.length == 0 ? merku.image : null });
 
                             console.error(e.message);
                         }
@@ -1243,7 +1239,15 @@
                     }
                 },
                 like: function () {
-                    if (this.isSuggested) {
+
+
+
+
+                    return;
+
+
+
+                    /*if (this.isSuggested) {
                         if (this.suggestionQueue.length > 0) {
                             this.suggestionQueue[0].messages[0].type.reverse = true;
                         }
@@ -1261,7 +1265,7 @@
 
 
 
-                    return;
+                    return;*/
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
@@ -1300,6 +1304,30 @@
                 },
                 hint: function (event) {
                     this.input += event.name;
+                },
+                notify: function (data) {
+                    let id = -1;
+
+                    for (const notification of this.notifications) {
+                        if (notification.id > id) {
+                            id = notification.id;
+                        }
+                    }
+
+                    id++;
+
+                    this.notifications.push(data);
+
+                    window.setTimeout(async function () {
+                        for (let i = 0; i < app.notifications.length; i++) {
+                            if (app.notifications[i].id == id) {
+                                app.notifications.splice(i, 1);
+
+                                break;
+                            }
+                        }
+
+                    }, 3000);
                 },
                 load: function () {
                     this.isPreloading = false;
@@ -1927,7 +1955,7 @@
                                 for (let message of tempMessages1.reverse()) {
                                     if (!ids1.includes(message.id) && segmenter.segment(message.text).includes(tag.name)) {
                                         let thread = null;
-                                        
+
                                         if ('thread' in message) {
                                             for (let m of tempMessages1) {
                                                 if (message.thread === m.id) {
