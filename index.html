@@ -107,7 +107,7 @@
             position: absolute;
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: center;
             top: 0;
             left: 0;
             margin: 0;
@@ -164,10 +164,6 @@
             /*text-shadow: -1px -1px rgba(255, 255, 255, 1), 1px -1px rgba(255, 255, 255, 1), -1px 1px rgba(255, 255, 255, 1), 1px 1px rgba(255, 255, 255, 1);*/
             /*color: rgba(255, 255, 255, 1);
             text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);*/
-        }
-
-        .columns .is-vcentered {
-            align-items: center;
         }
 
         #heading .level .level-item .field span.icon {
@@ -518,10 +514,20 @@
             transition: transform 0.5s ease;
         }
 
-        .message-list-enter,
-        .message-list-leave-to {
+        .message-list-enter {
             opacity: 0;
             transform: translate3d(0%, 50%, 0);
+        }
+
+        .message-list-enter-to,
+        .message-list-leave {
+            opacity: 1;
+            transform: translate3d(0%, 0%, 0);
+        }
+
+        .message-list-leave-to {
+            opacity: 0;
+            transform: translate3d(0%, -50%, 0);
         }
 
         .notification-list-enter-active,
@@ -546,7 +552,7 @@
 
         .notification-list-leave-to {
             opacity: 0;
-            transform: translate3d(0%, -50%, 0);
+            transform: translate3d(0%, 0%, 0);
         }
 
         .type-list-enter-active,
@@ -664,8 +670,8 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
-        <div class="type columns is-mobile is-centered">
-            <transition-group name="type-list" tag="div" class="column is-full has-text-left" v-cloak>
+        <div class="type columns is-mobile is-centered is-vcentered">
+            <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
                 <span class="title is-5 has-text-weight-bold" v-for="character in text"
                     v-bind:key="character.key">{{ character.value }}</span>
             </transition-group>
@@ -675,7 +681,7 @@
                 <img class="background" v-bind:src="cover" @load="load" @error="error" alt="Background"><img>
                 <transition name="fade">
                     <div class="columns is-mobile is-centered is-vcentered" v-if="isPreloading" key="loading">
-                        <div class="column is-full has-text-left" v-show="highlight">
+                        <div class="column is-full has-text-centered" v-show="highlight">
                             <span class="title is-5 has-text-weight-bold has-text-white">{{ highlight }}</span>
                         </div>
                     </div>
@@ -683,7 +689,7 @@
                         v-bind:style="{backgroundImage: cover === null ? 'none' : 'url(' + cover + ')'}" v-else
                         key="loaded">
                         <transition name="fade">
-                            <div class="column is-full has-text-left" v-show="highlight">
+                            <div class="column is-full has-text-centered" v-show="highlight">
                                 <span class="title is-5 has-text-weight-bold has-text-white">{{ highlight }}</span>
                             </div>
                         </transition>
