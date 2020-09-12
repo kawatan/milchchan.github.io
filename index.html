@@ -672,7 +672,7 @@
     <div id="app">
         <div class="type columns is-mobile is-centered is-vcentered">
             <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
-                <span class="title is-5 has-text-weight-bold" v-for="character in text"
+                <span class="title is-2 has-text-weight-bold" v-for="character in text"
                     v-bind:key="character.key">{{ character.value }}</span>
             </transition-group>
         </div>
@@ -682,7 +682,7 @@
                 <transition name="fade">
                     <div class="columns is-mobile is-centered is-vcentered" v-if="isPreloading" key="loading">
                         <div class="column is-full has-text-centered" v-show="highlight">
-                            <span class="title is-5 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                            <span class="title is-2 has-text-weight-bold has-text-white">{{ highlight }}</span>
                         </div>
                     </div>
                     <div class="columns is-mobile is-centered is-vcentered"
@@ -690,7 +690,7 @@
                         key="loaded">
                         <transition name="fade">
                             <div class="column is-full has-text-centered" v-show="highlight">
-                                <span class="title is-5 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                                <span class="title is-2 has-text-weight-bold has-text-white">{{ highlight }}</span>
                             </div>
                         </transition>
                     </div>
@@ -1275,11 +1275,11 @@
                     if (this.isSuggested) {
                         if (this.suggestionQueue.length > 0) {
                             this.suggestionQueue[0].messages[0].type.reverse = true;
+                            this.isBlinded = true;
+                        } else {
+                            this.isBlinded = false;
                         }
 
-                        this.highlight = null;
-                        this.cover = null;
-                        this.isBlinded = true;
                         this.isSuggested = false;
                     } else {
                         this.suggestionQueue.splice(0);
@@ -1371,7 +1371,7 @@
                             let termFrequencies = [];
                             let inverseDocumentFrequency = {};
                             const baseTime = new Date().getTime() - 12 * 60 * 60 * 1000;
-                            const limit = 25;
+                            const limit = 10;
                             let scoreDictionary = {};
                             let scores = [];
                             let maxScore = 0.0;
@@ -2020,7 +2020,7 @@
 
                             resolve(suggestions);
                         }).then((result) => {
-                            if (result.length > 0) {
+                            if (app.isSuggested && result.length > 0) {
                                 for (const suggestion of result) {
                                     app.suggestionQueue.push(suggestion);
                                 }
@@ -2039,7 +2039,7 @@
                                     }
                                 }
                             }
-                        }).finally(() => {
+
                             app.isComputing = false;
                         });
                     }
