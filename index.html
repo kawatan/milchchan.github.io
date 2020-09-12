@@ -1102,7 +1102,7 @@
                 messages: [],
                 maxMessages: 10,
                 tags: [],
-                maxTags: 10,
+                maxTags: 25,
                 scrollRequired: false,
                 words: 0,
                 animatedWords: 0,
@@ -1437,15 +1437,17 @@
                             for (const key in scoreDictionary) {
                                 for (const termFrequency of termFrequencies) {
                                     if (key in termFrequency) {
-                                        scoreDictionary[key] += termFrequency[key] * inverseDocumentFrequency[key];
+                                        const tfidf = termFrequency[key] * inverseDocumentFrequency[key];
+
+                                        if (tfidf > scoreDictionary[key]) {
+                                            scoreDictionary[key] = tfidf;
+                                        }
                                     }
                                 }
-
-                                scoreDictionary[key] /= termFrequencies.length;
                             }
 
                             for (const key in scoreDictionary) {
-                                if (key.length > 1) {
+                                if (key.length > 1 && key != '...') {
                                     scores.push({ term: key, value: scoreDictionary[key] });
                                 }
                             }
