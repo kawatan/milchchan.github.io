@@ -1184,8 +1184,10 @@
                                 completed++;
 
                                 if (completed == tokens.length && learned.length > 0) {
-                                    for (const word of learned) {
-                                        app.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', word), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                    for (let i = 0; i < learned.length; i++) {
+                                        window.setTimeout(async function () {
+                                            app.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', learned[i]), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                        }, i * 500);
                                     }
 
                                     window.pJSDom[0].pJS.fn.modes.pushParticles(learned.length);
