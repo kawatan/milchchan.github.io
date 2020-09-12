@@ -107,7 +107,7 @@
             position: absolute;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;
             top: 0;
             left: 0;
             margin: 0;
@@ -135,7 +135,7 @@
 
         .cover span {
             color: rgba(255, 255, 255, 1);
-            text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);
+            /*text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);*/
         }
 
         .type {
@@ -161,7 +161,7 @@
 
         .type span {
             color: black;
-            text-shadow: -1px -1px rgba(255, 255, 255, 1), 1px -1px rgba(255, 255, 255, 1), -1px 1px rgba(255, 255, 255, 1), 1px 1px rgba(255, 255, 255, 1);
+            /*text-shadow: -1px -1px rgba(255, 255, 255, 1), 1px -1px rgba(255, 255, 255, 1), -1px 1px rgba(255, 255, 255, 1), 1px 1px rgba(255, 255, 255, 1);*/
             /*color: rgba(255, 255, 255, 1);
             text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);*/
         }
@@ -664,9 +664,9 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
-        <div class="type columns is-mobile is-centered is-vcentered">
-            <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
-                <span class="title is-1 has-text-weight-bold" v-for="character in text"
+        <div class="type columns is-mobile is-centered">
+            <transition-group name="type-list" tag="div" class="column is-full has-text-left" v-cloak>
+                <span class="title is-5 has-text-weight-bold" v-for="character in text"
                     v-bind:key="character.key">{{ character.value }}</span>
             </transition-group>
         </div>
@@ -675,16 +675,16 @@
                 <img class="background" v-bind:src="cover" @load="load" @error="error" alt="Background"><img>
                 <transition name="fade">
                     <div class="columns is-mobile is-centered is-vcentered" v-if="isPreloading" key="loading">
-                        <div class="column is-full has-text-centered" v-show="highlight">
-                            <span class="title is-1 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                        <div class="column is-full has-text-left" v-show="highlight">
+                            <span class="title is-5 has-text-weight-bold has-text-white">{{ highlight }}</span>
                         </div>
                     </div>
                     <div class="columns is-mobile is-centered is-vcentered"
                         v-bind:style="{backgroundImage: cover === null ? 'none' : 'url(' + cover + ')'}" v-else
                         key="loaded">
                         <transition name="fade">
-                            <div class="column is-full has-text-centered" v-show="highlight">
-                                <span class="title is-1 has-text-weight-bold has-text-white">{{ highlight }}</span>
+                            <div class="column is-full has-text-left" v-show="highlight">
+                                <span class="title is-5 has-text-weight-bold has-text-white">{{ highlight }}</span>
                             </div>
                         </transition>
                     </div>
@@ -1649,10 +1649,10 @@
                                     }
 
                                     if (index >= 0) {
-                                        app.$set(app.messages, key, { id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                        app.$set(app.messages, key, { id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
                                     }
                                     else {
-                                        app.messages.push({ id: key, text: message.text, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                        app.messages.push({ id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
 
                                         if (app.messages.length > app.maxMessages) {
                                             app.messages.shift();
@@ -1977,7 +1977,7 @@
 
                                         if ('thread' in message) {
                                             for (let m of tempMessages1) {
-                                                if (message.thread === m.id) {
+                                                if (message.thread == m.id) {
                                                     thread = m;
 
                                                     break;
