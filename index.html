@@ -524,6 +524,31 @@
             transform: translate3d(0%, 50%, 0);
         }
 
+        .notification-list-enter-active,
+        .notification-list-leave-active {
+            transition: all 0.5s ease;
+        }
+
+        .notification-list-move {
+            transition: transform 0.5s ease;
+        }
+
+        .notification-list-enter {
+            opacity: 0;
+            transform: translate3d(0%, 50%, 0);
+        }
+
+        .notification-list-enter-to,
+        .notification-list-leave {
+            opacity: 1;
+            transform: translate3d(0%, 0%, 0);
+        }
+
+        .notification-list-leave-to {
+            opacity: 0;
+            transform: translate3d(0%, -50%, 0);
+        }
+
         .type-list-enter-active,
         .type-list-leave-active {
             transition: all 0s ease;
@@ -874,7 +899,7 @@
             <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-show="isOverlayed && !isSuggested">
                 <div class=" navbar-item is-expanded columns is-desktop">
                     <div class="column is-half has-content-centered is-mobile">
-                        <transition-group name="message-list" class="control" tag="div">
+                        <transition-group name="notification-list" class="control" tag="div">
                             <nav class="level" v-for="notification in notifications" v-bind:key="notification.id">
                                 <div class="notification is-info is-light" v-cloak>
                                     <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
@@ -1185,9 +1210,9 @@
 
                                 if (completed == tokens.length && learned.length > 0) {
                                     for (let i = 0; i < learned.length; i++) {
-                                        window.setTimeout(async function () {
+                                        window.setTimeout(function () {
                                             app.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', learned[i]), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
-                                        }, i * 500);
+                                        }, (i + 1) * 500);
                                     }
 
                                     window.pJSDom[0].pJS.fn.modes.pushParticles(learned.length);
