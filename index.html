@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
     <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css" type="text/css"
         media="screen" />
     <style>
@@ -61,6 +62,11 @@
         span,
         input {
             font-family: "Noto Sans JP";
+        }
+
+        label {
+            display: inline;
+            cursor: pointer;
         }
 
         .progress {
@@ -420,7 +426,51 @@
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        #input .navbar-item .control:last-child .level:first-child {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            margin: 0;
+            padding: 16px 0px 0px 0px;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .notification {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .notification .media {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 500px 500px 500px 500px;
+            padding: 8px 16px 8px 16px;
+            background: #30c0f5 url('/images/Stripes.png') repeat;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .notification .media .media-left {
+            margin: 0px 8px 0px 0px;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .field {
+            margin: 0;
+            padding: 0px -8px 0px -8px;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .field label.checkbox {
+            margin: 0;
+            margin: 16px 8px 0px 8px;
+            padding: 8px 16px 8px 16px;
+            border-radius: 500px 500px 500px 500px;
+            background: rgba(0, 0, 0, 0.75);
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -428,11 +478,11 @@
             padding: 16px 0px 0px 0px;
         }
 
-        #input .navbar-item .control:last-child .level:first-child>span {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2)>span {
             font-family: 'Josefin Sans', sans-serif;
         }
 
-        #input .navbar-item .control:last-child .level:last-child {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(1) {
             display: block;
             margin: 0;
             padding: 0px 0px 16px 0px;
@@ -920,7 +970,7 @@
                                         </figure>
                                         <div class="media-content">
                                             <div class="content has-text-left">
-                                                <span class="has-text-weight-bold" v-cloak>
+                                                <span class="has-text-weight-bold has-text-white" v-cloak>
                                                     {{ notification.text }}
                                                 </span>
                                             </div>
@@ -930,6 +980,34 @@
                             </nav>
                         </transition-group>
                         <div class="control">
+                            <transition name="fade">
+                                <nav class="level" v-show="isLearning">
+                                    <div class="notification is-info is-light" v-cloak>
+                                        <article class="media">
+                                            <figure class="media-left">
+                                                <span class="image is-32x32">
+                                                    <img class="is-rounded" src="/images/Merku.png" alt="Avatar">
+                                                </span>
+                                            </figure>
+                                            <div class="media-content">
+                                                <div class="content has-text-left">
+                                                    <span class="has-text-weight-bold has-text-white" v-cloak>
+                                                        「{{ input }}」の意味を教えてね
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="field has-addons has-addons-centered is-grouped is-grouped-multiline">
+                                        <label class="checkbox" v-for="attribute in attributes"
+                                            v-bind:key="attribute.name" v-cloak>
+                                            <input type="checkbox" @change="check" v-model="attribute.value">
+                                            <span
+                                                class="title is-size-6 has-text-weight-bold has-text-white">{{ attribute.name }}</span>
+                                        </label>
+                                    </div>
+                                </nav>
+                            </transition>
                             <nav class="level">
                                 <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
                                     {{ maxInputLength - animatedCurrentInputLength }}
@@ -938,10 +1016,19 @@
                             <nav class="level">
                                 <form onsubmit="return false;">
                                     <div class="field has-addons">
+                                        <div class="control">
+                                            <button class="button is-rounded" type="button"
+                                                v-bind:class="{'is-black': isLearning, 'is-static': input.length === 0}"
+                                                v-bind:disabled="user === null" @click="learn"><span
+                                                    class="icon is-small">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                            </button>
+                                        </div>
                                         <div class="control is-expanded">
                                             <input class="input is-rounded" type="text"
-                                                v-bind:class="{'is-danger': inputHasError}" v-model="input"
-                                                @input="change">
+                                                v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="isLearning"
+                                                v-model="input" @input="change">
                                         </div>
                                         <div class="control">
                                             <button class="button is-rounded is-primary" type="submit"
@@ -977,7 +1064,6 @@
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://unpkg.com/three@0.106.2/build/three.js"></script>
     <script src="https://unpkg.com/three@0.106.2/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://unpkg.com/three@0.106.2/examples/js/controls/OrbitControls.js"></script>
@@ -1020,6 +1106,9 @@
             .once('value', function (snapshot) { console.log(snapshot.val()) })*/
 
         function random(min, max) {
+            min = Math.ceil(min);
+            max = Math.floor(max);
+
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
 
@@ -1128,7 +1217,28 @@
                 cover: null,
                 isPreloading: false,
                 isComputing: false,
-                text: []
+                text: [],
+                script: { messages: null, words: null, wordDictionary: {}, reverseWordDictionary: {} },
+                isLearning: false,
+                attributes: [{ name: "有名人", value: false },
+                { name: "人の名前", value: false },
+                { name: "職業", value: false },
+                { name: "人を表すことば", value: false },
+                { name: "ロボット", value: false },
+                { name: "すること", value: false },
+                { name: "行くところ", value: false },
+                { name: "食べ物", value: false },
+                { name: "飲み物", value: false },
+                { name: "生き物", value: false },
+                { name: "音楽", value: false },
+                { name: "見るもの", value: false },
+                { name: "読むもの", value: false },
+                { name: "使うもの", value: false },
+                { name: "身につけるもの", value: false },
+                { name: "乗り物", value: false },
+                { name: "ことば", value: false },
+                { name: "体の一部", value: false },
+                { name: "病気", value: false }]
             },
             watch: {
                 words: function (newValue) {
@@ -1177,7 +1287,7 @@
                         }
 
                         const text = this.input;
-                        const url = 'https://api.milchchan.com/talk?text=' + decodeURIComponent(text) + '&threshold=1.0';
+                        const url = 'https://api.milchchan.com/talk?text=' + text + '&threshold=1.0';
                         let segmenter = new TinySegmenter();
                         let regex = new RegExp('[.#$\\[\\]]');
                         let tokens = [];
@@ -1194,7 +1304,7 @@
 
                         let ref = database.ref(databaseMessages).push();
                         let completed = 0;
-                        let learned = [];
+                        let learnedWords = [];
 
                         ref.set({ text: text, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
@@ -1207,7 +1317,7 @@
                                 return;
                             }, function (error, committed, snapshot) {
                                 if (committed) {
-                                    learned.push(token);
+                                    learnedWords.push(token);
 
                                     database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
                                         return (count || 0) + 1;
@@ -1218,14 +1328,14 @@
 
                                 completed++;
 
-                                if (completed == tokens.length && learned.length > 0) {
-                                    for (let i = 0; i < learned.length; i++) {
+                                if (completed == tokens.length && learnedWords.length > 0) {
+                                    for (let i = 0; i < learnedWords.length; i++) {
                                         window.setTimeout(function () {
-                                            app.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', learned[i]), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                            app.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', learnedWords[i]), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
                                         }, (i + 1) * 500);
                                     }
 
-                                    window.pJSDom[0].pJS.fn.modes.pushParticles(learned.length);
+                                    window.pJSDom[0].pJS.fn.modes.pushParticles(learnedWords.length);
                                 }
                             });
                         }
@@ -1237,7 +1347,7 @@
                         try {
                             this.isLoading = true;
 
-                            const response = await fetch(url, {
+                            const response = await fetch(encodeURI(url), {
                                 mode: "cors",
                                 method: "GET",
                                 headers: {
@@ -1330,6 +1440,264 @@
                     });*/
 
                     this.$el.querySelector("#twinkle").play();
+                },
+                check: function (event) {
+                    let attributes = {};
+                    let index = 0;
+                    const timestamp = Math.floor(new Date() / 1000);
+                    let ref = database.ref(databaseRoot + "/words/" + this.input);
+
+                    for (const attribute of this.attributes) {
+                        if (attribute.value) {
+                            attributes[ref.push().key] = { attribute: attribute.name, timestamp: timestamp };
+                            index++;
+                        }
+                    }
+
+                    ref.transaction(function (current) {
+                        if (current) {
+                            for (const key1 of Object.keys(current)) {
+                                let deleteRequired = true;
+
+                                for (const key2 in attributes) {
+                                    if (current[key1].attribute == attributes[key2].attribute) {
+                                        deleteRequired = false;
+                                    }
+                                }
+
+                                if (deleteRequired) {
+                                    delete current[key1];
+                                }
+                            }
+
+                            for (const key1 in attributes) {
+                                let isNew = true;
+
+                                for (const key2 in current) {
+                                    if (current[key2].attribute == attributes[key1].attribute) {
+                                        isNew = false;
+                                    }
+                                }
+
+                                if (isNew) {
+                                    current[key1] = attributes[key1];
+                                }
+                            }
+
+                            return current;
+                        }
+
+                        return attributes;
+                    }, function (error, committed, snapshot) {
+                        if (committed) {
+                            /*database.ref(databaseRoot + "/vocabularies").transaction(function (count) {
+                                return (count || 0) + 1;
+                            });*/
+                        } else if (error) {
+                            console.error(error);
+                        }
+                    });
+
+                    return;
+
+                    if (index > 0) {
+
+                    } else {
+                        database.ref(databaseRoot + "/words/" + this.input).transaction(function (current) {
+                            return null;
+                        }, function (error, committed, snapshot) {
+                            if (committed) {
+                                /*database.ref(databaseRoot + "/vocabularies").transaction(function (count) {
+                                    if (count) {
+                                        count -= 1;
+
+                                        if (count > 0) {
+                                            return count;
+                                        } else {
+                                            return null;
+                                        }
+                                    }
+
+                                    return;
+                                });*/
+                            } else if (error) {
+                                console.error(error);
+                            }
+                        });
+                    }
+                },
+                learn: function () {
+                    if (this.isLearning) {
+                        this.isLearning = false;
+                    } else {
+                        for (const attribute of this.attributes) {
+                            attribute.value = false;
+                        }
+
+                        database.ref(databaseRoot + "/words/" + this.input).once('value', snapshot => {
+                            const word = snapshot.val();
+
+                            if (word !== null) {
+                                for (const key in word) {
+                                    for (const attribute of this.attributes) {
+                                        if (word[key].attribute == attribute.name) {
+                                            attribute.value = true;
+                                        }
+                                    }
+                                }
+                            }
+
+                            this.isLearning = true;
+                        });
+                    }
+                },
+                talk: async function () {
+                    const token = "AAA";
+                    const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
+
+                    if (snapshot1.exists()) {
+                        const dictionary = snapshot1.val();
+
+                        for (const key in dictionary) {
+
+                            const snapshot2 = await database.ref(databaseRoot + "/words/" + token).orderByChild('attribute').equalTo(dictionary[key].attribute).once('value');
+
+                            console.log(dictionary[key]);
+                            console.log(snapshot2.val());
+                        }
+
+
+
+
+                    }
+
+                    return;
+
+                    function generateUuid() {
+                        // https://github.com/GoogleChrome/chrome-platform-analytics/blob/master/src/internal/identifier.js
+                        // const FORMAT: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+                        let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
+
+                        for (let i = 0, len = chars.length; i < len; i++) {
+                            switch (chars[i]) {
+                                case "x":
+                                    chars[i] = Math.floor(Math.random() * 16).toString(16);
+                                    break;
+                                case "y":
+                                    chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
+                                    break;
+                            }
+                        }
+                        return chars.join("");
+                    }
+
+                    function choice(x, probabilities) {
+                        const r = Math.random();
+                        let sum = 0.0;
+                        let index = 0;
+
+                        console.log(probabilities);
+
+                        for (let probability of probabilities) {
+                            if (sum <= r && r < sum + probability) {
+                                break;
+                            }
+
+                            sum += probability;
+                            index++;
+                        }
+
+                        return x[index];
+                    }
+
+                    function softmax(x) {
+                        let y = [];
+                        let max = Number.MIN_VALUE;
+                        let sum = 0.0;
+
+                        for (let i = 0; i < x.length; i++) {
+                            if (x[i] > max) {
+                                max = x[i];
+                            }
+                        }
+
+                        for (let i = 0; i < x.length; i++) {
+                            sum += Math.exp(x[i] - max);
+                        }
+
+                        for (let i = 0; i < x.length; i++) {
+                            y.push(Math.exp(x[i] - max) / sum);
+                        }
+
+                        return y;
+                    }
+
+                    let segmenter = new TinySegmenter();
+                    let cachDictionary = {};
+                    let text = '';
+                    let epsilon = Math.pow(10, -6);
+
+                    for (const token of segmenter.segment(this.script.messages[random(0, this.script.messages.length - 1)])) {
+                        if (token in cachDictionary) {
+                            text += cachDictionary[token]
+                        } else {
+                            let terms = [];
+                            let scores = [];
+
+                            const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
+
+                            if (snapshot1.exist()) {
+                                for (const attribute of snapshot1.val()) {
+                                    const snapshot2 = await database.ref(databaseRoot + "/words/").orderByKey().startAt(attribute).endAt(attribute).once('value');
+
+
+                                }
+                            }
+                            if (token in this.script.wordDictionary) {
+                                for (const attribute of this.script.wordDictionary[token]) {
+                                    if (attribute in this.script.reverseWordDictionary) {
+                                        for (const word of this.script.reverseWordDictionary[attribute]) {
+                                            if (!terms.includes(word)) {
+                                                let isNew = true;
+
+                                                terms.push(word);
+
+                                                for (const tag of this.tags) {
+                                                    if (word == tag.name) {
+                                                        scores.push(tag.score);
+                                                        isNew = false;
+
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (isNew) {
+                                                    scores.push(epsilon);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+
+                            if (terms.length > 0) {
+                                const term = choice(terms, softmax(scores));
+
+                                text += term;
+                                cachDictionary[token] = term;
+                            } else {
+                                text += token;
+                            }
+                        }
+                    }
+
+                    this.messages.push({ id: generateUuid(), text: text, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+
+                    if (this.messages.length > this.maxMessages) {
+                        this.messages.shift();
+                    }
+
+                    this.scrollRequired = true;
                 },
                 hint: function (event) {
                     this.input += event.name;
@@ -1567,6 +1935,64 @@
                                     app.animationsQueue.push(animationDictionary['jump']);
                                 }
 
+                                const response1 = await fetch('/js/words.json', {
+                                    mode: "cors",
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type": "application/x-www-form-urlencoded"
+                                    }
+                                });
+
+                                if (response1.ok) {
+                                    const json = await response1.json();
+
+                                    app.script.words = json;
+                                }
+                                else {
+                                    throw new Error(response1.statusText);
+                                }
+
+                                for (const word of app.script.words) {
+                                    if (word.name in app.script.wordDictionary) {
+                                        for (const attribute of word.attributes) {
+                                            app.script.wordDictionary[word.name].attributes.push(attribute);
+
+                                            if (attribute in app.script.reverseWordDictionary) {
+                                                app.script.reverseWordDictionary[attribute].push(word.name);
+                                            } else {
+                                                app.script.reverseWordDictionary[attribute] = [word.name];
+                                            }
+                                        }
+                                    } else {
+                                        app.script.wordDictionary[word.name] = word.attributes;
+
+                                        for (const attribute of word.attributes) {
+                                            if (attribute in app.script.reverseWordDictionary) {
+                                                app.script.reverseWordDictionary[attribute].push(word.name);
+                                            } else {
+                                                app.script.reverseWordDictionary[attribute] = [word.name];
+                                            }
+                                        }
+                                    }
+                                }
+
+                                const response2 = await fetch('/js/milch.json', {
+                                    mode: "cors",
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type": "application/x-www-form-urlencoded"
+                                    }
+                                });
+
+                                if (response2.ok) {
+                                    const json = await response2.json();
+
+                                    app.script.messages = json;
+                                }
+                                else {
+                                    throw new Error(response2.statusText);
+                                }
+
                                 app.animations = animationDictionary;
                                 app.vrm = vrm;
 
@@ -1712,10 +2138,12 @@
         const mouse = new THREE.Vector2();
         let animationIndex = 0;
         const animationSkipFrames = 2;
-        let idleTime = null;
+        let idleTime = 0.0;
         const blinkThreshold = 5.0;
         let waitTime = 0.0;
         const waitThreshold = 1.0;
+        let activateTime = 0.0;
+        const activateThreshold = 10.0;
         let lookAnimation = null;
 
         function render() {
@@ -2056,7 +2484,8 @@
                                 app.currentAnimations.push(animation);
                             }
 
-                            idleTime = null;
+                            idleTime = 0.0;
+                            activateTime = 0.0;
                         } else {
                             const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
                             const idle = idles[random(0, 14)];
@@ -2067,14 +2496,19 @@
                                 }
                             }
 
-                            if (idleTime === null) {
+                            if (app.blendShapeAnimationQueue.length > 0) {
                                 idleTime = 0.0;
-                            } else if (app.blendShapeAnimationQueue.length > 0) {
-                                idleTime = null;
+                                activateTime = 0.0;
                             } else {
                                 idleTime += deltaTime;
+                                activateTime += deltaTime;
 
-                                if (idleTime >= blinkThreshold) {
+                                if (activateTime >= activateThreshold) {
+                                    //app.talk();
+
+                                    idleTime = 0.0;
+                                    activateTime = 0.0;
+                                } else if (idleTime >= blinkThreshold) {
                                     const durations = [0.5, 1.0];
                                     const ends = [2.0, 4.0];
                                     const index = random(0, 1);
@@ -2103,15 +2537,19 @@
                         animationIndex = 0;
                         messageData = app.currentAnimations[animationIndex];
                         animationIndex += animationSkipFrames;
-                    }
-                    else if (idleTime === null) {
-                        idleTime = 0.0;
                     } else if (app.blendShapeAnimationQueue.length > 0) {
-                        idleTime = null;
+                        idleTime = 0.0;
+                        activateTime = 0.0;
                     } else {
                         idleTime += deltaTime;
+                        activateTime += deltaTime;
 
-                        if (idleTime >= blinkThreshold) {
+                        if (activateTime >= activateThreshold) {
+                            //app.talk();
+
+                            idleTime = 0.0;
+                            activateTime = 0.0;
+                        } else if (idleTime >= blinkThreshold) {
                             const durations = [0.5, 1.0];
                             const ends = [2.0, 4.0];
                             const index = random(0, 1);
@@ -2419,6 +2857,13 @@
 
                     break;
                 }
+            }
+        });
+        window.addEventListener('dblclick', (event) => {
+            raycaster.setFromCamera(mouse, camera);
+
+            if (raycaster.intersectObjects(scene.children, true).length > 0) {
+                app.talk();
             }
         });
         window.addEventListener('mousemove', (event) => {
