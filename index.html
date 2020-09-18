@@ -2032,6 +2032,11 @@
                                         message.user.accent = '#30c0f5';
                                     }
 
+                                    if (channel.length > 0 && !message.user.id) {
+                                        message.user.name = null;
+                                        message.user.image = null;
+                                    }
+
                                     if (index >= 0) {
                                         app.$set(app.messages, key, { id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
                                     }
