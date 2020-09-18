@@ -1340,10 +1340,6 @@
                             });
                         }
 
-                        if (channel.length > 0) {
-                            return;
-                        }
-
                         try {
                             this.isLoading = true;
 
@@ -1443,48 +1439,21 @@
                 },
                 check: function (event) {
                     let attributes = {};
-                    let index = 0;
                     const timestamp = Math.floor(new Date() / 1000);
+                    let isEmpty = true;
                     let ref = database.ref(databaseRoot + "/words/" + this.input);
 
                     for (const attribute of this.attributes) {
+                        attributes[attribute.name] = attribute.value;
+
                         if (attribute.value) {
-                            attributes[ref.push().key] = { attribute: attribute.name, timestamp: timestamp };
-                            index++;
+                            isEmpty = false;
                         }
                     }
 
                     ref.transaction(function (current) {
-                        if (current) {
-                            for (const key1 of Object.keys(current)) {
-                                let deleteRequired = true;
-
-                                for (const key2 in attributes) {
-                                    if (current[key1].attribute == attributes[key2].attribute) {
-                                        deleteRequired = false;
-                                    }
-                                }
-
-                                if (deleteRequired) {
-                                    delete current[key1];
-                                }
-                            }
-
-                            for (const key1 in attributes) {
-                                let isNew = true;
-
-                                for (const key2 in current) {
-                                    if (current[key2].attribute == attributes[key1].attribute) {
-                                        isNew = false;
-                                    }
-                                }
-
-                                if (isNew) {
-                                    current[key1] = attributes[key1];
-                                }
-                            }
-
-                            return current;
+                        if (isEmpty) {
+                            return null;
                         }
 
                         return attributes;
@@ -1538,11 +1507,9 @@
                             const word = snapshot.val();
 
                             if (word !== null) {
-                                for (const key in word) {
-                                    for (const attribute of this.attributes) {
-                                        if (word[key].attribute == attribute.name) {
-                                            attribute.value = true;
-                                        }
+                                for (const attribute of this.attributes) {
+                                    if (attribute.name in word) {
+                                        attribute.value = word[attribute.name];
                                     }
                                 }
                             }
@@ -1552,27 +1519,6 @@
                     }
                 },
                 talk: async function () {
-                    const token = "AAA";
-                    const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
-
-                    if (snapshot1.exists()) {
-                        const dictionary = snapshot1.val();
-
-                        for (const key in dictionary) {
-
-                            const snapshot2 = await database.ref(databaseRoot + "/words/" + token).orderByChild('attribute').equalTo(dictionary[key].attribute).once('value');
-
-                            console.log(dictionary[key]);
-                            console.log(snapshot2.val());
-                        }
-
-
-
-
-                    }
-
-                    return;
-
                     function generateUuid() {
                         // https://github.com/GoogleChrome/chrome-platform-analytics/blob/master/src/internal/identifier.js
                         // const FORMAT: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
@@ -1643,36 +1589,36 @@
                         } else {
                             let terms = [];
                             let scores = [];
-
                             const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
 
-                            if (snapshot1.exist()) {
-                                for (const attribute of snapshot1.val()) {
-                                    const snapshot2 = await database.ref(databaseRoot + "/words/").orderByKey().startAt(attribute).endAt(attribute).once('value');
+                            if (snapshot1.exists()) {
+                                const word = snapshot1.val();
 
+                                for (let attribute in word) {
+                                    if (word[attribute]) {
+                                        const snapshot2 = await database.ref(databaseRoot + "/words/").orderByChild(attribute).equalTo(true).once('value');
 
-                                }
-                            }
-                            if (token in this.script.wordDictionary) {
-                                for (const attribute of this.script.wordDictionary[token]) {
-                                    if (attribute in this.script.reverseWordDictionary) {
-                                        for (const word of this.script.reverseWordDictionary[attribute]) {
-                                            if (!terms.includes(word)) {
-                                                let isNew = true;
+                                        if (snapshot2.exists()) {
+                                            const words = snapshot2.val();
 
-                                                terms.push(word);
+                                            for (let key in words) {
+                                                if (!terms.includes(key)) {
+                                                    let isNew = true;
 
-                                                for (const tag of this.tags) {
-                                                    if (word == tag.name) {
-                                                        scores.push(tag.score);
-                                                        isNew = false;
+                                                    terms.push(key);
 
-                                                        break;
+                                                    for (const tag of this.tags) {
+                                                        if (key == tag.name) {
+                                                            scores.push(tag.score);
+                                                            isNew = false;
+
+                                                            break;
+                                                        }
                                                     }
-                                                }
 
-                                                if (isNew) {
-                                                    scores.push(epsilon);
+                                                    if (isNew) {
+                                                        scores.push(epsilon);
+                                                    }
                                                 }
                                             }
                                         }
@@ -2862,7 +2808,7 @@
         window.addEventListener('dblclick', (event) => {
             raycaster.setFromCamera(mouse, camera);
 
-            if (raycaster.intersectObjects(scene.children, true).length > 0) {
+            if (raycaster.intersectObjects(scene.children, true).length > 0 && channel.length == 0) {
                 app.talk();
             }
         });
