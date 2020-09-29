@@ -1208,6 +1208,7 @@
                 tags: [],
                 maxTags: 10,
                 scrollRequired: false,
+                scrollTimeoutID: undefined,
                 isScrolling: false,
                 words: 0,
                 animatedWords: 0,
@@ -1828,8 +1829,13 @@
                     this.isUpdating = false;
                 },
                 scrollToEnd: function () {
-                    window.scrollTo(0, window.pageYOffset);
-                    window.scrollTo(0, document.body.scrollHeight);
+                    if (typeof this.scrollTimeoutID === 'number') {
+                        clearTimeout(this.scrollTimeoutID);
+                    }
+
+                    this.scrollTimeoutID = setTimeout(function () {
+                        window.scrollTo(0, document.body.scrollHeight);
+                    }, 500);
                 },
                 formatDate: function (event) {
                     moment.locale(window.navigator.language);
@@ -2936,17 +2942,6 @@
                 break;
             }
 
-        }, false);
-        window.addEventListener('scroll', () => {
-            if (typeof timeoutID === 'number') {
-                clearTimeout(timeoutID);
-            }
-
-            app.isScrolling = true;
-
-            timeoutID = setTimeout(function () {
-                app.isScrolling = false;
-            }, 500);
         }, false);
 
         particlesJS.load('particles-js', '/js/particlesjs-config.json', function () {
