@@ -1443,7 +1443,7 @@
                     let attributes = {};
                     const timestamp = Math.floor(new Date() / 1000);
                     let isEmpty = true;
-                    let ref = database.ref(databaseRoot + "/words/" + this.input);
+                    let ref = database.ref(databaseRoot + "/dictionary/words/" + this.input);
 
                     for (const attribute of this.attributes) {
                         attributes[attribute.name] = attribute.value;
@@ -1474,7 +1474,7 @@
                     if (index > 0) {
 
                     } else {
-                        database.ref(databaseRoot + "/words/" + this.input).transaction(function (current) {
+                        database.ref(databaseRoot + "/dictionary/words/" + this.input).transaction(function (current) {
                             return null;
                         }, function (error, committed, snapshot) {
                             if (committed) {
@@ -1505,7 +1505,7 @@
                             attribute.value = false;
                         }
 
-                        database.ref(databaseRoot + "/words/" + this.input).once('value', snapshot => {
+                        database.ref(databaseRoot + "/dictionary/words/" + this.input).once('value', snapshot => {
                             const word = snapshot.val();
 
                             if (word !== null) {
@@ -1539,12 +1539,19 @@
                         return chars.join("");
                     }
 
+                    this.messages.push({ id: generateUuid(), text: await generate(this.script.messages[random(0, this.script.messages.length - 1)]), timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+
+                    if (this.messages.length > this.maxMessages) {
+                        this.messages.shift();
+                    }
+
+                    this.scrollRequired = true;
+                },
+                generate: async function (message) {
                     function choice(x, probabilities) {
                         const r = Math.random();
                         let sum = 0.0;
                         let index = 0;
-
-                        console.log(probabilities);
 
                         for (let probability of probabilities) {
                             if (sum <= r && r < sum + probability) {
@@ -1585,20 +1592,20 @@
                     let text = '';
                     let epsilon = Math.pow(10, -6);
 
-                    for (const token of segmenter.segment(this.script.messages[random(0, this.script.messages.length - 1)])) {
+                    for (const token of segmenter.segment(message)) {
                         if (token in cachDictionary) {
                             text += cachDictionary[token]
                         } else {
                             let terms = [];
                             let scores = [];
-                            const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
+                            const snapshot1 = await database.ref(databaseRoot + "/dictionary/words/" + token).once('value');
 
                             if (snapshot1.exists()) {
                                 const word = snapshot1.val();
 
                                 for (let attribute in word) {
                                     if (word[attribute]) {
-                                        const snapshot2 = await database.ref(databaseRoot + "/words/").orderByChild(attribute).equalTo(true).once('value');
+                                        const snapshot2 = await database.ref(databaseRoot + "/dictionary/words/").orderByChild(attribute).equalTo(true).once('value');
 
                                         if (snapshot2.exists()) {
                                             const words = snapshot2.val();
@@ -1639,13 +1646,7 @@
                         }
                     }
 
-                    this.messages.push({ id: generateUuid(), text: text, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
-
-                    if (this.messages.length > this.maxMessages) {
-                        this.messages.shift();
-                    }
-
-                    this.scrollRequired = true;
+                    return text;
                 },
                 hint: function (event) {
                     this.input += event.name;
