@@ -2052,7 +2052,7 @@
                                         const data = { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user };
 
                                         for (let i = 0; i < app.messages.length; i++) {
-                                            if (timestamp < app.messages[i].timestamp) {
+                                            if (timestamp < Math.floor(app.messages[i].timestamp)) {
                                                 j = i;
                                             }
                                         }
@@ -2070,8 +2070,8 @@
                                     }
                                     else {
                                         for (let i = 0; i < app.messages.length; i++) {
-                                            console.log(app.messages[i].timestamp);
-                                            if (timestamp < app.messages[i].timestamp) {
+                                            console.log(Math.floor(app.messages[i].timestamp));
+                                            if (timestamp < Math.floor(app.messages[i].timestamp)) {
                                                 index = i;
                                             }
                                         }
