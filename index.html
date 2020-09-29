@@ -1828,10 +1828,7 @@
                     this.isUpdating = false;
                 },
                 scrollToEnd: function () {
-                    window.scroll({
-                        top: document.documentElement.scrollTop,
-                        behavior: 'instant'
-                    });
+                    window.scrollBy(0, 0);
                     window.scroll(0, document.documentElement.scrollHeight);
                 },
                 formatDate: function (event) {
