@@ -2047,8 +2047,10 @@
                                         app.$set(app.messages, key, { id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
                                     }
                                     else {
-                                        app.messages.push({ id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                        
 
+                                        app.messages.splice(app.messages.length, 0, { id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                        
                                         if (app.messages.length > app.maxMessages) {
                                             app.messages.shift();
                                         }
