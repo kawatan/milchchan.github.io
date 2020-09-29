@@ -1545,7 +1545,7 @@
                         return chars.join("");
                     }
 
-                    this.messages.push({ id: generateUuid(), text: await generate(this.script.messages[random(0, this.script.messages.length - 1)]), timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                    this.messages.push({ id: generateUuid(), text: await this.generate(this.script.messages[random(0, this.script.messages.length - 1)]), timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
 
                     if (this.messages.length > this.maxMessages) {
                         this.messages.shift();
@@ -2068,7 +2068,7 @@
 
                                         console.log(data);
 
-                                        app.$set(app.messages, key, data);
+                                        app.$set(app.messages, key, { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user });
                                     }
                                     else {
                                         for (let i = 0; i < app.messages.length; i++) {
