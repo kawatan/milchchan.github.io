@@ -1293,27 +1293,26 @@
 
                         const text = this.input;
                         const url = 'https://api.milchchan.com/talk?text=' + text + '&threshold=1.0';
-                        let segmenter = new TinySegmenter();
+                        //let segmenter = new TinySegmenter();
                         let regex = new RegExp('[.#$\\[\\]]');
                         let tokens = [];
 
-                        for (let token of segmenter.segment(text)) {
+                        /*for (let token of segmenter.segment(text)) {
                             if (!regex.test(token)) {
                                 tokens.push(token);
                             }
-                        }
+                        }*/
 
                         this.input = '';
                         this.currentInputLength = 0;
                         this.$el.querySelector("#popup").play();
 
-                        let ref = database.ref(databaseMessages).push();
                         let completed = 0;
                         let learnedWords = [];
 
-                        ref.set({ text: text, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
+                        database.ref(databaseMessages).push({ text: text, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
-                        for (let token of tokens) {
+                        /*for (let token of tokens) {
                             database.ref(databaseRoot + "/dictionary/words/" + token).transaction(function (word) {
                                 if (word === null) {
                                     return ref.key;
@@ -1343,11 +1342,11 @@
                                     window.pJSDom[0].pJS.fn.modes.pushParticles(learnedWords.length);
                                 }
                             });
-                        }
+                        }*/
 
-                        let r = database.ref(databaseMessages).push();
+                        let ref = database.ref(databaseMessages).push();
 
-                        this.messages.push({ id: r.key, text: null, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                        this.messages.push({ id: ref.key, text: null, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
 
                         try {
                             this.isLoading = true;
@@ -1364,7 +1363,7 @@
                                 const json = await response.json();
 
                                 if (json.text.length > 0) {
-                                    r.set({ text: json.text, timestamp: Math.floor(new Date() / 1000), thread: ref.key, user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                                    ref.set({ text: json.text, timestamp: Math.floor(new Date() / 1000), thread: ref.key, user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
                                 }
                             }
                             else {
