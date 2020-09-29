@@ -2025,6 +2025,7 @@
 
                                 for (let key of keys) {
                                     const message = messageDictionary[key];
+                                    const timestamp = message.timestamp * 1000;
                                     let index = -1;
 
                                     //console.log(date.toISOString());
@@ -2048,10 +2049,28 @@
                                     }
 
                                     if (index >= 0) {
-                                        app.$set(app.messages, key, { id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                        let j = -1; 
+                                        const data = { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user };
+
+                                        for (let i = 0; i < app.messages.length; i++) {
+                                            if (timestamp < app.messages[i].timestamp.getTime()) {
+                                                j = i;
+                                            }
+                                        }
+
+                                        if (j >= 0) {
+                                            const temp = app.messages[j];
+
+                                            app.messages[j] = data;
+                                            app.messages[index] = temp;
+
+                                            app.$set(app.messages, temp.id, temp);
+                                        }
+
+                                        app.$set(app.messages, key, data);
                                     }
                                     else {
-                                        const timestamp = message.timestamp * 1000;
+                                        
                                         
                                         for (let i = 0; i < app.messages.length; i++) {
                                             if (timestamp < app.messages[i].timestamp.getTime()) {
