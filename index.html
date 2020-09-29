@@ -1347,6 +1347,7 @@
                         let ref = database.ref(databaseMessages).push();
 
                         this.messages.push({ id: ref.key, text: null, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                        this.scrollRequired = true;
 
                         try {
                             this.isLoading = true;
@@ -2066,9 +2067,7 @@
                                             app.$set(app.messages, temp.id, temp);
                                         }*/
 
-                                        console.log(data);
-
-                                        app.$set(app.messages, key, { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user });
+                                        app.$set(app.messages, index, { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user });
                                     }
                                     else {
                                         for (let i = 0; i < app.messages.length; i++) {
