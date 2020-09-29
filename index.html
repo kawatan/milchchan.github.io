@@ -2132,7 +2132,7 @@
         let activateTime = 0.0;
         const activateThreshold = 10.0;
         let lookAnimation = null;
-        let timer;
+        let timeoutID = undefined;
 
         function render() {
             requestAnimationFrame(render);
@@ -2937,11 +2937,13 @@
 
         }, false);
         window.addEventListener('scroll', () => {
-            clearTimeout(timer);
+            if (typeof timeoutID === 'number') {
+                clearTimeout(timeoutID);
+            }
             
             app.isScrolling = true;
             
-            timer = setTimeout(function () {
+            timeoutID = setTimeout(function () {
                 app.isScrolling = false;
             }, 500);
         }, false);
