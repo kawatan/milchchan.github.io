@@ -2047,9 +2047,15 @@
                                         app.$set(app.messages, key, { id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
                                     }
                                     else {
+                                        const timestamp = message.timestamp * 1000;
                                         
+                                        for (let i = 0; i < app.messages.length; i++) {
+                                            if (timestamp < app.messages[i].timestamp.getTime()) {
+                                                index = i;
+                                            }
+                                        }
 
-                                        app.messages.splice(app.messages.length, 0, { id: key, text: message.text, thread: message.thread, timestamp: new Date(message.timestamp * 1000), user: message.user });
+                                        app.messages.splice(index >= 0 ? index : app.messages.length, 0, { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user });
                                         
                                         if (app.messages.length > app.maxMessages) {
                                             app.messages.shift();
