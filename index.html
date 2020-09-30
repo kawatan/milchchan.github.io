@@ -2070,16 +2070,16 @@
                                             }
                                         }
 
-                                        /*if (j >= 0) {
+                                        if (j >= 0) {
                                             const temp = app.messages[j];
 
                                             app.messages[j] = data;
                                             app.messages[index] = temp;
 
-                                            app.$set(app.messages, temp.id, temp);
-                                        }*/
+                                            app.$set(app.messages, j, temp);
+                                        }
 
-                                        app.$set(app.messages, index, { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user });
+                                        app.$set(app.messages, index, data);
                                     }
                                     else {
                                         for (let i = 0; i < app.messages.length; i++) {
