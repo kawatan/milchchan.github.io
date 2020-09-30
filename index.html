@@ -1346,41 +1346,45 @@
                             });
                         }*/
 
-                        let ref = database.ref(databaseMessages).push();
+                        window.setTimeout(async () => {
+                            let ref = database.ref(databaseMessages).push();
 
-                        this.messages.push({ id: ref.key, text: null, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
-                        this.scrollRequired = true;
+                            app.messages.push({ id: ref.key, text: null, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                            app.scrollRequired = true;
 
-                        try {
-                            this.isLoading = true;
+                            try {
+                                app.isLoading = true;
 
-                            const response = await fetch(encodeURI(url), {
-                                mode: "cors",
-                                method: "GET",
-                                headers: {
-                                    "Content-Type": "application/x-www-form-urlencoded"
+                                const response = await fetch(encodeURI(url), {
+                                    mode: "cors",
+                                    method: "GET",
+                                    headers: {
+                                        "Content-Type": "application/x-www-form-urlencoded"
+                                    }
+                                });
+
+                                if (response.ok) {
+                                    const json = await response.json();
+
+                                    if (json.text.length > 0) {
+                                        ref.set({ text: json.text, timestamp: Math.floor(new Date() / 1000), thread: ref.key, user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                                    }
                                 }
-                            });
-
-                            if (response.ok) {
-                                const json = await response.json();
-
-                                if (json.text.length > 0) {
-                                    ref.set({ text: json.text, timestamp: Math.floor(new Date() / 1000), thread: ref.key, user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                                else {
+                                    throw new Error(response.statusText);
                                 }
+
+                                app.isLoading = false;
                             }
-                            else {
-                                throw new Error(response.statusText);
+                            catch (e) {
+                                app.isLoading = false;
+                                app.notify({ text: channel.length == 0 ? 'もう一度試してほしいよぉ' : 'もう一度試してみてね', accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+
+                                console.error(e.message);
                             }
 
-                            this.isLoading = false;
-                        }
-                        catch (e) {
-                            this.isLoading = false;
-                            this.notify({ text: channel.length == 0 ? 'もう一度試してほしいよぉ' : 'もう一度試してみてね', accent: merku.accent, image: channel.length == 0 ? merku.image : null });
 
-                            console.error(e.message);
-                        }
+                        }, random(500, 1000));
                     }
                 },
                 change: function (event) {
