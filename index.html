@@ -1215,7 +1215,7 @@
                                         <div class="control">
                                             <button class="button is-rounded" type="button"
                                                 v-bind:class="{'is-black': isLearning, 'is-static': input.length === 0}"
-                                                v-bind:disabled="user === null" @click="learn"><span
+                                                v-bind:disabled="user === null" @click="learn" v-cloak><span
                                                     class="icon is-small has-text-black">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
@@ -1224,7 +1224,7 @@
                                         <div class="control is-expanded">
                                             <input class="input is-rounded" type="text"
                                                 v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="isLearning"
-                                                v-model="input" @input="change">
+                                                v-model="input" @input="change" v-cloak>
                                         </div>
                                         <div class="control">
                                             <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
@@ -1234,7 +1234,7 @@
                                         <div class="control">
                                             <button class="button is-rounded is-primary" type="submit"
                                                 v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
-                                                @click="send"><span class="icon is-small">
+                                                @click="send"><span class="icon is-small" v-cloak>
                                                     <i class="fas fa-paper-plane"></i>
                                                 </span>
                                             </button>
