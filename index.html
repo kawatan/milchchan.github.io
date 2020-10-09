@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://kit.fontawesome.com/922939073a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" type="text/css"
         media="screen" />
     <style>
@@ -23,7 +23,7 @@
         }
 
         .wf-notosansjapanese {
-            font-family: "Noto Sans JP";
+            font-family: 'Noto Sans JP';
         }
 
         html {
@@ -46,7 +46,7 @@
             top: 0;
             width: 100%;
             height: 100vh;
-            background: url('/images/Background.png') 50% 50% repeat;
+            /*background: url('/images/Background.png') 50% 50% repeat;*/
             content: "";
             animation: loop 10s linear infinite;
         }
@@ -64,7 +64,7 @@
         p,
         span,
         input {
-            font-family: "Noto Sans JP";
+            font-family: 'Noto Sans JP', sans-serif;
         }
 
         label {
@@ -240,6 +240,7 @@
 
         #heading .title {
             font-family: 'Alata', sans-serif;
+            font-size: 4rem!important;
         }
 
         #heading .subtitle {
@@ -331,6 +332,14 @@
             padding: 0px 16px 0px 16px;
         }
 
+        #input form .field {
+            background-color: #f5f5f5;
+            border-radius: 500px 500px 500px 500px;
+            padding: 8px 8px 8px 8px;
+            box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;
+        }
+
         #input .columns {
             margin: 0;
             padding: 0;
@@ -353,6 +362,11 @@
             margin: 0px 0px 4px 0px;
         }
 
+        #container .media .media-left .image img {
+            box-shadow: 4px 4px 12px #d0d0d0,
+                -4px -4px 12px #ffffff;
+        }
+
         .media-content .content div:last-child {
             margin: 4px 0px 0px 0px;
         }
@@ -366,14 +380,28 @@
             display: inline-block;
             padding: 8px 16px 8px 16px;
             border-radius: 0px 500px 500px 500px;
-            background: url('/images/Stripes.png') repeat;
+            /*background: url('/images/Stripes.png') repeat;*/
+            background: #f5f5f5;
+            box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;
         }
 
         .media-content .has-text-right .balloon {
             display: inline-block;
             padding: 8px 16px 8px 16px;
-            border-radius: 500px 0px 500px 500px;
-            background: url('/images/Stripes.png') repeat;
+            border-radius: 500px 500px 0px 500px;
+            /*background: url('/images/Stripes.png') repeat;*/
+            background: #f5f5f5;
+            box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;
+        }
+
+        .media-content>.level span {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        .media-content .balloon span {
+            font-family: 'Noto Sans JP', sans-serif;
         }
 
         .media-content .has-text-left div:nth-last-of-type(1)>p {
@@ -403,13 +431,57 @@
             padding: 0;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level {
+        .navbar:nth-of-type(2) .columns {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+        }
+
+        .navbar:nth-of-type(2) .columns>.column {
+            padding: 0px 16px 0px 16px;
+        }
+
+        .navbar:nth-of-type(2) .navbar-item>div>.control:last-child {
+            margin: 0;
+            padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+        }
+
+        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1) {
+            display: block;
+            margin: 0;
+            padding: 0px 0px 16px 0px;
+        }
+
+        .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 500px 500px 500px 500px;
+            padding: 8px 16px 8px 16px;
+            background: #ffa6bb url('/images/Stripes.png') repeat;
+            box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;
+        }
+
+        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-of-type(2) .media span {
+            display: inline-block;
+            font-family: 'Noto Sans JP', 'Josefin Sans', sans-serif;
+            line-height: 1.5rem;
+            text-shadow: #d0d0d0 0px 0px 60px;
+        }
+
+        .navbar:nth-of-type(3) {
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar:nth-of-type(3) .navbar-item .control:first-child .level {
             display: block;
             margin: 0;
             padding: 16px 0px 0px 0px;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level .notification {
+        .navbar:nth-of-type(3) .navbar-item .control:first-child .level .notification {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -418,11 +490,11 @@
             padding: 0;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level .is-info {
+        .navbar:nth-of-type(3) .navbar-item .control:first-child .level .is-info {
             color: #ffffff;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level .notification .media {
+        .navbar:nth-of-type(3) .navbar-item .control:first-child .level .notification .media {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -431,16 +503,16 @@
             background: url('/images/Stripes.png') repeat;
         }
 
-        .navbar:nth-of-type(2) .notification .media .media-left {
+        .navbar:nth-of-type(3) .notification .media .media-left {
             margin: 0px 8px 0px 0px;
         }
 
-        .navbar:nth-of-type(2) .navbar-item>div>.control:last-child {
+        .navbar:nth-of-type(3) .navbar-item>div>.control:last-child {
             margin: 0;
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(3) {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -449,7 +521,7 @@
             padding: 16px 0px 0px 0px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .notification {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -458,7 +530,7 @@
             padding: 0;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .notification .media {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification .media {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -467,39 +539,84 @@
             background: #30c0f5 url('/images/Stripes.png') repeat;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .notification .media .media-left {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification .media .media-left {
             margin: 0px 8px 0px 0px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .field {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .columns {
             margin: 0;
-            padding: 0px -8px 0px -8px;
+            padding: 0;
+            width: 100%;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(3) .field label.checkbox {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .field {
             margin: 0;
+            padding: 0px -8px 0px -8px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .field label.checkbox {
             margin: 16px 8px 0px 8px;
             padding: 8px 16px 8px 16px;
             border-radius: 500px 500px 500px 500px;
             background: rgba(0, 0, 0, 0.75);
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0px 0px 4px 0px;
-            padding: 16px 0px 0px 0px;
+        label.checkbox input[type=checkbox] {
+            display: none;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2)>span {
-            font-family: 'Alata', sans-serif;
+        label.checkbox .custom {
+            position: relative;
+            margin: 0px 8px 0px 0px;
+            font-size: 1.0rem;
+        }
+
+        label.checkbox input[type=checkbox]+.custom:before {
+            font-weight: 900;
+            font-family: "Font Awesome 5 Free";
+            content: '\f00c';
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        label.checkbox input[type=checkbox]:checked+.custom:before {
+            color: #30c0f5;
         }
 
         #input .navbar-item .control:last-child .level:nth-last-of-type(1) {
             display: block;
             margin: 0;
-            padding: 0px 0px 16px 0px;
+            padding: 16px 0px 16px 0px;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(1) button {
+            border: 0px solid transparent;
+            background-color: transparent;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(2) input {
+            border: 0px solid transparent;
+            background-color: transparent;
+            box-shadow: none;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(3) {
+            display: flex;
+            align-items: center;
+            padding: 0px 8px 0px 8px;
+            font-family: 'Alata', 'Josefin Sans', sans-serif;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(3) span {
+            font-family: 'Alata', 'Josefin Sans', sans-serif;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(4) button {
+            border: 0px solid transparent;
+            background-color: transparent;
+            color: #30c0f5;
         }
 
         .navbar-item img {
@@ -515,7 +632,7 @@
             transition: opacity 0.5s;
         }
 
-        .fade-enter,
+        .fade-enter-from,
         .fade-leave-to {
             opacity: 0;
         }
@@ -525,14 +642,14 @@
             transition: all .5s ease;
         }
 
-        .reveal-enter,
+        .reveal-enter-from,
         .reveal-leave-to {
             opacity: 0;
             transform: translate3d(0, -50%, 0);
         }
 
         .reveal-enter-to,
-        .reveal-leave {
+        .reveal-leave-from {
             opacity: 1;
             transform: translate3d(0, 0%, 0);
         }
@@ -542,13 +659,13 @@
             transition: all .5s ease;
         }
 
-        .collapse-enter,
+        .collapse-enter-from,
         .collapse-leave-to {
             opacity: 0;
         }
 
         .collapse-enter-to,
-        .collapse-leave {
+        .collapse-leave-from {
             opacity: 1;
         }
 
@@ -557,7 +674,7 @@
             transition: all .5s ease;
         }
 
-        .blind-enter {
+        .blind-enter-from {
             transform: translate3d(0, 100%, 0);
         }
 
@@ -565,7 +682,7 @@
             transform: translate3d(0, 0%, 0);
         }
 
-        .blind-leave {
+        .blind-leave-from {
             transform: translate3d(0, 0%, 0);
         }
 
@@ -582,13 +699,13 @@
             transition: transform 0.5s ease;
         }
 
-        .message-list-enter {
+        .message-list-enter-from {
             opacity: 0;
             transform: translate3d(0%, 50%, 0);
         }
 
         .message-list-enter-to,
-        .message-list-leave {
+        .message-list-leave-from {
             opacity: 1;
             transform: translate3d(0%, 0%, 0);
         }
@@ -607,13 +724,13 @@
             transition: transform 0.5s ease;
         }
 
-        .notification-list-enter {
+        .notification-list-enter-from {
             opacity: 0;
             transform: translate3d(0%, 50%, 0);
         }
 
         .notification-list-enter-to,
-        .notification-list-leave {
+        .notification-list-leave-from {
             opacity: 1;
             transform: translate3d(0%, 0%, 0);
         }
@@ -632,16 +749,41 @@
             transition: transform 0s ease;
         }
 
-        .type-list-enter,
+        .type-list-enter-from,
         .type-list-leave-to {
             opacity: 0;
             transform: translate3d(0%, 25%, 0);
         }
 
         .type-list-enter-to,
-        .type-list-leave {
+        .type-list-leave-from {
             opacity: 1;
             transform: translate3d(0%, 0%, 0);
+        }
+
+        .popup-enter-active,
+        .popup-leave-active {
+            transition: all .5s ease;
+        }
+
+        .popup-enter-from {
+            opacity: 0;
+            transform: translate3d(0, 100%, 0);
+        }
+
+        .popup-enter-to {
+            opacity: 1;
+            transform: translate3d(0, 0%, 0);
+        }
+
+        .popup-leave-from {
+            opacity: 1;
+            transform: translate3d(0, 0%, 0);
+        }
+
+        .popup-leave-to {
+            opacity: 0;
+            transform: translate3d(0, 100%, 0);
         }
 
         @keyframes loop {
@@ -748,12 +890,12 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
-        <div class="type columns is-mobile is-centered is-vcentered">
+        <!--<div class="type columns is-mobile is-centered is-vcentered">
             <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
                 <span class="title is-2 has-text-weight-bold" v-for="character in text"
                     v-bind:key="character.key">{{ character.value }}</span>
             </transition-group>
-        </div>
+        </div>-->
         <transition name="blind">
             <div class="cover" v-if="isBlinded" v-cloak>
                 <img class="background" v-bind:src="cover" @load="load" @error="error" alt="Background"><img>
@@ -801,9 +943,9 @@
                                     <div class="level-item has-text-centered">
                                         <div class="field is-grouped is-vcentered">
                                             <span class="icon is-small">
-                                                <i class="fas fa-book"></i>
+                                                <i class="fas fa-star"></i>
                                             </span>
-                                            <span class="title is-size-3">{{ animatedWords }}</span>
+                                            <span class="title is-size-1">{{ animatedWords }}</span>
                                         </div>
                                     </div>
                                 </nav>
@@ -903,9 +1045,9 @@
                                     </span>
                                 </button>
                                 <button class="button is-white" type="button" v-bind:disabled="user === null"
-                                    @click="like" v-else key="suggest">
+                                    @click="talk" v-else key="suggest">
                                     <span class="icon is-small">
-                                        <i class="fas fa-tv"></i>
+                                        <i class="fas fa-lightbulb"></i>
                                     </span>
                                 </button>
                             </transition>
@@ -921,15 +1063,9 @@
                         <hr class="is-invisible">
                         <article class="media" v-if="user.uid === message.user.id" v-cloak>
                             <div class="media-content">
-                                <div class="level is-mobile" v-if="message.user.name">
-                                    <div class="level-left">
-                                        <span
-                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                                    </div>
-                                </div>
                                 <div class="content has-text-right">
-                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                        <p class="has-text-weight-bold has-text-white">
+                                    <div class="balloon" v-bind:style="{ color: message.user.accent }">
+                                        <p class="has-text-weight-bold">
                                             {{ message.text }}
                                         </p>
                                     </div>
@@ -942,26 +1078,22 @@
                             </div>
                             <figure class="media-right" v-if="message.user.image">
                                 <p class="image is-64x64">
-                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                    <img class="is-rounded" v-bind:src="message.user.image"
+                                        v-bind:alt="message.user.name ? message.user.name : message.id">
                                 </p>
                             </figure>
                         </article>
                         <article class="media" v-else v-cloak>
                             <figure class="media-left" v-if="message.user.image">
                                 <p class="image is-64x64">
-                                    <img class="is-rounded" v-bind:src="message.user.image" alt="Avatar">
+                                    <img class="is-rounded" v-bind:src="message.user.image"
+                                        v-bind:alt="message.user.name ? message.user.name : message.id">
                                 </p>
                             </figure>
                             <div class="media-content">
-                                <div class="level is-mobile" v-if="message.user.name">
-                                    <div class="level-left">
-                                        <span
-                                            class="is-size-7 has-text-weight-bold has-text-grey">{{ message.user.name }}</span>
-                                    </div>
-                                </div>
                                 <div class="content has-text-left">
-                                    <div class="balloon" v-bind:style="{ backgroundColor: message.user.accent }">
-                                        <p class="has-text-weight-bold has-text-white">
+                                    <div class="balloon" v-bind:style="{ color: message.user.accent }">
+                                        <p class="has-text-weight-bold">
                                             <span v-bind:class="{'is-hidden': message.text}">
                                                 <i class="fas fa-spinner updating"></i>
                                             </span>
@@ -978,6 +1110,46 @@
                     </div>
                 </div>
             </transition-group>
+        </transition>
+        <transition name="popup" v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
+            v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart" v-on:after-leave="animationEnd"
+            v-on:leave-cancelled="animationEnd">
+            <nav class="navbar is-fixed-bottom" v-show="isPopup" v-cloak>
+                <div class=" navbar-item is-expanded columns is-desktop">
+                    <div class="column is-half has-content-centered is-mobile">
+                        <div class="control">
+                            <nav class="level">
+                                <article class="media">
+                                    <figure class="media-left">
+                                        <span class="image is-32x32">
+                                            <img class="is-rounded" src="/images/Milch.png" alt="ミルヒちゃん">
+                                        </span>
+                                    </figure>
+                                    <div class="media-content">
+                                        <div class="content has-text-left">
+                                            <span class="is-size-6 has-text-weight-bold has-text-white">
+                                                ミルヒちゃん
+                                            </span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </nav>
+                            <nav class="level">
+                                <article class="media">
+                                    <div class="media-content"
+                                        v-bind:style="{ height: animatedPopupTextHeight + 'px' }">
+                                        <div class="content has-text-left" ref="popupText">
+                                            <span class="title is-3 has-text-weight-bold has-text-white"
+                                                v-for="character in text" v-bind:key="character.key"
+                                                v-cloak>{{ character.value }}</span>
+                                        </div>
+                                    </div>
+                                </article>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </nav>
         </transition>
         <transition name="collapse">
             <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-show="isOverlayed && !isSuggested">
@@ -1022,21 +1194,21 @@
                                             </div>
                                         </article>
                                     </div>
-                                    <div class="field has-addons has-addons-centered is-grouped is-grouped-multiline">
-                                        <label class="checkbox" v-for="attribute in attributes"
-                                            v-bind:key="attribute.name" v-cloak>
-                                            <input type="checkbox" @change="check" v-model="attribute.value">
-                                            <span
-                                                class="title is-size-6 has-text-weight-bold has-text-white">{{ attribute.name }}</span>
-                                        </label>
+                                    <div class="columns is-mobile is-gapless" v-for="row in arrange(attributes, 2)"
+                                        v-cloak>
+                                        <div class="column is-half" v-for="column in row" v-bind:key="column.name" v-cloak>
+                                            <div class="field">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @change="check" v-model="column.value">
+                                                    <span class="custom"></span>
+                                                    <span
+                                                        class="title is-size-6 has-text-weight-bold has-text-white">{{ column.name }}</span>
+                                                </label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </nav>
                             </transition>
-                            <nav class="level">
-                                <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
-                                    {{ maxInputLength - animatedCurrentInputLength }}
-                                </span>
-                            </nav>
                             <nav class="level">
                                 <form onsubmit="return false;">
                                     <div class="field has-addons">
@@ -1044,7 +1216,7 @@
                                             <button class="button is-rounded" type="button"
                                                 v-bind:class="{'is-black': isLearning, 'is-static': input.length === 0}"
                                                 v-bind:disabled="user === null" @click="learn"><span
-                                                    class="icon is-small">
+                                                    class="icon is-small has-text-black">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
                                             </button>
@@ -1053,6 +1225,11 @@
                                             <input class="input is-rounded" type="text"
                                                 v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="isLearning"
                                                 v-model="input" @input="change">
+                                        </div>
+                                        <div class="control">
+                                            <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
+                                                {{ maxInputLength - animatedCurrentInputLength }}
+                                            </span>
                                         </div>
                                         <div class="control">
                                             <button class="button is-rounded is-primary" type="submit"
@@ -1092,7 +1269,7 @@
     <script src="https://unpkg.com/three@0.106.2/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://unpkg.com/three@0.106.2/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r16/Stats.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
     <script src="/js/moment-with-locales.js"></script>
     <script src="/js/three-vrm.js"></script>
@@ -1204,70 +1381,105 @@
 
         document.body.appendChild(stats.domElement);
 
-        var app = new Vue({
-            el: '#app',
-            data: {
-                isReady: false,
-                isLoading: false,
-                isRevealed: false,
-                isUpdating: false,
-                isBlinded: false,
-                isOverlayed: true,
-                isSuggested: false,
-                suggestionQueue: [],
-                progress: 0,
-                user: null,
-                input: '',
-                currentInputLength: 0,
-                animatedCurrentInputLength: 0,
-                maxInputLength: 100,
-                inputHasError: false,
-                messages: [],
-                maxMessages: 10,
-                tags: [],
-                maxTags: 10,
-                scrollRequired: false,
-                scrollTimeoutID: undefined,
-                isScrolling: false,
-                words: 0,
-                animatedWords: 0,
-                likes: -1,
-                notifications: [],
-                vrm: null,
-                animations: null,
-                animationsQueue: [],
-                currentAnimations: [],
-                blendShapeAnimations: [],
-                blendShapeAnimationQueue: [],
-                highlight: null,
-                cover: null,
-                isPreloading: false,
-                isComputing: false,
-                text: [],
-                script: { messages: null, words: null, wordDictionary: {}, reverseWordDictionary: {} },
-                isLearning: false,
-                attributes: [{ name: "有名人", value: false },
-                { name: "人の名前", value: false },
-                { name: "職業", value: false },
-                { name: "人を表すことば", value: false },
-                { name: "ロボット", value: false },
-                { name: "すること", value: false },
-                { name: "行くところ", value: false },
-                { name: "食べ物", value: false },
-                { name: "飲み物", value: false },
-                { name: "生き物", value: false },
-                { name: "音楽", value: false },
-                { name: "見るもの", value: false },
-                { name: "読むもの", value: false },
-                { name: "使うもの", value: false },
-                { name: "身につけるもの", value: false },
-                { name: "乗り物", value: false },
-                { name: "ことば", value: false },
-                { name: "体の一部", value: false },
-                { name: "病気", value: false }]
+        var app = Vue.createApp({
+            data() {
+                return {
+                    isReady: false,
+                    isLoading: false,
+                    isRevealed: false,
+                    isUpdating: false,
+                    isBlinded: false,
+                    isOverlayed: true,
+                    isSuggested: false,
+                    isPopup: false,
+                    isAnimating: false,
+                    suggestionQueue: [],
+                    sequenceQueue: [],
+                    progress: 0,
+                    user: null,
+                    input: '',
+                    currentInputLength: 0,
+                    animatedCurrentInputLength: 0,
+                    maxInputLength: 100,
+                    inputHasError: false,
+                    messages: [],
+                    maxMessages: 10,
+                    tags: [],
+                    maxTags: 10,
+                    scrollTimeoutID: undefined,
+                    isScrolling: false,
+                    words: 0,
+                    animatedWords: 0,
+                    likes: -1,
+                    notifications: [],
+                    vrm: null,
+                    animations: null,
+                    animationsQueue: [],
+                    currentAnimations: [],
+                    blendShapeAnimations: [],
+                    blendShapeAnimationQueue: [],
+                    highlight: null,
+                    cover: null,
+                    isPreloading: false,
+                    isComputing: false,
+                    text: [],
+                    popupTextHeight: 0,
+                    animatedPopupTextHeight: 0,
+                    script: { messages: null, words: null, wordDictionary: {}, reverseWordDictionary: {} },
+                    isLearning: false,
+                    attributes: [{ name: "有名人", value: false },
+                    { name: "人の名前", value: false },
+                    { name: "職業", value: false },
+                    { name: "人を表すことば", value: false },
+                    { name: "ロボット", value: false },
+                    { name: "すること", value: false },
+                    { name: "行くところ", value: false },
+                    { name: "食べ物", value: false },
+                    { name: "飲み物", value: false },
+                    { name: "生き物", value: false },
+                    { name: "音楽", value: false },
+                    { name: "見るもの", value: false },
+                    { name: "読むもの", value: false },
+                    { name: "使うもの", value: false },
+                    { name: "身につけるもの", value: false },
+                    { name: "乗り物", value: false },
+                    { name: "ことば", value: false },
+                    { name: "体の一部", value: false },
+                    { name: "病気", value: false }]
+                }
             },
             watch: {
-                words: function (newValue) {
+                messages: {
+                    handler: () => {
+                        app.$nextTick(() => {
+                            app.scrollToEnd();
+                        });
+                    },
+                    deep: true
+                },
+                text: {
+                    handler: () => {
+                        app.$nextTick(() => {
+                            app.popupTextHeight = app.$refs.popupText.getBoundingClientRect().height;
+                        });
+                    },
+                    deep: true
+                },
+                popupTextHeight(newValue) {
+                    const obj = { height: this.animatedPopupTextHeight };
+
+                    anime({
+                        targets: obj,
+                        height: newValue,
+                        round: 1,
+                        duration: 500,
+                        easing: 'linear',
+                        update: () => {
+                            this.animatedPopupTextHeight = obj.height
+                        }
+                    });
+                },
+                words(newValue) {
                     const obj = { count: this.animatedWords };
 
                     anime({
@@ -1281,7 +1493,7 @@
                         }
                     });
                 },
-                currentInputLength: function (newValue) {
+                currentInputLength(newValue) {
                     const obj = { count: this.animatedCurrentInputLength };
 
                     anime({
@@ -1295,7 +1507,7 @@
                         }
                     });
                 },
-                cover: function (newValue) {
+                cover(newValue) {
                     if (newValue) {
                         this.isPreloading = true;
                     } else {
@@ -1313,7 +1525,7 @@
                         }
 
                         const text = this.input;
-                        const url = 'https://api.milchchan.com/talk?text=' + text + '&threshold=1.0';
+                        const url = "https://api.milchchan.com/talk?text=" + text + "&threshold=1.0";
                         //let segmenter = new TinySegmenter();
                         let regex = new RegExp('[.#$\\[\\]]');
                         let tokens = [];
@@ -1326,7 +1538,8 @@
 
                         this.input = '';
                         this.currentInputLength = 0;
-                        this.$el.querySelector("#popup").play();
+
+                        document.body.querySelector("#popup").play();
 
                         let completed = 0;
                         let learnedWords = [];
@@ -1368,8 +1581,7 @@
                         window.setTimeout(async () => {
                             let ref = database.ref(databaseMessages).push();
 
-                            app.messages.push({ id: ref.key, text: null, timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
-                            app.scrollRequired = true;
+                            app.messages.push({ id: ref.key, text: null, timestamp: new Date(), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
 
                             try {
                                 app.isLoading = true;
@@ -1429,7 +1641,7 @@
                         this.suggestionQueue.splice(0);
                         this.isBlinded = true;
                         this.isSuggested = true;
-                        this.$el.querySelector("#twinkle").play();
+                        document.body.querySelector("#twinkle").play();
                     }
 
 
@@ -1442,8 +1654,6 @@
                         this.messages.push({ id: this.messages.length, text: '最初にミルヒちゃんに送るメッセージを教えて欲しいよぉ', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = true;
                     }
-
-                    this.scrollRequired = true;
                     */
 
                     database.ref(databaseChannel + "/likes").transaction(function (count) {
@@ -1469,33 +1679,43 @@
                         }
                     });*/
 
-                    this.$el.querySelector("#twinkle").play();
+                    document.body.querySelector("#twinkle").play();
                 },
                 check: function (event) {
                     let attributes = {};
                     const timestamp = Math.floor(new Date() / 1000);
-                    let isEmpty = true;
+                    //let isEmpty = true;
+                    let isNew = false;
                     let ref = database.ref(databaseRoot + "/dictionary/words/" + this.input);
 
                     for (const attribute of this.attributes) {
                         attributes[attribute.name] = attribute.value;
 
                         if (attribute.value) {
-                            isEmpty = false;
+                            //    isEmpty = false;
                         }
                     }
 
                     ref.transaction(function (current) {
-                        if (isEmpty) {
-                            return null;
+                        //console.log(current);
+                        if (current === null) {
+                            isNew = true;
                         }
+                        /*if (isEmpty) {
+                            return null;
+                        }*/
 
                         return attributes;
                     }, function (error, committed, snapshot) {
                         if (committed) {
-                            /*database.ref(databaseRoot + "/vocabularies").transaction(function (count) {
-                                return (count || 0) + 1;
-                            });*/
+                            //console.log(snapshot);
+                            //console.log(isNew);
+
+                            if (isNew) {
+                                /*database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
+                                    return (count || 0) + 1;
+                                });*/
+                            }
                         } else if (error) {
                             console.error(error);
                         }
@@ -1568,16 +1788,24 @@
                                     break;
                             }
                         }
+
                         return chars.join("");
                     }
 
-                    this.messages.push({ id: generateUuid(), text: await this.generate(this.script.messages[random(0, this.script.messages.length - 1)]), timestamp: Math.floor(new Date() / 1000), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
+                    const generatedText = await this.generate(this.script.messages[random(0, this.script.messages.length - 1)]);
+                    const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
+                    { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy },
+                    { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy },
+                    { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
+                    const item = presets[random(0, 3)];
+
+                    this.sequenceQueue.push({ messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: generatedText }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
+
+                    this.messages.push({ id: generateUuid(), text: generatedText, timestamp: new Date(), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
 
                     if (this.messages.length > this.maxMessages) {
                         this.messages.shift();
                     }
-
-                    this.scrollRequired = true;
                 },
                 generate: async function (message) {
                     function choice(x, probabilities) {
@@ -1864,21 +2092,49 @@
                     moment.locale(window.navigator.language);
 
                     return moment(event).format('LT');
+                },
+                animationStart: function (el) {
+                    this.isAnimating = true;
+                },
+                animationEnd: function (el) {
+                    this.isAnimating = false;
+                },
+                arrange: function (collection, limit) {
+                    let rows = [];
+                    let columns = [];
+
+                    for (const item of collection) {
+                        if (columns.length < limit) {
+                            columns.push(item);
+                        } else {
+                            rows.push(columns);
+                            columns = [item];
+                        }
+                    }
+
+                    rows.push(columns);
+
+                    return rows;
                 }
             },
             updated: function () {
-                let container = this.$el.querySelector("#container");
+                let container = document.body.querySelector("#container");
+                let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
 
-                container.style.paddingTop = this.$el.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-                container.style.paddingBottom = this.$el.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
+                container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
-                if (this.scrollRequired) {
-                    this.scrollToEnd();
-                    this.scrollRequired = false;
+                if (popup !== null) {
+                    popup.style.paddingBottom = container.style.paddingBottom;
                 }
             },
-            created: async function () {
+            mounted: function () {
+                const self = this;
+                let container = document.body.querySelector("#container");
                 const loader = new THREE.GLTFLoader();
+
+                container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
+                container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
                 loader.crossOrigin = "anonymous";
                 loader.load(
@@ -1919,7 +2175,7 @@
                                         }
                                     }
 
-                                    app.animationsQueue.push(animationDictionary['jump']);
+                                    self.animationsQueue.push(animationDictionary['jump']);
                                 }
 
                                 const response1 = await fetch('/js/words.json', {
@@ -1933,31 +2189,31 @@
                                 if (response1.ok) {
                                     const json = await response1.json();
 
-                                    app.script.words = json;
+                                    self.script.words = json;
                                 }
                                 else {
                                     throw new Error(response1.statusText);
                                 }
 
-                                for (const word of app.script.words) {
-                                    if (word.name in app.script.wordDictionary) {
+                                for (const word of self.script.words) {
+                                    if (word.name in self.script.wordDictionary) {
                                         for (const attribute of word.attributes) {
-                                            app.script.wordDictionary[word.name].attributes.push(attribute);
+                                            self.script.wordDictionary[word.name].attributes.push(attribute);
 
-                                            if (attribute in app.script.reverseWordDictionary) {
-                                                app.script.reverseWordDictionary[attribute].push(word.name);
+                                            if (attribute in self.script.reverseWordDictionary) {
+                                                self.script.reverseWordDictionary[attribute].push(word.name);
                                             } else {
-                                                app.script.reverseWordDictionary[attribute] = [word.name];
+                                                self.script.reverseWordDictionary[attribute] = [word.name];
                                             }
                                         }
                                     } else {
-                                        app.script.wordDictionary[word.name] = word.attributes;
+                                        self.script.wordDictionary[word.name] = word.attributes;
 
                                         for (const attribute of word.attributes) {
-                                            if (attribute in app.script.reverseWordDictionary) {
-                                                app.script.reverseWordDictionary[attribute].push(word.name);
+                                            if (attribute in self.script.reverseWordDictionary) {
+                                                self.script.reverseWordDictionary[attribute].push(word.name);
                                             } else {
-                                                app.script.reverseWordDictionary[attribute] = [word.name];
+                                                self.script.reverseWordDictionary[attribute] = [word.name];
                                             }
                                         }
                                     }
@@ -1974,14 +2230,14 @@
                                 if (response2.ok) {
                                     const json = await response2.json();
 
-                                    app.script.messages = json;
+                                    self.script.messages = json;
                                 }
                                 else {
                                     throw new Error(response2.statusText);
                                 }
 
-                                app.animations = animationDictionary;
-                                app.vrm = vrm;
+                                self.animations = animationDictionary;
+                                self.vrm = vrm;
 
                                 scene.add(vrm.scene);
 
@@ -1991,27 +2247,15 @@
 
                                 vrm.lookAt.target = lookAtTarget;
 
-                                app.progress = 0.0;
+                                self.progress = 0.0;
                             } catch (e) {
                                 console.error(e);
                             }
                         });
                     },
-                    (progress) => app.progress = progress.loaded / progress.total,
+                    (progress) => self.progress = progress.loaded / progress.total,
                     (error) => console.error(error)
                 );
-            },
-            destroyed: function () {
-                if (this.vrm !== null) {
-                    scene.remove(this.vrm.scene);
-                    this.vrm = null;
-                }
-            },
-            mounted: function () {
-                let container = this.$el.querySelector("#container");
-
-                container.style.paddingTop = this.$el.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-                container.style.paddingBottom = this.$el.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
                 firebase.auth().signInAnonymously().catch(function (error) {
                     console.error(error.code, error.message);
@@ -2019,28 +2263,28 @@
                 firebase.auth().onAuthStateChanged(function (user) {
                     if (user) {
                         // User is signed in.
-                        app.user = user;
+                        self.user = user;
 
                         database.ref(databaseRoot + "/dictionary/count").on('value', snapshot => {
                             const count = snapshot.val();
 
                             if (count === null) {
-                                app.words = 0;
+                                self.words = 0;
                             } else {
-                                app.words = count;
+                                self.words = count;
                             }
                         });
                         database.ref(databaseChannel + "/likes").on('value', snapshot => {
                             const count = snapshot.val();
 
                             if (count === null) {
-                                app.likes = 0;
+                                self.likes = 0;
                             } else {
-                                if (app.likes >= 0) {
+                                if (self.likes >= 0) {
                                     window.pJSDom[0].pJS.fn.modes.pushParticles(1);
                                 }
 
-                                app.likes = count;
+                                self.likes = count;
                             }
                         });
                         database.ref(databaseMessages).limitToLast(100).on('value', snapshot => {
@@ -2080,9 +2324,9 @@
                                     }
 
                                     if (index >= 0) {
-                                        let j = -1;
+                                        //let j = -1;
                                         const data = { id: key, text: message.text, thread: message.thread, timestamp: new Date(timestamp), user: message.user };
-
+                                        /*
                                         for (let i = 0; i < app.messages.length; i++) {
                                             if (timestamp < Math.floor(app.messages[i].timestamp)) {
                                                 j = i;
@@ -2094,11 +2338,11 @@
 
                                             app.messages[j] = data;
                                             app.messages[index] = temp;
+                                        } else {
+                                            app.messages[index] = data;
+                                        }*/
 
-                                            app.$set(app.messages, j, temp);
-                                        }
-
-                                        app.$set(app.messages, index, data);
+                                        app.messages[index] = data;
                                     }
                                     else {
                                         for (let i = 0; i < app.messages.length; i++) {
@@ -2125,14 +2369,12 @@
                                     }
                                 }
 
-                                app.scrollRequired = true;
-
                                 if (received) {
                                     if (!received.id && app.vrm) {
                                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
 
-                                    app.$el.querySelector("#popup").play();
+                                    document.body.querySelector("#popup").play();
                                 }
 
                                 app.update(messageDictionary, app.maxTags);
@@ -2144,11 +2386,17 @@
                         database.ref(databaseChannel + "/likes").off('value');
                         database.ref(databaseMessages).off('value');
 
-                        app.user = null;
+                        self.user = null;
                     }
                 });
+            },
+            unmounted: function () {
+                if (this.vrm !== null) {
+                    scene.remove(this.vrm.scene);
+                    this.vrm = null;
+                }
             }
-        });
+        }).mount('#app');
 
         const clock = new THREE.Clock();
         const raycaster = new THREE.Raycaster();
@@ -2209,7 +2457,164 @@
                     }
                 }
 
-                if (app.suggestionQueue.length > 0) {
+                if (app.sequenceQueue.length > 0) {
+                    const suggestion = app.sequenceQueue[0];
+                    const message = suggestion.messages[0];
+                    let loopRequired = true;
+
+                    if (message.type.reverse) {
+                        if (message.type.count > 0) {
+                            message.type.elapsed += deltaTime;
+
+                            if (message.type.elapsed >= message.type.speed / 1000.0) {
+                                let index = message.type.count - 1;
+
+                                if (index < message.text.length) {
+                                    let width = Math.floor(message.text.length / 2);
+
+                                    if (message.type.buffer.length <= width) {
+                                        message.type.count -= 1;
+                                    }
+
+                                    if (message.type.buffer.length > 0) {
+                                        message.type.buffer = message.type.buffer.substring(message.type.buffer.length - 2, message.type.buffer.length - 1);
+                                    }
+                                }
+
+                                message.type.elapsed = 0;
+                            }
+                        } else {
+                            if (suggestion.messages.length > 1) {
+                                suggestion.messages.shift();
+                            } else {
+                                if ('morphs' in suggestion) {
+                                    for (let blendShape of suggestion.morphs.defaults) {
+                                        app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                    }
+                                }
+
+                                app.sequenceQueue.shift();
+                                app.isPopup = false;
+                            }
+                        }
+                    } else if (message.type.buffer.length < message.text.length) {
+                        if (message.type.elapsed >= 0) {
+                            message.type.elapsed += deltaTime;
+                        } else if (!isActive && !app.isAnimating) {
+                            if (app.isPopup) {
+                                message.type.elapsed = deltaTime;
+                                app.isBlinded = false;
+                                app.currentAnimations.splice(0);
+
+                                if ('animation' in suggestion && suggestion.animation in app.animations) {
+                                    const skipFrames = 60 / 12;
+                                    let animations = app.animations[suggestion.animation];
+                                    let maxFrames = Math.min(animations.length, 60);
+                                    let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                    let length = Math.round(90 / 24);
+
+                                    for (let i = 0; i < maxFrames; i += skipFrames) {
+                                        for (let j = 0; j < length; j++) {
+                                            app.currentAnimations.push(animations[offset + i]);
+                                        }
+                                    }
+
+                                    for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
+                                        app.currentAnimations.push(animations[offset + i]);
+                                    }
+                                }
+
+                                if ('morphs' in suggestion) {
+                                    let nameSet = [];
+
+                                    for (let blendShape of suggestion.morphs.defaults) {
+                                        app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                    }
+
+                                    for (let blendShapeAnimation of suggestion.morphs.animations) {
+                                        app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                    }
+
+                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                        let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                                        if (!nameSet.includes(blendShapeAnimation.name)) {
+                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                            nameSet.push(blendShapeAnimation.name);
+                                        }
+                                    }
+                                }
+                            } else {
+                                app.isPopup = true;
+                            }
+                        }
+
+                        if (message.type.elapsed >= message.type.speed / 1000.0) {
+                            let index = message.type.buffer.length;
+                            let width = Math.floor(message.text.length / 2);
+                            let length = message.text.length;
+
+                            if (message.type.count >= width) {
+                                message.type.buffer += message.text.charAt(index);
+                            }
+
+                            if (message.type.count < length) {
+                                message.type.count += 1;
+                            }
+
+                            message.type.elapsed = 0;
+                        }
+                    } else {
+                        message.time += deltaTime;
+
+                        if (message.time >= message.duration) {
+                            message.type.reverse = true;
+                        }
+                    }
+
+                    if (message.text.length === message.type.buffer.length) {
+                        const characters = message.text.split('');
+
+                        app.text.splice(0);
+
+                        for (let i = 0; i < characters.length; i++) {
+                            app.text.push({ key: i, value: characters[i] });
+                        }
+                    } else {
+                        let charArray = new Array();
+                        let randomBuffer = '';
+
+                        for (let i = 0; i < message.text.length; i++) {
+                            if (charArray.indexOf(message.text.charAt(i)) == -1 && message.text.charAt(i).match(/\s/) == null) {
+                                charArray.push(message.text.charAt(i));
+                            }
+                        }
+
+                        for (let i = 0; i < message.type.count; i++) {
+                            if (charArray.length > 0) {
+                                randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                            }
+                        }
+
+                        if (randomBuffer.length > message.type.buffer.length) {
+                            const characters = (message.type.buffer + randomBuffer.substring(message.type.buffer.length, randomBuffer.length)).split('');
+
+                            app.text.splice(0);
+
+                            for (let i = 0; i < characters.length; i++) {
+                                app.text.push({ key: i, value: characters[i] });
+                            }
+                        } else if (app.text.length !== message.type.buffer.length) {
+                            const characters = message.type.buffer.split('');
+
+                            app.text.splice(0);
+
+                            for (let i = 0; i < characters.length; i++) {
+                                app.text.push({ key: i, value: characters[i] });
+                            }
+                        }
+                    }
+                } else if (app.suggestionQueue.length > 0) {
                     const suggestion = app.suggestionQueue[0];
                     const message = suggestion.messages[0];
                     let loopRequired = true;
@@ -2278,7 +2683,6 @@
 
                             app.suggestionQueue.splice(0);
                             app.isBlinded = false;
-                            app.scrollRequired = true;
                             loopRequired = false;
                         }
                     } else if (message.type.buffer.length < message.text.length) {
@@ -2844,10 +3248,10 @@
         render();
 
         window.addEventListener('resize', (event) => {
-            let container = app.$el.querySelector("#container");
+            let container = document.body.querySelector("#container");
 
-            container.style.paddingTop = app.$el.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-            container.style.paddingBottom = app.$el.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
+            container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
+            container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
             const width = window.innerWidth;
             const height = window.outerHeight;
