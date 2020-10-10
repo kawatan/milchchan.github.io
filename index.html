@@ -46,7 +46,7 @@
             top: 0;
             width: 100%;
             height: 100vh;
-            /*background: url('/images/Background.png') 50% 50% repeat;*/
+            background: url('/images/Background.png') 50% 50% repeat;
             content: "";
             animation: loop 10s linear infinite;
         }
@@ -365,6 +365,10 @@
         #container .media .media-left .image img {
             box-shadow: 4px 4px 12px #d0d0d0,
                 -4px -4px 12px #ffffff;
+        }
+
+        #container .media .media-content {
+            overflow: visible;
         }
 
         .media-content .content div:last-child {
@@ -792,7 +796,7 @@
             }
 
             100% {
-                background-position: 0px -128px;
+                background-position: 128px -128px;
             }
         }
 
