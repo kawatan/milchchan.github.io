@@ -1,3 +1,34 @@
-["やめて・・・ミルヒに乱暴する気でしょう？エロ同人みたいに！エロ同人みたいに！",
-"ふぇぇ・・・もらししちゃったよぉ・・・",
-"タイム イズ マネー"]
+{
+    "name": "ミルヒ",
+    "sequences": [
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "やめて・・・ミルヒに乱暴する気でしょう？エロ同人みたいに！エロ同人みたいに！"
+                },
+                {
+                    "type": "Animation",
+                    "name": "jump"
+                },
+                {
+                    "type": "Animation",
+                    "name": "joy",
+                    "duration": 3.0,
+                    "start": 1.0,
+                    "end": 1.0
+                },
+                {
+                    "type": "Animation",
+                    "name": "joy",
+                    "duration": 0.0,
+                    "start": 0.0,
+                    "end": 0.0
+                }
+            ]
+        }
+    ]
+}
