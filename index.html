@@ -1216,7 +1216,7 @@
                                             <div class="media-content">
                                                 <div class="content has-text-left">
                                                     <span class="has-text-weight-bold has-text-white" v-cloak>
-                                                        「{{ input }}」の意味を教えてね
+                                                        「{{ input }}」って何かなぁ？
                                                     </span>
                                                 </div>
                                             </div>
@@ -1245,7 +1245,7 @@
                                             <button class="button is-rounded" type="button"
                                                 v-bind:class="{'is-black': isLearning, 'is-static': input.length === 0}"
                                                 v-bind:disabled="user === null" @click="learn" v-cloak><span
-                                                    class="icon is-small has-text-black">
+                                                    class="icon is-small is-black">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
                                             </button>
@@ -1713,39 +1713,26 @@
                 },
                 check: function (event) {
                     let attributes = {};
-                    const timestamp = Math.floor(new Date() / 1000);
-                    //let isEmpty = true;
-                    let isNew = false;
                     let ref = database.ref(databaseRoot + "/dictionary/words/" + this.input);
 
                     for (const attribute of this.attributes) {
                         attributes[attribute.name] = attribute.value;
-
-                        if (attribute.value) {
-                            //    isEmpty = false;
-                        }
                     }
 
-                    ref.transaction(function (current) {
-                        //console.log(current);
-                        if (current === null) {
-                            isNew = true;
-                        }
-                        /*if (isEmpty) {
-                            return null;
-                        }*/
+                    attributes["timestamp"] = Math.floor(new Date() / 1000);
 
+                    ref.transaction(function (current) {
                         return attributes;
                     }, function (error, committed, snapshot) {
                         if (committed) {
                             //console.log(snapshot);
                             //console.log(isNew);
 
-                            if (isNew) {
+                            //if (isNew) {
                                 /*database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
                                     return (count || 0) + 1;
                                 });*/
-                            }
+                            //}
                         } else if (error) {
                             console.error(error);
                         }
