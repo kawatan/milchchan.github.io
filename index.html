@@ -455,7 +455,8 @@
         .navbar:nth-of-type(2) .columns {
             margin: 0;
             padding: 0;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0));
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+            backdrop-filter: blur(8px);
         }
 
         .navbar:nth-of-type(2) .columns>.column {
@@ -465,6 +466,11 @@
         .navbar:nth-of-type(2) .navbar-item>div>.control:last-child {
             margin: 0;
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+        }
+
+        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-of-type(1) {
+            margin: 0;
+            padding: 16px 0px 32px 0px;
         }
 
         .navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1) {
@@ -979,7 +985,9 @@
                                 <nav class="level">
                                     <div class="level-item has-text-centered">
                                         <div class="field">
-                                            <h6 class="subtitle is-size-6 is-uppercase has-text-weight-bold has-text-black">おぼえたことば
+                                            <h6
+                                                class="subtitle is-size-6 is-uppercase has-text-weight-bold has-text-black">
+                                                おぼえたことば
                                             </h6>
                                         </div>
                                     </div>
@@ -1455,6 +1463,7 @@
                     popupTextHeight: 0,
                     animatedPopupTextHeight: 0,
                     message: null,
+                    states: {},
                     script: { character: null, words: null, wordDictionary: {}, reverseWordDictionary: {} },
                     isLearning: false,
                     attributes: [{ name: "有名人", value: false },
@@ -1729,9 +1738,9 @@
                             //console.log(isNew);
 
                             //if (isNew) {
-                                /*database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
-                                    return (count || 0) + 1;
-                                });*/
+                            /*database.ref(databaseRoot + "/dictionary/count").transaction(function (count) {
+                                return (count || 0) + 1;
+                            });*/
                             //}
                         } else if (error) {
                             console.error(error);
@@ -1818,7 +1827,7 @@
                         }
                     }
 
-                    for (const obj of sequences[random(0, sequences.length - 1)].sequence) {
+                    for (const obj of this.prepare(sequences)) {
                         if (obj.type == "Message") {
                             sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: await this.generate(obj.text) });
                         } else {
@@ -1826,15 +1835,16 @@
                         }
                     }
 
-
-                    const generatedText = await this.generate();
-                    const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
+                    /*const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
                     { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy },
                     { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy },
                     { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
-                    const item = presets[random(0, 3)];
+                    const item = presets[random(0, 3)];*/
 
-                    this.sequenceQueue.push(sequence);//{ messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: generatedText }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
+                    if (sequence.length > 0) {
+                        this.sequenceQueue.push(sequence);
+                    }
+                    //{ messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: generatedText }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
 
                     /*this.messages.push({ id: generateUuid(), text: generatedText, timestamp: new Date(), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
 
@@ -2154,6 +2164,182 @@
                     rows.push(columns);
 
                     return rows;
+                },
+                prepare: function (sequences) {
+                    let choosedSequences = [];
+                    let flattenedSequence = [];
+
+                    for (const s of sequences) {
+                        if ('state' in s && s.name in this.states) {
+                            let regex = new RegExp(s.state);
+
+                            if (!regex.test(this.states[s.name])) {
+                                continue;
+                            }
+                        }
+
+                        choosedSequences.push(s);
+                    }
+
+                    if (choosedSequences.length > 0) {
+                        let queue = [];
+
+                        for (const s of choosedSequences[random(0, sequences.length - 1)].sequence) {
+                            queue.push(s);
+                        }
+
+                        while (queue.length > 0) {
+                            const obj = queue.shift();
+
+                            if (obj.type == "Sequence") {
+                                if (!('sequence' in obj)) {
+                                    let tracedSequences = [];
+                                    let callableSequences = [];
+
+                                    for (const s of this.script.character.sequences) {
+                                        let sequenceStack = getSequenceStack(s, obj);
+
+                                        if (sequenceStack.length > 0) {
+                                            let stack = [];
+
+                                            do {
+                                                let poppedSequence = sequenceStack.pop();
+
+                                                if (sequenceStack.length > 0) {
+                                                    let tempStack = [];
+
+                                                    for (const o of sequenceStack[sequenceStack.length - 1].sequence) {
+                                                        if (o.type == "Sequence") {
+                                                            if ('sequence' in o) {
+                                                                let isNew = true;
+
+                                                                for (const tempSequence of stack) {
+                                                                    if (tempSequence === o) {
+                                                                        isNew = false;
+
+                                                                        break;
+                                                                    }
+                                                                }
+
+                                                                if (isNew) {
+                                                                    tempStack.push(o);
+                                                                }
+                                                            }
+
+                                                            if (o === poppedSequence) {
+                                                                break;
+                                                            }
+                                                        }
+                                                    }
+
+                                                    while (tempStack.length > 0) {
+                                                        stack.push(tempStack.pop());
+                                                    }
+                                                }
+
+                                                if ('sequence' in poppedSequence) {
+                                                    let isNew = true;
+
+                                                    for (const tempSequence of stack) {
+                                                        if (tempSequence === poppedSequence) {
+                                                            isNew = false;
+
+                                                            break;
+                                                        }
+                                                    }
+
+                                                    if (isNew) {
+                                                        stack.Push(poppedSequence);
+                                                    }
+                                                }
+                                            } while (sequenceStack.length > 0);
+
+                                            while (stack.length > 0) {
+                                                sequenceList.push(stack.pop());
+                                            }
+                                        }
+                                        else {
+                                            tracedSequences.push(s);
+                                        }
+                                    }
+
+                                    if ('state' in obj) {
+                                        this.states[obj.name] = obj.state;
+
+                                        for (const s of tracedSequences) {
+                                            if (s.name == obj.name) {
+                                                let regex = new RegExp(s.state);
+
+                                                if (!regex.test(obj.state)) {
+                                                    continue;
+                                                }
+
+                                                callableSequences.push(s);
+                                            }
+                                        }
+                                    } else {
+                                        for (const s of tracedSequences) {
+                                            if (s.name == obj.name) {
+                                                if (s.name in this.states) {
+                                                    let regex = new RegExp(s.state);
+
+                                                    if (!regex.test(this.states[s.name])) {
+                                                        continue;
+                                                    }
+                                                }
+
+                                                callableSequences.push(s);
+                                            }
+                                        }
+                                    }
+
+                                    if (callableSequences.length > 0) {
+                                        let index = 0;
+
+                                        for (const o of callableSequences[random(0, sequences.length - 1)].sequence) {
+                                            queue.splice(index, 0, o);
+                                            index++;
+                                        }
+                                    }
+                                }
+                            } else {
+                                flattenedSequence.push(obj);
+                            }
+                        }
+                    }
+
+                    return flattenedSequence;
+                },
+                getSequenceStack: function (sourceSequence, targetSequence) {
+                    let sequenceStack = [];
+
+                    sequenceStack.push(sourceSequence);
+
+                    if (sequenceStack[sequenceStack.length - 1] !== targetSequence) {
+                        for (const o in sourceSequence.sequence) {
+                            if (o.type == "Sequence") {
+                                let stack = this.getSequenceStack(o, targetSequence);
+
+                                if (stack.length > 0 && stack[stack.length - 1] === targetSequence) {
+                                    let tempStack = [];
+
+                                    do {
+                                        tempStack.push(stack.pop());
+                                    } while (stack.length > 0);
+
+                                    do {
+                                        sequenceStack.push(tempStack.pop());
+                                    } while (tempStack.length > 0);
+
+                                    return sequenceStack;
+                                }
+                            }
+                        }
+
+                        sequenceStack.pop();
+                    }
+
+                    return sequenceStack;
                 }
             },
             updated: function () {
@@ -2167,7 +2353,7 @@
                     popup.style.paddingBottom = container.style.paddingBottom;
                 }
             },
-            mounted: function () {
+            mounted: async function () {
                 const self = this;
                 let container = document.body.querySelector("#container");
                 const loader = new THREE.GLTFLoader();
@@ -2175,124 +2361,128 @@
                 container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
                 container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
-                loader.crossOrigin = "anonymous";
-                loader.load(
-                    "/models/Milch.vrm",
-                    (gltf) => {
-                        THREE.VRM.from(gltf).then(async (vrm) => {
-                            const urls = {
-                                idle1: '/models/animations/animation-idle1.json',
-                                idle2: '/models/animations/animation-idle2.json',
-                                //idle3: '/models/animations/animation-idle3.json',
-                                //idle4: '/models/animations/animation-idle4.json',
-                                jump: '/models/animations/animation-jump.json',
-                                lose: '/models/animations/animation-lose.json',
-                                //run: '/models/animations/animation-run.json',
-                                //walk: '/models/animations/animation-walk.json',
-                                win: '/models/animations/animation-win.json'
-                            };
-                            let animationDictionary = {};
+                try {
+                    const response1 = await fetch('/js/milch.json', {
+                        mode: "cors",
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        }
+                    });
 
-                            try {
-                                if (channel.length == 0) {
-                                    for (let key in urls) {
-                                        const response = await fetch(encodeURI(urls[key]), {
-                                            mode: "cors",
-                                            method: "GET",
-                                            headers: {
-                                                "Content-Type": "application/x-www-form-urlencoded"
+                    if (response1.ok) {
+                        self.script.character = await response1.json();
+                    }
+                    else {
+                        throw new Error(response1.statusText);
+                    }
+
+                    loader.crossOrigin = "anonymous";
+                    loader.load(
+                        self.script.character.model,
+                        (gltf) => {
+                            THREE.VRM.from(gltf).then(async (vrm) => {
+                                const urls = {
+                                    idle1: '/models/animations/animation-idle1.json',
+                                    idle2: '/models/animations/animation-idle2.json',
+                                    //idle3: '/models/animations/animation-idle3.json',
+                                    //idle4: '/models/animations/animation-idle4.json',
+                                    jump: '/models/animations/animation-jump.json',
+                                    lose: '/models/animations/animation-lose.json',
+                                    //run: '/models/animations/animation-run.json',
+                                    //walk: '/models/animations/animation-walk.json',
+                                    win: '/models/animations/animation-win.json'
+                                };
+                                let animationDictionary = {};
+
+                                try {
+                                    if (channel.length == 0) {
+                                        for (let key in urls) {
+                                            const response2 = await fetch(encodeURI(urls[key]), {
+                                                mode: "cors",
+                                                method: "GET",
+                                                headers: {
+                                                    "Content-Type": "application/x-www-form-urlencoded"
+                                                }
+                                            });
+
+                                            if (response2.ok) {
+                                                const json = await response2.json();
+
+                                                animationDictionary[key] = json.data;
                                             }
-                                        });
-
-                                        if (response.ok) {
-                                            const json = await response.json();
-
-                                            animationDictionary[key] = json.data;
-                                        }
-                                        else {
-                                            throw new Error(response.statusText);
-                                        }
-                                    }
-
-                                    self.animationsQueue.push(animationDictionary['jump']);
-                                }
-
-                                const response1 = await fetch('/js/words.json', {
-                                    mode: "cors",
-                                    method: "GET",
-                                    headers: {
-                                        "Content-Type": "application/x-www-form-urlencoded"
-                                    }
-                                });
-
-                                if (response1.ok) {
-                                    const json = await response1.json();
-
-                                    self.script.words = json;
-                                }
-                                else {
-                                    throw new Error(response1.statusText);
-                                }
-
-                                for (const word of self.script.words) {
-                                    if (word.name in self.script.wordDictionary) {
-                                        for (const attribute of word.attributes) {
-                                            self.script.wordDictionary[word.name].attributes.push(attribute);
-
-                                            if (attribute in self.script.reverseWordDictionary) {
-                                                self.script.reverseWordDictionary[attribute].push(word.name);
-                                            } else {
-                                                self.script.reverseWordDictionary[attribute] = [word.name];
+                                            else {
+                                                throw new Error(response2.statusText);
                                             }
                                         }
-                                    } else {
-                                        self.script.wordDictionary[word.name] = word.attributes;
 
-                                        for (const attribute of word.attributes) {
-                                            if (attribute in self.script.reverseWordDictionary) {
-                                                self.script.reverseWordDictionary[attribute].push(word.name);
-                                            } else {
-                                                self.script.reverseWordDictionary[attribute] = [word.name];
+                                        self.animationsQueue.push(animationDictionary['jump']);
+                                    }
+
+                                    const response3 = await fetch('/js/words.json', {
+                                        mode: "cors",
+                                        method: "GET",
+                                        headers: {
+                                            "Content-Type": "application/x-www-form-urlencoded"
+                                        }
+                                    });
+
+                                    if (response3.ok) {
+                                        const json = await response3.json();
+
+                                        self.script.words = json;
+                                    }
+                                    else {
+                                        throw new Error(response3.statusText);
+                                    }
+
+                                    for (const word of self.script.words) {
+                                        if (word.name in self.script.wordDictionary) {
+                                            for (const attribute of word.attributes) {
+                                                self.script.wordDictionary[word.name].attributes.push(attribute);
+
+                                                if (attribute in self.script.reverseWordDictionary) {
+                                                    self.script.reverseWordDictionary[attribute].push(word.name);
+                                                } else {
+                                                    self.script.reverseWordDictionary[attribute] = [word.name];
+                                                }
+                                            }
+                                        } else {
+                                            self.script.wordDictionary[word.name] = word.attributes;
+
+                                            for (const attribute of word.attributes) {
+                                                if (attribute in self.script.reverseWordDictionary) {
+                                                    self.script.reverseWordDictionary[attribute].push(word.name);
+                                                } else {
+                                                    self.script.reverseWordDictionary[attribute] = [word.name];
+                                                }
                                             }
                                         }
                                     }
+
+                                    self.animations = animationDictionary;
+                                    self.vrm = vrm;
+
+                                    scene.add(vrm.scene);
+
+                                    //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
+
+                                    //currentMixer = prepareAnimation(vrm);
+
+                                    vrm.lookAt.target = lookAtTarget;
+
+                                    self.progress = 0.0;
+                                } catch (e) {
+                                    console.error(e);
                                 }
-
-                                const response2 = await fetch('/js/milch.json', {
-                                    mode: "cors",
-                                    method: "GET",
-                                    headers: {
-                                        "Content-Type": "application/x-www-form-urlencoded"
-                                    }
-                                });
-
-                                if (response2.ok) {
-                                    self.script.character = await response2.json();
-                                }
-                                else {
-                                    throw new Error(response2.statusText);
-                                }
-
-                                self.animations = animationDictionary;
-                                self.vrm = vrm;
-
-                                scene.add(vrm.scene);
-
-                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                                //currentMixer = prepareAnimation(vrm);
-
-                                vrm.lookAt.target = lookAtTarget;
-
-                                self.progress = 0.0;
-                            } catch (e) {
-                                console.error(e);
-                            }
-                        });
-                    },
-                    (progress) => self.progress = progress.loaded / progress.total,
-                    (error) => console.error(error)
-                );
+                            });
+                        },
+                        (progress) => self.progress = progress.loaded / progress.total,
+                        (error) => console.error(error)
+                    );
+                } catch (e) {
+                    console.error(e);
+                }
 
                 firebase.auth().signInAnonymously().catch(function (error) {
                     console.error(error.code, error.message);
