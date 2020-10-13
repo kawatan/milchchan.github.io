@@ -1303,8 +1303,6 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
     <script src="https://unpkg.com/three@0.121.1/build/three.js"></script>
-    <script src="https://unpkg.com/three@0.121.1/examples/js/loaders/GLTFLoader.js"></script>
-    <script src="https://unpkg.com/three@0.121.1/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stats-js@1.0.1/build/stats.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
@@ -1312,7 +1310,10 @@
     <script src="/js/three-vrm.js"></script>
     <script src="/js/particles.js"></script>
     <script src="/js/tiny-segmenter.js"></script>
-    <script type="text/javascript">
+    <script type="module">
+        import { GLTFLoader } from 'https://unpkg.com/three@0.121.1/examples/jsm/loaders/GLTFLoader.js';
+        import { OrbitControls } from 'https://unpkg.com/three@0.121.1/examples/jsm/controls/OrbitControls.js';
+
         // Your web app's Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyDTVxDJj7rqG9L-Clvba2Tao9B0hkcxjcE",
@@ -1327,7 +1328,7 @@
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         firebase.analytics();
-
+        
         const debug = getParameterByName("debug") || false;
         const channel = decodeURIComponent(window.location.hash.substring(1));
         const databaseRoot = 'chat';
@@ -1386,7 +1387,7 @@
 
         camera.position.set(0.0, 1.25, CAMERA_Z);
 
-        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        const controls = new OrbitControls(camera, renderer.domElement);
 
         controls.enableKeys = false;
         controls.screenSpacePanning = true;
@@ -2367,7 +2368,7 @@
             mounted: async function () {
                 const self = this;
                 let container = document.body.querySelector("#container");
-                const loader = new THREE.GLTFLoader();
+                const loader = new GLTFLoader();
 
                 container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
                 container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
@@ -3637,7 +3638,7 @@
                 let reader = new FileReader();
 
                 reader.addEventListener("load", (e) => {
-                    const loader = new THREE.GLTFLoader();
+                    const loader = new GLTFLoader();
 
                     loader.crossOrigin = "anonymous";
                     loader.load(
