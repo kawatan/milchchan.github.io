@@ -2249,7 +2249,7 @@
                                     let callableSequences = [];
 
                                     for (const s of this.script.character.sequences) {
-                                        let sequenceStack = getSequenceStack(s, obj);
+                                        let sequenceStack = this.getSequenceStack(s, obj);
 
                                         if (sequenceStack.length > 0) {
                                             let stack = [];
