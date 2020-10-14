@@ -1750,7 +1750,7 @@
                     let attributes = {};
                     let checked = 0;
                     let isNew = false;
-                    let ref = database.ref(databaseRoot + "/dictionary/words/" + this.input);
+                    let ref = database.ref(databaseRoot + "/words/" + this.input);
 
                     for (const attribute of this.attributes) {
                         attributes[attribute.name] = attribute.value;
@@ -1822,7 +1822,7 @@
                             attribute.value = false;
                         }
 
-                        database.ref(databaseRoot + "/dictionary/words/" + this.input).once('value', snapshot => {
+                        database.ref(databaseRoot + "/words/" + this.input).once('value', snapshot => {
                             const word = snapshot.val();
 
                             if (word !== null) {
@@ -1955,14 +1955,14 @@
                         } else {
                             let terms = [];
                             let scores = [];
-                            const snapshot1 = await database.ref(databaseRoot + "/dictionary/words/" + token).once('value');
+                            const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
 
                             if (snapshot1.exists()) {
                                 const word = snapshot1.val();
 
                                 for (let attribute in word) {
                                     if (word[attribute]) {
-                                        const snapshot2 = await database.ref(databaseRoot + "/dictionary/words/").orderByChild(attribute).equalTo(true).once('value');
+                                        const snapshot2 = await database.ref(databaseRoot + "/words/").orderByChild(attribute).equalTo(true).once('value');
 
                                         if (snapshot2.exists()) {
                                             const words = snapshot2.val();
@@ -2654,8 +2654,7 @@
                         });
                     } else {
                         // User is signed out.
-                        database.ref(databaseRoot + "/dictionary/count").off('value')
-                        database.ref(databaseChannel + "/likes").off('value');
+                        database.ref(databaseChannel + "/stars").off('value');
                         database.ref(databaseMessages).off('value');
 
                         self.user = null;
