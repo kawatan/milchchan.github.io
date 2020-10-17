@@ -46,7 +46,7 @@
             top: 0;
             width: 100%;
             height: 100vh;
-            background: url('/images/Background.png') 50% 50% repeat;
+            /*background: url('/images/Background.png') 50% 50% repeat;*/
             content: "";
             animation: loop 10s linear infinite;
         }
@@ -262,14 +262,58 @@
             padding: 0;
         }
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(2) {
+        #heading .navbar-item .control:first-child .level:nth-last-child(3) {
             margin: 0px 8px 0px 8px;
             padding: 0;
         }
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(1) {
+        #heading .navbar-item .control:first-child .level:nth-last-child(2) {
             margin: 4px 8px 0px 8px;
             padding: 0;
+        }
+
+        #heading .navbar-item .control:first-child .level:nth-last-child(1) {
+            margin: 16px 0px 0px 0px;
+            padding: 0;
+        }
+
+        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            /*background-color: #f5f5f5;
+            background-image: url('/images/Stripes.png');
+            background-repeat: repeat;*/
+            /*border-radius: 500px 500px 500px 500px;
+            padding: 16px 32px 16px 32px;
+            box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;
+            box-sizing: border-box;*/
+            /*backdrop-filter: blur(8px);*/
+        }
+
+        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field .ticker-wrap {
+            padding: 0;
+            width: 100%;
+            overflow: hidden;
+            box-sizing: content-box;
+        }
+
+        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field .ticker {
+            display: inline-block;
+            justify-content: flex-start;
+            white-space: nowrap;
+            padding: 0px 0px 0px 100%;
+            box-sizing: content-box;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            animation-name: ticker;
+            animation-duration: 30s;
+        }
+
+        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field .ticker .item {
+            display: inline-block;
+            padding: 0px 16px;
         }
 
         #heading .navbar-item .control:nth-child(2) .level {
@@ -819,6 +863,36 @@
             transform: translate3d(0, 100%, 0);
         }
 
+        .ticker-item-list-enter-active,
+        .ticker-item-list-leave-active {
+            transition: all 0.5s ease;
+        }
+
+        .ticker-item-list-move {
+            transition: transform 0.5s ease;
+        }
+
+        .ticker-item-list-enter-from,
+        .ticker-item-list-leave-to {
+            opacity: 0;
+        }
+
+        .ticker-item-list-enter-to,
+        .ticker-item-list-leave-from {
+            opacity: 1;
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+                visibility: visible;
+            }
+
+            100% {
+                transform: translate3d(-100%, 0, 0);
+            }
+        }
+
         @keyframes loop {
             0% {
                 background-position: 0 0;
@@ -1008,6 +1082,20 @@
                                         </div>
                                     </div>
                                 </nav>
+                                <nav class="level">
+                                    <div class="level-item has-text-centered">
+                                        <div class="field">
+                                            <div class="ticker-wrap">
+                                                <transition-group name="ticker-item-list" class="ticker" tag="div">
+                                                    <div class="item"
+                                                        v-for="message in messages" v-bind:key="message.id">
+                                                        <span class="is-size-4 is-uppercase has-text-weight-bold has-text-black" v-cloak>{{ message.text }}</span>
+                                                    </div>
+                                                </transition-group>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
                             </div>
                             <transition name="reveal">
                                 <div class="control has-text-centered" v-if="isRevealed" v-cloak>
@@ -1110,7 +1198,7 @@
         </nav>
         <transition name="collapse">
             <transition-group id="container" name="message-list" tag="div" v-show="isOverlayed && !isSuggested">
-                <div class="columns is-desktop" v-for="message in messages" v-bind:key="message.id">
+                <div class="columns is-desktop is-invisible" v-for="message in messages" v-bind:key="message.id">
                     <div class="column is-half has-content-centered">
                         <hr class="is-invisible">
                         <article class="media" v-if="user.uid === message.user.id" v-cloak>
@@ -1386,6 +1474,7 @@
 
         const renderer = new THREE.WebGLRenderer({
             canvas: document.getElementById("three"),
+            antialias: true,
             alpha: true
         });
 
@@ -1485,24 +1574,20 @@
                     states: {},
                     script: { character: null, words: null, wordDictionary: {}, reverseWordDictionary: {} },
                     isLearning: false,
-                    attributes: [{ name: "有名人", value: false },
-                    { name: "人の名前", value: false },
-                    { name: "職業", value: false },
-                    { name: "人を表すことば", value: false },
-                    { name: "ロボット", value: false },
-                    { name: "すること", value: false },
-                    { name: "行くところ", value: false },
+                    attributes: [{ name: "名前", value: false },
+                    { name: "所属", value: false },
+                    { name: "時間", value: false },
+                    { name: "場所", value: false },
+                    { name: "する事", value: false },
+                    { name: "生き物", value: false },
                     { name: "食べ物", value: false },
                     { name: "飲み物", value: false },
-                    { name: "生き物", value: false },
-                    { name: "音楽", value: false },
-                    { name: "見るもの", value: false },
-                    { name: "読むもの", value: false },
-                    { name: "使うもの", value: false },
-                    { name: "身につけるもの", value: false },
+                    { name: "聞く物", value: false },
+                    { name: "見る物", value: false },
+                    { name: "読む物", value: false },
+                    { name: "使う物", value: false },
                     { name: "乗り物", value: false },
-                    { name: "ことば", value: false },
-                    { name: "体の一部", value: false },
+                    { name: "部位", value: false },
                     { name: "病気", value: false }]
                 }
             },
@@ -2236,7 +2321,7 @@
                     if (choosedSequences.length > 0) {
                         let queue = [];
 
-                        for (const s of choosedSequences[random(0, sequences.length - 1)].sequence) {
+                        for (const s of choosedSequences[random(0, choosedSequences.length - 1)].sequence) {
                             queue.push(s);
                         }
 
@@ -2348,7 +2433,7 @@
                                     if (callableSequences.length > 0) {
                                         let index = 0;
 
-                                        for (const o of callableSequences[random(0, sequences.length - 1)].sequence) {
+                                        for (const o of callableSequences[random(0, callableSequences.length - 1)].sequence) {
                                             queue.splice(index, 0, o);
                                             index++;
                                         }
@@ -2401,6 +2486,8 @@
                 container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
                 container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
 
+                document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1) .field").style.width = document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1)").getBoundingClientRect().width + 'px';
+
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
                 }
@@ -2412,6 +2499,8 @@
 
                 container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
                 container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
+
+                document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1) .field").style.width = document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1)").getBoundingClientRect().width + 'px';
 
                 try {
                     const response1 = await fetch('/js/milch.json', {
@@ -3593,6 +3682,8 @@
 
             container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
             container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
+
+            document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1) .field").style.width = document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1)").getBoundingClientRect().width + 'px';
 
             const width = window.innerWidth;
             const height = window.outerHeight;
