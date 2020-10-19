@@ -72,6 +72,14 @@
             cursor: pointer;
         }
 
+        .columns {
+            margin: 0;
+        }
+
+        .columns>.column {
+            padding: 0;
+        }
+
         .progress {
             position: fixed;
             margin: 0;
@@ -83,6 +91,14 @@
             overflow: hidden;
             background: #ffc547 url('/images/Stripes.png') repeat;
             animation: progress 0.5s linear 0s infinite;
+        }
+
+        #app>canvas {
+            position: fixed;
+            z-index: -1;
+            display: block;
+            width: 100%;
+            height: 100vh;
         }
 
         #three {
@@ -202,17 +218,12 @@
             padding: 16px 16px 16px 16px;
         }
 
-        #heading>.columns>.column>.columns {
-            margin: 0;
-            padding: 0;
-        }
-
-        #heading>.columns>.column>.columns>.column:first-child {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child {
             margin: 16px 0px 0px 0px;
             padding: 0px 0px 0px 16px;
         }
 
-        #heading>.columns>.column>.columns>.column:first-child button {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child button {
             border-radius: 290486px;
             padding: 16px;
             background: #f5f5f5;
@@ -221,17 +232,17 @@
             height: initial;
         }
 
-        #heading>.columns>.column>.columns>.column:first-child button>span {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child button>span {
             margin: 0;
         }
 
-        #heading>.columns>.column>.columns>.column:last-child {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child {
             margin: 16px 0px 0px 0px;
             padding: 0px 16px 0px 0px;
             text-align: right;
         }
 
-        #heading>.columns>.column>.columns>.column:last-child button {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child button {
             border-radius: 290486px;
             padding: 16px;
             background: #f5f5f5;
@@ -240,12 +251,8 @@
             height: initial;
         }
 
-        #heading>.columns>.column>.columns>.column:last-child button>span {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child button>span {
             margin: 0;
-        }
-
-        #heading>.columns>.column>.columns>.column {
-            padding: 0;
         }
 
         #heading .title {
@@ -257,49 +264,75 @@
             font-family: 'Nico Moji', sans-serif;
         }
 
-        #heading .navbar-item .control:first-child .level {
+        /*#heading .navbar-item .control:first-child .level {
             margin: 16px 16px 16px 16px;
             padding: 0;
         }
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(3) {
+        #heading .navbar-item .control:first-child .level:nth-last-child(2) {
             margin: 0px 8px 0px 8px;
             padding: 0;
         }
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(2) {
+        #heading .navbar-item .control:first-child .level:nth-last-child(1) {
             margin: 4px 8px 0px 8px;
             padding: 0;
+        }
+
+        #heading .navbar-item .control:nth-child(2) .level {
+            margin: 0;
+            padding: 0;
+        }
+
+        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(2) {
+            margin: 4px 0px 0px 0px;
+            padding: 0;
+        }
+
+        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(1) {
+            margin: 0;
+            padding: 16px 0px 16px 0px;
+        }
+
+        #heading .navbar-item .level .level-item {
+            margin: 0;
+            padding: 0;
+        }
+
+        #heading .columns .column .columns:last-child {
+            justify-content: center;
         }
 
         #heading .navbar-item .control:first-child .level:nth-last-child(1) {
             margin: 16px 0px 0px 0px;
             padding: 0;
-        }
+        }*/
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field {
             margin: 0;
             padding: 0;
             width: 100%;
-            /*background-color: #f5f5f5;
-            background-image: url('/images/Stripes.png');
+            background-color: #30c0f5;
+            background-color: #f5f5f5;
+            background-color: rgba(0, 0, 0, 0.75);
+            /*background-image: url('/images/Stripes.png');
             background-repeat: repeat;*/
-            /*border-radius: 500px 500px 500px 500px;
+            border-radius: 500px 500px 500px 500px;
             padding: 16px 32px 16px 32px;
             box-shadow: 20px 20px 60px #d0d0d0,
                 -20px -20px 60px #ffffff;
-            box-sizing: border-box;*/
-            /*backdrop-filter: blur(8px);*/
+            box-sizing: border-box;
+            backdrop-filter: blur(8px);
         }
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field .ticker-wrap {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
             padding: 0;
             width: 100%;
             overflow: hidden;
             box-sizing: content-box;
         }
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field .ticker {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
             display: inline-block;
             justify-content: flex-start;
             white-space: nowrap;
@@ -311,29 +344,13 @@
             animation-duration: 30s;
         }
 
-        #heading .navbar-item .control:first-child .level:nth-last-child(1) .field .ticker .item {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item {
             display: inline-block;
             padding: 0px 16px;
         }
 
-        #heading .navbar-item .control:nth-child(2) .level {
-            margin: 0;
-            padding: 0;
-        }
-
-        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(3) {
-            margin: 4px 0px 0px 0px;
-            padding: 0;
-        }
-
-        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(2) {
-            margin: 0;
-            padding: 16px 0px 16px 0px;
-        }
-
-        #heading .navbar-item .level .level-item {
-            margin: 0;
-            padding: 0;
+        #heading>.columns>.column>.columns:last-child {
+            justify-content: center;
         }
 
         #heading .navbar-item .tags>.control {
@@ -391,6 +408,19 @@
 
         #container .column {
             padding: 0px 16px 0px 16px;
+        }
+
+        #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item button {
+            border-radius: 290486px;
+            padding: 16px;
+            background: #f5f5f5;
+            box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;
+            height: initial;
+        }
+
+        #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item button span {
+            margin: 0;
         }
 
         #input form .field {
@@ -584,12 +614,8 @@
         }
 
         #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
             margin: 0;
-            padding: 16px 0px 0px 0px;
+            padding: 0;
         }
 
         #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification {
@@ -614,22 +640,9 @@
             margin: 0px 8px 0px 0px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .columns {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .field {
-            margin: 0;
-            padding: 0px -8px 0px -8px;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-        }
-
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .field label.checkbox {
-            margin: 16px 8px 0px 8px;
+        #container .columns .column .columns .column .field label.checkbox,
+        #input .columns .column .control:nth-last-of-type(1) .level:nth-last-of-type(2) .level-left {
+            margin: 16px 0px 0px 0px;
             padding: 16px 32px 16px 32px;
             border-radius: 500px 500px 500px 500px;
             background: rgba(0, 0, 0, 0.75);
@@ -638,7 +651,28 @@
                 -20px -20px 60px #ffffff;
         }
 
-        label.checkbox input[type=checkbox] {
+        #container .columns .column .media .media-content {
+            margin: -16px 0px 0px 0px;
+            padding: 0;
+        }
+
+        #container .columns .column .media .media-content .columns {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        #container .columns .column .media .media-content .columns .column .field {
+            margin: 0;
+            padding: 0px -8px 0px -8px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+
+        label.checkbox input[type=checkbox],
+        label.checkbox input[type=radio] {
             display: none;
         }
 
@@ -648,14 +682,16 @@
             font-size: 1.0rem;
         }
 
-        label.checkbox input[type=checkbox]+.custom:before {
+        label.checkbox input[type=checkbox]+.custom:before,
+        label.checkbox input[type=radio]+.custom:before {
             font-weight: 900;
             font-family: "Font Awesome 5 Free";
             content: '\f00c';
             color: rgba(255, 255, 255, 0.5);
         }
 
-        label.checkbox input[type=checkbox]:checked+.custom:before {
+        label.checkbox input[type=checkbox]:checked+.custom:before,
+        label.checkbox input[type=radio]:checked+.custom:before {
             color: #30c0f5;
         }
 
@@ -666,6 +702,7 @@
         }
 
         #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(1) button {
+            padding: 8px 16px 8px 16px;
             border: 0px solid transparent;
             border-radius: 290486px;
             background-color: transparent;
@@ -1013,6 +1050,7 @@
     <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
+        <canvas ref="three"></canvas>
         <!--<div class="type columns is-mobile is-centered is-vcentered">
             <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
                 <span class="title is-2 has-text-weight-bold" v-for="character in text"
@@ -1045,60 +1083,94 @@
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-full has-content-centered" v-cloak>
-                    <div class="columns is-mobile">
-                        <div class="column is-3 is-mobile">
-                            <button class="button is-white" type="button" @click="isRevealed = !isRevealed">
-                                <span class="icon is-small">
-                                    <i class="fas fa-bars"></i>
-                                </span>
-                            </button>
-                        </div>
-                        <div class="column is-6 is-mobile">
-                            <div class="control has-text-centered">
-                                <nav class="level is-hidden">
-                                    <div class="level-item has-text-centered image">
-                                        <a href="/"><img src="/images/Logo.png"
-                                                srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
-                                                alt="milchchan.com"></a>
-                                    </div>
-                                </nav>
-                                <nav class="level">
-                                    <div class="level-item has-text-centered">
-                                        <div class="field is-grouped is-vcentered">
-                                            <span class="icon is-small has-text-black">
-                                                <i class="fas fa-star"></i>
-                                            </span>
-                                            <span class="title is-size-1 has-text-black">{{ animatedStars }}</span>
-                                        </div>
-                                    </div>
-                                </nav>
-                                <nav class="level">
-                                    <div class="level-item has-text-centered">
-                                        <div class="field">
-                                            <h6
-                                                class="subtitle is-size-6 is-uppercase has-text-weight-bold has-text-black">
-                                                つかったことば
-                                            </h6>
-                                        </div>
-                                    </div>
-                                </nav>
-                                <nav class="level">
-                                    <div class="level-item has-text-centered">
-                                        <div class="field">
-                                            <div class="ticker-wrap">
-                                                <transition-group name="ticker-item-list" class="ticker" tag="div">
-                                                    <div class="item"
-                                                        v-for="message in messages" v-bind:key="message.id">
-                                                        <span class="is-size-4 is-uppercase has-text-weight-bold has-text-black" v-cloak>{{ message.text }}</span>
-                                                    </div>
-                                                </transition-group>
+                    <div class="columns is-mobile" ref="indicator">
+                        <div class="column is-full">
+                            <div class="columns is-mobile">
+                                <div class="column is-3 is-mobile">
+                                    <button class="button is-white" type="button" @click="isRevealed = !isRevealed">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-bars"></i>
+                                        </span>
+                                    </button>
+                                </div>
+                                <div class="column is-6 is-mobile">
+                                    <div class="control has-text-centered">
+                                        <nav class="level is-hidden">
+                                            <div class="level-item has-text-centered image">
+                                                <a href="/"><img src="/images/Logo.png"
+                                                        srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
+                                                        alt="milchchan.com"></a>
                                             </div>
-                                        </div>
+                                        </nav>
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered">
+                                                <div class="field is-grouped is-vcentered">
+                                                    <span class="icon is-small has-text-black">
+                                                        <i class="fas fa-star"></i>
+                                                    </span>
+                                                    <span
+                                                        class="title is-size-1 is-uppercase has-text-black">{{ animatedStars }}</span>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered">
+                                                <div class="field">
+                                                    <h6
+                                                        class="subtitle is-size-6 is-uppercase has-text-weight-bold has-text-black">
+                                                        つかったことば
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </nav>
                                     </div>
-                                </nav>
+                                </div>
+                                <div class="column is-3 is-mobile">
+                                    <transition name="fade" mode="out-in">
+                                        <button class="button is-white" type="button" v-bind:disabled="user === null"
+                                            @click="like" v-if="isSuggested" key="cancel">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-times"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-white" type="button" v-bind:disabled="user === null"
+                                            @click="talk" v-else key="suggest">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-comment"></i>
+                                            </span>
+                                        </button>
+                                    </transition>
+                                </div>
                             </div>
-                            <transition name="reveal">
-                                <div class="control has-text-centered" v-if="isRevealed" v-cloak>
+                            <div class="columns is-mobile">
+                                <div class="column is-half has-content-centered">
+                                    <div class="control has-text-centered">
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered">
+                                                <div class="field" ref="ticker">
+                                                    <div class="ticker-wrap">
+                                                        <transition-group name="ticker-item-list" class="ticker"
+                                                            tag="div">
+                                                            <div class="item" v-for="message in messages"
+                                                                v-bind:key="message.id">
+                                                                <span
+                                                                    class="is-size-5 has-text-weight-bold has-text-white"
+                                                                    v-cloak>{{ message.text }}</span>
+                                                            </div>
+                                                        </transition-group>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="columns is-mobile">
+                        <div class="column is-half">
+                            <div class="control has-text-centered">
+                                <transition name="reveal">
                                     <!--<nav class="level">
                                         <div class="level-item has-text-centered">
                                             <div class="field is-grouped is-vcentered">
@@ -1118,7 +1190,7 @@
                                             </div>
                                         </div>
                                     </nav>-->
-                                    <nav class="level">
+                                    <nav class="level" v-if="isRevealed" v-cloak>
                                         <transition name="fade" mode="out-in">
                                             <div class="level-item" v-if="isUpdating" key="updating">
                                                 <span class="has-text-black">
@@ -1173,29 +1245,52 @@
                                             </span>
                                         </div>
                                     </nav>-->
-                                </div>
-                            </transition>
-                        </div>
-                        <div class="column is-3 is-mobile">
-                            <transition name="fade" mode="out-in">
-                                <button class="button is-white" type="button" v-bind:disabled="user === null"
-                                    @click="like" v-if="isSuggested" key="cancel">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-times"></i>
-                                    </span>
-                                </button>
-                                <button class="button is-white" type="button" v-bind:disabled="user === null"
-                                    @click="talk" v-else key="suggest">
-                                    <span class="icon is-small">
-                                        <i class="fas fa-comment"></i>
-                                    </span>
-                                </button>
-                            </transition>
+                                </transition>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </nav>
+        <div id="container" ref="container">
+            <transition name="fade">
+                <div class="columns is-desktop" v-show="isPrompted">
+                    <div class="column is-half has-content-centered">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content">
+                                    <div class="columns is-mobile is-gapless" v-for="row in arrange(attributes, 2)"
+                                        v-cloak>
+                                        <div class="column is-half" v-for="column in row" v-bind:key="column.name"
+                                            v-cloak>
+                                            <div class="field">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" @change="check" v-model="column.value">
+                                                    <span class="custom"></span>
+                                                    <span
+                                                        class="title is-size-6 has-text-weight-bold has-text-black">{{ column.name }}</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <nav class="level">
+                                    <div class="level-item">
+                                        <button class="button is-white" type="button" @click="isPrompted = false"
+                                            v-cloak>
+                                            <span class="icon is-small">
+                                                <i class="fas fa-times"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </nav>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </transition>
+        </div>
+        <!--
         <transition name="collapse">
             <transition-group id="container" name="message-list" tag="div" v-show="isOverlayed && !isSuggested">
                 <div class="columns is-desktop is-invisible" v-for="message in messages" v-bind:key="message.id">
@@ -1250,7 +1345,7 @@
                     </div>
                 </div>
             </transition-group>
-        </transition>
+        </transition>-->
         <transition name="popup" v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
             v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart" v-on:after-leave="animationEnd"
             v-on:leave-cancelled="animationEnd">
@@ -1317,55 +1412,57 @@
                         </transition-group>
                         <div class="control">
                             <transition name="fade">
-                                <nav class="level" v-show="isLearning">
-                                    <div class="notification is-info is-light" v-cloak>
-                                        <article class="media">
-                                            <figure class="media-left">
-                                                <span class="image is-32x32">
-                                                    <img class="is-rounded" src="/images/Merku.png" alt="Avatar">
-                                                </span>
-                                            </figure>
-                                            <div class="media-content">
-                                                <div class="content has-text-left">
-                                                    <span class="has-text-weight-bold has-text-white" v-cloak>
-                                                        「{{ input }}」って何かなぁ？
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </article>
-                                    </div>
-                                    <div class="columns is-mobile is-gapless" v-for="row in arrange(attributes, 2)"
-                                        v-cloak>
-                                        <div class="column is-half" v-for="column in row" v-bind:key="column.name"
-                                            v-cloak>
+                                <nav class="level" v-show="isExpanded">
+                                    <div class="level-left">
+                                        <div class="level-item">
                                             <div class="field">
-                                                <label class="checkbox">
-                                                    <input type="checkbox" @change="check" v-model="column.value">
+                                                <label class="checkbox" v-cloak>
+                                                    <input type="radio" name="mode" checked="checked"
+                                                        @change="isLearning = false">
                                                     <span class="custom"></span>
                                                     <span
-                                                        class="title is-size-6 has-text-weight-bold has-text-black">{{ column.name }}</span>
+                                                        class="title is-size-6 has-text-weight-bold has-text-black">出来事を投稿</span>
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="level-item">
+                                            <div class="field">
+                                                <label class="checkbox" v-cloak>
+                                                    <input type="radio" name="mode" @change="isLearning = true">
+                                                    <span class="custom"></span>
+                                                    <span
+                                                        class="title is-size-6 has-text-weight-bold has-text-black">言葉を教える</span>
                                                 </label>
                                             </div>
                                         </div>
                                     </div>
                                 </nav>
                             </transition>
-                            <nav class="level">
+                            <nav class="level" ref="input">
                                 <form onsubmit="return false;">
                                     <div class="field has-addons">
                                         <div class="control">
-                                            <button class="button is-rounded" type="button"
-                                                v-bind:class="{'is-black': isLearning, 'is-static': input.length === 0}"
-                                                v-bind:disabled="user === null" @click="learn" v-cloak><span
-                                                    class="icon is-small is-black">
-                                                    <i class="fas fa-plus"></i>
-                                                </span>
-                                            </button>
+                                            <transition name="fade" mode="out-in">
+                                                <button class="button is-rounded" type="button"
+                                                    v-bind:disabled="user === null" @click="isExpanded = false"
+                                                    v-if="isExpanded" key="unexpand" v-cloak>
+                                                    <span class="icon is-small is-black">
+                                                        <i class="fas fa-angle-down"></i>
+                                                    </span>
+                                                </button>
+                                                <button class="button is-white" type="button"
+                                                    v-bind:disabled="user === null" @click="isExpanded = true" v-else
+                                                    key="expand" v-cloak>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-angle-up"></i>
+                                                    </span>
+                                                </button>
+                                            </transition>
                                         </div>
                                         <div class="control is-expanded">
                                             <input class="input is-rounded" type="text"
-                                                v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="isLearning"
-                                                v-model="input" @input="change" v-cloak>
+                                                v-bind:class="{'is-danger': inputHasError}" v-model="input"
+                                                @input="change" v-cloak>
                                         </div>
                                         <div class="control">
                                             <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
@@ -1374,8 +1471,9 @@
                                         </div>
                                         <div class="control">
                                             <button class="button is-rounded is-primary" type="submit"
-                                                v-bind:class="{'is-loading': isLoading}" v-bind:disabled="user === null"
-                                                @click="send"><span class="icon is-small" v-cloak>
+                                                v-bind:class="{'is-loading': isLoading, 'is-static': isPrompted}"
+                                                v-bind:disabled="user === null" @click="send"><span
+                                                    class="icon is-small" v-cloak>
                                                     <i class="fas fa-paper-plane"></i>
                                                 </span>
                                             </button>
@@ -1435,9 +1533,9 @@
 
         const debug = getParameterByName("debug") || false;
         const channel = decodeURIComponent(window.location.hash.substring(1));
-        const databaseRoot = 'chat';
+        const databaseRoot = 'bot';
         const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
-        const databaseMessages = databaseChannel + '/messages';
+        const databaseMessages = databaseChannel + '/statuses';
         let database = firebase.database();
         const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
@@ -1535,6 +1633,9 @@
                     isOverlayed: true,
                     isSuggested: false,
                     isPopup: false,
+                    isExpanded: false,
+                    isLearning: false,
+                    isPrompted: false,
                     isAnimating: false,
                     suggestionQueue: [],
                     sequenceQueue: [],
@@ -1573,7 +1674,6 @@
                     message: null,
                     states: {},
                     script: { character: null, words: null, wordDictionary: {}, reverseWordDictionary: {} },
-                    isLearning: false,
                     attributes: [{ name: "名前", value: false },
                     { name: "所属", value: false },
                     { name: "時間", value: false },
@@ -1582,9 +1682,9 @@
                     { name: "生き物", value: false },
                     { name: "食べ物", value: false },
                     { name: "飲み物", value: false },
-                    { name: "聞く物", value: false },
-                    { name: "見る物", value: false },
-                    { name: "読む物", value: false },
+                    { name: "聞くもの", value: false },
+                    { name: "見るもの", value: false },
+                    { name: "読むもの", value: false },
                     { name: "使う物", value: false },
                     { name: "乗り物", value: false },
                     { name: "部位", value: false },
@@ -1661,17 +1761,68 @@
             methods: {
                 send: async function (event) {
                     if (this.input.length > 0 && this.input.length <= this.maxInputLength) {
-                        function format(format) {
-                            var args = arguments;
+                        if (this.isLearning) {
+                            this.learn(this.input);
+                        } else {
+                            function format(format) {
+                                var args = arguments;
 
-                            return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
+                                return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
+                            }
+
+                            function shuffle(array) {
+                                function _random(min, max) {
+                                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                                }
+
+                                let a = [].concat(array);
+                                let n = array.length;
+
+                                while (n > 1) {
+                                    const k = _random(0, n);
+
+                                    n--;
+
+                                    const temp = a[n];
+
+                                    a[n] = a[k];
+                                    a[k] = temp;
+                                }
+
+                                return a;
+                            }
+
+                            let segmenter = new TinySegmenter();
+                            let tokens = segmenter.segment(this.input).sort((x, y) => y.length - x.length);
+
+                            database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
+
+                            this.input = '';
+                            this.currentInputLength = 0;
+
+                            document.body.querySelector("#popup").play();
+
+                            if (tokens.length > 5) {
+                                tokens.splice(5);
+                            }
+
+                            for (const token of shuffle(tokens)) {
+                                let snapshot = await database.ref(databaseRoot + "/dictionary/words/" + token).once('value');
+
+                                if (!snapshot.exists()) {
+                                    this.learn(token);
+
+                                    break;
+                                }
+                            }
                         }
 
-                        const text = this.input;
+                        return;
+
                         const url = "https://api.milchchan.com/talk?text=" + text + "&threshold=1.0";
                         //let segmenter = new TinySegmenter();
                         let regex = new RegExp('[.#$\\[\\]]');
-                        let tokens = [];
+                        //let tokens = [];
 
                         /*for (let token of segmenter.segment(text)) {
                             if (!regex.test(token)) {
@@ -1899,28 +2050,50 @@
                         });
                     }
                 },
-                learn: function () {
-                    if (this.isLearning) {
-                        this.isLearning = false;
-                    } else {
-                        for (const attribute of this.attributes) {
-                            attribute.value = false;
-                        }
+                learn: async function (term) {
+                    function format(format) {
+                        var args = arguments;
 
-                        database.ref(databaseRoot + "/words/" + this.input).once('value', snapshot => {
-                            const word = snapshot.val();
-
-                            if (word !== null) {
-                                for (const attribute of this.attributes) {
-                                    if (attribute.name in word) {
-                                        attribute.value = word[attribute.name];
-                                    }
-                                }
-                            }
-
-                            this.isLearning = true;
-                        });
+                        return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
                     }
+
+                    for (const attribute of this.attributes) {
+                        attribute.value = false;
+                    }
+
+                    const snapshot = await database.ref(databaseRoot + "/words/" + term).once('value');
+                    let sequences = [];
+                    let sequence = [];
+
+                    if (snapshot.exists()) {
+                        const word = snapshot.val();
+
+                        for (const attribute of this.attributes) {
+                            if (attribute.name in word) {
+                                attribute.value = word[attribute.name];
+                            }
+                        }
+                    }
+
+                    for (const sequence of this.script.character.sequences) {
+                        if (sequence.name == "Learn") {
+                            sequences.push(sequence);
+                        }
+                    }
+
+                    for (const obj of this.prepare(sequences)) {
+                        if (obj.type == "Message") {
+                            sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: format(obj.text, term) });
+                        } else {
+                            sequence.push(obj);
+                        }
+                    }
+
+                    if (sequence.length > 0) {
+                        this.sequenceQueue.push(sequence);
+                    }
+
+                    this.isPrompted = true;
                 },
                 talk: async function () {
                     function generateUuid() {
@@ -2480,13 +2653,13 @@
                 }
             },
             updated: function () {
-                let container = document.body.querySelector("#container");
+                let container = this.$refs.container;
                 let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
 
-                container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-                container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
+                container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
+                container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1) .field").style.width = document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1)").getBoundingClientRect().width + 'px';
+                this.$refs.ticker.style.width = document.body.querySelector("#heading .columns .column .columns:last-child .level:first-child .level-item").getBoundingClientRect().width + 'px';
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
@@ -2494,13 +2667,20 @@
             },
             mounted: async function () {
                 const self = this;
-                let container = document.body.querySelector("#container");
+                let container = this.$refs.container;
+                let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
                 const loader = new GLTFLoader();
 
-                container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-                container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
+                container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
+                container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1) .field").style.width = document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1)").getBoundingClientRect().width + 'px';
+                this.$refs.ticker.style.width = document.body.querySelector("#heading .columns .column .columns:last-child .level:first-child .level-item").getBoundingClientRect().width + 'px';
+
+                if (popup !== null) {
+                    popup.style.paddingBottom = container.style.paddingBottom;
+                }
+
+                //this.$refs.three.appendChild(this.renderer.domElement);
 
                 try {
                     const response1 = await fetch('/js/milch.json', {
@@ -3678,12 +3858,17 @@
         render();
 
         window.addEventListener('resize', (event) => {
-            let container = document.body.querySelector("#container");
+            let container = app.$refs.container;
+            let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
 
-            container.style.paddingTop = document.body.querySelector("#heading .navbar-item .control:first-child").getBoundingClientRect().height + 'px';
-            container.style.paddingBottom = document.body.querySelector("#input .navbar-item>div>.control:last-child").getBoundingClientRect().height + 'px';
+            container.style.paddingTop = app.$refs.indicator.getBoundingClientRect().height + 'px'
+            container.style.paddingBottom = app.$refs.input.getBoundingClientRect().height + 'px'
 
-            document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1) .field").style.width = document.body.querySelector("#heading .navbar-item .control:first-child .level:nth-last-child(1)").getBoundingClientRect().width + 'px';
+            app.$refs.ticker.style.width = document.body.querySelector("#heading .columns .column .columns:last-child .level:first-child .level-item").getBoundingClientRect().width + 'px';
+
+            if (popup !== null) {
+                popup.style.paddingBottom = container.style.paddingBottom;
+            }
 
             const width = window.innerWidth;
             const height = window.outerHeight;
