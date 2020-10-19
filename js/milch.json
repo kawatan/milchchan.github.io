@@ -3,6 +3,51 @@
     "model": "/models/Milch.vrm",
     "sequences": [
         {
+            "name": "Learn",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "{0}って何かな？"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "筋肉は裏切らない！"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "やはり暴力...！！暴力は全てを解決する...！！"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
             "name": "Activate",
             "sequence": [
                 {
@@ -11,6 +56,15 @@
                     "duration": 5,
                     "text": "やめて・・・ミルヒに乱暴する気でしょう？エロ同人みたいに！エロ同人みたいに！"
                 },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Say",
+            "sequence": [
                 {
                     "type": "Animation",
                     "name": "jump"
