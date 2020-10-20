@@ -295,6 +295,7 @@
             width: 100%;
             overflow: hidden;
             box-sizing: content-box;
+            background-color: red;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
@@ -307,11 +308,13 @@
             animation-timing-function: linear;
             animation-name: ticker;
             animation-duration: 30s;
+            background-color: green;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item {
             display: inline-block;
             padding: 0px 16px;
+            background-color: blue;
         }
 
         #heading>.columns>.column>.columns:last-child {
@@ -3377,7 +3380,9 @@
                         activateTime += deltaTime;
 
                         if (activateTime >= activateThreshold) {
-                            //app.talk();
+                            if (app.sequenceQueue.length == 0) {
+                                //app.talk();
+                            }
 
                             idleTime = 0.0;
                             activateTime = 0.0;
