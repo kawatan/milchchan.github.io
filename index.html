@@ -1442,7 +1442,7 @@
                 </div>
             </nav>
         </transition>
-        <audio id="popup" preload="auto">
+        <audio id="alert" preload="auto">
             <source src="/sounds/plastic_hi.mp3" type="audio/mpeg" />
             <source src="/sounds/plastic_hi.m4a" type="audio/mp4" />
             <source src="/sounds/plastic_hi.wav" type="audio/wav" />
@@ -1756,7 +1756,7 @@
                             this.input = '';
                             this.currentInputLength = 0;
 
-                            document.body.querySelector("#popup").play();
+                            document.body.querySelector("#alert").play();
 
                             if (tokens.length > 5) {
                                 tokens.splice(5);
@@ -1789,7 +1789,7 @@
                         this.input = '';
                         this.currentInputLength = 0;
 
-                        document.body.querySelector("#popup").play();
+                        document.body.querySelector("#alert").play();
 
                         let completed = 0;
                         let learnedWords = [];
@@ -2871,7 +2871,7 @@
                                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
 
-                                    document.body.querySelector("#popup").play();
+                                    document.body.querySelector("#alert").play();
                                 }
 
                                 app.update(messageDictionary, app.maxTags);
