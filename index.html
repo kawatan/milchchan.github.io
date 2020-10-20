@@ -72,6 +72,12 @@
             cursor: pointer;
         }
 
+        .navbar {
+            margin: 0;
+            padding: 0;
+            background-color: transparent;
+        }
+
         .navbar-item {
             padding: 0 !important;
         }
@@ -366,7 +372,7 @@
         }
 
         #container .columns .column .media {
-            padding: 16px 0px 16px 0px;
+            padding: 16px 16px 16px 16px;
         }
 
         #container .columns .column .media .media-content .content {
@@ -468,52 +474,42 @@
             /*font-family: 'Fredoka One', cursive;*/
         }
 
-        .navbar {
-            background-color: transparent;
-        }
-
-        .navbar:first-of-type {
+        #heading {
             margin: 0;
             padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) 0px env(safe-area-inset-left, 0px);
         }
 
-        .navbar:first-of-type .navbar-item .control nav.level:nth-last-child(1) {
+        #heading .navbar-item .control nav.level:nth-last-child(1) {
             display: block;
         }
 
-        .navbar:nth-of-type(2) {
+        #popup {
             margin: 0;
             padding: 0;
         }
 
-        .navbar:nth-of-type(2) .columns {
-            margin: 0;
-            padding: 0;
+        #popup .columns {
             background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
             backdrop-filter: blur(8px);
         }
 
-        .navbar:nth-of-type(2) .columns>.column {
-            padding: 0px 16px 0px 16px;
-        }
-
-        .navbar:nth-of-type(2) .navbar-item>div>.control:last-child {
+        #popup .columns>.column>.control:last-child {
             margin: 0;
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-of-type(1) {
+        #popup .columns>.column>.control:last-child .level:nth-of-type(1) {
             margin: 0;
-            padding: 16px 0px 32px 0px;
+            padding: 16px 16px 32px 16px;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1) {
+        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) {
             display: block;
             margin: 0;
-            padding: 0px 0px 16px 0px;
+            padding: 0px 16px 16px 16px;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
+        #popup .columns>.column>.control:first-child .level:first-child .media {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -524,25 +520,20 @@
                 -20px -20px 60px #ffffff;
         }
 
-        .navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-of-type(2) .media span {
+        #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media span {
             display: inline-block;
             font-family: 'Noto Sans JP', 'Josefin Sans', sans-serif;
             line-height: 1.5rem;
             text-shadow: #d0d0d0 0px 0px 60px;
         }
 
-        .navbar:nth-of-type(3) {
-            margin: 0;
-            padding: 0;
-        }
-
-        .navbar:nth-of-type(3) .navbar-item .control:first-child .level {
+        #input .navbar-item .control:first-child .level {
             display: block;
             margin: 0;
             padding: 16px 0px 0px 0px;
         }
 
-        .navbar:nth-of-type(3) .navbar-item .control:first-child .level .notification {
+        #input .navbar-item .control:first-child .level .notification {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -551,11 +542,11 @@
             padding: 0;
         }
 
-        .navbar:nth-of-type(3) .navbar-item .control:first-child .level .is-info {
+        #input .navbar-item .control:first-child .level .is-info {
             color: #ffffff;
         }
 
-        .navbar:nth-of-type(3) .navbar-item .control:first-child .level .notification .media {
+        #input .navbar-item .control:first-child .level .notification .media {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -564,11 +555,11 @@
             background: url('/images/Stripes.png') repeat;
         }
 
-        .navbar:nth-of-type(3) .notification .media .media-left {
+        #input .notification .media .media-left {
             margin: 0px 8px 0px 0px;
         }
 
-        .navbar:nth-of-type(3) .navbar-item>div>.control:last-child {
+        #input .navbar-item>div>.control:last-child {
             margin: 0;
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
@@ -1107,8 +1098,8 @@
                                     </transition>
                                 </div>
                             </div>
-                            <div class="columns is-mobile">
-                                <div class="column is-half has-content-centered">
+                            <div class="columns">
+                                <div class="column is-half is-mobile has-content-centered">
                                     <div class="control has-text-centered">
                                         <nav class="level">
                                             <div class="level-item has-text-centered">
@@ -1314,7 +1305,7 @@
         <transition name="popup" v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
             v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart" v-on:after-leave="animationEnd"
             v-on:leave-cancelled="animationEnd">
-            <nav class="navbar is-fixed-bottom" v-show="isPopup" v-cloak>
+            <nav id="popup" class="navbar is-fixed-bottom" v-show="isPopup" v-cloak>
                 <div class=" navbar-item is-expanded columns is-desktop">
                     <div class="column is-half has-content-centered is-mobile">
                         <div class="control">
@@ -1339,7 +1330,7 @@
                                     <div class="media-content"
                                         v-bind:style="{ height: animatedPopupTextHeight + 'px' }">
                                         <div class="content has-text-left" ref="popupText">
-                                            <span class="title is-3 has-text-weight-bold has-text-white"
+                                            <span class="title is-4 has-text-weight-bold has-text-white"
                                                 v-for="character in text" v-bind:key="character.key"
                                                 v-cloak>{{ character.value }}</span>
                                         </div>
