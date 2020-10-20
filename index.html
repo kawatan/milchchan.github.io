@@ -72,12 +72,16 @@
             cursor: pointer;
         }
 
+        .navbar-item {
+            padding: 0 !important;
+        }
+
         .columns {
-            margin: 0;
+            margin: 0 !important;
         }
 
         .columns>.column {
-            padding: 0;
+            padding: 0 !important;
         }
 
         .progress {
@@ -204,23 +208,9 @@
             overflow: hidden;
         }
 
-        #heading>.columns {
-            margin: 0;
-            padding: 0;
-        }
-
-        #heading>.columns>.column {
-            padding: 0;
-        }
-
-        #heading>.columns>.column .control {
-            margin: 0;
-            padding: 16px 16px 16px 16px;
-        }
-
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child {
             margin: 16px 0px 0px 0px;
-            padding: 0px 0px 0px 16px;
+            padding: 0px 0px 0px 16px !important;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child button {
@@ -238,7 +228,7 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child {
             margin: 16px 0px 0px 0px;
-            padding: 0px 16px 0px 0px;
+            padding: 0px 16px 0px 0px !important;
             text-align: right;
         }
 
@@ -255,62 +245,31 @@
             margin: 0;
         }
 
-        #heading .title {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
+            margin: 0;
+            padding: 16px 16px 16px 16px;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control>.level:nth-last-of-type(2) {
+            margin: 0;
+            padding: 0px 0px 8px 0px;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .title {
             font-family: 'Alata', sans-serif;
             font-size: 4rem !important;
         }
 
-        #heading .subtitle {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .subtitle {
             font-family: 'Nico Moji', sans-serif;
         }
 
-        /*#heading .navbar-item .control:first-child .level {
-            margin: 16px 16px 16px 16px;
-            padding: 0;
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item {
+            padding: 16px 16px 16px 16px;
         }
-
-        #heading .navbar-item .control:first-child .level:nth-last-child(2) {
-            margin: 0px 8px 0px 8px;
-            padding: 0;
-        }
-
-        #heading .navbar-item .control:first-child .level:nth-last-child(1) {
-            margin: 4px 8px 0px 8px;
-            padding: 0;
-        }
-
-        #heading .navbar-item .control:nth-child(2) .level {
-            margin: 0;
-            padding: 0;
-        }
-
-        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(2) {
-            margin: 4px 0px 0px 0px;
-            padding: 0;
-        }
-
-        #heading .navbar-item .control:nth-child(2) .level:nth-last-child(1) {
-            margin: 0;
-            padding: 16px 0px 16px 0px;
-        }
-
-        #heading .navbar-item .level .level-item {
-            margin: 0;
-            padding: 0;
-        }
-
-        #heading .columns .column .columns:last-child {
-            justify-content: center;
-        }
-
-        #heading .navbar-item .control:first-child .level:nth-last-child(1) {
-            margin: 16px 0px 0px 0px;
-            padding: 0;
-        }*/
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field {
             margin: 0;
-            padding: 0;
             width: 100%;
             background-color: #30c0f5;
             background-color: #f5f5f5;
@@ -351,6 +310,10 @@
 
         #heading>.columns>.column>.columns:last-child {
             justify-content: center;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control .level:first-child .level-item {
+            padding: 16px 16px 16px 16px;
         }
 
         #heading .navbar-item .tags>.control {
@@ -396,18 +359,24 @@
             padding: 0px env(safe-area-inset-right, 0px) 0px env(safe-area-inset-left, 0px);
         }
 
-        #container .columns {
-            margin: 0;
-        }
-
         #container .column hr {
             margin: 8px 0px 8px 0px;
             padding: 0;
             height: 0;
         }
 
-        #container .column {
-            padding: 0px 16px 0px 16px;
+        #container .columns .column .media {
+            padding: 16px 0px 16px 0px;
+        }
+
+        #container .columns .column .media .media-content .content {
+            margin: 0;
+            padding: 0;
+        }
+
+        #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item {
+            margin: 16px 0px 16px 0px;
+            padding: 0;
         }
 
         #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item button {
@@ -431,15 +400,6 @@
                 -20px -20px 60px #ffffff;
         }
 
-        #input .columns {
-            margin: 0;
-            padding: 0;
-        }
-
-        #input .column {
-            padding: 0px 16px 0px 16px;
-        }
-
         #input .control .is-primary {
             background-color: #30c0f5;
         }
@@ -449,9 +409,9 @@
             margin-right: auto;
         }
 
-        .media-content .level {
+        /*.media-content .level {
             margin: 0px 0px 4px 0px;
-        }
+        }*/
 
         #container .media .media-left .image img {
             box-shadow: 4px 4px 12px #d0d0d0,
@@ -462,9 +422,9 @@
             overflow: visible;
         }
 
-        .media-content .content div:last-child {
+        /*.media-content .content div:last-child {
             margin: 4px 0px 0px 0px;
-        }
+        }*/
 
         .media-content p {
             word-wrap: break-word;
@@ -613,12 +573,12 @@
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
+        #input .columns>.column .control:nth-last-of-type(2) {
             margin: 0;
-            padding: 0;
+            padding: 0px 16px 0px 16px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification {
+        #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -627,7 +587,7 @@
             padding: 0;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification .media {
+        #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
             display: flex;
             align-items: center;
             justify-content: center;
@@ -636,12 +596,12 @@
             background: #5bcbe1 url('/images/Stripes.png') repeat;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification .media .media-left {
+        #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media .media-left {
             margin: 0px 8px 0px 0px;
         }
 
         #container .columns .column .columns .column .field label.checkbox,
-        #input .columns .column .control:nth-last-of-type(1) .level:nth-last-of-type(2) .level-left {
+        #input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(2) .level-left {
             margin: 16px 0px 0px 0px;
             padding: 16px 32px 16px 32px;
             border-radius: 500px 500px 500px 500px;
@@ -695,10 +655,15 @@
             color: #30c0f5;
         }
 
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
+            margin: 0;
+            padding: 0px 16px 0px 16px;
+        }
+
         #input .navbar-item .control:last-child .level:nth-last-of-type(1) {
             display: block;
             margin: 0;
-            padding: 16px 0px 16px 0px;
+            padding: 16px 16px 16px 16px;
         }
 
         #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(1) button {
@@ -978,7 +943,7 @@
                 background: #ffa6bb url('/images/Stripes@2x.png') repeat 20px 20px;
             }
 
-            #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification .media {
+            #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
                 background: #5bcbe1 url('/images/Stripes@2x.png') repeat 20px 20px;
             }
 
@@ -1014,7 +979,7 @@
                 background: #ffa6bb url('/images/Stripes@3x.png') repeat 20px 20px;
             }
 
-            #input .navbar-item .control:last-child .level:nth-last-of-type(2) .notification .media {
+            #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
                 background-image: #5bcbe1 url('/images/Stripes@3x.png') repeat 20px 20px;
             }
 
@@ -1154,7 +1119,7 @@
                                                             <div class="item" v-for="message in messages"
                                                                 v-bind:key="message.id">
                                                                 <span
-                                                                    class="is-size-5 has-text-weight-bold has-text-white"
+                                                                    class="is-size-6 has-text-weight-bold has-text-white"
                                                                     v-cloak>{{ message.text }}</span>
                                                             </div>
                                                         </transition-group>
@@ -2659,7 +2624,7 @@
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                this.$refs.ticker.style.width = document.body.querySelector("#heading .columns .column .columns:last-child .level:first-child .level-item").getBoundingClientRect().width + 'px';
+                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
@@ -2674,7 +2639,7 @@
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                this.$refs.ticker.style.width = document.body.querySelector("#heading .columns .column .columns:last-child .level:first-child .level-item").getBoundingClientRect().width + 'px';
+                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
@@ -3864,7 +3829,7 @@
             container.style.paddingTop = app.$refs.indicator.getBoundingClientRect().height + 'px'
             container.style.paddingBottom = app.$refs.input.getBoundingClientRect().height + 'px'
 
-            app.$refs.ticker.style.width = document.body.querySelector("#heading .columns .column .columns:last-child .level:first-child .level-item").getBoundingClientRect().width + 'px';
+            app.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
             if (popup !== null) {
                 popup.style.paddingBottom = container.style.paddingBottom;
