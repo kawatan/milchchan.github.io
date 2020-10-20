@@ -295,7 +295,6 @@
             width: 100%;
             overflow: hidden;
             box-sizing: content-box;
-            background-color: red;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
@@ -308,13 +307,11 @@
             animation-timing-function: linear;
             animation-name: ticker;
             animation-duration: 30s;
-            background-color: green;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item {
             display: inline-block;
             padding: 0px 16px;
-            background-color: blue;
         }
 
         #heading>.columns>.column>.columns:last-child {
@@ -1108,7 +1105,10 @@
                                             <div class="level-item has-text-centered">
                                                 <div class="field" ref="ticker">
                                                     <div class="ticker-wrap">
-                                                        <transition-group name="ticker-item-list" class="ticker"
+                                                        <div class="item">
+                                                                <span
+                                                                    class="is-size-6 has-text-weight-bold has-text-white">Hello, world</span>
+                                                        <!--<transition-group name="ticker-item-list" class="ticker"
                                                             tag="div">
                                                             <div class="item" v-for="message in messages"
                                                                 v-bind:key="message.id">
@@ -1116,7 +1116,7 @@
                                                                     class="is-size-6 has-text-weight-bold has-text-white"
                                                                     v-cloak>{{ message.text }}</span>
                                                             </div>
-                                                        </transition-group>
+                                                        </transition-group>-->
                                                     </div>
                                                 </div>
                                             </div>
