@@ -312,6 +312,7 @@
             animation-timing-function: linear;
             animation-name: ticker;
             animation-duration: 30s;
+            animation-play-state: paused;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item {
@@ -1112,7 +1113,7 @@
                                                     <div class="clip">
                                                         <div class="ticker-wrap">
                                                             <transition-group name="ticker-item-list" class="ticker"
-                                                                tag="div">
+                                                                tag="div" v-bind:style="{ animationPlayState: 'running' }">
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id">
                                                                     <div class="is-size-7 has-text-weight-bold has-text-black"
@@ -2615,38 +2616,32 @@
                 }
             },
             updated: function () {
-                const self = this;
+                let container = this.$refs.container;
+                let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
 
-                this.$nextTick(() => {
-                    let container = self.$refs.container;
-                    let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
+                container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
+                container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                    container.style.paddingTop = self.$refs.indicator.getBoundingClientRect().height + 'px'
-                    container.style.paddingBottom = self.$refs.input.getBoundingClientRect().height + 'px'
+                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
-                    self.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
-
-                    if (popup !== null) {
-                        popup.style.paddingBottom = container.style.paddingBottom;
-                    }
-                });
+                if (popup !== null) {
+                    popup.style.paddingBottom = container.style.paddingBottom;
+                }
             },
             mounted: async function () {
+                const self = this;
+                let container = this.$refs.container;
+                let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
                 const loader = new GLTFLoader();
 
-                this.$nextTick(() => {
-                    let container = self.$refs.container;
-                    let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
+                container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
+                container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                    container.style.paddingTop = self.$refs.indicator.getBoundingClientRect().height + 'px'
-                    container.style.paddingBottom = self.$refs.input.getBoundingClientRect().height + 'px'
+                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
-                    self.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
-
-                    if (popup !== null) {
-                        popup.style.paddingBottom = container.style.paddingBottom;
-                    }
-                });
+                if (popup !== null) {
+                    popup.style.paddingBottom = container.style.paddingBottom;
+                }
 
                 //this.$refs.three.appendChild(this.renderer.domElement);
 
