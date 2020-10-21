@@ -2615,17 +2615,21 @@
                 }
             },
             updated: function () {
-                let container = this.$refs.container;
-                let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
+                const self = this;
 
-                container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
-                container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
+                this.$nextTick(() => {
+                    let container = self.$refs.container;
+                    let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
 
-                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+                    container.style.paddingTop = self.$refs.indicator.getBoundingClientRect().height + 'px'
+                    container.style.paddingBottom = self.$refs.input.getBoundingClientRect().height + 'px'
 
-                if (popup !== null) {
-                    popup.style.paddingBottom = container.style.paddingBottom;
-                }
+                    self.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+
+                    if (popup !== null) {
+                        popup.style.paddingBottom = container.style.paddingBottom;
+                    }
+                });
             },
             mounted: async function () {
                 const self = this;
