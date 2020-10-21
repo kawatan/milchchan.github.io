@@ -1113,7 +1113,8 @@
                                                     <div class="clip">
                                                         <div class="ticker-wrap">
                                                             <transition-group name="ticker-item-list" class="ticker"
-                                                                tag="div" v-bind:style="{ animationPlayState: 'running' }">
+                                                                tag="div"
+                                                                v-bind:style="{ animationPlayState: 'running' }">
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id">
                                                                     <div class="is-size-7 has-text-weight-bold has-text-black"
@@ -2617,20 +2618,21 @@
             },
             updated: function () {
                 let container = this.$refs.container;
-                let ticker = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker");
                 let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
-                let width = 0;
 
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
                 this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
-                
-                for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
-                    width += item.getBoundingClientRect().width;
-                }
+                this.$nextTick(() => {
+                    let width = 0;
 
-                ticker.style.width = width + 'px';
+                    for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
+                        width += item.getBoundingClientRect().width;
+                    }
+
+                    document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
+                });
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
@@ -2648,7 +2650,7 @@
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
                 this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
-                
+
                 for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
                     width += item.getBoundingClientRect().width;
                 }
