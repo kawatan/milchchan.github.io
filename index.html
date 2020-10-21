@@ -1659,13 +1659,16 @@
                 messages: {
                     handler: () => {
                         app.$nextTick(() => {
-                            let width = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
+                            let width = 0;
 
                             for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
                                 width += item.getBoundingClientRect().width;
                             }
 
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
+                            
+                            width += document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
+                            
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").animate([
                                 {
                                     transform: "translate3d(0, 0, 0)"
