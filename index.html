@@ -1112,15 +1112,13 @@
                                                 <div class="field" ref="ticker">
                                                     <div class="clip">
                                                         <div class="ticker-wrap">
-                                                            <transition-group name="ticker-item-list" class="ticker"
-                                                                tag="div"
-                                                                v-bind:style="{ animationPlayState: 'running' }">
+                                                            <div class="ticker" v-bind:style="{ animationPlayState: 'running' }" ref="news">
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id">
                                                                     <div class="is-size-7 has-text-weight-bold has-text-black"
                                                                         v-cloak>{{ message.text }}</div>
                                                                 </div>
-                                                            </transition-group>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1665,8 +1663,9 @@
                                 width += item.getBoundingClientRect().width;
                             }
 
-                            document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
-                            app.stars = width;
+                            //document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
+                            app.$refs.news.style.width = width + 'px';
+                            
                             app.scrollToEnd();
                         });
                     },
