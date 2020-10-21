@@ -274,7 +274,7 @@
             padding: 16px 16px 16px 16px;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field {
+        .level:first-child .level-item .field {
             margin: 0;
             width: 100%;
             background-color: #30c0f5;
@@ -290,20 +290,20 @@
             backdrop-filter: blur(8px);
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip {
+        .level:first-child .level-item .field .clip {
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
+        .level:first-child .level-item .field .ticker-wrap {
             padding: 0px 0px 0px 100%;
             width: 100%;
             overflow: hidden;
             box-sizing: content-box;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
+        .level:first-child .level-item .field .ticker {
             display: inline-block;
             white-space: nowrap;
             padding: 0px 100% 0px 0px;
@@ -315,7 +315,7 @@
             animation-play-state: paused;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item {
+        .level:first-child .level-item .field .ticker .item {
             display: inline-block;
             padding: 0px 16px;
         }
@@ -1129,6 +1129,27 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="control has-text-centered">
+                                <nav class="level">
+                                    <div class="level-item has-text-centered">
+                                        <div class="field">
+                                            <div class="clip">
+                                                <div class="ticker-wrap">
+                                                    <transition-group name="ticker-item-list" class="ticker"
+                                                        tag="div"
+                                                        v-bind:style="{ animationPlayState: 'running' }">
+                                                        <div class="item" v-for="message in messages"
+                                                            v-bind:key="message.id">
+                                                            <div class="is-size-7 has-text-weight-bold has-text-black"
+                                                                v-cloak>{{ message.text }}</div>
+                                                        </div>
+                                                    </transition-group>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                            </div>
                         </div>
                     </div>
                     <div class="columns">
@@ -1665,7 +1686,7 @@
                                 width += item.getBoundingClientRect().width;
                             }
 
-                            document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
+                            //document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
                             
                             app.scrollToEnd();
                         });
