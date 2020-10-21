@@ -274,7 +274,7 @@
             padding: 16px 16px 16px 16px;
         }
 
-        .level:first-child .level-item .field {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field {
             margin: 0;
             width: 100%;
             background-color: #30c0f5;
@@ -290,20 +290,20 @@
             backdrop-filter: blur(8px);
         }
 
-        .level:first-child .level-item .field .clip {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip {
             margin: 0;
             padding: 0;
             overflow: hidden;
         }
 
-        .level:first-child .level-item .field .ticker-wrap {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
             padding: 0px 0px 0px 100%;
             width: 100%;
             overflow: hidden;
             box-sizing: content-box;
         }
 
-        .level:first-child .level-item .field .ticker {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
             display: inline-block;
             white-space: nowrap;
             padding: 0px 100% 0px 0px;
@@ -315,7 +315,7 @@
             animation-play-state: paused;
         }
 
-        .level:first-child .level-item .field .ticker .item {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item {
             display: inline-block;
             padding: 0px 16px;
         }
@@ -883,12 +883,12 @@
 
         @keyframes ticker {
             0% {
-                transform: translate3d(0, 0, 0);
+                transform: translate(0, 0);
                 visibility: visible;
             }
 
             100% {
-                transform: translate3d(-100%, 0, 0);
+                transform: translate(-100%, 0);
             }
         }
 
@@ -1128,27 +1128,6 @@
                                         </nav>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="control has-text-centered">
-                                <nav class="level">
-                                    <div class="level-item has-text-centered">
-                                        <div class="field">
-                                            <div class="clip">
-                                                <div class="ticker-wrap">
-                                                    <transition-group name="ticker-item-list" class="ticker"
-                                                        tag="div"
-                                                        v-bind:style="{ animationPlayState: 'running' }">
-                                                        <div class="item" v-for="message in messages"
-                                                            v-bind:key="message.id">
-                                                            <div class="is-size-7 has-text-weight-bold has-text-black"
-                                                                v-cloak>{{ message.text }}</div>
-                                                        </div>
-                                                    </transition-group>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </nav>
                             </div>
                         </div>
                     </div>
@@ -1686,7 +1665,7 @@
                                 width += item.getBoundingClientRect().width;
                             }
 
-                            //document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
+                            document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
                             
                             app.scrollToEnd();
                         });
