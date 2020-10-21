@@ -1659,7 +1659,7 @@
                 messages: {
                     handler: () => {
                         app.$nextTick(() => {
-                            let width = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip");
+                            let width = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
 
                             for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
                                 width += item.getBoundingClientRect().width;
