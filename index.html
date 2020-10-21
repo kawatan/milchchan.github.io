@@ -283,7 +283,7 @@
             /*background-image: url('/images/Stripes.png');
             background-repeat: repeat;*/
             border-radius: 500px 500px 500px 500px;
-            padding: 16px 32px 16px 32px;
+            padding: 8px 16px 8px 16px;
             box-shadow: 20px 20px 60px #d0d0d0,
                 -20px -20px 60px #ffffff;
             box-sizing: border-box;
@@ -299,7 +299,6 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
             display: inline-block;
-            justify-content: flex-start;
             white-space: nowrap;
             padding: 0px 0px 0px 100%;
             box-sizing: content-box;
@@ -1109,9 +1108,9 @@
                                                             tag="div">
                                                             <div class="item" v-for="message in messages"
                                                                 v-bind:key="message.id">
-                                                                <span
-                                                                    class="is-size-6 has-text-weight-bold has-text-white"
-                                                                    v-cloak>{{ message.text }}</span>
+                                                                <div
+                                                                    class="is-size-7 has-text-weight-bold has-text-white"
+                                                                    v-cloak>{{ message.text }}</div>
                                                             </div>
                                                         </transition-group>
                                                     </div>
