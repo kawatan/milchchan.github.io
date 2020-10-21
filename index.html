@@ -2617,12 +2617,22 @@
             },
             updated: function () {
                 let container = this.$refs.container;
+                let ticker = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker");
                 let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
 
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
                 this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+                
+                /*console.log(ticker.getBoundingClientRect().width);
+                console.log(document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width);
+                console.log(this.$refs.ticker.style.width);
+                console.log(ticker.style.width);*/
+
+                ticker.style.width = ticker.getBoundingClientRect().width + 'px';// - document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap").getBoundingClientRect().width + 'px';
+
+                //console.log(ticker.style.width);
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
@@ -2631,6 +2641,7 @@
             mounted: async function () {
                 const self = this;
                 let container = this.$refs.container;
+                let ticker = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker");
                 let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
                 const loader = new GLTFLoader();
 
@@ -2638,6 +2649,14 @@
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
                 this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+                
+                /*console.log(ticker.getBoundingClientRect().width);
+                console.log(document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width);
+                console.log(this.$refs.ticker.style.width);
+                console.log(ticker.style.width);*/
+
+                //ticker.style.width = ticker.getBoundingClientRect().width - document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width + 'px';
+                ticker.style.width = ticker.getBoundingClientRect().width + 'px';// - document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap").getBoundingClientRect().width + 'px';
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
