@@ -2623,7 +2623,7 @@
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+                /*this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
                 this.$nextTick(() => {
                     let width = 0;
 
@@ -2632,7 +2632,7 @@
                     }
 
                     document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
-                });
+                });*/
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
@@ -2649,13 +2649,13 @@
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+                /*this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
                 for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
                     width += item.getBoundingClientRect().width;
                 }
 
-                ticker.style.width = width + 'px';
+                ticker.style.width = width + 'px';*/
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
