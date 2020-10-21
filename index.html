@@ -279,19 +279,25 @@
             width: 100%;
             background-color: #30c0f5;
             background-color: #f5f5f5;
-            background-color: rgba(0, 0, 0, 0.75);
+            background-color: rgba(255, 255, 255, 1.0);
             /*background-image: url('/images/Stripes.png');
             background-repeat: repeat;*/
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            /*box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;*/
             box-sizing: border-box;
             backdrop-filter: blur(8px);
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip {
+            margin: 0;
             padding: 0;
+            overflow: hidden;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
+            padding: 0px 0px 0px 100%;
             width: 100%;
             overflow: hidden;
             box-sizing: content-box;
@@ -300,7 +306,7 @@
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
             display: inline-block;
             white-space: nowrap;
-            padding: 0px 0px 0px 100%;
+            padding: 0px 100% 0px 0px;
             box-sizing: content-box;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
@@ -1103,16 +1109,17 @@
                                         <nav class="level">
                                             <div class="level-item has-text-centered">
                                                 <div class="field" ref="ticker">
-                                                    <div class="ticker-wrap">
-                                                        <transition-group name="ticker-item-list" class="ticker"
-                                                            tag="div">
-                                                            <div class="item" v-for="message in messages"
-                                                                v-bind:key="message.id">
-                                                                <div
-                                                                    class="is-size-7 has-text-weight-bold has-text-white"
-                                                                    v-cloak>{{ message.text }}</div>
-                                                            </div>
-                                                        </transition-group>
+                                                    <div class="clip">
+                                                        <div class="ticker-wrap">
+                                                            <transition-group name="ticker-item-list" class="ticker"
+                                                                tag="div">
+                                                                <div class="item" v-for="message in messages"
+                                                                    v-bind:key="message.id">
+                                                                    <div class="is-size-7 has-text-weight-bold has-text-black"
+                                                                        v-cloak>{{ message.text }}</div>
+                                                                </div>
+                                                            </transition-group>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
