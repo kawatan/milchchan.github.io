@@ -1148,10 +1148,10 @@
                                                 <div class="tags are-medium field is-grouped is-grouped-multiline">
                                                     <div class="control" v-for="tag in tags" v-bind:key="tag.index">
                                                         <div class="tags has-addons">
-                                                            <button class="button tag is-rounded has-text-weight-bold"
+                                                            <button class="button tag is-rounded is-size-7 has-text-weight-bold"
                                                                 type="button"
                                                                 v-bind:style="{ color: 'rgba(0, 0, 0, ' + (0.25 + 0.75 * tag.score) + ')' }"
-                                                                @click="learn(tag)">{{ tag.name }}</button>
+                                                                @click="learn(tag.name); isRevealed = false;">{{ tag.name }}</button>
                                                         </div>
                                                     </div>
                                                 </div>
