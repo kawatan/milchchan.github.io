@@ -22,10 +22,6 @@
             display: none;
         }
 
-        .wf-notosansjapanese {
-            font-family: 'Noto Sans JP';
-        }
-
         html {
             margin: 0;
             padding: 0;
@@ -33,7 +29,7 @@
             height: 100vh;
             height: -webkit-fill-available;
             overflow-x: hidden;
-            overflow-y: scroll;
+            overflow-y: auto;
             scroll-behavior: smooth;
             background: #f5f5f5;
         }
@@ -48,7 +44,7 @@
             height: 100vh;
             /*background: url('/images/Background.png') 50% 50% repeat;*/
             content: "";
-            animation: loop 10s linear infinite;
+            /*animation: loop 10s linear infinite;*/
         }
 
         body {
@@ -94,6 +90,7 @@
             position: fixed;
             margin: 0;
             padding: 0;
+            border-radius: 0px;
             width: 0%;
             height: 2px;
             top: 0;
@@ -103,17 +100,39 @@
             animation: progress 0.5s linear 0s infinite;
         }
 
-        #app>canvas {
+        .background {
             position: fixed;
             z-index: -1;
-            display: block;
+            overflow: hidden;
             width: 100%;
             height: 100vh;
+            background-color: transparent;
+            background-position: 50% 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .background>div {
+            position: fixed;
+            overflow: hidden;
+            background-color: transparent;
+            background-position: 50% 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+        }
+
+        .background>img {
+            position: fixed;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
         }
 
         #three {
             position: fixed;
-            z-index: -1;
+            z-index: 0;
             display: block;
             width: 100%;
             height: 100vh;
@@ -127,80 +146,16 @@
             background-color: transparent;
         }
 
-        .cover {
+        .blind {
             position: fixed;
-            z-index: 0;
             top: 0;
             left: 0;
             width: 100%;
             height: 100vh;
             transform: translate3d(0, 0%, 0);
             overflow: hidden;
-            background: #30c0f5 url('/images/Stripes.png') repeat;
+            background: #64dafe url('/images/Stripes.png') repeat;
             animation: progress 0.5s linear 0s infinite;
-        }
-
-        .cover .columns {
-            position: absolute;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            top: 0;
-            left: 0;
-            margin: 0;
-            padding: 16px 16px 16px 16px;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background-color: transparent;
-            background-position: center center;
-            background-size: cover;
-        }
-
-        .cover .column {
-            margin: 0;
-            padding: 0;
-        }
-
-        .cover img.background {
-            position: fixed;
-            top: 100vh;
-            left: 0;
-            margin: 0;
-            padding: 0;
-        }
-
-        .cover span {
-            color: rgba(255, 255, 255, 1);
-            /*text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);*/
-        }
-
-        .type {
-            position: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            z-index: 0;
-            top: 0;
-            left: 0;
-            margin: 0;
-            padding: 16px 16px 16px 16px;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-            background: transparent;
-        }
-
-        .type .column {
-            margin: 0;
-            padding: 0;
-        }
-
-        .type span {
-            color: black;
-            /*text-shadow: -1px -1px rgba(255, 255, 255, 1), 1px -1px rgba(255, 255, 255, 1), -1px 1px rgba(255, 255, 255, 1), 1px 1px rgba(255, 255, 255, 1);*/
-            /*color: rgba(255, 255, 255, 1);
-            text-shadow: -1px -1px rgba(48, 192, 245, 1), 1px -1px rgba(48, 192, 245, 1), -1px 1px rgba(48, 192, 245, 1), 1px 1px rgba(48, 192, 245, 1);*/
         }
 
         #heading .level .level-item .field span.icon {
@@ -222,9 +177,11 @@
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child button {
             border-radius: 290486px;
             padding: 16px;
-            background: #f5f5f5;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            background: #ffffff;
+            /*background: #f5f5f5;
+            background: linear-gradient(145deg, #ffffff, #dddddd);
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
             height: initial;
         }
 
@@ -241,9 +198,11 @@
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child button {
             border-radius: 290486px;
             padding: 16px;
-            background: #f5f5f5;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            background: #ffffff;
+            /*background: #f5f5f5;
+            background: linear-gradient(145deg, #ffffff, #dddddd);
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
             height: initial;
         }
 
@@ -271,7 +230,7 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item {
-            padding: 16px 16px 16px 16px;
+            padding: 0px 16px 16px 16px;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field {
@@ -279,7 +238,7 @@
             width: 100%;
             background-color: #30c0f5;
             background-color: #f5f5f5;
-            background-color: rgba(255, 255, 255, 1.0);
+            background-color: rgba(0, 0, 0, 1.0);
             /*background-image: url('/images/Stripes.png');
             background-repeat: repeat;*/
             border-radius: 500px 500px 500px 500px;
@@ -287,7 +246,7 @@
             /*box-shadow: 20px 20px 60px #d0d0d0,
                 -20px -20px 60px #ffffff;*/
             box-sizing: border-box;
-            backdrop-filter: blur(8px);
+            /*backdrop-filter: blur(8px);*/
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip {
@@ -296,17 +255,18 @@
             overflow: hidden;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
-            padding: 0px 0px 0px 100%;
+        .ticker-wrap {
+            padding: 0;
             width: 100%;
             overflow: hidden;
             box-sizing: content-box;
+            background-color: transparent;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker {
+        .ticker-wrap .ticker {
             display: inline-block;
             white-space: nowrap;
-            padding: 0px 100% 0px 0px;
+            padding: 0;
             box-sizing: content-box;
             animation-iteration-count: infinite;
             animation-timing-function: linear;
@@ -315,9 +275,23 @@
             animation-play-state: paused;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item {
+        .ticker-wrap .ticker .item {
             display: inline-block;
             padding: 0px 16px;
+        }
+
+        .ticker-wrap .ticker .item>div {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
+        #app>.ticker-wrap {
+            bottom: 0;
+            position: fixed;
+        }
+
+        #app>.ticker-wrap .ticker .item>div {
+            opacity: 0.5;
+            font-family: 'Gotham', 'Noto Sans JP', sans-serif;
         }
 
         #heading>.columns>.column>.columns:last-child {
@@ -354,9 +328,11 @@
             padding: 16px 32px 16px 32px;
             border: 0px solid transparent;
             border-radius: 500px 500px 500px 500px;
-            background: #f5f5f5;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            background: #ffffff;
+            /*background: #f5f5f5;
+            background: linear-gradient(145deg, #ffffff, #dddddd);
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
             height: initial;
         }
 
@@ -394,9 +370,11 @@
         #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item button {
             border-radius: 290486px;
             padding: 16px;
-            background: #f5f5f5;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            background: #ffffff;
+            /*background: #f5f5f5;
+            background: linear-gradient(145deg, #ffffff, #dddddd);
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
             height: initial;
         }
 
@@ -405,11 +383,12 @@
         }
 
         #input form .field {
-            background-color: #f5f5f5;
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            background: #ffffff;
+            /*background: #f5f5f5;
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
         }
 
         #input .control .is-primary {
@@ -520,10 +499,10 @@
             align-items: center;
             justify-content: center;
             border-radius: 500px 500px 500px 500px;
-            padding: 16px 32px 16px 32px;
+            padding: 8px 16px 8px 16px;
             background: #ffa6bb url('/images/Stripes.png') repeat;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            /*box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
         }
 
         #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media span {
@@ -602,10 +581,12 @@
             margin: 16px 0px 0px 0px;
             padding: 16px 32px 16px 32px;
             border-radius: 500px 500px 500px 500px;
-            background: rgba(0, 0, 0, 0.75);
+            background: #ffffff;
+            /*background: rgba(0, 0, 0, 0.75);
             background: #f5f5f5;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
+            background: linear-gradient(145deg, #ffffff, #dddddd);
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
         }
 
         #container .columns .column .media .media-content {
@@ -881,16 +862,16 @@
             opacity: 1;
         }
 
-        /*@keyframes ticker {
+        @keyframes ticker {
             0% {
                 transform: translate3d(0, 0, 0);
                 visibility: visible;
             }
 
             100% {
-                transform: translate3d(-100%, 0, 0);
+                transform: translate3d(-50%, 0, 0);
             }
-        }*/
+        }
 
         @keyframes loop {
             0% {
@@ -996,52 +977,36 @@
 
         @font-face {
             font-family: "Gotham";
-            src: url('/fonts/Gotham-Book.woff') format('woff');
+            src: url('/fonts/GothamRnd-Book.woff') format('woff');
             font-weight: normal;
         }
 
         @font-face {
             font-family: "Gotham";
-            src: url('/fonts/Gotham-Bold.woff') format('woff');
+            src: url('/fonts/GothamRnd-Bold.woff') format('woff');
             font-weight: bold;
         }
     </style>
 </head>
 
 <body>
-    <canvas id="three"></canvas>
     <div id="particles-js"></div>
     <div id="app">
-        <div ref="three"></div>
-        <!--<div class="type columns is-mobile is-centered is-vcentered">
-            <transition-group name="type-list" tag="div" class="column is-full has-text-centered" v-cloak>
-                <span class="title is-2 has-text-weight-bold" v-for="character in text"
-                    v-bind:key="character.key">{{ character.value }}</span>
-            </transition-group>
-        </div>-->
-        <transition name="blind">
-            <div class="cover" v-if="isBlinded" v-cloak>
-                <img class="background" v-bind:src="cover" @load="load" @error="error" alt="Background"><img>
-                <transition name="fade">
-                    <div class="columns is-mobile is-centered is-vcentered" v-if="isPreloading" key="loading">
-                        <div class="column is-full has-text-centered" v-show="highlight">
-                            <span class="title is-2 has-text-weight-bold has-text-white">{{ highlight }}</span>
-                        </div>
-                    </div>
-                    <div class="columns is-mobile is-centered is-vcentered"
-                        v-bind:style="{backgroundImage: cover === null ? 'none' : 'url(' + cover + ')'}" v-else
-                        key="loaded">
-                        <transition name="fade">
-                            <div class="column is-full has-text-centered" v-show="highlight">
-                                <span class="title is-2 has-text-weight-bold has-text-white">{{ highlight }}</span>
-                            </div>
-                        </transition>
-                    </div>
-                </transition>
+        <div class="background is-hidden">
+            <div v-bind:style="{ backgroundImage: 'url(' + image.url + ')', marginLeft: image.index * 100 + '%' }"
+                v-for="image in backgroundImages" v-bind:key="image" v-cloak></div>
+            <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
+                v-bind:key="image.url" alt="Background" v-cloak>
+        </div>
+        <transition name="blind" v-on:after-enter="blinded">
+            <div class="blind" v-if="isBlinded" v-cloak></div>
+        </transition>
+        <div id="three" ref="three"></div>
+        <transition name="fade">
+            <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
+                v-cloak>
             </div>
         </transition>
-        <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}" v-cloak>
-        </div>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-full has-content-centered" v-cloak>
@@ -1117,7 +1082,12 @@
                                                                 v-bind:style="{ animationPlayState: 'running' }">
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id">
-                                                                    <div class="is-size-7 has-text-weight-bold has-text-black"
+                                                                    <div class="is-size-7 has-text-weight-bold has-text-white"
+                                                                        v-cloak>{{ message.text }}</div>
+                                                                </div>
+                                                                <div class="item" v-for="message in messages"
+                                                                    v-bind:key="message.id">
+                                                                    <div class="is-size-7 has-text-weight-bold has-text-white"
                                                                         v-cloak>{{ message.text }}</div>
                                                                 </div>
                                                             </transition-group>
@@ -1191,7 +1161,7 @@
                                                             <button class="button tag is-rounded has-text-weight-bold"
                                                                 type="button"
                                                                 v-bind:style="{ color: 'rgba(0, 0, 0, ' + (0.25 + 0.75 * tag.score) + ')' }"
-                                                                @click="hint(tag)">{{ tag.name }}</button>
+                                                                @click="learn(tag)">{{ tag.name }}</button>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1535,7 +1505,6 @@
         //var channel = getParameterByName("channel") || getParameterByName("ch") || "";
 
         const renderer = new THREE.WebGLRenderer({
-            canvas: document.getElementById("three"),
             antialias: true,
             alpha: true
         });
@@ -1584,7 +1553,20 @@
             stats.domElement.classList.add("is-hidden");
         }
 
-        document.body.appendChild(stats.domElement);
+        //document.body.appendChild(stats.domElement);
+        const clock = new THREE.Clock();
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let animationIndex = 0;
+        const animationSkipFrames = 2;
+        let idleTime = 0.0;
+        const blinkThreshold = 5.0;
+        let waitTime = 0.0;
+        const waitThreshold = 1.0;
+        let activateTime = 0.0;
+        const activateThreshold = 10.0;
+        let lookAnimation = null;
+        let timeoutID = undefined;
 
         var app = Vue.createApp({
             data() {
@@ -1621,7 +1603,11 @@
                     likes: -1,
                     stars: 0,
                     animatedStars: 0,
+                    hints: [],
                     notifications: [],
+                    presetImages: null,
+                    backgroundImages: [],
+                    preloadImages: [],
                     vrm: null,
                     animations: null,
                     animationsQueue: [],
@@ -1637,7 +1623,7 @@
                     animatedPopupTextHeight: 0,
                     message: null,
                     states: {},
-                    script: { character: null, words: null, wordDictionary: {}, reverseWordDictionary: {} },
+                    character: null,
                     attributes: [{ name: "名前", value: false },
                     { name: "所属", value: false },
                     { name: "時間", value: false },
@@ -1661,27 +1647,53 @@
                         app.$nextTick(() => {
                             let width = 0;
 
-                            for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
-                                width += item.getBoundingClientRect().width;
+                            for (const element of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
+                                width += element.getBoundingClientRect().width;
                             }
 
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
-                            
-                            width += document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
-                            
+
+                            //width += document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
+
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").animate([
                                 {
                                     transform: "translate3d(0, 0, 0)"
                                 },
                                 {
-                                    transform: "translate3d(-" + width + "px, 0, 0)"
+                                    transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                                 }
                             ], {
                                 duration: 30000,
                                 iterations: Infinity
                             });
 
-                            app.scrollToEnd();
+                            //app.scrollToEnd();
+                        });
+                    },
+                    deep: true
+                },
+                backgroundImages: {
+                    handler: () => {
+                        app.$nextTick(() => {
+                            const elements = document.body.querySelectorAll("#app>.background>div");
+                            const offset = elements.length - 1;
+                            const frameRate = 15;
+
+                            for (const element of elements) {
+                                element.animate([
+                                    {
+                                        transform: "translate3d(0, 0, 0)"
+                                    },
+                                    {
+                                        transform: "translate3d(-" + offset * 100 + "%, 0, 0)"
+                                    }
+                                ], {
+                                    fill: 'forwards',
+                                    easing: 'steps(' + offset + ')',
+                                    duration: 1000 / frameRate * elements.length,
+                                    iterations: Infinity
+                                });
+                            }
                         });
                     },
                     deep: true
@@ -1758,7 +1770,10 @@
 
                             function shuffle(array) {
                                 function _random(min, max) {
-                                    return Math.floor(Math.random() * (max - min + 1)) + min;
+                                    min = Math.ceil(min);
+                                    max = Math.floor(max);
+
+                                    return Math.floor(Math.random() * (max - min)) + min;
                                 }
 
                                 let a = [].concat(array);
@@ -2061,7 +2076,7 @@
                         }
                     }
 
-                    for (const sequence of this.script.character.sequences) {
+                    for (const sequence of this.character.sequences) {
                         if (sequence.name == "Learn") {
                             sequences.push(sequence);
                         }
@@ -2105,7 +2120,7 @@
                     let sequence = [];
                     let delta = 0;
 
-                    for (const sequence of this.script.character.sequences) {
+                    for (const sequence of this.character.sequences) {
                         if (sequence.name == "Activate") {
                             sequences.push(sequence);
                         }
@@ -2119,7 +2134,12 @@
                             [text, cache] = await this.generate(obj.text);
 
                             sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: text });
-                            delta += Object.keys(cache).length;
+
+                            for (const key in cache) {
+                                if (typeof cache[key] !== "undefined") {
+                                    delta++;
+                                }
+                            }
                         } else {
                             sequence.push(obj);
                         }
@@ -2189,13 +2209,20 @@
                     }
 
                     let segmenter = new TinySegmenter();
+                    let regex = new RegExp('[.#$\\[\\]]');
                     let cachDictionary = {};
                     let text = '';
                     let epsilon = Math.pow(10, -6);
 
                     for (const token of segmenter.segment(message)) {
                         if (token in cachDictionary) {
-                            text += cachDictionary[token]
+                            if (typeof cachDictionary[token] === "undefined") {
+                                text += token;
+                            } else {
+                                text += cachDictionary[token]
+                            }
+                        } else if (regex.test(token)) {
+                            text += token;
                         } else {
                             let terms = [];
                             let scores = [];
@@ -2240,7 +2267,12 @@
                                 const term = choice(terms, softmax(scores));
 
                                 text += term;
-                                cachDictionary[token] = term;
+
+                                if (token == term) {
+                                    cachDictionary[token] = undefined;
+                                } else {
+                                    cachDictionary[token] = term;
+                                }
                             } else {
                                 text += token;
                             }
@@ -2248,9 +2280,6 @@
                     }
 
                     return [text, cachDictionary];
-                },
-                hint: function (event) {
-                    this.input += event.name;
                 },
                 notify: function (data) {
                     let id = -1;
@@ -2276,11 +2305,77 @@
                         }
                     }, 3000);
                 },
-                load: function () {
-                    this.isPreloading = false;
+                blinded: async function () {
+                    function _random(min, max) {
+                        min = Math.ceil(min);
+                        max = Math.floor(max);
+
+                        return Math.floor(Math.random() * (max - min)) + min;
+                    }
+
+                    this.preloadImages.splice(0);
+                    this.backgroundImages.splice(0);
+
+                    for (const image of this.presetImages[_random(0, this.presetImages.length)]) {
+                        this.preloadImages.push({
+                            url: image
+                        });
+                    }
+
+                    setTimeout(() => {
+                        this.isBlinded = true;
+                    }, 30000);
                 },
-                error: function () {
-                    this.cover = null;
+                load: function (url) {
+                    let isCompleted = true;
+
+                    for (let image of this.preloadImages) {
+                        if (image.url == url) {
+                            image["isLoaded"] = true;
+                        } else if (!("isLoaded" in image)) {
+                            isCompleted = false;
+                        }
+                    }
+
+                    if (isCompleted) {
+                        let index = 0;
+
+                        for (const image of this.preloadImages) {
+                            if (image.isLoaded) {
+                                this.backgroundImages.push({
+                                    index: index,
+                                    url: image.url
+                                });
+
+                                index++;
+                            }
+                        }
+
+                        this.preloadImages.splice(0);
+                        this.isBlinded = false;
+                    }
+                },
+                error: function (url) {
+                    let isCompleted = true;
+
+                    for (let image of this.preloadImages) {
+                        if (image.url == url) {
+                            image["isLoaded"] = true;
+                        } else if (!("isLoaded" in image)) {
+                            isCompleted = false;
+                        }
+                    }
+
+                    if (isCompleted) {
+                        for (const image of this.preloadImages) {
+                            if (image.isLoaded) {
+                                this.backgroundImages.push(image.url);
+                            }
+                        }
+
+                        this.preloadImages.splice(0);
+                        this.isBlinded = false;
+                    }
                 },
                 update: async function (data, max) {
                     this.isUpdating = true;
@@ -2492,7 +2587,7 @@
                                     let tracedSequences = [];
                                     let callableSequences = [];
 
-                                    for (const s of this.script.character.sequences) {
+                                    for (const s of this.character.sequences) {
                                         let sequenceStack = this.getSequenceStack(s, obj);
 
                                         if (sequenceStack.length > 0) {
@@ -2636,6 +2731,912 @@
                     }
 
                     return sequenceStack;
+                },
+                render: function () {
+                    requestAnimationFrame(this.render);
+
+                    const deltaTime = clock.getDelta();
+                    const app = this;
+
+                    if (app.vrm) {
+                        let isActive = false;
+                        let isAnimating = false;
+                        let isDeforming = false;
+                        let messageData = null;
+                        let updatedBlendShapeNames = [];
+
+                        if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
+                            messageData = app.currentAnimations[animationIndex];
+                            animationIndex += animationSkipFrames;
+                            isActive = true;
+                            isAnimating = true;
+                        }
+
+                        if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
+                            for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
+                                app.blendShapeAnimations.unshift(blendShapeAnimation);
+                            }
+
+                            isActive = true;
+                            isDeforming = true;
+                        }
+
+                        for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                            let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                            if (!updatedBlendShapeNames.includes(blendShapeAnimation.name)) {
+                                if (blendShapeAnimation.time <= blendShapeAnimation.duration) {
+                                    blendShapeAnimation.time += deltaTime;
+
+                                    if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
+                                        app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+                                        app.blendShapeAnimations.splice(i, 1);
+                                    } else {
+                                        console.log(THREE.VRMSchema.BlendShapePresetName.Blink);
+                                        app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
+                                    }
+
+                                    isActive = true;
+                                }
+
+                                updatedBlendShapeNames.push(blendShapeAnimation.name);
+                            }
+                        }
+
+                        if (app.sequenceQueue.length > 0) {
+                            const sequence = app.sequenceQueue[0];
+
+                            if (sequence[0].type == "Animation") {
+                                if (!isAnimating && sequence[0].name in app.animations) {
+                                    /*const skipFrames = 60 / 12;
+                                    let animations = app.animations[suggestion.animation];
+                                    let maxFrames = Math.min(animations.length, 60);
+                                    let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                    let length = Math.round(90 / 24);
+        
+                                    for (let i = 0; i < maxFrames; i += skipFrames) {
+                                        for (let j = 0; j < length; j++) {
+                                            app.currentAnimations.push(animations[offset + i]);
+                                        }
+                                    }
+        
+                                    for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
+                                        app.currentAnimations.push(animations[offset + i]);
+                                    }*/
+
+                                    for (let animation of app.animations[sequence[0].name]) {
+                                        app.currentAnimations.push(animation);
+                                    }
+
+                                    if (sequence.length > 1) {
+                                        sequence.shift();
+                                    } else {
+                                        app.sequenceQueue.shift();
+                                    }
+                                } else if (!isDeforming) {
+                                    let nameSet = [];
+
+                                    app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
+                                    sequence.shift();
+
+                                    while (sequence.length > 0) {
+                                        if (sequence[0].type != "Animation" || sequence[0].name in app.animations) {
+                                            break;
+                                        }
+
+                                        app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
+                                        sequence.shift();
+                                    }
+
+                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                        let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                                        if (!nameSet.includes(blendShapeAnimation.name)) {
+                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                            nameSet.push(blendShapeAnimation.name);
+                                        }
+                                    }
+
+                                    if (sequence.length == 0) {
+                                        app.sequenceQueue.shift();
+                                    }
+                                }
+                            } else if (sequence[0].type == "Message" && app.message === null && !isAnimating && !isDeforming) {
+                                app.message = { time: 0, duration: sequence[0].duration, type: { elapsed: -1, speed: sequence[0].speed, reverse: false, buffer: '', count: 0 }, text: sequence[0].text };
+
+                                if (sequence.length > 1) {
+                                    sequence.shift();
+                                } else {
+                                    app.sequenceQueue.shift();
+                                }
+                            }
+                        } else if (app.suggestionQueue.length > 0) {
+                            const suggestion = app.suggestionQueue[0];
+                            const message = suggestion.messages[0];
+                            let loopRequired = true;
+
+                            if (message.type.reverse) {
+                                if (message.type.count > 0) {
+                                    message.type.elapsed += deltaTime;
+
+                                    if (message.type.elapsed >= message.type.speed / 1000.0) {
+                                        let index = message.type.count - 1;
+
+                                        if (index < message.text.length) {
+                                            let width = Math.floor(message.text.length / 2);
+
+                                            if (message.type.buffer.length <= width) {
+                                                message.type.count -= 1;
+                                            }
+
+                                            if (message.type.buffer.length > 0) {
+                                                message.type.buffer = message.type.buffer.substring(message.type.buffer.length - 2, message.type.buffer.length - 1);
+                                            }
+                                        }
+
+                                        message.type.elapsed = 0;
+                                    }
+                                } else if (app.isSuggested) {
+                                    /*suggestion.time = 0;
+                                    suggestion.type.elapsed = -1;
+                                    suggestion.type.reverse = false;
+                                    suggestion.type.buffer = '';
+                                    suggestion.type.count = 0;
+        
+                                    if ('morphs' in suggestion) {
+                                        for (let blendShapeAnimation of suggestion.morphs.animations) {
+                                            blendShapeAnimation.time = 0;
+                                        }
+                                    }*/
+
+                                    if (suggestion.messages.length > 1) {
+                                        suggestion.messages.shift();
+                                    } else {
+                                        app.suggestionQueue.shift();
+
+                                        if (app.suggestionQueue.length > 0 && 'highlight' in app.suggestionQueue[0]) {
+                                            if ('text' in app.suggestionQueue[0].highlight) {
+                                                app.highlight = app.suggestionQueue[0].highlight.text;
+                                            } else {
+                                                app.highlight = null;
+                                            }
+
+                                            if ('image' in app.suggestionQueue[0].highlight) {
+                                                app.cover = app.suggestionQueue[0].highlight.image;
+                                            } else {
+                                                app.cover = app;
+                                            }
+                                        }
+
+                                        app.isBlinded = true;
+                                    }
+                                } else if (app.isBlinded && !isActive) {
+                                    if ('morphs' in suggestion) {
+                                        for (let blendShape of suggestion.morphs.defaults) {
+                                            app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                        }
+                                    }
+
+                                    app.suggestionQueue.splice(0);
+                                    app.isBlinded = false;
+                                    loopRequired = false;
+                                }
+                            } else if (message.type.buffer.length < message.text.length) {
+                                if (message.type.elapsed >= 0) {
+                                    message.type.elapsed += deltaTime;
+                                } else if (!isActive) {
+                                    if (!app.isPreloading) {
+                                        waitTime += deltaTime;
+                                    }
+
+                                    if (app.highlight === null && app.cover === null || waitTime >= waitThreshold) {
+                                        message.type.elapsed = deltaTime;
+                                        app.isBlinded = false;
+                                        app.currentAnimations.splice(0);
+
+                                        if ('animation' in suggestion && suggestion.animation in app.animations) {
+                                            const skipFrames = 60 / 12;
+                                            let animations = app.animations[suggestion.animation];
+                                            let maxFrames = Math.min(animations.length, 60);
+                                            let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                            let length = Math.round(90 / 24);
+
+                                            for (let i = 0; i < maxFrames; i += skipFrames) {
+                                                for (let j = 0; j < length; j++) {
+                                                    app.currentAnimations.push(animations[offset + i]);
+                                                }
+                                            }
+
+                                            for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
+                                                app.currentAnimations.push(animations[offset + i]);
+                                            }
+                                        }
+
+                                        if ('morphs' in suggestion) {
+                                            let nameSet = [];
+
+                                            for (let blendShape of suggestion.morphs.defaults) {
+                                                app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                            }
+
+                                            for (let blendShapeAnimation of suggestion.morphs.animations) {
+                                                app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                            }
+
+                                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                                let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                                                if (!nameSet.includes(blendShapeAnimation.name)) {
+                                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                    nameSet.push(blendShapeAnimation.name);
+                                                }
+                                            }
+                                        }
+
+                                        waitTime = 0.0;
+                                    } else {
+                                        loopRequired = false;
+                                    }
+                                }
+
+                                if (message.type.elapsed >= message.type.speed / 1000.0) {
+                                    let index = message.type.buffer.length;
+                                    let width = Math.floor(message.text.length / 2);
+                                    let length = message.text.length;
+
+                                    if (message.type.count >= width) {
+                                        message.type.buffer += message.text.charAt(index);
+                                    }
+
+                                    if (message.type.count < length) {
+                                        message.type.count += 1;
+                                    }
+
+                                    message.type.elapsed = 0;
+                                }
+                            } else {
+                                message.time += deltaTime;
+
+                                if (message.time >= message.duration) {
+                                    message.type.reverse = true;
+                                }
+                            }
+
+                            if (message.text.length === message.type.buffer.length) {
+                                const characters = message.text.split('');
+
+                                app.text.splice(0);
+
+                                for (let i = 0; i < characters.length; i++) {
+                                    app.text.push({ key: i, value: characters[i] });
+                                }
+                            } else {
+                                let charArray = new Array();
+                                let randomBuffer = '';
+
+                                for (let i = 0; i < message.text.length; i++) {
+                                    if (charArray.indexOf(message.text.charAt(i)) == -1 && message.text.charAt(i).match(/\s/) == null) {
+                                        charArray.push(message.text.charAt(i));
+                                    }
+                                }
+
+                                for (let i = 0; i < message.type.count; i++) {
+                                    if (charArray.length > 0) {
+                                        randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                                    }
+                                }
+
+                                if (randomBuffer.length > message.type.buffer.length) {
+                                    const characters = (message.type.buffer + randomBuffer.substring(message.type.buffer.length, randomBuffer.length)).split('');
+
+                                    app.text.splice(0);
+
+                                    for (let i = 0; i < characters.length; i++) {
+                                        app.text.push({ key: i, value: characters[i] });
+                                    }
+                                } else if (app.text.length !== message.type.buffer.length) {
+                                    const characters = message.type.buffer.split('');
+
+                                    app.text.splice(0);
+
+                                    for (let i = 0; i < characters.length; i++) {
+                                        app.text.push({ key: i, value: characters[i] });
+                                    }
+                                }
+                            }
+
+                            if (loopRequired && messageData === null) {
+                                animationIndex = 0;
+                                messageData = app.currentAnimations[animationIndex];
+                                animationIndex += animationSkipFrames;
+                            }
+                        } else {
+                            if (app.isSuggested && app.suggestionQueue.length == 0 && !app.isComputing) {
+                                const tempMessages1 = [].concat(app.messages);
+                                const tempTags = [].concat(app.tags);
+
+                                app.isComputing = true;
+
+                                new Promise(resolve => {
+                                    let segmenter = new TinySegmenter();
+                                    const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
+                                    { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy },
+                                    { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy },
+                                    { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
+                                    let suggestions = [];
+                                    let tempMessages2 = [];
+                                    let ids1 = [];
+                                    let ids2 = [];
+
+                                    for (let tag of tempTags.sort((x, y) => y.score - x.score)) {
+                                        for (let message of tempMessages1.reverse()) {
+                                            if (!ids1.includes(message.id) && segmenter.segment(message.text).includes(tag.name)) {
+                                                let thread = null;
+
+                                                if ('thread' in message) {
+                                                    for (let m of tempMessages1) {
+                                                        if (message.thread == m.id) {
+                                                            thread = m;
+
+                                                            break;
+                                                        }
+                                                    }
+                                                }
+
+                                                if (thread === null) {
+                                                    tempMessages2.push(message);
+                                                } else {
+                                                    const item = presets[random(0, 3)];
+
+                                                    suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: thread.text }, { time: 0, duration: 5, type: { elapsed: 0, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
+
+                                                    if (!ids2.includes(thread.id)) {
+                                                        ids2.push(thread.id);
+                                                    }
+                                                }
+
+                                                ids1.push(message.id);
+                                            }
+                                        }
+                                    }
+
+                                    for (const message of tempMessages2) {
+                                        if (!ids2.includes(message.id)) {
+                                            const item = presets[random(0, 3)];
+
+                                            suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
+                                        }
+                                    }
+
+                                    resolve(suggestions);
+                                }).then((result) => {
+                                    if (app.isSuggested && result.length > 0) {
+                                        for (const suggestion of result) {
+                                            app.suggestionQueue.push(suggestion);
+                                        }
+
+                                        if ('highlight' in app.suggestionQueue[0]) {
+                                            if ('text' in app.suggestionQueue[0].highlight) {
+                                                app.highlight = app.suggestionQueue[0].highlight.text;
+                                            } else {
+                                                app.highlight = null;
+                                            }
+
+                                            if ('image' in app.suggestionQueue[0].highlight) {
+                                                app.cover = app.suggestionQueue[0].highlight.image;
+                                            } else {
+                                                app.cover = null;
+                                            }
+                                        }
+                                    }
+
+                                    app.isComputing = false;
+                                });
+                            }
+
+                            if (messageData === null) {
+                                app.currentAnimations.splice(0);
+
+                                if (app.animationsQueue.length > 0) {
+                                    for (let animation of app.animationsQueue.shift()) {
+                                        app.currentAnimations.push(animation);
+                                    }
+
+                                    idleTime = 0.0;
+                                    activateTime = 0.0;
+                                } else {
+                                    const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
+                                    const idle = idles[random(0, 14)];
+
+                                    if (idle in app.animations) {
+                                        for (let animation of app.animations[idle]) {
+                                            app.currentAnimations.push(animation);
+                                        }
+                                    }
+
+                                    if (app.blendShapeAnimationQueue.length > 0) {
+                                        idleTime = 0.0;
+                                        activateTime = 0.0;
+                                    } else {
+                                        idleTime += deltaTime;
+                                        activateTime += deltaTime;
+
+                                        if (activateTime >= activateThreshold) {
+                                            //app.talk();
+
+                                            idleTime = 0.0;
+                                            activateTime = 0.0;
+                                        } else if (idleTime >= blinkThreshold) {
+                                            const durations = [0.5, 1.0];
+                                            const ends = [2.0, 4.0];
+                                            const index = random(0, 1);
+                                            const duration = durations[index];
+                                            const end = ends[index];
+                                            let nameSet = [];
+
+                                            for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
+                                                app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                            }
+
+                                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                                let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                                                if (!nameSet.includes(blendShapeAnimation.name)) {
+                                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                    nameSet.push(blendShapeAnimation.name);
+                                                }
+                                            }
+
+                                            idleTime = 0.0;
+                                        }
+                                    }
+                                }
+
+                                animationIndex = 0;
+                                messageData = app.currentAnimations[animationIndex];
+                                animationIndex += animationSkipFrames;
+                            } else if (app.blendShapeAnimationQueue.length > 0) {
+                                idleTime = 0.0;
+                                activateTime = 0.0;
+                            } else {
+                                idleTime += deltaTime;
+                                activateTime += deltaTime;
+
+                                if (activateTime >= activateThreshold) {
+                                    if (app.sequenceQueue.length == 0) {
+                                        //app.talk();
+                                    }
+
+                                    idleTime = 0.0;
+                                    activateTime = 0.0;
+                                } else if (idleTime >= blinkThreshold) {
+                                    const durations = [0.5, 1.0];
+                                    const ends = [2.0, 4.0];
+                                    const index = random(0, 1);
+                                    const duration = durations[index];
+                                    const end = ends[index];
+                                    let nameSet = [];
+
+                                    for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
+                                        app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                    }
+
+                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                        let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                                        if (!nameSet.includes(blendShapeAnimation.name)) {
+                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                            nameSet.push(blendShapeAnimation.name);
+                                        }
+                                    }
+
+                                    idleTime = 0.0;
+                                }
+                            }
+                        }
+
+                        if (app.message !== null) {
+                            if (app.message.type.reverse) {
+                                if (app.message.type.count > 0) {
+                                    app.message.type.elapsed += deltaTime;
+
+                                    if (app.message.type.elapsed >= app.message.type.speed / 1000.0) {
+                                        let index = app.message.type.count - 1;
+
+                                        if (index < app.message.text.length) {
+                                            let width = Math.floor(app.message.text.length / 2);
+
+                                            if (app.message.type.buffer.length <= width) {
+                                                app.message.type.count -= 1;
+                                            }
+
+                                            if (app.message.type.buffer.length > 0) {
+                                                app.message.type.buffer = app.message.type.buffer.substring(app.message.type.buffer.length - 2, app.message.type.buffer.length - 1);
+                                            }
+                                        }
+
+                                        app.message.type.elapsed = 0;
+                                    }
+                                } else {
+                                    /*if (suggestion.messages.length > 1) {
+                                        suggestion.messages.shift();
+                                    } else {
+                                        if ('morphs' in suggestion) {
+                                            for (let blendShape of suggestion.morphs.defaults) {
+                                                app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                            }
+                                        }
+        
+        
+                                    }*/
+
+                                    app.isPopup = false;
+                                }
+                            } else if (app.message.type.buffer.length < app.message.text.length) {
+                                if (app.message.type.elapsed >= 0) {
+                                    app.message.type.elapsed += deltaTime;
+                                } else if (!app.isAnimating) {
+                                    if (app.isPopup) {
+                                        app.message.type.elapsed = deltaTime;
+                                        //app.isBlinded = false;
+                                        //app.currentAnimations.splice(0);
+
+                                        /*if ('animation' in suggestion && suggestion.animation in app.animations) {
+                                            const skipFrames = 60 / 12;
+                                            let animations = app.animations[suggestion.animation];
+                                            let maxFrames = Math.min(animations.length, 60);
+                                            let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                            let length = Math.round(90 / 24);
+        
+                                            for (let i = 0; i < maxFrames; i += skipFrames) {
+                                                for (let j = 0; j < length; j++) {
+                                                    app.currentAnimations.push(animations[offset + i]);
+                                                }
+                                            }
+        
+                                            for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
+                                                app.currentAnimations.push(animations[offset + i]);
+                                            }
+                                        }
+        
+                                        if ('morphs' in suggestion) {
+                                            let nameSet = [];
+        
+                                            for (let blendShape of suggestion.morphs.defaults) {
+                                                app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                            }
+        
+                                            for (let blendShapeAnimation of suggestion.morphs.animations) {
+                                                app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                            }
+        
+                                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                                let blendShapeAnimation = app.blendShapeAnimations[i];
+        
+                                                if (!nameSet.includes(blendShapeAnimation.name)) {
+                                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                    nameSet.push(blendShapeAnimation.name);
+                                                }
+                                            }
+                                        }*/
+                                    } else {
+                                        app.isPopup = true;
+                                    }
+                                }
+
+                                if (app.message.type.elapsed >= app.message.type.speed / 1000.0) {
+                                    let index = app.message.type.buffer.length;
+                                    let width = Math.floor(app.message.text.length / 2);
+                                    let length = app.message.text.length;
+
+                                    if (app.message.type.count >= width) {
+                                        app.message.type.buffer += app.message.text.charAt(index);
+                                    }
+
+                                    if (app.message.type.count < length) {
+                                        app.message.type.count += 1;
+                                    }
+
+                                    app.message.type.elapsed = 0;
+                                }
+                            } else {
+                                app.message.time += deltaTime;
+
+                                if (app.message.time >= app.message.duration) {
+                                    app.message.type.reverse = true;
+                                }
+                            }
+
+                            if (app.message.text.length === app.message.type.buffer.length) {
+                                const characters = app.message.text.split('');
+
+                                app.text.splice(0);
+
+                                for (let i = 0; i < characters.length; i++) {
+                                    app.text.push({ key: i, value: characters[i] });
+                                }
+                            } else {
+                                let charArray = new Array();
+                                let randomBuffer = '';
+
+                                for (let i = 0; i < app.message.text.length; i++) {
+                                    if (charArray.indexOf(app.message.text.charAt(i)) == -1 && app.message.text.charAt(i).match(/\s/) == null) {
+                                        charArray.push(app.message.text.charAt(i));
+                                    }
+                                }
+
+                                for (let i = 0; i < app.message.type.count; i++) {
+                                    if (charArray.length > 0) {
+                                        randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                                    }
+                                }
+
+                                if (randomBuffer.length > app.message.type.buffer.length) {
+                                    const characters = (app.message.type.buffer + randomBuffer.substring(app.message.type.buffer.length, randomBuffer.length)).split('');
+
+                                    app.text.splice(0);
+
+                                    for (let i = 0; i < characters.length; i++) {
+                                        app.text.push({ key: i, value: characters[i] });
+                                    }
+                                } else if (app.text.length !== app.message.type.buffer.length) {
+                                    const characters = app.message.type.buffer.split('');
+
+                                    app.text.splice(0);
+
+                                    for (let i = 0; i < characters.length; i++) {
+                                        app.text.push({ key: i, value: characters[i] });
+                                    }
+                                }
+                            }
+                        }
+
+                        if (lookAnimation !== null) {
+                            lookAnimation.time += deltaTime;
+
+                            if (lookAnimation.time >= lookAnimation.duration) {
+                                lookAtTarget.position.x = lookAnimation.target.x;
+                                lookAtTarget.position.y = lookAnimation.target.y;
+                                lookAnimation = null;
+                            } else {
+                                const rate = lookAnimation.time / lookAnimation.duration;
+
+                                lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
+                                lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
+                            }
+                        }
+
+                        if (messageData) {
+                            for (let animation of messageData.animations) {
+                                switch (animation.bone) {
+                                    case 'chest':
+                                    case 'head':
+                                    case 'hips':
+                                    case 'jaw':
+                                    case 'leftEye':
+                                    case 'leftFoot':
+                                    case 'leftHand':
+                                    case 'leftIndexDistal':
+                                    case 'leftIndexIntermediate':
+                                    case 'leftIndexProximal':
+                                    case 'leftLittleDistal':
+                                    case 'leftLittleIntermediate':
+                                    case 'leftLittleProximal':
+                                    case 'leftLowerArm':
+                                    case 'leftLowerLeg':
+                                    case 'leftMiddleDistal':
+                                    case 'leftMiddleIntermediate':
+                                    case 'leftMiddleProximal':
+                                    case 'leftRingDistal':
+                                    case 'leftRingIntermediate':
+                                    case 'leftRingProximal':
+                                    case 'leftShoulder':
+                                    case 'leftThumbDistal':
+                                    case 'leftThumbIntermediate':
+                                    case 'leftThumbProximal':
+                                    case 'leftToes':
+                                    case 'leftUpperArm':
+                                    case 'leftUpperLeg':
+                                    case 'neck':
+                                    case 'rightEye':
+                                    case 'rightFoot':
+                                    case 'rightHand':
+                                    case 'rightIndexDistal':
+                                    case 'rightIndexIntermediate':
+                                    case 'rightIndexProximal':
+                                    case 'rightLittleDistal':
+                                    case 'rightLittleIntermediate':
+                                    case 'rightLittleProximal':
+                                    case 'rightLowerArm':
+                                    case 'rightLowerLeg':
+                                    case 'rightMiddleDistal':
+                                    case 'rightMiddleIntermediate':
+                                    case 'rightMiddleProximal':
+                                    case 'rightRingDistal':
+                                    case 'rightRingIntermediate':
+                                    case 'rightRingProximal':
+                                    case 'rightShoulder':
+                                    case 'rightThumbDistal':
+                                    case 'rightThumbIntermediate':
+                                    case 'rightThumbProximal':
+                                    case 'rightToes':
+                                    case 'rightUpperArm':
+                                    case 'rightUpperLeg':
+                                    case 'spine':
+                                    case 'upperChest':
+                                        break;
+                                    case 'eye.L':
+                                        animation.bone = 'leftEye';
+                                        break;
+                                    case 'foot.L':
+                                        animation.bone = 'leftFoot';
+                                        break;
+                                    case 'hand.L':
+                                        animation.bone = 'leftHand';
+                                        break;
+                                    case 'f_index.03.L':
+                                        animation.bone = 'leftIndexDistal';
+                                        break;
+                                    case 'f_index.02.L':
+                                        animation.bone = 'leftIndexIntermediate';
+                                        break;
+                                    case 'f_index.01.L':
+                                        animation.bone = 'leftIndexProximal';
+                                        break;
+                                    case 'f_pinky.03.L':
+                                        animation.bone = 'leftLittleDistal';
+                                        break;
+                                    case 'f_pinky.02.L':
+                                        animation.bone = 'leftLittleIntermediate';
+                                        break;
+                                    case 'f_pinky.01.L':
+                                        animation.bone = 'leftLittleProximal';
+                                        break;
+                                    case 'lower_arm.L':
+                                        animation.bone = 'leftLowerArm';
+                                        break;
+                                    case 'shin.L':
+                                        animation.bone = 'leftLowerLeg';
+                                        break;
+                                    case 'f_middle.03.L':
+                                        animation.bone = 'leftMiddleDistal';
+                                        break;
+                                    case 'f_middle.02.L':
+                                        animation.bone = 'leftMiddleIntermediate';
+                                        break;
+                                    case 'f_middle.01.L':
+                                        animation.bone = 'leftMiddleProximal';
+                                        break;
+                                    case 'f_ring.03.L':
+                                        animation.bone = 'leftRingDistal';
+                                        break;
+                                    case 'f_ring.02.L':
+                                        animation.bone = 'leftRingIntermediate';
+                                        break;
+                                    case 'f_ring.01.L':
+                                        animation.bone = 'leftRingProximal';
+                                        break;
+                                    case 'shoulder.L':
+                                        animation.bone = 'leftShoulder';
+                                        break;
+                                    case 'thumb_distal.L':
+                                        animation.bone = 'leftThumbDistal';
+                                        break;
+                                    case 'thumb_intermediate.L':
+                                        animation.bone = 'leftThumbIntermediate';
+                                        break;
+                                    case 'thumb_proximal.L':
+                                        animation.bone = 'leftThumbProximal';
+                                        break;
+                                    case 'toe.L':
+                                        animation.bone = 'leftToes';
+                                        break;
+                                    case 'upper_arm.L':
+                                        animation.bone = 'leftUpperArm';
+                                        break;
+                                    case 'thigh.L':
+                                        animation.bone = 'leftUpperLeg';
+                                        break;
+                                    case 'eye.R':
+                                        animation.bone = 'rightEye';
+                                        break;
+                                    case 'foot.R':
+                                        animation.bone = 'rightFoot';
+                                        break;
+                                    case 'hand.R':
+                                        animation.bone = 'rightHand';
+                                        break;
+                                    case 'f_index.03.R':
+                                        animation.bone = 'rightIndexDistal';
+                                        break;
+                                    case 'f_index.02.R':
+                                        animation.bone = 'rightIndexIntermediate';
+                                        break;
+                                    case 'f_index.01.R':
+                                        animation.bone = 'rightIndexProximal';
+                                        break;
+                                    case 'f_pinky.03.R':
+                                        animation.bone = 'rightLittleDistal';
+                                        break;
+                                    case 'f_pinky.02.R':
+                                        animation.bone = 'rightLittleIntermediate';
+                                        break;
+                                    case 'f_pinky.01.R':
+                                        animation.bone = 'rightLittleProximal';
+                                        break;
+                                    case 'lower_arm.R':
+                                        animation.bone = 'rightLowerArm';
+                                        break;
+                                    case 'shin.R':
+                                        animation.bone = 'rightLowerLeg';
+                                        break;
+                                    case 'f_middle.03.R':
+                                        animation.bone = 'rightMiddleDistal';
+                                        break;
+                                    case 'f_middle.02.R':
+                                        animation.bone = 'rightMiddleIntermediate';
+                                        break;
+                                    case 'f_middle.01.R':
+                                        animation.bone = 'rightMiddleProximal';
+                                        break;
+                                    case 'f_ring.03.R':
+                                        animation.bone = 'rightRingDistal';
+                                        break;
+                                    case 'f_ring.02.R':
+                                        animation.bone = 'rightRingIntermediate';
+                                        break;
+                                    case 'f_ring.01.R':
+                                        animation.bone = 'rightRingProximal';
+                                        break;
+                                    case 'shoulder.R':
+                                        animation.bone = 'rightShoulder';
+                                        break;
+                                    case 'thumb_distal.R':
+                                        animation.bone = 'rightThumbDistal';
+                                        break;
+                                    case 'thumb_intermediate.R':
+                                        animation.bone = 'rightThumbIntermediate';
+                                        break;
+                                    case 'thumb_proximal.R':
+                                        animation.bone = 'rightThumbProximal';
+                                        break;
+                                    case 'toe.R':
+                                        animation.bone = 'rightToes';
+                                        break;
+                                    case 'upper_arm.R':
+                                        animation.bone = 'rightUpperArm';
+                                        break;
+                                    case 'thigh.R':
+                                        animation.bone = 'rightUpperLeg';
+                                        break;
+                                    case 'upper_chest':
+                                        animation.bone = 'upperChest';
+                                        break;
+                                    default:
+                                        animation.bone = null;
+                                }
+
+                                if (animation.bone && animation.rotation.length == 4) {
+                                    try {
+                                        app.vrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
+                                        app.vrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
+                                    } catch (e) {
+                                        console.log(animation.bone);
+                                    }
+                                }
+                            }
+                        }
+
+                        app.vrm.update(deltaTime);
+
+                        /*if (currentMixer) {
+                            currentMixer.update(deltaTime);
+                        }*/
+
+                        renderer.render(scene, camera);
+                    }
+
+                    stats.update();
                 }
             },
             updated: function () {
@@ -2669,6 +3670,11 @@
                 let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
                 const loader = new GLTFLoader();
 
+                this.$refs.three.appendChild(renderer.domElement);
+                this.$refs.three.appendChild(stats.domElement);
+
+                this.render();
+
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
@@ -2689,10 +3695,8 @@
                     popup.style.paddingBottom = container.style.paddingBottom;
                 }
 
-                //this.$refs.three.appendChild(this.renderer.domElement);
-
                 try {
-                    const response1 = await fetch('/js/milch.json', {
+                    const response1 = await fetch('/js/images.json', {
                         mode: "cors",
                         method: "GET",
                         headers: {
@@ -2701,15 +3705,38 @@
                     });
 
                     if (response1.ok) {
-                        self.script.character = await response1.json();
+                        this.presetImages = await response1.json();
+
+                        if (this.presetImages !== null && this.presetImages.length > 0) {
+                            this.isBlinded = true;
+                        }
                     }
                     else {
                         throw new Error(response1.statusText);
                     }
+                } catch (e) {
+                    console.error(e);
+                }
+
+                try {
+                    const response2 = await fetch('/js/milch.json', {
+                        mode: "cors",
+                        method: "GET",
+                        headers: {
+                            "Content-Type": "application/x-www-form-urlencoded"
+                        }
+                    });
+
+                    if (response2.ok) {
+                        self.character = await response2.json();
+                    }
+                    else {
+                        throw new Error(response2.statusText);
+                    }
 
                     loader.crossOrigin = "anonymous";
                     loader.load(
-                        self.script.character.model,
+                        self.character.model,
                         (gltf) => {
                             THREE.VRM.from(gltf).then(async (vrm) => {
                                 const urls = {
@@ -2728,7 +3755,7 @@
                                 try {
                                     if (channel.length == 0) {
                                         for (let key in urls) {
-                                            const response2 = await fetch(encodeURI(urls[key]), {
+                                            const response3 = await fetch(encodeURI(urls[key]), {
                                                 mode: "cors",
                                                 method: "GET",
                                                 headers: {
@@ -2736,58 +3763,17 @@
                                                 }
                                             });
 
-                                            if (response2.ok) {
-                                                const json = await response2.json();
+                                            if (response3.ok) {
+                                                const json = await response3.json();
 
                                                 animationDictionary[key] = json.data;
                                             }
                                             else {
-                                                throw new Error(response2.statusText);
+                                                throw new Error(response3.statusText);
                                             }
                                         }
 
                                         self.animationsQueue.push(animationDictionary['jump']);
-                                    }
-
-                                    const response3 = await fetch('/js/words.json', {
-                                        mode: "cors",
-                                        method: "GET",
-                                        headers: {
-                                            "Content-Type": "application/x-www-form-urlencoded"
-                                        }
-                                    });
-
-                                    if (response3.ok) {
-                                        const json = await response3.json();
-
-                                        self.script.words = json;
-                                    }
-                                    else {
-                                        throw new Error(response3.statusText);
-                                    }
-
-                                    for (const word of self.script.words) {
-                                        if (word.name in self.script.wordDictionary) {
-                                            for (const attribute of word.attributes) {
-                                                self.script.wordDictionary[word.name].attributes.push(attribute);
-
-                                                if (attribute in self.script.reverseWordDictionary) {
-                                                    self.script.reverseWordDictionary[attribute].push(word.name);
-                                                } else {
-                                                    self.script.reverseWordDictionary[attribute] = [word.name];
-                                                }
-                                            }
-                                        } else {
-                                            self.script.wordDictionary[word.name] = word.attributes;
-
-                                            for (const attribute of word.attributes) {
-                                                if (attribute in self.script.reverseWordDictionary) {
-                                                    self.script.reverseWordDictionary[attribute].push(word.name);
-                                                } else {
-                                                    self.script.reverseWordDictionary[attribute] = [word.name];
-                                                }
-                                            }
-                                        }
                                     }
 
                                     self.animations = animationDictionary;
@@ -2947,927 +3933,6 @@
             }
         }).mount('#app');
 
-        const clock = new THREE.Clock();
-        const raycaster = new THREE.Raycaster();
-        const mouse = new THREE.Vector2();
-        let animationIndex = 0;
-        const animationSkipFrames = 2;
-        let idleTime = 0.0;
-        const blinkThreshold = 5.0;
-        let waitTime = 0.0;
-        const waitThreshold = 1.0;
-        let activateTime = 0.0;
-        const activateThreshold = 10.0;
-        let lookAnimation = null;
-        let timeoutID = undefined;
-
-        function render() {
-            requestAnimationFrame(render);
-
-            const deltaTime = clock.getDelta();
-
-            if (app.vrm) {
-                let isActive = false;
-                let isAnimating = false;
-                let isDeforming = false;
-                let messageData = null;
-                let updatedBlendShapeNames = [];
-
-                if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
-                    messageData = app.currentAnimations[animationIndex];
-                    animationIndex += animationSkipFrames;
-                    isActive = true;
-                    isAnimating = true;
-                }
-
-                if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
-                    for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
-                        app.blendShapeAnimations.unshift(blendShapeAnimation);
-                    }
-
-                    isActive = true;
-                    isDeforming = true;
-                }
-
-                for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                    let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                    if (!updatedBlendShapeNames.includes(blendShapeAnimation.name)) {
-                        if (blendShapeAnimation.time <= blendShapeAnimation.duration) {
-                            blendShapeAnimation.time += deltaTime;
-
-                            if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
-                                app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
-                                app.blendShapeAnimations.splice(i, 1);
-                            } else {
-                                app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
-                            }
-
-                            isActive = true;
-                        }
-
-                        updatedBlendShapeNames.push(blendShapeAnimation.name);
-                    }
-                }
-
-                if (app.sequenceQueue.length > 0) {
-                    const sequence = app.sequenceQueue[0];
-
-                    if (sequence[0].type == "Animation") {
-                        if (!isAnimating && sequence[0].name in app.animations) {
-                            /*const skipFrames = 60 / 12;
-                            let animations = app.animations[suggestion.animation];
-                            let maxFrames = Math.min(animations.length, 60);
-                            let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
-                            let length = Math.round(90 / 24);
-
-                            for (let i = 0; i < maxFrames; i += skipFrames) {
-                                for (let j = 0; j < length; j++) {
-                                    app.currentAnimations.push(animations[offset + i]);
-                                }
-                            }
-
-                            for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                app.currentAnimations.push(animations[offset + i]);
-                            }*/
-
-                            for (let animation of app.animations[sequence[0].name]) {
-                                app.currentAnimations.push(animation);
-                            }
-
-                            if (sequence.length > 1) {
-                                sequence.shift();
-                            } else {
-                                app.sequenceQueue.shift();
-                            }
-                        } else if (!isDeforming) {
-                            let nameSet = [];
-
-                            app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
-                            sequence.shift();
-
-                            while (sequence.length > 0) {
-                                if (sequence[0].type != "Animation" || sequence[0].name in app.animations) {
-                                    break;
-                                }
-
-                                app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
-                                sequence.shift();
-                            }
-
-                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                if (!nameSet.includes(blendShapeAnimation.name)) {
-                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                    nameSet.push(blendShapeAnimation.name);
-                                }
-                            }
-
-                            if (sequence.length == 0) {
-                                app.sequenceQueue.shift();
-                            }
-                        }
-                    } else if (sequence[0].type == "Message" && app.message === null && !isAnimating && !isDeforming) {
-                        app.message = { time: 0, duration: sequence[0].duration, type: { elapsed: -1, speed: sequence[0].speed, reverse: false, buffer: '', count: 0 }, text: sequence[0].text };
-
-                        if (sequence.length > 1) {
-                            sequence.shift();
-                        } else {
-                            app.sequenceQueue.shift();
-                        }
-                    }
-                } else if (app.suggestionQueue.length > 0) {
-                    const suggestion = app.suggestionQueue[0];
-                    const message = suggestion.messages[0];
-                    let loopRequired = true;
-
-                    if (message.type.reverse) {
-                        if (message.type.count > 0) {
-                            message.type.elapsed += deltaTime;
-
-                            if (message.type.elapsed >= message.type.speed / 1000.0) {
-                                let index = message.type.count - 1;
-
-                                if (index < message.text.length) {
-                                    let width = Math.floor(message.text.length / 2);
-
-                                    if (message.type.buffer.length <= width) {
-                                        message.type.count -= 1;
-                                    }
-
-                                    if (message.type.buffer.length > 0) {
-                                        message.type.buffer = message.type.buffer.substring(message.type.buffer.length - 2, message.type.buffer.length - 1);
-                                    }
-                                }
-
-                                message.type.elapsed = 0;
-                            }
-                        } else if (app.isSuggested) {
-                            /*suggestion.time = 0;
-                            suggestion.type.elapsed = -1;
-                            suggestion.type.reverse = false;
-                            suggestion.type.buffer = '';
-                            suggestion.type.count = 0;
-
-                            if ('morphs' in suggestion) {
-                                for (let blendShapeAnimation of suggestion.morphs.animations) {
-                                    blendShapeAnimation.time = 0;
-                                }
-                            }*/
-
-                            if (suggestion.messages.length > 1) {
-                                suggestion.messages.shift();
-                            } else {
-                                app.suggestionQueue.shift();
-
-                                if (app.suggestionQueue.length > 0 && 'highlight' in app.suggestionQueue[0]) {
-                                    if ('text' in app.suggestionQueue[0].highlight) {
-                                        app.highlight = app.suggestionQueue[0].highlight.text;
-                                    } else {
-                                        app.highlight = null;
-                                    }
-
-                                    if ('image' in app.suggestionQueue[0].highlight) {
-                                        app.cover = app.suggestionQueue[0].highlight.image;
-                                    } else {
-                                        app.cover = app;
-                                    }
-                                }
-
-                                app.isBlinded = true;
-                            }
-                        } else if (app.isBlinded && !isActive) {
-                            if ('morphs' in suggestion) {
-                                for (let blendShape of suggestion.morphs.defaults) {
-                                    app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                }
-                            }
-
-                            app.suggestionQueue.splice(0);
-                            app.isBlinded = false;
-                            loopRequired = false;
-                        }
-                    } else if (message.type.buffer.length < message.text.length) {
-                        if (message.type.elapsed >= 0) {
-                            message.type.elapsed += deltaTime;
-                        } else if (!isActive) {
-                            if (!app.isPreloading) {
-                                waitTime += deltaTime;
-                            }
-
-                            if (app.highlight === null && app.cover === null || waitTime >= waitThreshold) {
-                                message.type.elapsed = deltaTime;
-                                app.isBlinded = false;
-                                app.currentAnimations.splice(0);
-
-                                if ('animation' in suggestion && suggestion.animation in app.animations) {
-                                    const skipFrames = 60 / 12;
-                                    let animations = app.animations[suggestion.animation];
-                                    let maxFrames = Math.min(animations.length, 60);
-                                    let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
-                                    let length = Math.round(90 / 24);
-
-                                    for (let i = 0; i < maxFrames; i += skipFrames) {
-                                        for (let j = 0; j < length; j++) {
-                                            app.currentAnimations.push(animations[offset + i]);
-                                        }
-                                    }
-
-                                    for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                        app.currentAnimations.push(animations[offset + i]);
-                                    }
-                                }
-
-                                if ('morphs' in suggestion) {
-                                    let nameSet = [];
-
-                                    for (let blendShape of suggestion.morphs.defaults) {
-                                        app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                    }
-
-                                    for (let blendShapeAnimation of suggestion.morphs.animations) {
-                                        app.blendShapeAnimations.unshift(blendShapeAnimation);
-                                    }
-
-                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                        let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                        if (!nameSet.includes(blendShapeAnimation.name)) {
-                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                            nameSet.push(blendShapeAnimation.name);
-                                        }
-                                    }
-                                }
-
-                                waitTime = 0.0;
-                            } else {
-                                loopRequired = false;
-                            }
-                        }
-
-                        if (message.type.elapsed >= message.type.speed / 1000.0) {
-                            let index = message.type.buffer.length;
-                            let width = Math.floor(message.text.length / 2);
-                            let length = message.text.length;
-
-                            if (message.type.count >= width) {
-                                message.type.buffer += message.text.charAt(index);
-                            }
-
-                            if (message.type.count < length) {
-                                message.type.count += 1;
-                            }
-
-                            message.type.elapsed = 0;
-                        }
-                    } else {
-                        message.time += deltaTime;
-
-                        if (message.time >= message.duration) {
-                            message.type.reverse = true;
-                        }
-                    }
-
-                    if (message.text.length === message.type.buffer.length) {
-                        const characters = message.text.split('');
-
-                        app.text.splice(0);
-
-                        for (let i = 0; i < characters.length; i++) {
-                            app.text.push({ key: i, value: characters[i] });
-                        }
-                    } else {
-                        let charArray = new Array();
-                        let randomBuffer = '';
-
-                        for (let i = 0; i < message.text.length; i++) {
-                            if (charArray.indexOf(message.text.charAt(i)) == -1 && message.text.charAt(i).match(/\s/) == null) {
-                                charArray.push(message.text.charAt(i));
-                            }
-                        }
-
-                        for (let i = 0; i < message.type.count; i++) {
-                            if (charArray.length > 0) {
-                                randomBuffer += charArray[~~random(0, charArray.length - 1)];
-                            }
-                        }
-
-                        if (randomBuffer.length > message.type.buffer.length) {
-                            const characters = (message.type.buffer + randomBuffer.substring(message.type.buffer.length, randomBuffer.length)).split('');
-
-                            app.text.splice(0);
-
-                            for (let i = 0; i < characters.length; i++) {
-                                app.text.push({ key: i, value: characters[i] });
-                            }
-                        } else if (app.text.length !== message.type.buffer.length) {
-                            const characters = message.type.buffer.split('');
-
-                            app.text.splice(0);
-
-                            for (let i = 0; i < characters.length; i++) {
-                                app.text.push({ key: i, value: characters[i] });
-                            }
-                        }
-                    }
-
-                    if (loopRequired && messageData === null) {
-                        animationIndex = 0;
-                        messageData = app.currentAnimations[animationIndex];
-                        animationIndex += animationSkipFrames;
-                    }
-                } else {
-                    if (app.isSuggested && app.suggestionQueue.length == 0 && !app.isComputing) {
-                        const tempMessages1 = [].concat(app.messages);
-                        const tempTags = [].concat(app.tags);
-
-                        app.isComputing = true;
-
-                        new Promise(resolve => {
-                            let segmenter = new TinySegmenter();
-                            const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
-                            { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy },
-                            { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy },
-                            { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
-                            let suggestions = [];
-                            let tempMessages2 = [];
-                            let ids1 = [];
-                            let ids2 = [];
-
-                            for (let tag of tempTags.sort((x, y) => y.score - x.score)) {
-                                for (let message of tempMessages1.reverse()) {
-                                    if (!ids1.includes(message.id) && segmenter.segment(message.text).includes(tag.name)) {
-                                        let thread = null;
-
-                                        if ('thread' in message) {
-                                            for (let m of tempMessages1) {
-                                                if (message.thread == m.id) {
-                                                    thread = m;
-
-                                                    break;
-                                                }
-                                            }
-                                        }
-
-                                        if (thread === null) {
-                                            tempMessages2.push(message);
-                                        } else {
-                                            const item = presets[random(0, 3)];
-
-                                            suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: thread.text }, { time: 0, duration: 5, type: { elapsed: 0, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
-
-                                            if (!ids2.includes(thread.id)) {
-                                                ids2.push(thread.id);
-                                            }
-                                        }
-
-                                        ids1.push(message.id);
-                                    }
-                                }
-                            }
-
-                            for (const message of tempMessages2) {
-                                if (!ids2.includes(message.id)) {
-                                    const item = presets[random(0, 3)];
-
-                                    suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
-                                }
-                            }
-
-                            resolve(suggestions);
-                        }).then((result) => {
-                            if (app.isSuggested && result.length > 0) {
-                                for (const suggestion of result) {
-                                    app.suggestionQueue.push(suggestion);
-                                }
-
-                                if ('highlight' in app.suggestionQueue[0]) {
-                                    if ('text' in app.suggestionQueue[0].highlight) {
-                                        app.highlight = app.suggestionQueue[0].highlight.text;
-                                    } else {
-                                        app.highlight = null;
-                                    }
-
-                                    if ('image' in app.suggestionQueue[0].highlight) {
-                                        app.cover = app.suggestionQueue[0].highlight.image;
-                                    } else {
-                                        app.cover = null;
-                                    }
-                                }
-                            }
-
-                            app.isComputing = false;
-                        });
-                    }
-
-                    if (messageData === null) {
-                        app.currentAnimations.splice(0);
-
-                        if (app.animationsQueue.length > 0) {
-                            for (let animation of app.animationsQueue.shift()) {
-                                app.currentAnimations.push(animation);
-                            }
-
-                            idleTime = 0.0;
-                            activateTime = 0.0;
-                        } else {
-                            const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
-                            const idle = idles[random(0, 14)];
-
-                            if (idle in app.animations) {
-                                for (let animation of app.animations[idle]) {
-                                    app.currentAnimations.push(animation);
-                                }
-                            }
-
-                            if (app.blendShapeAnimationQueue.length > 0) {
-                                idleTime = 0.0;
-                                activateTime = 0.0;
-                            } else {
-                                idleTime += deltaTime;
-                                activateTime += deltaTime;
-
-                                if (activateTime >= activateThreshold) {
-                                    //app.talk();
-
-                                    idleTime = 0.0;
-                                    activateTime = 0.0;
-                                } else if (idleTime >= blinkThreshold) {
-                                    const durations = [0.5, 1.0];
-                                    const ends = [2.0, 4.0];
-                                    const index = random(0, 1);
-                                    const duration = durations[index];
-                                    const end = ends[index];
-                                    let nameSet = [];
-
-                                    for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
-                                        app.blendShapeAnimations.unshift(blendShapeAnimation);
-                                    }
-
-                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                        let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                        if (!nameSet.includes(blendShapeAnimation.name)) {
-                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                            nameSet.push(blendShapeAnimation.name);
-                                        }
-                                    }
-
-                                    idleTime = 0.0;
-                                }
-                            }
-                        }
-
-                        animationIndex = 0;
-                        messageData = app.currentAnimations[animationIndex];
-                        animationIndex += animationSkipFrames;
-                    } else if (app.blendShapeAnimationQueue.length > 0) {
-                        idleTime = 0.0;
-                        activateTime = 0.0;
-                    } else {
-                        idleTime += deltaTime;
-                        activateTime += deltaTime;
-
-                        if (activateTime >= activateThreshold) {
-                            if (app.sequenceQueue.length == 0) {
-                                //app.talk();
-                            }
-
-                            idleTime = 0.0;
-                            activateTime = 0.0;
-                        } else if (idleTime >= blinkThreshold) {
-                            const durations = [0.5, 1.0];
-                            const ends = [2.0, 4.0];
-                            const index = random(0, 1);
-                            const duration = durations[index];
-                            const end = ends[index];
-                            let nameSet = [];
-
-                            for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
-                                app.blendShapeAnimations.unshift(blendShapeAnimation);
-                            }
-
-                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                if (!nameSet.includes(blendShapeAnimation.name)) {
-                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                    nameSet.push(blendShapeAnimation.name);
-                                }
-                            }
-
-                            idleTime = 0.0;
-                        }
-                    }
-                }
-
-                if (app.message !== null) {
-                    if (app.message.type.reverse) {
-                        if (app.message.type.count > 0) {
-                            app.message.type.elapsed += deltaTime;
-
-                            if (app.message.type.elapsed >= app.message.type.speed / 1000.0) {
-                                let index = app.message.type.count - 1;
-
-                                if (index < app.message.text.length) {
-                                    let width = Math.floor(app.message.text.length / 2);
-
-                                    if (app.message.type.buffer.length <= width) {
-                                        app.message.type.count -= 1;
-                                    }
-
-                                    if (app.message.type.buffer.length > 0) {
-                                        app.message.type.buffer = app.message.type.buffer.substring(app.message.type.buffer.length - 2, app.message.type.buffer.length - 1);
-                                    }
-                                }
-
-                                app.message.type.elapsed = 0;
-                            }
-                        } else {
-                            /*if (suggestion.messages.length > 1) {
-                                suggestion.messages.shift();
-                            } else {
-                                if ('morphs' in suggestion) {
-                                    for (let blendShape of suggestion.morphs.defaults) {
-                                        app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                    }
-                                }
-
-
-                            }*/
-
-                            app.isPopup = false;
-                        }
-                    } else if (app.message.type.buffer.length < app.message.text.length) {
-                        if (app.message.type.elapsed >= 0) {
-                            app.message.type.elapsed += deltaTime;
-                        } else if (!app.isAnimating) {
-                            if (app.isPopup) {
-                                app.message.type.elapsed = deltaTime;
-                                //app.isBlinded = false;
-                                //app.currentAnimations.splice(0);
-
-                                /*if ('animation' in suggestion && suggestion.animation in app.animations) {
-                                    const skipFrames = 60 / 12;
-                                    let animations = app.animations[suggestion.animation];
-                                    let maxFrames = Math.min(animations.length, 60);
-                                    let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
-                                    let length = Math.round(90 / 24);
-
-                                    for (let i = 0; i < maxFrames; i += skipFrames) {
-                                        for (let j = 0; j < length; j++) {
-                                            app.currentAnimations.push(animations[offset + i]);
-                                        }
-                                    }
-
-                                    for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                        app.currentAnimations.push(animations[offset + i]);
-                                    }
-                                }
-
-                                if ('morphs' in suggestion) {
-                                    let nameSet = [];
-
-                                    for (let blendShape of suggestion.morphs.defaults) {
-                                        app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                    }
-
-                                    for (let blendShapeAnimation of suggestion.morphs.animations) {
-                                        app.blendShapeAnimations.unshift(blendShapeAnimation);
-                                    }
-
-                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                        let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                        if (!nameSet.includes(blendShapeAnimation.name)) {
-                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                            nameSet.push(blendShapeAnimation.name);
-                                        }
-                                    }
-                                }*/
-                            } else {
-                                app.isPopup = true;
-                            }
-                        }
-
-                        if (app.message.type.elapsed >= app.message.type.speed / 1000.0) {
-                            let index = app.message.type.buffer.length;
-                            let width = Math.floor(app.message.text.length / 2);
-                            let length = app.message.text.length;
-
-                            if (app.message.type.count >= width) {
-                                app.message.type.buffer += app.message.text.charAt(index);
-                            }
-
-                            if (app.message.type.count < length) {
-                                app.message.type.count += 1;
-                            }
-
-                            app.message.type.elapsed = 0;
-                        }
-                    } else {
-                        app.message.time += deltaTime;
-
-                        if (app.message.time >= app.message.duration) {
-                            app.message.type.reverse = true;
-                        }
-                    }
-
-                    if (app.message.text.length === app.message.type.buffer.length) {
-                        const characters = app.message.text.split('');
-
-                        app.text.splice(0);
-
-                        for (let i = 0; i < characters.length; i++) {
-                            app.text.push({ key: i, value: characters[i] });
-                        }
-                    } else {
-                        let charArray = new Array();
-                        let randomBuffer = '';
-
-                        for (let i = 0; i < app.message.text.length; i++) {
-                            if (charArray.indexOf(app.message.text.charAt(i)) == -1 && app.message.text.charAt(i).match(/\s/) == null) {
-                                charArray.push(app.message.text.charAt(i));
-                            }
-                        }
-
-                        for (let i = 0; i < app.message.type.count; i++) {
-                            if (charArray.length > 0) {
-                                randomBuffer += charArray[~~random(0, charArray.length - 1)];
-                            }
-                        }
-
-                        if (randomBuffer.length > app.message.type.buffer.length) {
-                            const characters = (app.message.type.buffer + randomBuffer.substring(app.message.type.buffer.length, randomBuffer.length)).split('');
-
-                            app.text.splice(0);
-
-                            for (let i = 0; i < characters.length; i++) {
-                                app.text.push({ key: i, value: characters[i] });
-                            }
-                        } else if (app.text.length !== app.message.type.buffer.length) {
-                            const characters = app.message.type.buffer.split('');
-
-                            app.text.splice(0);
-
-                            for (let i = 0; i < characters.length; i++) {
-                                app.text.push({ key: i, value: characters[i] });
-                            }
-                        }
-                    }
-                }
-
-                if (lookAnimation !== null) {
-                    lookAnimation.time += deltaTime;
-
-                    if (lookAnimation.time >= lookAnimation.duration) {
-                        lookAtTarget.position.x = lookAnimation.target.x;
-                        lookAtTarget.position.y = lookAnimation.target.y;
-                        lookAnimation = null;
-                    } else {
-                        const rate = lookAnimation.time / lookAnimation.duration;
-
-                        lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
-                        lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
-                    }
-                }
-
-                if (messageData) {
-                    for (let animation of messageData.animations) {
-                        switch (animation.bone) {
-                            case 'chest':
-                            case 'head':
-                            case 'hips':
-                            case 'jaw':
-                            case 'leftEye':
-                            case 'leftFoot':
-                            case 'leftHand':
-                            case 'leftIndexDistal':
-                            case 'leftIndexIntermediate':
-                            case 'leftIndexProximal':
-                            case 'leftLittleDistal':
-                            case 'leftLittleIntermediate':
-                            case 'leftLittleProximal':
-                            case 'leftLowerArm':
-                            case 'leftLowerLeg':
-                            case 'leftMiddleDistal':
-                            case 'leftMiddleIntermediate':
-                            case 'leftMiddleProximal':
-                            case 'leftRingDistal':
-                            case 'leftRingIntermediate':
-                            case 'leftRingProximal':
-                            case 'leftShoulder':
-                            case 'leftThumbDistal':
-                            case 'leftThumbIntermediate':
-                            case 'leftThumbProximal':
-                            case 'leftToes':
-                            case 'leftUpperArm':
-                            case 'leftUpperLeg':
-                            case 'neck':
-                            case 'rightEye':
-                            case 'rightFoot':
-                            case 'rightHand':
-                            case 'rightIndexDistal':
-                            case 'rightIndexIntermediate':
-                            case 'rightIndexProximal':
-                            case 'rightLittleDistal':
-                            case 'rightLittleIntermediate':
-                            case 'rightLittleProximal':
-                            case 'rightLowerArm':
-                            case 'rightLowerLeg':
-                            case 'rightMiddleDistal':
-                            case 'rightMiddleIntermediate':
-                            case 'rightMiddleProximal':
-                            case 'rightRingDistal':
-                            case 'rightRingIntermediate':
-                            case 'rightRingProximal':
-                            case 'rightShoulder':
-                            case 'rightThumbDistal':
-                            case 'rightThumbIntermediate':
-                            case 'rightThumbProximal':
-                            case 'rightToes':
-                            case 'rightUpperArm':
-                            case 'rightUpperLeg':
-                            case 'spine':
-                            case 'upperChest':
-                                break;
-                            case 'eye.L':
-                                animation.bone = 'leftEye';
-                                break;
-                            case 'foot.L':
-                                animation.bone = 'leftFoot';
-                                break;
-                            case 'hand.L':
-                                animation.bone = 'leftHand';
-                                break;
-                            case 'f_index.03.L':
-                                animation.bone = 'leftIndexDistal';
-                                break;
-                            case 'f_index.02.L':
-                                animation.bone = 'leftIndexIntermediate';
-                                break;
-                            case 'f_index.01.L':
-                                animation.bone = 'leftIndexProximal';
-                                break;
-                            case 'f_pinky.03.L':
-                                animation.bone = 'leftLittleDistal';
-                                break;
-                            case 'f_pinky.02.L':
-                                animation.bone = 'leftLittleIntermediate';
-                                break;
-                            case 'f_pinky.01.L':
-                                animation.bone = 'leftLittleProximal';
-                                break;
-                            case 'lower_arm.L':
-                                animation.bone = 'leftLowerArm';
-                                break;
-                            case 'shin.L':
-                                animation.bone = 'leftLowerLeg';
-                                break;
-                            case 'f_middle.03.L':
-                                animation.bone = 'leftMiddleDistal';
-                                break;
-                            case 'f_middle.02.L':
-                                animation.bone = 'leftMiddleIntermediate';
-                                break;
-                            case 'f_middle.01.L':
-                                animation.bone = 'leftMiddleProximal';
-                                break;
-                            case 'f_ring.03.L':
-                                animation.bone = 'leftRingDistal';
-                                break;
-                            case 'f_ring.02.L':
-                                animation.bone = 'leftRingIntermediate';
-                                break;
-                            case 'f_ring.01.L':
-                                animation.bone = 'leftRingProximal';
-                                break;
-                            case 'shoulder.L':
-                                animation.bone = 'leftShoulder';
-                                break;
-                            case 'thumb_distal.L':
-                                animation.bone = 'leftThumbDistal';
-                                break;
-                            case 'thumb_intermediate.L':
-                                animation.bone = 'leftThumbIntermediate';
-                                break;
-                            case 'thumb_proximal.L':
-                                animation.bone = 'leftThumbProximal';
-                                break;
-                            case 'toe.L':
-                                animation.bone = 'leftToes';
-                                break;
-                            case 'upper_arm.L':
-                                animation.bone = 'leftUpperArm';
-                                break;
-                            case 'thigh.L':
-                                animation.bone = 'leftUpperLeg';
-                                break;
-                            case 'eye.R':
-                                animation.bone = 'rightEye';
-                                break;
-                            case 'foot.R':
-                                animation.bone = 'rightFoot';
-                                break;
-                            case 'hand.R':
-                                animation.bone = 'rightHand';
-                                break;
-                            case 'f_index.03.R':
-                                animation.bone = 'rightIndexDistal';
-                                break;
-                            case 'f_index.02.R':
-                                animation.bone = 'rightIndexIntermediate';
-                                break;
-                            case 'f_index.01.R':
-                                animation.bone = 'rightIndexProximal';
-                                break;
-                            case 'f_pinky.03.R':
-                                animation.bone = 'rightLittleDistal';
-                                break;
-                            case 'f_pinky.02.R':
-                                animation.bone = 'rightLittleIntermediate';
-                                break;
-                            case 'f_pinky.01.R':
-                                animation.bone = 'rightLittleProximal';
-                                break;
-                            case 'lower_arm.R':
-                                animation.bone = 'rightLowerArm';
-                                break;
-                            case 'shin.R':
-                                animation.bone = 'rightLowerLeg';
-                                break;
-                            case 'f_middle.03.R':
-                                animation.bone = 'rightMiddleDistal';
-                                break;
-                            case 'f_middle.02.R':
-                                animation.bone = 'rightMiddleIntermediate';
-                                break;
-                            case 'f_middle.01.R':
-                                animation.bone = 'rightMiddleProximal';
-                                break;
-                            case 'f_ring.03.R':
-                                animation.bone = 'rightRingDistal';
-                                break;
-                            case 'f_ring.02.R':
-                                animation.bone = 'rightRingIntermediate';
-                                break;
-                            case 'f_ring.01.R':
-                                animation.bone = 'rightRingProximal';
-                                break;
-                            case 'shoulder.R':
-                                animation.bone = 'rightShoulder';
-                                break;
-                            case 'thumb_distal.R':
-                                animation.bone = 'rightThumbDistal';
-                                break;
-                            case 'thumb_intermediate.R':
-                                animation.bone = 'rightThumbIntermediate';
-                                break;
-                            case 'thumb_proximal.R':
-                                animation.bone = 'rightThumbProximal';
-                                break;
-                            case 'toe.R':
-                                animation.bone = 'rightToes';
-                                break;
-                            case 'upper_arm.R':
-                                animation.bone = 'rightUpperArm';
-                                break;
-                            case 'thigh.R':
-                                animation.bone = 'rightUpperLeg';
-                                break;
-                            case 'upper_chest':
-                                animation.bone = 'upperChest';
-                                break;
-                            default:
-                                animation.bone = null;
-                        }
-
-                        if (animation.bone && animation.rotation.length == 4) {
-                            try {
-                                app.vrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
-                                app.vrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
-                            } catch (e) {
-                                console.log(animation.bone);
-                            }
-                        }
-                    }
-                }
-
-                app.vrm.update(deltaTime);
-
-                /*if (currentMixer) {
-                    currentMixer.update(deltaTime);
-                }*/
-
-                renderer.render(scene, camera);
-            }
-
-            stats.update();
-        }
-
-        render();
-
         window.addEventListener('resize', (event) => {
             let container = app.$refs.container;
             let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
@@ -3889,6 +3954,33 @@
 
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
+
+            const size = app.$refs.three.getBoundingClientRect().height;
+
+            for (const element of document.body.querySelectorAll("#app>.ticker-wrap .ticker .item>div")) {
+                element.style.fontSize = size + "px";
+                element.style.lineHeight = size + "px";
+            }
+
+            app.$nextTick(() => {
+                let width = 0;
+
+                for (const element of document.body.querySelectorAll("#app>.ticker-wrap .ticker .item>div")) {
+                    width += element.getBoundingClientRect().width;
+                }
+
+                document.body.querySelector("#app>.ticker-wrap .ticker").animate([
+                    {
+                        transform: "translate3d(0, 0, 0)"
+                    },
+                    {
+                        transform: "translate3d(-" + width / 2 + "px, 0, 0)"
+                    }
+                ], {
+                    duration: 60000,
+                    iterations: Infinity
+                });
+            });
         });
         window.addEventListener('click', (event) => {
             raycaster.setFromCamera(mouse, camera);
