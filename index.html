@@ -1352,7 +1352,7 @@
                                             <div class="field">
                                                 <label class="checkbox" v-cloak>
                                                     <input type="radio" name="mode" checked="checked"
-                                                        @change="isLearning = false">
+                                                        @change="isLearning = false; isExpanded = false;">
                                                     <span class="custom"></span>
                                                     <span
                                                         class="title is-size-6 has-text-weight-bold has-text-black">出来事を投稿</span>
@@ -1362,7 +1362,8 @@
                                         <div class="level-item">
                                             <div class="field">
                                                 <label class="checkbox" v-cloak>
-                                                    <input type="radio" name="mode" @change="isLearning = true">
+                                                    <input type="radio" name="mode"
+                                                        @change="isLearning = true; isExpanded = false;">
                                                     <span class="custom"></span>
                                                     <span
                                                         class="title is-size-6 has-text-weight-bold has-text-black">言葉を教える</span>
@@ -1651,8 +1652,6 @@
                                 width += element.getBoundingClientRect().width;
                             }
 
-                            width = width / 2;
-
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
 
                             //width += document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
@@ -1662,7 +1661,7 @@
                                     transform: "translate3d(0, 0, 0)"
                                 },
                                 {
-                                    transform: "translate3d(-" + width + "px, 0, 0)"
+                                    transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                                 }
                             ], {
                                 duration: 10000,
@@ -3968,11 +3967,11 @@
             app.$nextTick(() => {
                 let width = 0;
 
-                for (const element of document.body.querySelectorAll("#app>.ticker-wrap .ticker .item>div")) {
+                for (const element of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
                     width += element.getBoundingClientRect().width;
                 }
 
-                document.body.querySelector("#app>.ticker-wrap .ticker").animate([
+                document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").animate([
                     {
                         transform: "translate3d(0, 0, 0)"
                     },
@@ -3980,7 +3979,7 @@
                         transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                     }
                 ], {
-                    duration: 60000,
+                    duration: 30000,
                     iterations: Infinity
                 });
             });
