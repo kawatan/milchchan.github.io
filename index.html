@@ -1664,7 +1664,7 @@
                                     transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                                 }
                             ], {
-                                duration: 10000,
+                                duration: 30000,
                                 iterations: Infinity
                             });
 
@@ -3956,33 +3956,6 @@
 
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
-
-            const size = app.$refs.three.getBoundingClientRect().height;
-
-            for (const element of document.body.querySelectorAll("#app>.ticker-wrap .ticker .item>div")) {
-                element.style.fontSize = size + "px";
-                element.style.lineHeight = size + "px";
-            }
-
-            app.$nextTick(() => {
-                let width = 0;
-
-                for (const element of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
-                    width += element.getBoundingClientRect().width;
-                }
-
-                document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").animate([
-                    {
-                        transform: "translate3d(0, 0, 0)"
-                    },
-                    {
-                        transform: "translate3d(-" + width / 2 + "px, 0, 0)"
-                    }
-                ], {
-                    duration: 30000,
-                    iterations: Infinity
-                });
-            });
         });
         window.addEventListener('click', (event) => {
             raycaster.setFromCamera(mouse, camera);
