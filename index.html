@@ -1651,6 +1651,8 @@
                                 width += element.getBoundingClientRect().width;
                             }
 
+                            width = width / 2;
+
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
 
                             //width += document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
@@ -1660,10 +1662,10 @@
                                     transform: "translate3d(0, 0, 0)"
                                 },
                                 {
-                                    transform: "translate3d(-" + width / 2 + "px, 0, 0)"
+                                    transform: "translate3d(-" + width + "px, 0, 0)"
                                 }
                             ], {
-                                duration: 30000,
+                                duration: 10000,
                                 iterations: Infinity
                             });
 
@@ -2772,7 +2774,6 @@
                                         app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
                                         app.blendShapeAnimations.splice(i, 1);
                                     } else {
-                                        console.log(THREE.VRMSchema.BlendShapePresetName.Blink);
                                         app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
                                     }
 
