@@ -146,6 +146,35 @@
             background-color: transparent;
         }
 
+        .ticker-wrap {
+            padding: 0;
+            width: 100%;
+            overflow: hidden;
+            box-sizing: content-box;
+            background-color: transparent;
+        }
+
+        .ticker-wrap .ticker {
+            display: inline-block;
+            white-space: nowrap;
+            padding: 0;
+            box-sizing: content-box;
+            animation-iteration-count: infinite;
+            animation-timing-function: linear;
+            /*animation-name: ticker;*/
+            animation-duration: 30s;
+            animation-play-state: paused;
+        }
+
+        .ticker-wrap .ticker .item {
+            display: inline-block;
+            padding: 0px 16px;
+        }
+
+        .ticker-wrap .ticker .item>div {
+            font-family: 'Noto Sans JP', sans-serif;
+        }
+
         .blind {
             position: fixed;
             top: 0;
@@ -156,10 +185,6 @@
             overflow: hidden;
             background: #64dafe url('/images/Stripes.png') repeat;
             animation: progress 0.5s linear 0s infinite;
-        }
-
-        #heading .level .level-item .field span.icon {
-            margin: 0px 8px 0px 0px;
         }
 
         #app {
@@ -210,6 +235,10 @@
             margin: 0;
         }
 
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field span.icon {
+            margin: 0px 8px 0px 0px;
+        }
+
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
             margin: 0;
             padding: 16px 16px 16px 16px;
@@ -253,45 +282,6 @@
             margin: 0;
             padding: 0;
             overflow: hidden;
-        }
-
-        .ticker-wrap {
-            padding: 0;
-            width: 100%;
-            overflow: hidden;
-            box-sizing: content-box;
-            background-color: transparent;
-        }
-
-        .ticker-wrap .ticker {
-            display: inline-block;
-            white-space: nowrap;
-            padding: 0;
-            box-sizing: content-box;
-            animation-iteration-count: infinite;
-            animation-timing-function: linear;
-            /*animation-name: ticker;*/
-            animation-duration: 30s;
-            animation-play-state: paused;
-        }
-
-        .ticker-wrap .ticker .item {
-            display: inline-block;
-            padding: 0px 16px;
-        }
-
-        .ticker-wrap .ticker .item>div {
-            font-family: 'Noto Sans JP', sans-serif;
-        }
-
-        #app>.ticker-wrap {
-            bottom: 0;
-            position: fixed;
-        }
-
-        #app>.ticker-wrap .ticker .item>div {
-            opacity: 0.5;
-            font-family: 'Gotham', 'Noto Sans JP', sans-serif;
         }
 
         #heading>.columns>.column>.columns:last-child {
