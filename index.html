@@ -1548,6 +1548,7 @@
         const clock = new THREE.Clock();
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
+        let vrmModel = null;
         let animationIndex = 0;
         const animationSkipFrames = 2;
         let idleTime = 0.0;
@@ -1599,7 +1600,6 @@
                     presetImages: null,
                     backgroundImages: [],
                     preloadImages: [],
-                    vrm: null,
                     animations: null,
                     animationsQueue: [],
                     currentAnimations: [],
@@ -1930,8 +1930,6 @@
                         document.body.querySelector("#twinkle").play();
                     }
 
-
-
                     return;
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
@@ -1946,7 +1944,7 @@
                         return (count || 0) + 1;
                     });
 
-                    if (this.vrm && 'jump' in this.animations) {
+                    if (vrmModel && 'jump' in this.animations) {
                         this.animationsQueue.push(this.animations['jump']);
                     }
 
@@ -2729,7 +2727,7 @@
                     const deltaTime = clock.getDelta();
                     const app = this;
 
-                    if (app.vrm) {
+                    if (vrmModel) {
                         let isActive = false;
                         let isAnimating = false;
                         let isDeforming = false;
@@ -2760,10 +2758,10 @@
                                     blendShapeAnimation.time += deltaTime;
 
                                     if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
-                                        app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+                                        vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
                                         app.blendShapeAnimations.splice(i, 1);
                                     } else {
-                                        app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
+                                        vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
                                     }
 
                                     isActive = true;
@@ -2822,7 +2820,7 @@
                                         let blendShapeAnimation = app.blendShapeAnimations[i];
 
                                         if (!nameSet.includes(blendShapeAnimation.name)) {
-                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                            vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
                                             nameSet.push(blendShapeAnimation.name);
                                         }
                                     }
@@ -2903,7 +2901,7 @@
                                 } else if (app.isBlinded && !isActive) {
                                     if ('morphs' in suggestion) {
                                         for (let blendShape of suggestion.morphs.defaults) {
-                                            app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                            vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
                                         }
                                     }
 
@@ -2946,7 +2944,7 @@
                                             let nameSet = [];
 
                                             for (let blendShape of suggestion.morphs.defaults) {
-                                                app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                                vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
                                             }
 
                                             for (let blendShapeAnimation of suggestion.morphs.animations) {
@@ -2957,7 +2955,7 @@
                                                 let blendShapeAnimation = app.blendShapeAnimations[i];
 
                                                 if (!nameSet.includes(blendShapeAnimation.name)) {
-                                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                    vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
                                                     nameSet.push(blendShapeAnimation.name);
                                                 }
                                             }
@@ -3172,7 +3170,7 @@
                                                 let blendShapeAnimation = app.blendShapeAnimations[i];
 
                                                 if (!nameSet.includes(blendShapeAnimation.name)) {
-                                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                    vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
                                                     nameSet.push(blendShapeAnimation.name);
                                                 }
                                             }
@@ -3215,7 +3213,7 @@
                                         let blendShapeAnimation = app.blendShapeAnimations[i];
 
                                         if (!nameSet.includes(blendShapeAnimation.name)) {
-                                            app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                            vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
                                             nameSet.push(blendShapeAnimation.name);
                                         }
                                     }
@@ -3253,7 +3251,7 @@
                                     } else {
                                         if ('morphs' in suggestion) {
                                             for (let blendShape of suggestion.morphs.defaults) {
-                                                app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                                vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
                                             }
                                         }
         
@@ -3293,7 +3291,7 @@
                                             let nameSet = [];
         
                                             for (let blendShape of suggestion.morphs.defaults) {
-                                                app.vrm.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                                vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
                                             }
         
                                             for (let blendShapeAnimation of suggestion.morphs.animations) {
@@ -3304,7 +3302,7 @@
                                                 let blendShapeAnimation = app.blendShapeAnimations[i];
         
                                                 if (!nameSet.includes(blendShapeAnimation.name)) {
-                                                    app.vrm.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                    vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
                                                     nameSet.push(blendShapeAnimation.name);
                                                 }
                                             }
@@ -3608,8 +3606,8 @@
 
                                 if (animation.bone && animation.rotation.length == 4) {
                                     try {
-                                        app.vrm.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
-                                        app.vrm.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
+                                        vrmModel.humanoid.getBoneNode(animation.bone).position.set(animation.position[0], animation.position[1], -animation.position[2]);
+                                        vrmModel.humanoid.getBoneNode(animation.bone).quaternion.set(-animation.rotation[0], -animation.rotation[1], animation.rotation[2], animation.rotation[3]);
                                     } catch (e) {
                                         console.log(animation.bone);
                                     }
@@ -3617,7 +3615,7 @@
                             }
                         }
 
-                        app.vrm.update(deltaTime);
+                        vrmModel.update(deltaTime);
 
                         /*if (currentMixer) {
                             currentMixer.update(deltaTime);
@@ -3767,7 +3765,7 @@
                                     }
 
                                     self.animations = animationDictionary;
-                                    self.vrm = vrm;
+                                    vrmModel = vrm;
 
                                     scene.add(vrm.scene);
 
@@ -3898,7 +3896,7 @@
                                 }
 
                                 if (received) {
-                                    if (!received.id && app.vrm) {
+                                    if (!received.id && vrmModel) {
                                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
 
@@ -3918,9 +3916,9 @@
                 });
             },
             unmounted: function () {
-                if (this.vrm !== null) {
-                    scene.remove(this.vrm.scene);
-                    this.vrm = null;
+                if (vrmModel !== null) {
+                    scene.remove(vrmModel.scene);
+                    vrmModel = null;
                 }
             }
         }).mount('#app');
@@ -3974,13 +3972,13 @@
             }
         });
         window.addEventListener('mousemove', (event) => {
-            /*if (currentVrm) {
+            /*if (vrmModel) {
         
                 const range = CAMERA_Z * Math.tan(CAMERA_FOV / 360.0 * Math.PI);
                 const px = (2.0 * event.clientX - window.innerWidth) / window.outerHeight * range;
                 const py = -(2.0 * event.clientY - window.outerHeight) / window.outerHeight * range;
         
-                currentVrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
+                vrmModel.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).position.set(px, py, 0.0);
             }*/
             mouse.x = (event.clientX / window.innerWidth) * 2.0 - 1.0;
             mouse.y = -(event.clientY / window.outerHeight) * 2.0 + 1.0;
@@ -4028,11 +4026,11 @@
                         e.target.result,
                         (gltf) => {
                             THREE.VRM.from(gltf).then((vrm) => {
-                                if (app.vrm !== null) {
-                                    scene.remove(app.vrm.scene);
+                                if (vrmModel !== null) {
+                                    scene.remove(vrmModel.scene);
                                 }
 
-                                app.vrm = vrm;
+                                vrmModel = vrm;
 
                                 scene.add(vrm.scene);
 
