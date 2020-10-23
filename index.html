@@ -1601,7 +1601,7 @@
                     words: 0,
                     animatedWords: 0,
                     likes: -1,
-                    stars: 0,
+                    stars: -1,
                     animatedStars: 0,
                     hints: [],
                     notifications: [],
@@ -3814,10 +3814,12 @@
                             if (count === null) {
                                 self.stars = 0;
                             } else {
-                                const particles = count - self.stars;
+                                if (self.stars >= 0) {
+                                    const particles = count - self.stars;
 
-                                if (particles > 0) {
-                                    window.pJSDom[0].pJS.fn.modes.pushParticles(particles);
+                                    if (particles > 0) {
+                                        window.pJSDom[0].pJS.fn.modes.pushParticles(particles);
+                                    }
                                 }
 
                                 self.stars = count;
