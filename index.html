@@ -175,6 +175,15 @@
             font-family: 'Noto Sans JP', sans-serif;
         }
 
+        .has-content-centered {
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .columns .is-vcentered {
+            align-items: center;
+        }
+
         .blind {
             position: fixed;
             top: 0;
@@ -288,8 +297,52 @@
             justify-content: center;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control .level:first-child .level-item {
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item:nth-child(1) {
             padding: 16px 16px 16px 16px;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item {
+            margin: 0;
+            padding: 0px 16px 16px 16px;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level {
+            margin: 0px -16px 0px -16px;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level>.level-item {
+            margin: 0px 16px 16px 16px;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child h1 {
+            margin: 0px 0px 8px 0px;
+            font-family: "Gotham", "Noto Sans JP", sans-serif;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child h2 {
+            margin: 0;
+            font-family: "Gotham", "Noto Sans JP", sans-serif;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child p {
+            font-family: "Gotham", "Noto Sans JP", sans-serif;
+            line-height: 2.0rem;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child hr {
+            margin: 24px auto 8px auto;
+            border-width: 0;
+            padding: 0;
+            width: 32px;
+            height: 4px;
+            background-color: #000000;
+            text-align: center !important;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .icon {
+            border-radius: 290486px;
+            padding: 16px;
+            background: #000000;
         }
 
         #heading .navbar-item .tags>.control {
@@ -324,10 +377,6 @@
             box-shadow: 10px 10px 30px #d0d0d0,
                 -10px -10px 30px #ffffff;*/
             height: initial;
-        }
-
-        .columns .is-vcentered {
-            align-items: center;
         }
 
         #container {
@@ -383,11 +432,6 @@
 
         #input .control .is-primary {
             background-color: #30c0f5;
-        }
-
-        .has-content-centered {
-            margin-left: auto;
-            margin-right: auto;
         }
 
         /*.media-content .level {
@@ -597,7 +641,6 @@
             align-items: center;
             justify-content: start;
         }
-
 
         label.checkbox input[type=checkbox],
         label.checkbox input[type=radio] {
@@ -1030,7 +1073,7 @@
                                                 </div>
                                             </div>
                                         </nav>
-                                        <nav class="level">
+                                        <!--<nav class="level">
                                             <div class="level-item has-text-centered">
                                                 <div class="field">
                                                     <h6
@@ -1039,7 +1082,7 @@
                                                     </h6>
                                                 </div>
                                             </div>
-                                        </nav>
+                                        </nav>-->
                                     </div>
                                 </div>
                                 <div class="column is-3 is-mobile">
@@ -1115,6 +1158,48 @@
                                         </div>
                                     </nav>-->
                                     <nav class="level" v-if="isRevealed" v-cloak>
+                                        <div class="level-item">
+                                            <article class="media">
+                                                <figure class="media-content">
+                                                    <p class="image is-64x64">
+                                                        <img class="is-rounded" src="/images/Milch.png" alt="ミルヒちゃん">
+                                                    </p>
+                                                </figure>
+                                            </article>
+                                        </div>
+                                        <div class="level-item">
+                                            <article class="media">
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <h1 class="is-size-3 is-uppercase has-text-weight-bold has-text-black">milchchan.com</h1>
+                                                        <h2 class="is-size-6 has-text-weight-bold has-text-black">#milchchannel</h2>
+                                                        <hr>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                        <!--<div class="level-item">
+                                            <article class="media">
+                                                <div class="media-content">
+                                                    <p class="content is-size-6 has-text-weight-bold has-text-black">
+                                                        
+                                                    </p>
+                                                </div>
+                                            </article>
+                                        </div>-->
+                                        <div class="level-item">
+                                            <div class="level is-mobile">
+                                                <div class="level-item">
+                                                    <a href="https://twitter.com/milchchan"><span class="icon is-small has-text-white"><i class="fab fa-twitter"></i></span></a>
+                                                </div>
+                                                <div class="level-item">
+                                                    <a href="https://instagram.com/milchchan"><span class="icon is-small has-text-white"><i class="fab fa-instagram"></i></span></a>
+                                                </div>
+                                                <div class="level-item">
+                                                    <a href="https://github.com/milchchan"><span class="icon is-small has-text-white"><i class="fab fa-github"></i></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <transition name="fade" mode="out-in">
                                             <div class="level-item" v-if="isUpdating" key="updating">
                                                 <span class="has-text-black">
@@ -1148,7 +1233,8 @@
                                                 <div class="tags are-medium field is-grouped is-grouped-multiline">
                                                     <div class="control" v-for="tag in tags" v-bind:key="tag.index">
                                                         <div class="tags has-addons">
-                                                            <button class="button tag is-rounded is-size-7 has-text-weight-bold"
+                                                            <button
+                                                                class="button tag is-rounded is-size-7 has-text-weight-bold"
                                                                 type="button"
                                                                 v-bind:style="{ color: 'rgba(0, 0, 0, ' + (0.25 + 0.75 * tag.score) + ')' }"
                                                                 @click="learn(tag.name); isRevealed = false;">{{ tag.name }}</button>
