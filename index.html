@@ -3251,10 +3251,9 @@
                                         }
                                     }
 
-                                    if (app.blendShapeAnimationQueue.length > 0) {
-                                        idleTime = 0.0;
-                                        activateTime = 0.0;
-                                    } else if (app.sequenceQueue.length > 0) {
+                                    if (app.blendShapeAnimationQueue.length > 0 || app.sequenceQueue.length > 0) {
+                                        idleTime = activateTime = 0.0;
+                                    } else {
                                         idleTime += deltaTime;
                                         activateTime += deltaTime;
 
@@ -3285,25 +3284,20 @@
 
                                             idleTime = 0.0;
                                         }
-                                    } else {
-                                        idleTime = activateTime = 0.0;
                                     }
                                 }
 
                                 animationIndex = 0;
                                 messageData = app.currentAnimations[animationIndex];
                                 animationIndex += animationSkipFrames;
-                            } else if (app.blendShapeAnimationQueue.length > 0) {
-                                idleTime = 0.0;
-                                activateTime = 0.0;
+                            } else if (app.blendShapeAnimationQueue.length > 0 || app.sequenceQueue.length > 0) {
+                                idleTime = activateTime = 0.0;
                             } else {
                                 idleTime += deltaTime;
                                 activateTime += deltaTime;
 
                                 if (activateTime >= activateThreshold) {
-                                    if (app.sequenceQueue.length == 0) {
-                                        //app.talk();
-                                    }
+                                    app.talk();
 
                                     idleTime = 0.0;
                                     activateTime = 0.0;
