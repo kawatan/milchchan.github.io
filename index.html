@@ -1511,14 +1511,12 @@
                 </div>
             </nav>
         </transition>
-        <audio id="alert" preload="auto">
-            <source src="/sounds/plastic_hi.mp3" type="audio/mpeg" />
-            <source src="/sounds/plastic_hi.m4a" type="audio/mp4" />
-            <source src="/sounds/plastic_hi.wav" type="audio/wav" />
+        <audio preload="auto" ref="alert">
+            <source src="/sounds/float001.mp3" type="audio/mpeg" />
+            <source src="/sounds/float001.wav" type="audio/wav" />
         </audio>
-        <audio id="twinkle" preload="auto">
+        <audio preload="auto" ref="twinkle">
             <source src="/sounds/plastic_up_hi.mp3" type="audio/mpeg" />
-            <source src="/sounds/plastic_up_hi.m4a" type="audio/mp4" />
             <source src="/sounds/plastic_up_hi.wav" type="audio/wav" />
         </audio>
     </div>
@@ -1898,8 +1896,7 @@
 
                             this.input = '';
                             this.currentInputLength = 0;
-
-                            document.body.querySelector("#alert").play();
+                            this.$refs.alert.play();
 
                             if (tokens.length > 5) {
                                 tokens.splice(5);
@@ -2034,7 +2031,7 @@
                         this.suggestionQueue.splice(0);
                         this.isBlinded = true;
                         this.isSuggested = true;
-                        document.body.querySelector("#twinkle").play();
+                        this.$refs.twinkle.play();
                     }
 
                     return;
@@ -2193,6 +2190,9 @@
                     this.isPrompted = true;
                 },
                 talk: async function () {
+                    this.$refs.alert.play();
+
+                    return;
                     function generateUuid() {
                         // https://github.com/GoogleChrome/chrome-platform-analytics/blob/master/src/internal/identifier.js
                         // const FORMAT: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
@@ -2256,7 +2256,7 @@
                             return (count || 0) + delta;
                         });
 
-                        document.body.querySelector("#twinkle").play();
+                        this.$refs.twinkle.play();
                     }
                     //{ messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: generatedText }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
 
