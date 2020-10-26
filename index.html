@@ -69,6 +69,11 @@
             cursor: pointer;
         }
 
+        a,
+        a:focus {
+            outline: none;
+        }
+
         .navbar {
             margin: 0;
             padding: 0;
@@ -133,10 +138,15 @@
 
         #three {
             position: fixed;
-            z-index: 0;
-            display: block;
+            /*display: block;*/
             width: 100%;
             height: 100vh;
+            overflow: hidden;
+        }
+
+        #three>canvas {
+            overflow: hidden;
+            outline: none;
         }
 
         #particles-js {
@@ -145,6 +155,7 @@
             width: 100%;
             height: 100vh;
             background-color: transparent;
+            overflow: hidden;
         }
 
         .ticker-wrap {
