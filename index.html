@@ -1552,7 +1552,7 @@
                                         </div>
                                         <div class="control is-expanded">
                                             <input class="input is-rounded" type="text"
-                                                v-bind:class="{'is-danger': inputHasError}" v-model="input"
+                                                v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="isPrompted" v-model="input"
                                                 @input="change" v-cloak>
                                         </div>
                                         <div class="control">
