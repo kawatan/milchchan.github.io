@@ -42,10 +42,10 @@
             top: 0;
             width: 100%;
             height: 100vh;
-            /*background: url('/images/Background.png') 50% 50% repeat;*/
-            /*background: url('/images/Stripes.png') 50% 50% repeat;*/
+            background: url('/images/Background.png') 50% 50% repeat;
+            /*background: url('/images/Stripes@3x.png') 50% 50% repeat;*/
             content: "";
-            /*animation: loop 10s linear infinite;*/
+            animation: loop 60s linear infinite;
         }
 
         body {
@@ -188,6 +188,10 @@
             align-items: center;
         }
 
+        .ticker-wrap .ticker .item .media .media-left {
+            margin: 0px 8px 0px 0px;
+        }
+
         .has-content-centered {
             margin-left: auto;
             margin-right: auto;
@@ -205,8 +209,9 @@
             height: 100vh;
             transform: translate3d(0, 0%, 0);
             overflow: hidden;
-            background: #64dafe url('/images/Stripes.png') 50% 50% repeat;
-            animation: progress 0.5s linear 0s infinite;
+            background: #64dafe;
+            /*background: #64dafe url('/images/Background.png') 50% 50% repeat;
+            animation: progress 0.5s linear 0s infinite;*/
         }
 
         #app {
@@ -552,9 +557,18 @@
                 -10px -10px 30px #ffffff;*/
         }
 
+        #popup .columns>.column>.control:first-child .level:first-child .media .media-left {
+            margin: 0px 8px 0px 0px;
+            padding: 0;
+        }
+
         #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media {
             margin: 0;
             padding: 0px 16px 0px 16px;
+        }
+
+        #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media .media-content {
+            overflow: hidden;
         }
 
         #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media span {
@@ -930,7 +944,7 @@
             }
 
             100% {
-                background-position: 128px -128px;
+                background-position: 100px -100px;
             }
         }
 
@@ -1043,7 +1057,7 @@
 <body>
     <div id="particles-js"></div>
     <div id="app">
-        <div class="background is-hidden">
+        <div class="background">
             <div v-bind:style="{ backgroundImage: 'url(' + image.url + ')', marginLeft: image.index * 100 + '%' }"
                 v-for="image in backgroundImages" v-bind:key="image" v-cloak></div>
             <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
@@ -1428,17 +1442,18 @@
                 <div class=" navbar-item is-expanded columns is-desktop">
                     <div class="column is-half has-content-centered is-mobile">
                         <div class="control">
-                            <nav class="level">
-                                <article class="media">
+                            <nav class="level is-mobile">
+                                <article class="media" v-if="character !== null">
                                     <figure class="media-left">
                                         <span class="image is-32x32">
-                                            <img class="is-rounded" src="/images/Milch.png" alt="ミルヒちゃん">
+                                            <img class="is-rounded" v-bind:src="character.image"
+                                                v-bind:alt="character.name" v-cloak>
                                         </span>
                                     </figure>
                                     <div class="media-content">
                                         <div class="content has-text-left">
-                                            <span class="is-size-6 has-text-weight-bold has-text-white">
-                                                ミルヒちゃん
+                                            <span class="is-size-6 has-text-weight-bold has-text-white" v-cloak>
+                                                {{ character.name }}
                                             </span>
                                         </div>
                                     </div>
@@ -1669,12 +1684,12 @@
         controls.enableKeys = false;
         controls.screenSpacePanning = true;
         controls.enableDamping = true;
-        controls.minPolarAngle = 30 * Math.PI / 180;
+        /*controls.minPolarAngle = 30 * Math.PI / 180;
         controls.maxPolarAngle = 150 * Math.PI / 180;
         controls.minAzimuthAngle = -45 * Math.PI / 180;
         controls.maxAzimuthAngle = 45 * Math.PI / 180;
         controls.minDistance = 0.75;
-        controls.maxDistance = 1.5;
+        controls.maxDistance = 1.5;*/
         controls.target.set(0.0, 0.95, 0.025);
         controls.update();
 
@@ -2146,7 +2161,12 @@
                     }, function (error, committed, snapshot) {
                         if (committed) {
                             if (isNew) {
+                                database.ref(databaseRoot + "/stars").transaction(function (count) {
+                                    return (count || 0) + 1;
+                                });
+
                                 self.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', snapshot.key), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                self.$refs.twinkle.play();
                             }
                             //console.log(snapshot);
                             //console.log(isNew);
@@ -2256,7 +2276,6 @@
 
                     let sequences = [];
                     let sequence = [];
-                    let delta = 0;
 
                     for (const sequence of this.character.sequences) {
                         if (sequence.name == "Activate") {
@@ -2272,12 +2291,6 @@
                             [text, cache] = await this.generate(obj.text);
 
                             sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: text });
-
-                            for (const key in cache) {
-                                if (typeof cache[key] !== "undefined") {
-                                    delta++;
-                                }
-                            }
                         } else {
                             sequence.push(obj);
                         }
@@ -2291,14 +2304,6 @@
 
                     if (sequence.length > 0) {
                         this.sequenceQueue.push(sequence);
-                    }
-
-                    if (delta > 0) {
-                        database.ref(databaseRoot + "/stars").transaction(function (count) {
-                            return (count || 0) + delta;
-                        });
-
-                        this.$refs.twinkle.play();
                     }
                     //{ messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: generatedText }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
 
@@ -2462,9 +2467,11 @@
                         });
                     }
 
-                    setTimeout(() => {
-                        this.isBlinded = true;
-                    }, 30000);
+                    if (this.presetImages.length > 1) {
+                        setTimeout(() => {
+                            this.isBlinded = true;
+                        }, 50000);
+                    }
                 },
                 load: function (url) {
                     let isCompleted = true;
@@ -2943,7 +2950,7 @@
                                 }
 
                                 this.sequenceQueue.push(this.prepare(sequences));
-                                
+
                                 idleTime = 0.0;
                             }
                         }
