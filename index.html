@@ -3238,49 +3238,28 @@
 
                                     idleTime = 0.0;
                                     activateTime = 0.0;
+                                } else if (app.blendShapeAnimationQueue.length > 0 || app.sequenceQueue.length > 0) {
+                                    idleTime = activateTime = 0.0;
                                 } else {
-                                    const idles = ['idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle1', 'idle2'];
-                                    const idle = idles[random(0, 14)];
+                                    idleTime += deltaTime;
+                                    activateTime += deltaTime;
 
-                                    if (idle in app.animations) {
-                                        for (let animation of app.animations[idle]) {
-                                            app.currentAnimations.push(animation);
-                                        }
-                                    }
+                                    if (activateTime >= activateThreshold) {
+                                        app.talk();
 
-                                    if (app.blendShapeAnimationQueue.length > 0 || app.sequenceQueue.length > 0) {
                                         idleTime = activateTime = 0.0;
-                                    } else {
-                                        idleTime += deltaTime;
-                                        activateTime += deltaTime;
+                                    } else if (idleTime >= blinkThreshold) {
+                                        let sequences = [];
 
-                                        if (activateTime >= activateThreshold) {
-                                            app.talk();
-
-                                            idleTime = activateTime = 0.0;
-                                        } else if (idleTime >= blinkThreshold) {
-                                            const durations = [0.5, 1.0];
-                                            const ends = [2.0, 4.0];
-                                            const index = random(0, 1);
-                                            const duration = durations[index];
-                                            const end = ends[index];
-                                            let nameSet = [];
-
-                                            for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
-                                                app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                        for (const sequence of this.character.sequences) {
+                                            if (sequence.name == "Idle") {
+                                                sequences.push(sequence);
                                             }
-
-                                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                                let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                                if (!nameSet.includes(blendShapeAnimation.name)) {
-                                                    vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                                    nameSet.push(blendShapeAnimation.name);
-                                                }
-                                            }
-
-                                            idleTime = 0.0;
                                         }
+
+                                        this.sequenceQueue.push(this.prepare(sequences));
+
+                                        idleTime = 0.0;
                                     }
                                 }
 
@@ -3292,35 +3271,6 @@
                             } else {
                                 idleTime += deltaTime;
                                 activateTime += deltaTime;
-
-                                if (activateTime >= activateThreshold) {
-                                    app.talk();
-
-                                    idleTime = 0.0;
-                                    activateTime = 0.0;
-                                } else if (idleTime >= blinkThreshold) {
-                                    const durations = [0.5, 1.0];
-                                    const ends = [2.0, 4.0];
-                                    const index = random(0, 1);
-                                    const duration = durations[index];
-                                    const end = ends[index];
-                                    let nameSet = [];
-
-                                    for (let blendShapeAnimation of [{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: duration, start: 0.0, end: end }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: duration, start: 0.0, end: end }]) {
-                                        app.blendShapeAnimations.unshift(blendShapeAnimation);
-                                    }
-
-                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                        let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                        if (!nameSet.includes(blendShapeAnimation.name)) {
-                                            vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                            nameSet.push(blendShapeAnimation.name);
-                                        }
-                                    }
-
-                                    idleTime = 0.0;
-                                }
                             }
                         }
 
@@ -3842,6 +3792,7 @@
                                     win: '/models/animations/animation-win.json'
                                 };
                                 let animationDictionary = {};
+                                let sequences = [];
 
                                 try {
                                     if (channel.length == 0) {
@@ -3863,8 +3814,6 @@
                                                 throw new Error(response3.statusText);
                                             }
                                         }
-
-                                        self.animationsQueue.push(animationDictionary['jump']);
                                     }
 
                                     self.animations = animationDictionary;
@@ -3872,18 +3821,24 @@
 
                                     scene.add(vrm.scene);
 
-                                    vrm.scene.rotation.y = Math.PI
+                                    vrm.scene.rotation.y = Math.PI;
+                                    vrm.lookAt.target = lookAtTarget;
 
                                     //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
                                     //currentMixer = prepareAnimation(vrm);
-
-                                    vrm.lookAt.target = lookAtTarget;
 
                                     self.progress = 0.0;
                                 } catch (e) {
                                     console.error(e);
                                 }
+
+                                for (const sequence of self.character.sequences) {
+                                    if (sequence.name == "Start") {
+                                        sequences.push(sequence);
+                                    }
+                                }
+
+                                self.sequenceQueue.push(this.prepare(sequences));
                             });
                         },
                         (progress) => self.progress = progress.loaded / progress.total,
@@ -4131,6 +4086,8 @@
                         e.target.result,
                         (gltf) => {
                             THREE.VRM.from(gltf).then((vrm) => {
+                                let sequences = [];
+
                                 if (vrmModel !== null) {
                                     scene.remove(vrmModel.scene);
                                 }
@@ -4139,13 +4096,18 @@
 
                                 scene.add(vrm.scene);
 
-                                //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
-
-                                //currentMixer = prepareAnimation(vrm);
-
+                                vrm.scene.rotation.y = Math.PI;
                                 vrm.lookAt.target = lookAtTarget;
 
                                 app.progress = 0.0;
+
+                                for (const sequence of app.character.sequences) {
+                                    if (sequence.name == "Start") {
+                                        sequences.push(sequence);
+                                    }
+                                }
+
+                                app.sequenceQueue.push(this.prepare(sequences));
                             });
                         },
                         (progress) => app.progress = progress.loaded / progress.total,
