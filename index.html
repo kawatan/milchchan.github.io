@@ -170,10 +170,11 @@
         .ticker-wrap .ticker .item {
             display: inline-block;
             padding: 0px 16px;
+            vertical-align: middle;
         }
 
-        .ticker-wrap .ticker .item>div {
-            font-family: 'Noto Sans JP', sans-serif;
+        .ticker-wrap .ticker .item .media {
+            align-items: center;
         }
 
         .has-content-centered {
@@ -887,9 +888,9 @@
             transition: all 0.5s ease;
         }
 
-        .ticker-item-list-move {
+        /*.ticker-item-list-move {
             transition: transform 0.5s ease;
-        }
+        }*/
 
         .ticker-item-list-enter-from,
         .ticker-item-list-leave-to {
@@ -1119,15 +1120,43 @@
                                                             <transition-group name="ticker-item-list" class="ticker"
                                                                 tag="div"
                                                                 v-bind:style="{ animationPlayState: 'running' }">
-                                                                <div class="item" v-for="message in messages"
-                                                                    v-bind:key="message.id">
-                                                                    <div class="is-size-6 has-text-weight-bold has-text-white"
-                                                                        v-cloak>{{ message.text }}</div>
+                                                                <div class="item" v-show="messages.length > 0" key="merku">
+                                                                    <article class="media">
+                                                                        <figure class="media-left">
+                                                                            <span class="image is-32x32">
+                                                                                <img class="is-rounded" src="/images/Merku.png" alt="メルクちゃん">
+                                                                            </span>
+                                                                        </figure>
+                                                                        <div class="media-content">
+                                                                            <div class="content has-text-left">
+                                                                                <span class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </article>
                                                                 </div>
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id">
-                                                                    <div class="is-size-6 has-text-weight-bold has-text-white"
-                                                                        v-cloak>{{ message.text }}</div>
+                                                                    <span class="is-size-6 has-text-weight-bold has-text-white"
+                                                                        v-cloak>{{ message.text }}</span>
+                                                                </div>
+                                                                <div class="item" v-show="messages.length > 0" key="merku-alt">
+                                                                    <article class="media">
+                                                                        <figure class="media-left">
+                                                                            <span class="image is-32x32">
+                                                                                <img class="is-rounded" src="/images/Merku.png" alt="メルクちゃん">
+                                                                            </span>
+                                                                        </figure>
+                                                                        <div class="media-content">
+                                                                            <div class="content has-text-left">
+                                                                                <span class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </article>
+                                                                </div>
+                                                                <div class="item" v-for="message in messages"
+                                                                    v-bind:key="message.id + '-alt'">
+                                                                    <span class="is-size-6 has-text-weight-bold has-text-white"
+                                                                        v-cloak>{{ message.text }}</span>
                                                                 </div>
                                                             </transition-group>
                                                         </div>
@@ -1446,7 +1475,7 @@
                                                         @change="isLearning = false; isExpanded = false;">
                                                     <span class="custom"></span>
                                                     <span
-                                                        class="title is-size-6 has-text-weight-bold has-text-black">出来事を投稿</span>
+                                                        class="title is-size-6 has-text-weight-bold has-text-black">ニュースを投稿</span>
                                                 </label>
                                             </div>
                                         </div>
@@ -1513,8 +1542,8 @@
             </nav>
         </transition>
         <audio preload="auto" ref="alert">
-            <source src="/sounds/float001.mp3" type="audio/mpeg" />
-            <source src="/sounds/float001.wav" type="audio/wav" />
+            <source src="/sounds/float_001.mp3" type="audio/mpeg" />
+            <source src="/sounds/float_001.wav" type="audio/wav" />
         </audio>
         <audio preload="auto" ref="twinkle">
             <source src="/sounds/plastic_up_hi.mp3" type="audio/mpeg" />
