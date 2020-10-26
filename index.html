@@ -1316,7 +1316,7 @@
                                                                 class="button tag is-rounded is-size-7 has-text-weight-bold"
                                                                 type="button"
                                                                 v-bind:style="{ color: 'rgba(0, 0, 0, ' + (0.25 + 0.75 * tag.score) + ')' }"
-                                                                @click="learn(tag.name); isRevealed = false;">{{ tag.name }}</button>
+                                                                @click="input=tag.name; learn(tag.name); isRevealed = false;">{{ tag.name }}</button>
                                                         </div>
                                                     </div>
                                                 </div>
