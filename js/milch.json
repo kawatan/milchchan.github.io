@@ -1,5 +1,6 @@
 {
     "name": "ミルヒ",
+    "image": "/images/Milch.png",
     "model": "/models/Milch.vrm",
     "sequences": [
         {
