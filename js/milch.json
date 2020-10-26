@@ -3,6 +3,24 @@
     "model": "/models/Milch.vrm",
     "sequences": [
         {
+            "name": "Start",
+            "sequence": [
+                {
+                    "type": "Animation",
+                    "name": "jump"
+                }
+            ]
+        },
+        {
+            "name": "Idle",
+            "sequence": [
+                {
+                    "type": "Sequence",
+                    "name": "Blink"
+                }
+            ]
+        },
+        {
             "name": "Learn",
             "sequence": [
                 {
@@ -44,6 +62,52 @@
                 {
                     "type": "Sequence",
                     "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Blink",
+            "sequence": [
+                {
+                    "type": "Animation",
+                    "name": "idle1"
+                },
+                {
+                    "type": "Animation",
+                    "name": "blink_l",
+                    "duration": 0.5,
+                    "start": 0.0,
+                    "end": 2.0
+                },
+                {
+                    "type": "Animation",
+                    "name": "blink_r",
+                    "duration": 0.5,
+                    "start": 0.0,
+                    "end": 2.0
+                }
+            ]
+        },
+        {
+            "name": "Blink",
+            "sequence": [
+                {
+                    "type": "Animation",
+                    "name": "idle1"
+                },
+                {
+                    "type": "Animation",
+                    "name": "blink_l",
+                    "duration": 1.0,
+                    "start": 0.0,
+                    "end": 4.0
+                },
+                {
+                    "type": "Animation",
+                    "name": "blink_r",
+                    "duration": 1.0,
+                    "start": 0.0,
+                    "end": 4.0
                 }
             ]
         },
