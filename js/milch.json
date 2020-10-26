@@ -131,10 +131,6 @@
             "sequence": [
                 {
                     "type": "Animation",
-                    "name": "jump"
-                },
-                {
-                    "type": "Animation",
                     "name": "joy",
                     "duration": 3.0,
                     "start": 1.0,
