@@ -1121,7 +1121,7 @@
                                                                 tag="div"
                                                                 v-bind:style="{ animationPlayState: 'running' }">
                                                                 <div class="item" v-show="messages.length > 0"
-                                                                    key="merku">
+                                                                    key="merku" v-cloak>
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <span class="image is-24x24">
@@ -1145,7 +1145,7 @@
                                                                         v-cloak>{{ message.text }}</span>
                                                                 </div>
                                                                 <div class="item" v-show="messages.length > 0"
-                                                                    key="merku-alt">
+                                                                    key="merku-alt" v-cloak>
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <span class="image is-24x24">
