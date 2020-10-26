@@ -1757,10 +1757,8 @@
                     backgroundImages: [],
                     preloadImages: [],
                     animations: null,
-                    animationsQueue: [],
                     currentAnimations: [],
                     blendShapeAnimations: [],
-                    blendShapeAnimationQueue: [],
                     highlight: null,
                     cover: null,
                     isPreloading: false,
@@ -2098,10 +2096,6 @@
                     database.ref(databaseChannel + "/likes").transaction(function (count) {
                         return (count || 0) + 1;
                     });
-
-                    if (vrmModel && 'jump' in this.animations) {
-                        this.animationsQueue.push(this.animations['jump']);
-                    }
 
                     window.pJSDom[0].pJS.fn.modes.pushParticles(1);
 
@@ -2898,14 +2892,14 @@
                             isAnimating = true;
                         }
 
-                        if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
+                        /*if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
                             for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
                                 app.blendShapeAnimations.unshift(blendShapeAnimation);
                             }
 
                             isActive = true;
                             isDeforming = true;
-                        }
+                        }*/
 
                         for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
                             let blendShapeAnimation = app.blendShapeAnimations[i];
@@ -2922,9 +2916,35 @@
                                     }
 
                                     isActive = true;
+                                    isDeforming = true;
                                 }
 
                                 updatedBlendShapeNames.push(blendShapeAnimation.name);
+                            }
+                        }
+
+                        if (app.sequenceQueue.length > 0) {
+                            idleTime = 0.0;
+                        } else {
+                            idleTime += deltaTime;
+                            activateTime += deltaTime;
+
+                            if (activateTime >= activateThreshold) {
+                                app.talk();
+
+                                idleTime = activateTime = 0.0;
+                            } else if (idleTime >= blinkThreshold) {
+                                let sequences = [];
+
+                                for (const sequence of this.character.sequences) {
+                                    if (sequence.name == "Idle") {
+                                        sequences.push(sequence);
+                                    }
+                                }
+
+                                this.sequenceQueue.push(this.prepare(sequences));
+                                
+                                idleTime = 0.0;
                             }
                         }
 
@@ -2933,28 +2953,34 @@
 
                             if (sequence.length > 0) {
                                 if (sequence[0].type == "Animation") {
-                                    if (!isAnimating && sequence[0].name in app.animations) {
-                                        /*const skipFrames = 60 / 12;
-                                        let animations = app.animations[suggestion.animation];
-                                        let maxFrames = Math.min(animations.length, 60);
-                                        let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
-                                        let length = Math.round(90 / 24);
-            
-                                        for (let i = 0; i < maxFrames; i += skipFrames) {
-                                            for (let j = 0; j < length; j++) {
-                                                app.currentAnimations.push(animations[offset + i]);
+                                    if (sequence[0].name in app.animations) {
+                                        if (!isAnimating) {
+                                            /*const skipFrames = 60 / 12;
+                                            let animations = app.animations[suggestion.animation];
+                                            let maxFrames = Math.min(animations.length, 60);
+                                            let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                            let length = Math.round(90 / 24);
+                
+                                            for (let i = 0; i < maxFrames; i += skipFrames) {
+                                                for (let j = 0; j < length; j++) {
+                                                    app.currentAnimations.push(animations[offset + i]);
+                                                }
                                             }
-                                        }
-            
-                                        for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                            app.currentAnimations.push(animations[offset + i]);
-                                        }*/
+                
+                                            for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
+                                                app.currentAnimations.push(animations[offset + i]);
+                                            }*/
 
-                                        for (let animation of app.animations[sequence[0].name]) {
-                                            app.currentAnimations.push(animation);
-                                        }
+                                            for (let animation of app.animations[sequence[0].name]) {
+                                                app.currentAnimations.push(animation);
+                                            }
 
-                                        sequence.shift();
+                                            sequence.shift();
+
+                                            animationIndex = 0;
+                                            messageData = app.currentAnimations[animationIndex];
+                                            animationIndex += animationSkipFrames;
+                                        }
                                     } else if (!isDeforming) {
                                         let nameSet = [];
 
@@ -3270,17 +3296,8 @@
                                 });
                             }
 
-                            if (messageData === null) {
-                                app.currentAnimations.splice(0);
-
-                                if (app.animationsQueue.length > 0) {
-                                    for (let animation of app.animationsQueue.shift()) {
-                                        app.currentAnimations.push(animation);
-                                    }
-
-                                    idleTime = 0.0;
-                                    activateTime = 0.0;
-                                } else if (app.blendShapeAnimationQueue.length > 0 || app.sequenceQueue.length > 0) {
+                            /*if (messageData === null) {
+                                if (app.sequenceQueue.length > 0) {
                                     idleTime = activateTime = 0.0;
                                 } else {
                                     idleTime += deltaTime;
@@ -3305,15 +3322,33 @@
                                     }
                                 }
 
+                                app.currentAnimations.splice(0);
+
+                                for (let animation of app.animations["idle1"]) {
+                                    app.currentAnimations.push(animation);
+                                }
+
                                 animationIndex = 0;
                                 messageData = app.currentAnimations[animationIndex];
                                 animationIndex += animationSkipFrames;
-                            } else if (app.blendShapeAnimationQueue.length > 0 || app.sequenceQueue.length > 0) {
+                            } else if (app.sequenceQueue.length > 0) {
                                 idleTime = activateTime = 0.0;
                             } else {
                                 idleTime += deltaTime;
                                 activateTime += deltaTime;
+                            }*/
+                        }
+
+                        if (messageData === null) {
+                            app.currentAnimations.splice(0);
+
+                            for (let animation of app.animations["idle1"]) {
+                                app.currentAnimations.push(animation);
                             }
+
+                            animationIndex = 0;
+                            messageData = app.currentAnimations[animationIndex];
+                            animationIndex += animationSkipFrames;
                         }
 
                         if (app.message !== null) {
@@ -3709,7 +3744,6 @@
                         }
 
                         vrmModel.update(deltaTime);
-
                         /*if (currentMixer) {
                             currentMixer.update(deltaTime);
                         }*/
@@ -3999,7 +4033,7 @@
 
                                 if (received) {
                                     if (!received.id && vrmModel) {
-                                        app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
+                                        //app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Joy, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.A, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
                                     }
 
                                     //document.body.querySelector("#alert").play();
@@ -4052,15 +4086,15 @@
 
             for (let intersect of raycaster.intersectObjects(scene.children, true)) {
                 if (intersect.object.name === 'face') {
-                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }]);
+                    //app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }]);
 
                     break;
                 } else if (intersect.object.name.indexOf('breast') >= 0) {
-                    if (random(0, 1) === 0) {
+                    /*if (random(0, 1) === 0) {
                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 3.0, start: 0.5, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.5, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 3.0, start: 0.5, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.5, end: 0.0 }]);
                     } else {
                         app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.Angry, time: 0.0, duration: 0.5, start: 0.0, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.Angry, time: 0.0, duration: 3.0, start: 0.5, end: 0.5 }, { name: THREE.VRMSchema.BlendShapePresetName.Angry, time: 0.0, duration: 0.5, start: 0.5, end: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.O, time: 0.0, duration: 0.5, start: 0.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.O, time: 0.0, duration: 3.0, start: 1.0, end: 1.0 }, { name: THREE.VRMSchema.BlendShapePresetName.O, time: 0.0, duration: 0.5, start: 1.0, end: 0.0 }]);
-                    }
+                    }*/
 
                     break;
                 }
@@ -4095,7 +4129,7 @@
 
             for (let intersect of raycaster.intersectObjects(scene.children, true)) {
                 if (intersect.object.name === 'face') {
-                    app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }]);
+                    //app.blendShapeAnimationQueue.push([{ name: THREE.VRMSchema.BlendShapePresetName.BlinkL, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }, { name: THREE.VRMSchema.BlendShapePresetName.BlinkR, time: 0.0, duration: 0.5, start: 0.0, end: 2.0 }]);
 
                     break;
                 }
