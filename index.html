@@ -1120,42 +1120,52 @@
                                                             <transition-group name="ticker-item-list" class="ticker"
                                                                 tag="div"
                                                                 v-bind:style="{ animationPlayState: 'running' }">
-                                                                <div class="item" v-show="messages.length > 0" key="merku">
+                                                                <div class="item" v-show="messages.length > 0"
+                                                                    key="merku">
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <span class="image is-24x24">
-                                                                                <img class="is-rounded" src="/images/Merku.png" alt="メルクちゃん">
+                                                                                <img class="is-rounded"
+                                                                                    src="/images/Merku.png"
+                                                                                    alt="メルクちゃん">
                                                                             </span>
                                                                         </figure>
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
-                                                                                <span class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                                <span
+                                                                                    class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
                                                                 </div>
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id">
-                                                                    <span class="is-size-6 has-text-weight-bold has-text-white"
+                                                                    <span
+                                                                        class="is-size-6 has-text-weight-bold has-text-white"
                                                                         v-cloak>{{ message.text }}</span>
                                                                 </div>
-                                                                <div class="item" v-show="messages.length > 0" key="merku-alt">
+                                                                <div class="item" v-show="messages.length > 0"
+                                                                    key="merku-alt">
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <span class="image is-24x24">
-                                                                                <img class="is-rounded" src="/images/Merku.png" alt="メルクちゃん">
+                                                                                <img class="is-rounded"
+                                                                                    src="/images/Merku.png"
+                                                                                    alt="メルクちゃん">
                                                                             </span>
                                                                         </figure>
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
-                                                                                <span class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                                <span
+                                                                                    class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
                                                                 </div>
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id + '-alt'">
-                                                                    <span class="is-size-6 has-text-weight-bold has-text-white"
+                                                                    <span
+                                                                        class="is-size-6 has-text-weight-bold has-text-white"
                                                                         v-cloak>{{ message.text }}</span>
                                                                 </div>
                                                             </transition-group>
@@ -2910,69 +2920,60 @@
                         if (app.sequenceQueue.length > 0) {
                             const sequence = app.sequenceQueue[0];
 
-                            if (sequence[0].type == "Animation") {
-                                if (!isAnimating && sequence[0].name in app.animations) {
-                                    /*const skipFrames = 60 / 12;
-                                    let animations = app.animations[suggestion.animation];
-                                    let maxFrames = Math.min(animations.length, 60);
-                                    let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
-                                    let length = Math.round(90 / 24);
-        
-                                    for (let i = 0; i < maxFrames; i += skipFrames) {
-                                        for (let j = 0; j < length; j++) {
+                            if (sequence.length > 0) {
+                                if (sequence[0].type == "Animation") {
+                                    if (!isAnimating && sequence[0].name in app.animations) {
+                                        /*const skipFrames = 60 / 12;
+                                        let animations = app.animations[suggestion.animation];
+                                        let maxFrames = Math.min(animations.length, 60);
+                                        let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                        let length = Math.round(90 / 24);
+            
+                                        for (let i = 0; i < maxFrames; i += skipFrames) {
+                                            for (let j = 0; j < length; j++) {
+                                                app.currentAnimations.push(animations[offset + i]);
+                                            }
+                                        }
+            
+                                        for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
                                             app.currentAnimations.push(animations[offset + i]);
+                                        }*/
+
+                                        for (let animation of app.animations[sequence[0].name]) {
+                                            app.currentAnimations.push(animation);
                                         }
-                                    }
-        
-                                    for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                        app.currentAnimations.push(animations[offset + i]);
-                                    }*/
 
-                                    for (let animation of app.animations[sequence[0].name]) {
-                                        app.currentAnimations.push(animation);
-                                    }
-
-                                    if (sequence.length > 1) {
                                         sequence.shift();
-                                    } else {
-                                        app.sequenceQueue.shift();
-                                    }
-                                } else if (!isDeforming) {
-                                    let nameSet = [];
-
-                                    app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
-                                    sequence.shift();
-
-                                    while (sequence.length > 0) {
-                                        if (sequence[0].type != "Animation" || sequence[0].name in app.animations) {
-                                            break;
-                                        }
+                                    } else if (!isDeforming) {
+                                        let nameSet = [];
 
                                         app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
                                         sequence.shift();
-                                    }
 
-                                    for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                        let blendShapeAnimation = app.blendShapeAnimations[i];
+                                        while (sequence.length > 0) {
+                                            if (sequence[0].type != "Animation" || sequence[0].name in app.animations) {
+                                                break;
+                                            }
 
-                                        if (!nameSet.includes(blendShapeAnimation.name)) {
-                                            vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                            nameSet.push(blendShapeAnimation.name);
+                                            app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
+                                            sequence.shift();
+                                        }
+
+                                        for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                            let blendShapeAnimation = app.blendShapeAnimations[i];
+
+                                            if (!nameSet.includes(blendShapeAnimation.name)) {
+                                                vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                nameSet.push(blendShapeAnimation.name);
+                                            }
                                         }
                                     }
-
-                                    if (sequence.length == 0) {
-                                        app.sequenceQueue.shift();
-                                    }
-                                }
-                            } else if (sequence[0].type == "Message" && app.message === null && !isAnimating && !isDeforming) {
-                                app.message = { time: 0, duration: sequence[0].duration, type: { elapsed: -1, speed: sequence[0].speed, reverse: false, buffer: '', count: 0 }, text: sequence[0].text };
-
-                                if (sequence.length > 1) {
+                                } else if (sequence[0].type == "Message" && app.message === null && !isAnimating && !isDeforming) {
+                                    app.message = { time: 0, duration: sequence[0].duration, type: { elapsed: -1, speed: sequence[0].speed, reverse: false, buffer: '', count: 0 }, text: sequence[0].text };
                                     sequence.shift();
-                                } else {
-                                    app.sequenceQueue.shift();
                                 }
+                            } else if (app.message === null && !isAnimating && !isDeforming) {
+                                app.sequenceQueue.shift();
                             }
                         } else if (app.suggestionQueue.length > 0) {
                             const suggestion = app.suggestionQueue[0];
