@@ -1,5 +1,6 @@
 {
     "name": "ミルヒ",
+    "accent": "#ffa6bb",
     "image": "/images/Milch.png",
     "model": "/models/Milch.vrm",
     "sequences": [
@@ -44,6 +45,21 @@
                     "speed": 50,
                     "duration": 5,
                     "text": "筋肉は裏切らない！"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "話は通じないが弾は通じる"
                 },
                 {
                     "type": "Sequence",
