@@ -45,7 +45,7 @@
             background: url('/images/Background.png') repeat;
             /*background: url('/images/Stripes@3x.png') 50% 50% repeat;*/
             content: "";
-            animation: loop 30s linear infinite;
+            animation: fade 0.5s ease-out, loop 10s linear infinite;
         }
 
         body {
@@ -927,14 +927,13 @@
             opacity: 1;
         }
 
-        @keyframes ticker {
-            0% {
-                transform: translate3d(0, 0, 0);
-                visibility: visible;
+        @keyframes fade {
+            from {
+                opacity: 0;
             }
 
-            100% {
-                transform: translate3d(-50%, 0, 0);
+            to {
+                opacity: 1;
             }
         }
 
@@ -955,6 +954,17 @@
 
             100% {
                 background-position: -20px 0px;
+            }
+        }
+
+        @keyframes ticker {
+            0% {
+                transform: translate3d(0, 0, 0);
+                visibility: visible;
+            }
+
+            100% {
+                transform: translate3d(-50%, 0, 0);
             }
         }
 
@@ -1552,8 +1562,8 @@
                                         </div>
                                         <div class="control is-expanded">
                                             <input class="input is-rounded" type="text"
-                                                v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="isPrompted" v-model="input"
-                                                @input="change" v-cloak>
+                                                v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="isPrompted"
+                                                v-model="input" @input="change" v-cloak>
                                         </div>
                                         <div class="control">
                                             <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
@@ -3961,8 +3971,8 @@
                             const words = snapshot.val();
 
                             console.log(words);
-                        
-                        
+
+
                         });
                         database.ref(databaseMessages).limitToLast(100).on('value', snapshot => {
                             const messageDictionary = snapshot.val();
