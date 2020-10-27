@@ -64,6 +64,10 @@
             font-family: 'Noto Sans JP', sans-serif;
         }
 
+        input::placeholder {
+            color: rgba(0, 0, 0, 0.5);;
+        }
+
         label {
             display: inline;
             cursor: pointer;
@@ -1611,8 +1615,9 @@
                                         </div>
                                         <div class="control is-expanded">
                                             <input class="input is-rounded" type="text"
-                                                v-bind:class="{'is-danger': inputHasError}" v-bind:disabled="word !== null"
-                                                v-model="input" @input="change" v-cloak>
+                                                v-bind:class="{'is-danger': inputHasError}"
+                                                v-bind:placeholder="isLearning ? '教える言葉' : '投稿するニュース'"
+                                                v-bind:disabled="word !== null" v-model="input" @input="change" v-cloak>
                                         </div>
                                         <div class="control">
                                             <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
