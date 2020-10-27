@@ -44,6 +44,156 @@
                     "type": "Message",
                     "speed": 50,
                     "duration": 5,
+                    "text": "メルクちゃんはちょっと変わっているけど大切なお友達だよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "メルクちゃんといっしょに食べるご飯は楽しいなぁ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "メルクちゃんといっしょに入るお風呂は楽しいなぁ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "お金がないけどiPhoneが欲しいなぁ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "お鼻を触っているとムズムズするよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "メルクちゃんといっしょに原宿に行ってクレープを食べたよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "この前メルクちゃんが学校のロッカーの中からミルヒを覗いてたよ...ちょっと怖かったよ..."
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "女の人は恋をすると綺麗になるんだって！恋ってすごいね"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "お友達のメルクちゃんは衣装をつくるのが得意なんだよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "背が15cmも違うカップルは肩叩きがしやすいんだって"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
                     "text": "筋肉は裏切らない！"
                 },
                 {
@@ -59,7 +209,7 @@
                     "type": "Message",
                     "speed": 50,
                     "duration": 5,
-                    "text": "話は通じないが弾は通じる"
+                    "text": "話は通じないが弾は通じるって、誰かが言ってたよ"
                 },
                 {
                     "type": "Sequence",
@@ -74,7 +224,7 @@
                     "type": "Message",
                     "speed": 50,
                     "duration": 5,
-                    "text": "やはり暴力...！！暴力は全てを解決する...！！"
+                    "text": "やはり暴力...！！暴力は全てを解決する...！！、誰かが言ってたよ"
                 },
                 {
                     "type": "Sequence",
