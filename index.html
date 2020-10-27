@@ -1970,6 +1970,7 @@
                                 let snapshot = await database.ref(databaseRoot + "/dictionary/words/" + token).once('value');
 
                                 if (!snapshot.exists()) {
+                                    this.input = token;
                                     this.learn(token);
 
                                     break;
