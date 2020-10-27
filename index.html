@@ -535,43 +535,43 @@
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
         }
 
-        #popup .columns>.column>.control:last-child .level:nth-of-type(1) {
-            margin: 0;
-            padding: 16px 16px 32px 16px;
-        }
-
         #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) {
             display: block;
             margin: 0;
             padding: 0px 16px 16px 16px;
         }
 
-        #popup .columns>.column>.control:first-child .level:first-child .media {
+        #popup .columns>.column>.control:last-child .level:nth-last-of-type(2) {
+            margin: 0;
+            padding: 16px 16px 32px 16px;
+        }
+
+        #popup .columns>.column>.control:first-child .level:nth-last-of-type(2) .media {
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
-            background: #ffa6bb url('/images/Stripes.png') repeat;
+            background: #64dafe url('/images/Stripes.png') repeat;
             /*box-shadow: 10px 10px 30px #d0d0d0,
                 -10px -10px 30px #ffffff;*/
         }
 
-        #popup .columns>.column>.control:first-child .level:first-child .media .media-left {
+        #popup .columns>.column>.control:first-child .level:nth-last-of-type(2) .media .media-left {
             margin: 0px 8px 0px 0px;
             padding: 0;
         }
 
-        #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media {
+        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media {
             margin: 0;
             padding: 0px 16px 0px 16px;
         }
 
-        #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media .media-content {
+        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media .media-content {
             overflow: hidden;
         }
 
-        #popup .columns>.column>.control:last-child .level:nth-of-type(2) .media span {
+        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media span {
             display: inline-block;
             font-family: 'Noto Sans JP', 'Josefin Sans', sans-serif;
             line-height: 1.5rem;
@@ -1442,8 +1442,8 @@
                 <div class=" navbar-item is-expanded columns is-desktop">
                     <div class="column is-half has-content-centered is-mobile">
                         <div class="control">
-                            <nav class="level is-mobile">
-                                <article class="media" v-if="character !== null">
+                            <nav class="level is-mobile" v-if="character !== null">
+                                <article class="media" v-bind:style="{ backgroundColor: character.accent }">
                                     <figure class="media-left">
                                         <span class="image is-24x24">
                                             <img class="is-rounded" v-bind:src="character.image"
@@ -3956,6 +3956,13 @@
 
                                 self.stars = count;
                             }
+                        });
+                        database.ref(databaseChannel + "/words").orderByChild("timestamp").limitToLast(10).on('value', snapshot => {
+                            const words = snapshot.val();
+
+                            console.log(words);
+                        
+                        
                         });
                         database.ref(databaseMessages).limitToLast(100).on('value', snapshot => {
                             const messageDictionary = snapshot.val();
