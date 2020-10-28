@@ -65,7 +65,8 @@
         }
 
         input::placeholder {
-            color: rgba(0, 0, 0, 0.5);;
+            color: rgba(0, 0, 0, 0.5);
+            ;
         }
 
         label {
@@ -1196,7 +1197,7 @@
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
                                                                                 <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんが最近覚えた言葉だよぉ</span>
+                                                                                    class="is-size-6 has-text-weight-bold has-text-white">最近覚えた言葉だよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
@@ -1244,7 +1245,7 @@
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
                                                                                 <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんが最近覚えた言葉だよぉ</span>
+                                                                                    class="is-size-6 has-text-weight-bold has-text-white">最近覚えた言葉だよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
@@ -1621,7 +1622,7 @@
                                         </div>
                                         <div class="control">
                                             <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
-                                                {{ maxInputLength - animatedCurrentInputLength }}
+                                                {{ maxInputLength - animatedInputLength }}
                                             </span>
                                         </div>
                                         <div class="control">
@@ -1814,8 +1815,7 @@
                     progress: 0,
                     user: null,
                     input: "",
-                    currentInputLength: 0,
-                    animatedCurrentInputLength: 0,
+                    animatedInputLength: 0,
                     maxInputLength: 100,
                     inputHasError: false,
                     messages: [],
@@ -1828,7 +1828,6 @@
                     isScrolling: false,
                     stars: -1,
                     animatedStars: 0,
-                    hints: [],
                     notifications: [],
                     presetImages: null,
                     backgroundImages: [],
@@ -1876,6 +1875,31 @@
                             });
 
                             //app.scrollToEnd();
+                        });
+                    },
+                    deep: true
+                },
+                words: {
+                    handler: () => {
+                        app.$nextTick(() => {
+                            let width = 0;
+
+                            for (const element of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
+                                width += element.getBoundingClientRect().width;
+                            }
+
+                            document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
+                            document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").animate([
+                                {
+                                    transform: "translate3d(0, 0, 0)"
+                                },
+                                {
+                                    transform: "translate3d(-" + width / 2 + "px, 0, 0)"
+                                }
+                            ], {
+                                duration: 30000,
+                                iterations: Infinity
+                            });
                         });
                     },
                     deep: true
@@ -1942,19 +1966,24 @@
                         }
                     });
                 },
-                currentInputLength(newValue) {
-                    const obj = { count: this.animatedCurrentInputLength };
+                input: {
+                    handler: () => {
+                        app.$nextTick(() => {
+                            const obj = { count: app.animatedInputLength };
 
-                    anime({
-                        targets: obj,
-                        count: newValue,
-                        round: 1,
-                        duration: 500,
-                        easing: 'linear',
-                        update: () => {
-                            this.animatedCurrentInputLength = obj.count
-                        }
-                    });
+                            anime({
+                                targets: obj,
+                                count: app.input.length,
+                                round: 1,
+                                duration: 500,
+                                easing: 'linear',
+                                update: () => {
+                                    app.animatedInputLength = obj.count
+                                }
+                            });
+                        });
+                    },
+                    deep: true
                 }
             },
             methods: {
@@ -2001,7 +2030,6 @@
                             database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
                             this.input = "";
-                            this.currentInputLength = 0;
                             this.$refs.alert.play();
 
                             if (tokens.length > 5) {
@@ -2033,8 +2061,7 @@
                         }*/
 
                         this.input = '';
-                        this.currentInputLength = 0;
-
+                        
                         document.body.querySelector("#alert").play();
 
                         let completed = 0;
@@ -2115,9 +2142,7 @@
                     }
                 },
                 change: function (event) {
-                    this.currentInputLength = this.input.length;
-
-                    if (this.currentInputLength <= this.maxInputLength) {
+                    if (this.input.length <= this.maxInputLength) {
                         this.inputHasError = false;
                     } else {
                         this.inputHasError = true;
