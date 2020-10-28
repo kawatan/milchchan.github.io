@@ -97,6 +97,16 @@
             padding: 0 !important;
         }
 
+        .tags>.tag {
+            margin: 0;
+            padding: 0px 8px 0px 8px;
+            padding: 8px 16px 8px 16px;
+            border: 0px solid transparent;
+            border-radius: 500px 500px 500px 500px;
+            background: #ffffff;
+            height: initial;
+        }
+
         .progress {
             position: fixed;
             margin: 0;
@@ -116,7 +126,7 @@
             z-index: -1;
             overflow: hidden;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             background-color: transparent;
             background-position: 50% 50%;
             background-size: contain;
@@ -141,9 +151,13 @@
             height: 100%;
         }
 
+        .background .ticker-wrap .ticker .item span {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 100vh;
+        }
+
         #three {
             position: fixed;
-            /*display: block;*/
             width: 100%;
             height: 100vh;
             overflow: hidden;
@@ -185,7 +199,6 @@
 
         .ticker-wrap .ticker .item {
             display: inline-block;
-            padding: 0px 16px;
             vertical-align: middle;
         }
 
@@ -195,6 +208,11 @@
 
         .ticker-wrap .ticker .item .media .media-left {
             margin: 0px 8px 0px 0px;
+        }
+
+        .background .ticker-wrap .ticker .item {
+            padding: 0px 10vmin;
+            line-height: 100vh;
         }
 
         .has-content-centered {
@@ -316,6 +334,10 @@
             overflow: hidden;
         }
 
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
+            padding: 0px 16px;
+        }
+
         #heading>.columns>.column>.columns:last-child {
             justify-content: center;
         }
@@ -383,23 +405,6 @@
         #heading .level>.level-item>.tags {
             margin: -8px;
             padding: 0;
-        }
-
-        .tags>.tag {
-            /*font-family: "Gotham";*/
-            margin: 0;
-            padding: 0px 8px 0px 8px;
-            /*background-image: url('/images/Stripes.png');
-            background-repeat: repeat;*/
-            padding: 8px 16px 8px 16px;
-            border: 0px solid transparent;
-            border-radius: 500px 500px 500px 500px;
-            background: #ffffff;
-            /*background: #f5f5f5;
-            background: linear-gradient(145deg, #ffffff, #dddddd);
-            box-shadow: 10px 10px 30px #d0d0d0,
-                -10px -10px 30px #ffffff;*/
-            height: initial;
         }
 
         #container {
@@ -579,6 +584,66 @@
             text-shadow: #d0d0d0 0px 0px 60px;
         }
 
+        #container .columns .column .columns .column .field label.checkbox,
+        #input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(2) .level-left {
+            margin: 16px 0px 0px 0px;
+            padding: 16px 32px 16px 32px;
+            border-radius: 500px 500px 500px 500px;
+            background: #ffffff;
+            /*background: rgba(0, 0, 0, 0.75);
+            background: #f5f5f5;
+            background: linear-gradient(145deg, #ffffff, #dddddd);
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
+        }
+
+        #container .columns .column .media {
+            border: 0px solid transparent;
+        }
+
+        #container .columns .column .media:nth-last-of-type(1) .media-content {
+            margin: -16px 0px 0px 0px;
+            padding: 0;
+        }
+
+        #container .columns .column .media .media-content .columns {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        #container .columns .column .media .media-content .columns .column .field {
+            margin: 0;
+            padding: 0px -8px 0px -8px;
+            display: flex;
+            align-items: center;
+            justify-content: start;
+        }
+
+        label.checkbox input[type=checkbox],
+        label.checkbox input[type=radio] {
+            display: none;
+        }
+
+        label.checkbox .custom {
+            position: relative;
+            margin: 0px 8px 0px 0px;
+            font-size: 1.0rem;
+        }
+
+        label.checkbox input[type=checkbox]+.custom:before,
+        label.checkbox input[type=radio]+.custom:before {
+            font-weight: 900;
+            font-family: "Font Awesome 5 Free";
+            content: '\f00c';
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        label.checkbox input[type=checkbox]:checked+.custom:before,
+        label.checkbox input[type=radio]:checked+.custom:before {
+            color: #64dafe;
+        }
+
         #input .navbar-item .control:first-child .level {
             display: block;
             margin: 0;
@@ -641,66 +706,6 @@
 
         #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media .media-left {
             margin: 0px 8px 0px 0px;
-        }
-
-        #container .columns .column .columns .column .field label.checkbox,
-        #input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(2) .level-left {
-            margin: 16px 0px 0px 0px;
-            padding: 16px 32px 16px 32px;
-            border-radius: 500px 500px 500px 500px;
-            background: #ffffff;
-            /*background: rgba(0, 0, 0, 0.75);
-            background: #f5f5f5;
-            background: linear-gradient(145deg, #ffffff, #dddddd);
-            box-shadow: 10px 10px 30px #d0d0d0,
-                -10px -10px 30px #ffffff;*/
-        }
-
-        #container .columns .column .media {
-            border: 0px solid transparent;
-        }
-
-        #container .columns .column .media:nth-last-of-type(1) .media-content {
-            margin: -16px 0px 0px 0px;
-            padding: 0;
-        }
-
-        #container .columns .column .media .media-content .columns {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-
-        #container .columns .column .media .media-content .columns .column .field {
-            margin: 0;
-            padding: 0px -8px 0px -8px;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-        }
-
-        label.checkbox input[type=checkbox],
-        label.checkbox input[type=radio] {
-            display: none;
-        }
-
-        label.checkbox .custom {
-            position: relative;
-            margin: 0px 8px 0px 0px;
-            font-size: 1.0rem;
-        }
-
-        label.checkbox input[type=checkbox]+.custom:before,
-        label.checkbox input[type=radio]+.custom:before {
-            font-weight: 900;
-            font-family: "Font Awesome 5 Free";
-            content: '\f00c';
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        label.checkbox input[type=checkbox]:checked+.custom:before,
-        label.checkbox input[type=radio]:checked+.custom:before {
-            color: #64dafe;
         }
 
         #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
@@ -1084,6 +1089,19 @@
             <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
                 v-bind:key="image.url" alt="Background" v-cloak>
         </div>
+        <div class="background">
+            <div class="ticker-wrap">
+                <transition-group name="ticker-item-list" class="ticker" tag="div"
+                    v-bind:style="{ animationPlayState: 'running' }">
+                    <div class="item" v-for="word in words" v-bind:key="word">
+                        <span class="has-text-weight-bold" v-cloak>{{ word }}</span>
+                    </div>
+                    <div class="item" v-for="word in words" v-bind:key="word + '-alt'">
+                        <span class="has-text-weight-bold" v-cloak>{{ word }}</span>
+                    </div>
+                </transition-group>
+            </div>
+        </div>
         <transition name="blind" v-on:after-enter="blinded">
             <div class="blind" v-if="isBlinded" v-cloak></div>
         </transition>
@@ -1190,30 +1208,6 @@
                                                                         class="is-size-6 has-text-weight-bold has-text-white"
                                                                         v-cloak>{{ message.text }}</span>
                                                                 </div>
-                                                                <div class="item" v-show="words.length > 0"
-                                                                    key="merku-words" v-cloak>
-                                                                    <article class="media">
-                                                                        <figure class="media-left">
-                                                                            <span class="image is-24x24">
-                                                                                <img class="is-rounded"
-                                                                                    src="/images/Merku.png"
-                                                                                    alt="メルクちゃん">
-                                                                            </span>
-                                                                        </figure>
-                                                                        <div class="media-content">
-                                                                            <div class="content has-text-left">
-                                                                                <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-white">最近覚えた言葉だよぉ</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </article>
-                                                                </div>
-                                                                <div class="item" v-for="word in words"
-                                                                    v-bind:key="word">
-                                                                    <span
-                                                                        class="is-size-6 has-text-weight-bold has-text-white"
-                                                                        v-cloak>{{ word }}</span>
-                                                                </div>
                                                                 <div class="item" v-show="messages.length > 0"
                                                                     key="merku-statuses-alt" v-cloak>
                                                                     <article class="media">
@@ -1237,30 +1231,6 @@
                                                                     <span
                                                                         class="is-size-6 has-text-weight-bold has-text-white"
                                                                         v-cloak>{{ message.text }}</span>
-                                                                </div>
-                                                                <div class="item" v-show="words.length > 0"
-                                                                    key="merku-words-alt" v-cloak>
-                                                                    <article class="media">
-                                                                        <figure class="media-left">
-                                                                            <span class="image is-24x24">
-                                                                                <img class="is-rounded"
-                                                                                    src="/images/Merku.png"
-                                                                                    alt="メルクちゃん">
-                                                                            </span>
-                                                                        </figure>
-                                                                        <div class="media-content">
-                                                                            <div class="content has-text-left">
-                                                                                <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-white">最近覚えた言葉だよぉ</span>
-                                                                            </div>
-                                                                        </div>
-                                                                    </article>
-                                                                </div>
-                                                                <div class="item" v-for="word in words"
-                                                                    v-bind:key="word + '-alt'">
-                                                                    <span
-                                                                        class="is-size-6 has-text-weight-bold has-text-white"
-                                                                        v-cloak>{{ word }}</span>
                                                                 </div>
                                                             </transition-group>
                                                         </div>
@@ -1417,8 +1387,8 @@
                         <article class="media" v-cloak>
                             <figure class="media-left">
                                 <p class="image is-64x64">
-                                    <img class="is-rounded" v-bind:src="character.image"
-                                        v-bind:alt="character.name" v-cloak>
+                                    <img class="is-rounded" v-bind:src="character.image" v-bind:alt="character.name"
+                                        v-cloak>
                                 </p>
                             </figure>
                             <div class="media-content">
@@ -1882,9 +1852,6 @@
                             }
 
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
-
-                            //width += document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip").getBoundingClientRect().width;
-
                             document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").animate([
                                 {
                                     transform: "translate3d(0, 0, 0)"
@@ -1907,12 +1874,12 @@
                         app.$nextTick(() => {
                             let width = 0;
 
-                            for (const element of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
+                            for (const element of document.body.querySelectorAll(".background .ticker-wrap .ticker .item")) {
                                 width += element.getBoundingClientRect().width;
                             }
 
-                            document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
-                            document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").animate([
+                            document.body.querySelector(".background .ticker-wrap .ticker").style.width = width + 'px';
+                            document.body.querySelector(".background .ticker-wrap .ticker").animate([
                                 {
                                     transform: "translate3d(0, 0, 0)"
                                 },
@@ -1920,7 +1887,7 @@
                                     transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                                 }
                             ], {
-                                duration: 30000,
+                                duration: 300000,
                                 iterations: Infinity
                             });
                         });
@@ -2084,7 +2051,7 @@
                         }*/
 
                         this.input = '';
-                        
+
                         document.body.querySelector("#alert").play();
 
                         let completed = 0;
@@ -4223,6 +4190,27 @@
 
             camera.aspect = width / height;
             camera.updateProjectionMatrix();
+
+            app.$nextTick(() => {
+                let width = 0;
+
+                for (const element of document.body.querySelectorAll(".background .ticker-wrap .ticker .item")) {
+                    width += element.getBoundingClientRect().width;
+                }
+
+                document.body.querySelector(".background .ticker-wrap .ticker").style.width = width + 'px';
+                document.body.querySelector(".background .ticker-wrap .ticker").animate([
+                    {
+                        transform: "translate3d(0, 0, 0)"
+                    },
+                    {
+                        transform: "translate3d(-" + width / 2 + "px, 0, 0)"
+                    }
+                ], {
+                    duration: 300000,
+                    iterations: Infinity
+                });
+            });
         });
         window.addEventListener('click', (event) => {
             raycaster.setFromCamera(mouse, camera);
