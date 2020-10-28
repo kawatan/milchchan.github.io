@@ -2424,6 +2424,7 @@
 
                     let segmenter = new TinySegmenter();
                     let tokens = segmenter.segment(message);
+                    let tokenSet = [];
                     let regex = new RegExp('[.#$\\[\\]]');
                     let cachDictionary = {};
                     let text = '';
@@ -2433,65 +2434,69 @@
                     let sequences = [{ sequence: [], score: 1.0 }]
 
                     for (const token of tokens) {
-                        if (!regex.test(token)) {
-                            let terms = [];
-                            let scores = [];
-                            const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
+                        if (!tokenSet.includes(token)) {
+                            if (!regex.test(token)) {
+                                let terms = [];
+                                let scores = [];
+                                const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
 
-                            if (snapshot1.exists()) {
-                                const word = snapshot1.val();
+                                if (snapshot1.exists()) {
+                                    const word = snapshot1.val();
 
-                                for (let attribute in word) {
-                                    if (word[attribute]) {
-                                        const snapshot2 = await database.ref(databaseRoot + "/words/").orderByChild(attribute).equalTo(true).once('value');
+                                    for (let attribute in word) {
+                                        if (word[attribute]) {
+                                            const snapshot2 = await database.ref(databaseRoot + "/words/").orderByChild(attribute).equalTo(true).once('value');
 
-                                        if (snapshot2.exists()) {
-                                            const words = snapshot2.val();
+                                            if (snapshot2.exists()) {
+                                                const words = snapshot2.val();
 
-                                            for (let key in words) {
-                                                if (!terms.includes(key)) {
-                                                    let isNew = true;
+                                                for (let key in words) {
+                                                    if (!terms.includes(key)) {
+                                                        let isNew = true;
 
-                                                    terms.push(key);
+                                                        terms.push(key);
 
-                                                    for (const tag of this.tags) {
-                                                        if (key == tag.name) {
-                                                            scores.push(tag.score);
-                                                            isNew = false;
+                                                        for (const tag of this.tags) {
+                                                            if (key == tag.name) {
+                                                                scores.push(tag.score);
+                                                                isNew = false;
 
-                                                            break;
+                                                                break;
+                                                            }
                                                         }
-                                                    }
 
-                                                    if (isNew) {
-                                                        scores.push(epsilon);
+                                                        if (isNew) {
+                                                            scores.push(epsilon);
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
                                 }
-                            }
 
-                            if (terms.length > 0) {
-                                const probabilities = softmax(scores);
-                                let candidates = [];
+                                if (terms.length > 0) {
+                                    const probabilities = softmax(scores);
+                                    let candidates = [];
 
-                                for (let i = 0; i < sequences.length; i++) {
-                                    for (let j = 0; j < probabilities.length; j++) {
-                                        let sequence = [].concat(sequences[i].sequence);
+                                    for (let i = 0; i < sequences.length; i++) {
+                                        for (let j = 0; j < probabilities.length; j++) {
+                                            let sequence = [].concat(sequences[i].sequence);
 
-                                        sequence.push({ index: index, term: terms[j] });
-                                        candidates.push({ sequence: sequence, score: sequences[i].score * probabilities[j] });
+                                            sequence.push({ index: index, term: terms[j] });
+                                            candidates.push({ sequence: sequence, score: sequences[i].score * probabilities[j] });
+                                        }
+                                    }
+
+                                    sequences.splice(0);
+
+                                    for (const candidate of this.take(candidates.sort((x, y) => y.score - x.score), beamWidth)) {
+                                        sequences.push(candidate);
                                     }
                                 }
-
-                                sequences.splice(0);
-
-                                for (const candidate of this.take(candidates.sort((x, y) => y.score - x.score), beamWidth)) {
-                                    sequences.push(candidate);
-                                }
                             }
+
+                            tokenSet.push(token);
                         }
 
                         index++;
