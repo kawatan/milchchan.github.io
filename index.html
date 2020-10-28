@@ -1992,7 +1992,7 @@
                         if (this.isLearning) {
                             this.learn(this.input);
                             this.input = "";
-                        } else {
+                        } else if (confirm(this.input)) {
                             function format(format) {
                                 var args = arguments;
 
