@@ -149,7 +149,7 @@
                     "type": "Message",
                     "speed": 50,
                     "duration": 5,
-                    "text": "女の人は恋をすると綺麗になるんだって！恋ってすごいね"
+                    "text": "メルクちゃんは衣装をつくるのが得意なんだよ"
                 },
                 {
                     "type": "Sequence",
@@ -164,22 +164,7 @@
                     "type": "Message",
                     "speed": 50,
                     "duration": 5,
-                    "text": "お友達のメルクちゃんは衣装をつくるのが得意なんだよ"
-                },
-                {
-                    "type": "Sequence",
-                    "name": "Say"
-                }
-            ]
-        },
-        {
-            "name": "Activate",
-            "sequence": [
-                {
-                    "type": "Message",
-                    "speed": 50,
-                    "duration": 5,
-                    "text": "背が15cmも違うカップルは肩叩きがしやすいんだって"
+                    "text": "女の人は恋をすると綺麗になるってメルクちゃんが言ってたよ！恋ってすごいね！"
                 },
                 {
                     "type": "Sequence",
@@ -209,7 +194,7 @@
                     "type": "Message",
                     "speed": 50,
                     "duration": 5,
-                    "text": "話は通じないが弾は通じるって、誰かが言ってたよ"
+                    "text": "夜、寂しくなったらミルヒを呼んでね"
                 },
                 {
                     "type": "Sequence",
@@ -224,7 +209,22 @@
                     "type": "Message",
                     "speed": 50,
                     "duration": 5,
-                    "text": "やはり暴力...！！暴力は全てを解決する...！！、誰かが言ってたよ"
+                    "text": "話は通じないが弾は通じるってメルクちゃんが言ってたよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 50,
+                    "duration": 5,
+                    "text": "やはり暴力...！！暴力は全てを解決する...！！ってメルクちゃんが言ってたよ"
                 },
                 {
                     "type": "Sequence",
