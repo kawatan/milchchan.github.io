@@ -1414,17 +1414,17 @@
             <transition name="fade">
                 <div class="columns is-desktop" v-if="word">
                     <div class="column is-half has-content-centered">
-                        <article class="media">
+                        <article class="media" v-cloak>
                             <figure class="media-left">
                                 <p class="image is-64x64">
                                     <img class="is-rounded" v-bind:src="character.image"
-                                        v-bind:alt="character.name">
+                                        v-bind:alt="character.name" v-cloak>
                                 </p>
                             </figure>
                             <div class="media-content">
                                 <div class="content has-text-left">
-                                    <div class="balloon" v-bind:style="{ backgroundColor: character.accent }">
-                                        <p class="has-text-weight-bold has-text-white">
+                                    <div class="balloon" v-bind:style="{ backgroundColor: character.accent }" v-cloak>
+                                        <p class="has-text-weight-bold has-text-white" v-cloak>
                                             {{ word.name }}
                                         </p>
                                     </div>
