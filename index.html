@@ -1887,7 +1887,7 @@
                                     transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                                 }
                             ], {
-                                duration: 300000,
+                                duration: 15 * 60 * 1000,
                                 iterations: Infinity
                             });
                         });
@@ -2383,7 +2383,7 @@
                     }*/
                 },
                 generate: async function (message) {
-                    function choice(x, probabilities) {
+                    function choice(probabilities) {
                         const r = Math.random();
                         let sum = 0.0;
                         let index = 0;
@@ -2397,7 +2397,7 @@
                             index++;
                         }
 
-                        return x[index];
+                        return index;
                     }
 
                     function softmax(x) {
@@ -2423,21 +2423,17 @@
                     }
 
                     let segmenter = new TinySegmenter();
+                    let tokens = segmenter.segment(message);
                     let regex = new RegExp('[.#$\\[\\]]');
                     let cachDictionary = {};
                     let text = '';
-                    let epsilon = Math.pow(10, -6);
+                    let index = 0;
+                    const epsilon = Math.pow(10, -6);
+                    const beamWidth = 10;
+                    let sequences = [{ sequence: [], score: 1.0 }]
 
-                    for (const token of segmenter.segment(message)) {
-                        if (token in cachDictionary) {
-                            if (typeof cachDictionary[token] === "undefined") {
-                                text += token;
-                            } else {
-                                text += cachDictionary[token]
-                            }
-                        } else if (regex.test(token)) {
-                            text += token;
-                        } else {
+                    for (const token of tokens) {
+                        if (!regex.test(token)) {
                             let terms = [];
                             let scores = [];
                             const snapshot1 = await database.ref(databaseRoot + "/words/" + token).once('value');
@@ -2478,17 +2474,57 @@
                             }
 
                             if (terms.length > 0) {
-                                const term = choice(terms, softmax(scores));
+                                const probabilities = softmax(scores);
+                                let candidates = [];
 
-                                text += term;
+                                for (let i = 0; i < sequences.length; i++) {
+                                    for (let j = 0; j < probabilities.length; j++) {
+                                        let sequence = [].concat(sequences[i].sequence);
 
-                                if (token == term) {
-                                    cachDictionary[token] = undefined;
-                                } else {
-                                    cachDictionary[token] = term;
+                                        sequence.push({ index: index, term: terms[j] });
+                                        candidates.push({ sequence: sequence, score: sequences[i].score * probabilities[j] });
+                                    }
                                 }
+
+                                sequences.splice(0);
+
+                                for (const candidate of this.take(candidates.sort((x, y) => y.score - x.score), beamWidth)) {
+                                    sequences.push(candidate);
+                                }
+                            }
+                        }
+
+                        index++;
+                    }
+
+                    const s = sequences[choice(sequences.map(x => x.score))];
+
+                    for (let i = 0; i < tokens.length; i++) {
+                        if (tokens[i] in cachDictionary) {
+                            if (typeof cachDictionary[tokens[i]] === "undefined") {
+                                text += tokens[i];
                             } else {
-                                text += token;
+                                text += cachDictionary[tokens[i]]
+                            }
+                        } else {
+                            let isNew = true;
+
+                            for (let j = 0; j < s.sequence.length; j++) {
+                                if (s.sequence[j].index == i) {
+                                    if (tokens[i] == s.sequence[j].term) {
+                                        cachDictionary[tokens[i]] = undefined;
+                                    } else {
+                                        cachDictionary[tokens[i]] = s.sequence[j].term;
+                                        text += s.sequence[j].term;
+                                        isNew = false;
+                                    }
+
+                                    break;
+                                }
+                            }
+
+                            if (isNew) {
+                                text += tokens[i];
                             }
                         }
                     }
@@ -2771,6 +2807,13 @@
                     rows.push(columns);
 
                     return rows;
+                },
+                take: function (collection, count) {
+                    if (collection.length > count) {
+                        return collection.splice(count);
+                    }
+
+                    return collection;
                 },
                 prepare: function (sequences) {
                     let choosedSequences = [];
@@ -4207,7 +4250,7 @@
                         transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                     }
                 ], {
-                    duration: 300000,
+                    duration: 15 * 60 * 1000,
                     iterations: Infinity
                 });
             });
