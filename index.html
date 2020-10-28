@@ -416,12 +416,32 @@
         }
 
         #container .columns .column .media {
+            margin: 0;
             padding: 16px 16px 16px 16px;
+        }
+
+        #container .columns .column .media:first-child {
+            padding: 16px 16px 0px 16px;
         }
 
         #container .columns .column .media .media-content .content {
             margin: 0;
             padding: 0;
+        }
+
+        #container .columns .column .media .media-content p {
+            word-wrap: break-word;
+            white-space: normal;
+        }
+
+        #container .columns .column .media .media-content .has-text-left .balloon {
+            display: inline-block;
+            padding: 16px 32px 16px 32px;
+            border-radius: 500px 500px 500px 0px;
+            background: url('/images/Stripes.png') repeat;
+            /*background: #f5f5f5;
+            box-shadow: 20px 20px 60px #d0d0d0,
+                -20px -20px 60px #ffffff;*/
         }
 
         #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item {
@@ -461,39 +481,15 @@
             margin: 0px 0px 4px 0px;
         }*/
 
-        #container .media .media-left .image img {
-            box-shadow: 4px 4px 12px #d0d0d0,
-                -4px -4px 12px #ffffff;
-        }
-
-        #container .media .media-content {
-            overflow: visible;
-        }
-
         /*.media-content .content div:last-child {
             margin: 4px 0px 0px 0px;
         }*/
 
-        .media-content p {
-            word-wrap: break-word;
-            white-space: normal;
-        }
-
-        .media-content .has-text-left .balloon {
-            display: inline-block;
-            padding: 16px 32px 16px 32px;
-            border-radius: 0px 500px 500px 500px;
-            /*background: url('/images/Stripes.png') repeat;*/
-            background: #f5f5f5;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
-        }
-
-        .media-content .has-text-right .balloon {
+        /*.media-content .has-text-right .balloon {
             display: inline-block;
             padding: 16px 32px 16px 32px;
             border-radius: 500px 500px 0px 500px;
-            /*background: url('/images/Stripes.png') repeat;*/
+            background: url('/images/Stripes.png') repeat;
             background: #f5f5f5;
             box-shadow: 20px 20px 60px #d0d0d0,
                 -20px -20px 60px #ffffff;
@@ -513,8 +509,8 @@
 
         .media-content .has-text-right div:nth-last-of-type(1)>p {
             font-family: 'Alata', 'Josefin Sans', sans-serif;
-            /*font-family: 'Fredoka One', cursive;*/
-        }
+            font-family: 'Fredoka One', cursive;
+        }*/
 
         #heading {
             margin: 0;
@@ -660,7 +656,11 @@
                 -10px -10px 30px #ffffff;*/
         }
 
-        #container .columns .column .media .media-content {
+        #container .columns .column .media {
+            border: 0px solid transparent;
+        }
+
+        #container .columns .column .media:nth-last-of-type(1) .media-content {
             margin: -16px 0px 0px 0px;
             padding: 0;
         }
@@ -997,6 +997,10 @@
                 background: #64dafe url('/images/Stripes@2x.png') 50% 50% repeat 20px 20px;
             }*/
 
+            #container .columns .column .media .media-content .has-text-left .balloon {
+                background: url('/images/Stripes@2x.png') repeat 20px 20px;
+            }
+
             .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
                 background: #ffa6bb url('/images/Stripes@2x.png') repeat 20px 20px;
             }
@@ -1010,9 +1014,7 @@
                 background-size: 20px 20px;
             }
 
-            .media-content .has-text-left .balloon {
-                background: url('/images/Stripes@2x.png') repeat 20px 20px;
-            }
+            
 
             .media-content .has-text-right .balloon {
                 background: url('/images/Stripes@2x.png') repeat 20px 20px;
@@ -1032,6 +1034,10 @@
             /*.blind {
                 background: #64dafe url('/images/Stripes@3x.png') 50% 50% repeat 20px 20px;
             }*/
+
+            #container .columns .column .media .media-content .has-text-left .balloon {
+                background: url('/images/Stripes@3x.png') repeat 20px 20px;
+            }
 
             .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
                 background: #ffa6bb url('/images/Stripes@3x.png') repeat 20px 20px;
@@ -1409,6 +1415,23 @@
                 <div class="columns is-desktop" v-if="word">
                     <div class="column is-half has-content-centered">
                         <article class="media">
+                            <figure class="media-left">
+                                <p class="image is-64x64">
+                                    <img class="is-rounded" v-bind:src="character.image"
+                                        v-bind:alt="character.name">
+                                </p>
+                            </figure>
+                            <div class="media-content">
+                                <div class="content has-text-left">
+                                    <div class="balloon" v-bind:style="{ backgroundColor: character.accent }">
+                                        <p class="has-text-weight-bold has-text-white">
+                                            {{ word.name }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="media">
                             <div class="media-content">
                                 <div class="content">
                                     <div class="columns is-mobile is-gapless" v-for="row in arrange(word.attributes, 2)"
@@ -1616,7 +1639,7 @@
                                         </div>
                                         <div class="control is-expanded">
                                             <input class="input is-rounded" type="text"
-                                                v-bind:class="{'is-danger': inputHasError}"
+                                                v-bind:class="{ 'is-danger': inputHasError }"
                                                 v-bind:placeholder="isLearning ? '教える言葉' : '投稿するニュース'"
                                                 v-bind:disabled="word !== null" v-model="input" @input="change" v-cloak>
                                         </div>
@@ -1627,7 +1650,7 @@
                                         </div>
                                         <div class="control">
                                             <button class="button is-rounded is-primary" type="submit"
-                                                v-bind:class="{'is-loading': isLoading, 'is-static': word !== null}"
+                                                v-bind:class="{ 'is-loading': isLoading, 'is-static': word !== null }"
                                                 v-bind:disabled="user === null" @click="send"><span
                                                     class="icon is-small" v-cloak>
                                                     <i class="fas fa-paper-plane"></i>
