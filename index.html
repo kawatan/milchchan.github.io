@@ -1101,7 +1101,11 @@
         </div>
         <div class="background">
             <div class="ticker-wrap">
-                <transition-group name="ticker-item-list" class="ticker" tag="div"
+                <div class="ticker">
+                    <div class="item"><span class="has-text-weight-bold">薄い本</span></div>
+                    <div class="item"><span class="has-text-weight-bold">薄い本</span></div>
+                </div>
+                <!--<transition-group name="ticker-item-list" class="ticker" tag="div"
                     v-bind:style="{ animationPlayState: 'running' }">
                     <div class="item" v-for="word in words" v-bind:key="word">
                         <span class="has-text-weight-bold" v-cloak>{{ word }}</span>
@@ -1109,7 +1113,7 @@
                     <div class="item" v-for="word in words" v-bind:key="word + '-alt'">
                         <span class="has-text-weight-bold" v-cloak>{{ word }}</span>
                     </div>
-                </transition-group>
+                </transition-group>-->
             </div>
         </div>
         <transition name="blind" v-on:after-enter="blinded">
