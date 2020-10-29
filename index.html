@@ -32,7 +32,8 @@
             overflow-y: auto;
             scroll-behavior: smooth;
             /*background: #f5f5f5;*/
-            background: #9095bd;
+            /*background: #9095bd;*/
+            background: #64dafe;
         }
 
         body::before {
@@ -66,7 +67,6 @@
 
         input::placeholder {
             color: rgba(0, 0, 0, 0.5);
-            ;
         }
 
         label {
@@ -77,6 +77,30 @@
         a,
         a:focus {
             outline: none;
+        }
+
+        label.checkbox input[type=checkbox],
+        label.checkbox input[type=radio] {
+            display: none;
+        }
+
+        label.checkbox .custom {
+            position: relative;
+            margin: 0px 8px 0px 0px;
+            font-size: 1.0rem;
+        }
+
+        label.checkbox input[type=checkbox]+.custom:before,
+        label.checkbox input[type=radio]+.custom:before {
+            font-weight: 900;
+            font-family: "Font Awesome 5 Free";
+            content: '\f00c';
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        label.checkbox input[type=checkbox]:checked+.custom:before,
+        label.checkbox input[type=radio]:checked+.custom:before {
+            color: #ffc547;
         }
 
         .navbar {
@@ -105,6 +129,11 @@
             border-radius: 500px 500px 500px 500px;
             background: #ffffff;
             height: initial;
+        }
+
+        .is-primary {
+            /*color: #fef6a5 !important;*/
+            color: #ffc547 !important;
         }
 
         .progress {
@@ -199,7 +228,7 @@
 
         .background .ticker-wrap .ticker .item {
             padding: 0px 10vmin;
-            color: rgba(255, 255, 255, 1.0);
+            color: rgba(255, 255, 255, 0.5);
             font-size: 100vh;
         }
 
@@ -326,7 +355,7 @@
             width: 100%;
             background-color: #30c0f5;
             background-color: #f5f5f5;
-            background-color: rgba(0, 0, 0, 1.0);
+            background-color: rgba(255, 255, 255, 1.0);
             /*background-image: url('/images/Stripes.png');
             background-repeat: repeat;*/
             border-radius: 500px 500px 500px 500px;
@@ -352,7 +381,7 @@
         }
 
         #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item:nth-child(1) {
-            padding: 16px 16px 16px 16px;
+            padding: 0px 16px 16px 16px;
         }
 
         #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item {
@@ -389,14 +418,14 @@
             padding: 0;
             width: 32px;
             height: 4px;
-            background-color: #000000;
+            background-color: #ffffff;
             text-align: center !important;
         }
 
         #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .icon {
             border-radius: 290486px;
             padding: 16px;
-            background: #000000;
+            background: #ffffff;
         }
 
         #heading .navbar-item .tags>.control {
@@ -487,10 +516,6 @@
                 -10px -10px 30px #ffffff;*/
         }
 
-        #input .control .is-primary {
-            background-color: #64dafe;
-        }
-
         /*.media-content .level {
             margin: 0px 0px 4px 0px;
         }*/
@@ -564,7 +589,7 @@
             justify-content: center;
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
-            background: #64dafe url('/images/Stripes.png') repeat;
+            background: url('/images/Stripes.png') repeat;
             /*box-shadow: 10px 10px 30px #d0d0d0,
                 -10px -10px 30px #ffffff;*/
         }
@@ -586,6 +611,10 @@
         #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media span {
             display: inline-block;
             line-height: 1.5rem;
+        }
+
+        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media span.break {
+            display: block;
         }
 
         #container .columns .column .columns .column .field label.checkbox,
@@ -622,30 +651,6 @@
             display: flex;
             align-items: center;
             justify-content: start;
-        }
-
-        label.checkbox input[type=checkbox],
-        label.checkbox input[type=radio] {
-            display: none;
-        }
-
-        label.checkbox .custom {
-            position: relative;
-            margin: 0px 8px 0px 0px;
-            font-size: 1.0rem;
-        }
-
-        label.checkbox input[type=checkbox]+.custom:before,
-        label.checkbox input[type=radio]+.custom:before {
-            font-weight: 900;
-            font-family: "Font Awesome 5 Free";
-            content: '\f00c';
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        label.checkbox input[type=checkbox]:checked+.custom:before,
-        label.checkbox input[type=radio]:checked+.custom:before {
-            color: #64dafe;
         }
 
         #input .navbar-item .control:first-child .level {
@@ -752,7 +757,7 @@
             border: 0px solid transparent;
             border-radius: 290486px;
             background-color: transparent;
-            color: #30c0f5;
+            /*color: #30c0f5;*/
         }
 
         .navbar-item img {
@@ -1031,7 +1036,7 @@
             }
 
             .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
-                background: #ffa6bb url('/images/Stripes@2x.png') repeat;
+                background: url('/images/Stripes@2x.png') repeat;
             }
 
             #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
@@ -1042,8 +1047,6 @@
                 background-image: url('/images/Stripes@2x.png');
                 background-size: 20px 20px;
             }
-
-            
 
             .media-content .has-text-right .balloon {
                 background: url('/images/Stripes@2x.png') repeat 20px 20px;
@@ -1089,7 +1092,7 @@
             }
 
             .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
-                background: #ffa6bb url('/images/Stripes@3x.png') repeat;
+                background: url('/images/Stripes@3x.png') repeat;
             }
 
             #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
@@ -1137,7 +1140,7 @@
             <div class="ticker-wrap">
                 <transition-group name="ticker-item-list" class="ticker" tag="div"
                     v-bind:style="{ animationPlayState: 'running' }">
-                    <div class="item" v-for="word in words" v-bind:key="word">
+                    <div class="item" v-for="word in take(words, 10)" v-bind:key="word">
                         <span class="has-text-weight-bold" v-cloak>{{ word }}</span>
                     </div>
                     <div class="item" v-for="word in words" v-bind:key="word + '-alt'">
@@ -1180,11 +1183,11 @@
                                         <nav class="level">
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
-                                                    <span class="icon is-small has-text-black">
+                                                    <span class="icon is-small has-text-white">
                                                         <i class="fas fa-star"></i>
                                                     </span>
                                                     <span
-                                                        class="title is-size-1 is-uppercase has-text-black">{{ animatedStars }}</span>
+                                                        class="title is-size-1 is-uppercase has-text-white">{{ animatedStars }}</span>
                                                 </div>
                                             </div>
                                         </nav>
@@ -1217,7 +1220,7 @@
                                     </transition>
                                 </div>
                             </div>
-                            <div class="columns">
+                            <!--<div class="columns">
                                 <div class="column is-half is-mobile has-content-centered">
                                     <div class="control has-text-centered">
                                         <nav class="level">
@@ -1241,7 +1244,7 @@
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
                                                                                 <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                                    class="is-size-6 has-text-weight-bold has-text-gray">ミルヒちゃんねるのニュースだよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
@@ -1249,7 +1252,7 @@
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id">
                                                                     <span
-                                                                        class="is-size-6 has-text-weight-bold has-text-white"
+                                                                        class="is-size-6 has-text-weight-bold has-text-gray"
                                                                         v-cloak>{{ message.text }}</span>
                                                                 </div>
                                                                 <div class="item" v-show="messages.length > 0"
@@ -1265,7 +1268,7 @@
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
                                                                                 <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-white">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                                    class="is-size-6 has-text-weight-bold has-text-gray">ミルヒちゃんねるのニュースだよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
@@ -1273,7 +1276,7 @@
                                                                 <div class="item" v-for="message in messages"
                                                                     v-bind:key="message.id + '-alt'">
                                                                     <span
-                                                                        class="is-size-6 has-text-weight-bold has-text-white"
+                                                                        class="is-size-6 has-text-weight-bold has-text-gray"
                                                                         v-cloak>{{ message.text }}</span>
                                                                 </div>
                                                             </transition-group>
@@ -1284,7 +1287,7 @@
                                         </nav>
                                     </div>
                                 </div>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                     <div class="columns">
@@ -1325,10 +1328,10 @@
                                                 <div class="media-content">
                                                     <div class="content">
                                                         <h1
-                                                            class="is-size-3 is-uppercase has-text-weight-bold has-text-black">
-                                                            milchchan.com</h1>
-                                                        <h2 class="is-size-6 has-text-weight-bold has-text-black">
-                                                            #milchchannel</h2>
+                                                            class="is-size-3 is-uppercase has-text-weight-bold has-text-white">
+                                                            #milchchannel</h1>
+                                                        <h2 class="is-size-6 has-text-weight-bold has-text-white">
+                                                            milchchan.com</h2>
                                                         <hr>
                                                     </div>
                                                 </div>
@@ -1347,17 +1350,17 @@
                                             <div class="level is-mobile">
                                                 <div class="level-item">
                                                     <a href="https://twitter.com/milchchan"><span
-                                                            class="icon is-small has-text-white"><i
+                                                            class="icon is-small has-text-black"><i
                                                                 class="fab fa-twitter"></i></span></a>
                                                 </div>
                                                 <div class="level-item">
                                                     <a href="https://instagram.com/milchchan"><span
-                                                            class="icon is-small has-text-white"><i
+                                                            class="icon is-small has-text-black"><i
                                                                 class="fab fa-instagram"></i></span></a>
                                                 </div>
                                                 <div class="level-item">
                                                     <a href="https://github.com/milchchan"><span
-                                                            class="icon is-small has-text-white"><i
+                                                            class="icon is-small has-text-black"><i
                                                                 class="fab fa-github"></i></span></a>
                                                 </div>
                                             </div>
@@ -1566,6 +1569,7 @@
                                         v-bind:style="{ height: animatedPopupTextHeight + 'px' }">
                                         <div class="content has-text-left" ref="popupText">
                                             <span class="title is-4 has-text-weight-bold has-text-white"
+                                                v-bind:class="{ break: character.value == '\n' }"
                                                 v-for="character in text" v-bind:key="character.key"
                                                 v-cloak>{{ character.value }}</span>
                                         </div>
@@ -1586,7 +1590,8 @@
                                 <article class="media" v-bind:style="{ backgroundColor: notification.accent }" v-cloak>
                                     <figure class="media-left" v-if="notification.image" v-cloak>
                                         <span class="image is-24x24">
-                                            <img class="is-rounded" v-bind:src="notification.image" alt="Avatar" v-cloak>
+                                            <img class="is-rounded" v-bind:src="notification.image" alt="Avatar"
+                                                v-cloak>
                                         </span>
                                     </figure>
                                     <div class="media-content" v-cloak>
@@ -1608,10 +1613,10 @@
                                         <div class="field">
                                             <label class="checkbox" v-cloak>
                                                 <input type="radio" name="mode" checked="checked"
-                                                    @change="isLearning = false; isExpanded = false;">
+                                                    @change="isLearning = true; isExpanded = false;">
                                                 <span class="custom"></span>
                                                 <span
-                                                    class="title is-size-6 has-text-weight-bold has-text-black">ニュースを投稿</span>
+                                                    class="title is-size-6 has-text-weight-bold has-text-black">言葉を教える</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1619,10 +1624,10 @@
                                         <div class="field">
                                             <label class="checkbox" v-cloak>
                                                 <input type="radio" name="mode"
-                                                    @change="isLearning = true; isExpanded = false;">
+                                                    @change="isLearning = false; isExpanded = false;">
                                                 <span class="custom"></span>
                                                 <span
-                                                    class="title is-size-6 has-text-weight-bold has-text-black">言葉を教える</span>
+                                                    class="title is-size-6 has-text-weight-bold has-text-black">ニュースを投稿</span>
                                             </label>
                                         </div>
                                     </div>
@@ -1827,7 +1832,9 @@
         let waitTime = 0.0;
         const waitThreshold = 1.0;
         let activateTime = 0.0;
-        const activateThreshold = 15.0;
+        const activateThreshold = 10.0;
+        let alertTime = 0.0;
+        const alertThreshold = 30.0;
         let lookAnimation = null;
         let timeoutID = undefined;
 
@@ -1843,8 +1850,9 @@
                     isSuggested: false,
                     isPopup: false,
                     isExpanded: false,
-                    isLearning: false,
+                    isLearning: true,
                     isAnimating: false,
+                    feedQueue: [],
                     suggestionQueue: [],
                     sequenceQueue: [],
                     progress: 0,
@@ -1887,7 +1895,7 @@
                 messages: {
                     handler: () => {
                         app.$nextTick(() => {
-                            let width = 0;
+                            /*let width = 0;
 
                             for (const element of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
                                 width += element.getBoundingClientRect().width;
@@ -1904,7 +1912,7 @@
                             ], {
                                 duration: 30000,
                                 iterations: Infinity
-                            });
+                            });*/
 
                             //app.scrollToEnd();
                         });
@@ -1929,7 +1937,7 @@
                                     transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                                 }
                             ], {
-                                duration: 15 * 60 * 1000,
+                                duration: 5 * 60 * 1000,
                                 iterations: Infinity
                             });
                         });
@@ -3094,8 +3102,42 @@
                         } else {
                             idleTime += deltaTime;
                             activateTime += deltaTime;
+                            alertTime += deltaTime;
 
-                            if (activateTime >= activateThreshold) {
+                            if (alertTime >= alertThreshold) {
+                                if (app.feedQueue.length > 0) {
+                                    function format(format) {
+                                        var args = arguments;
+
+                                        return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
+                                    }
+
+                                    let sequences = [];
+                                    let sequence = [];
+
+                                    for (const sequence of this.character.sequences) {
+                                        if (sequence.name == "Alert") {
+                                            sequences.push(sequence);
+                                        }
+                                    }
+
+                                    for (const obj of this.prepare(sequences)) {
+                                        if (obj.type == "Message") {
+                                            sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: format(obj.text, app.feedQueue[0].text) });
+                                        } else {
+                                            sequence.push(obj);
+                                        }
+                                    }
+
+                                    if (sequence.length > 0) {
+                                        this.sequenceQueue.push(sequence);
+                                    }
+
+                                    app.feedQueue.push(app.feedQueue.shift());
+                                }
+
+                                idleTime = activateTime = alertTime = 0.0;
+                            } else if (activateTime >= activateThreshold) {
                                 app.talk();
 
                                 idleTime = activateTime = 0.0;
@@ -3347,7 +3389,7 @@
                                 let randomBuffer = '';
 
                                 for (let i = 0; i < message.text.length; i++) {
-                                    if (charArray.indexOf(message.text.charAt(i)) == -1 && message.text.charAt(i).match(/\s/) == null) {
+                                    if (charArray.indexOf(message.text.charAt(i)) == -1 && message.text.charAt(i) != "\n" && message.text.charAt(i).match(/\s/) == null) {
                                         charArray.push(message.text.charAt(i));
                                     }
                                 }
@@ -3646,14 +3688,18 @@
                                 let randomBuffer = '';
 
                                 for (let i = 0; i < app.message.text.length; i++) {
-                                    if (charArray.indexOf(app.message.text.charAt(i)) == -1 && app.message.text.charAt(i).match(/\s/) == null) {
+                                    if (charArray.indexOf(app.message.text.charAt(i)) == -1 && app.message.text.charAt(i) != "\n" && app.message.text.charAt(i).match(/\s/) == null) {
                                         charArray.push(app.message.text.charAt(i));
                                     }
                                 }
 
-                                for (let i = 0; i < app.message.type.count; i++) {
-                                    if (charArray.length > 0) {
-                                        randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                                if (charArray.length > 0) {
+                                    for (let i = 0; i < app.message.type.count; i++) {
+                                        if (app.message.text.charAt(i) == "\n") {
+                                            randomBuffer += "\n";
+                                        } else {
+                                            randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                                        }
                                     }
                                 }
 
@@ -3933,7 +3979,7 @@
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+                //this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
                 //document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = "100%";
                 /*this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
@@ -3965,18 +4011,7 @@
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
 
-                this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
-
-                //document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = this.$refs.ticker.style.width;
-
-                //document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = "100%";
-                /*this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
-
-                for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
-                    width += item.getBoundingClientRect().width;
-                }
-
-                ticker.style.width = width + 'px';*/
+                //this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
                 if (popup !== null) {
                     popup.style.paddingBottom = container.style.paddingBottom;
@@ -4160,6 +4195,8 @@
                                     keys.splice(0, keys.length - app.maxMessages);
                                 }
 
+                                app.feedQueue.splice(0);
+
                                 for (let key of keys) {
                                     const message = messageDictionary[key];
                                     const timestamp = message.timestamp * 1000;
@@ -4223,6 +4260,8 @@
                                             received = message.user;
                                         }
                                     }
+
+                                    app.feedQueue.unshift(message);
                                 }
 
                                 for (let i = app.messages.length - 1; i >= 0; i--) {
@@ -4266,7 +4305,7 @@
             container.style.paddingTop = app.$refs.indicator.getBoundingClientRect().height + 'px'
             container.style.paddingBottom = app.$refs.input.getBoundingClientRect().height + 'px'
 
-            app.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
+            //app.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
 
             if (popup !== null) {
                 popup.style.paddingBottom = container.style.paddingBottom;
@@ -4297,7 +4336,7 @@
                         transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                     }
                 ], {
-                    duration: 15 * 60 * 1000,
+                    duration: 5 * 60 * 1000,
                     iterations: Infinity
                 });
             });
