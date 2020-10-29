@@ -1154,7 +1154,7 @@
         <transition name="blind" v-on:after-enter="blinded">
             <div class="blind" v-if="isBlinded" v-cloak></div>
         </transition>
-        <div id="three" class="is-hidden" ref="three"></div>
+        <div id="three" ref="three"></div>
         <transition name="fade">
             <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
                 v-cloak>
@@ -1582,108 +1582,106 @@
                 </div>
             </nav>
         </transition>
-        <transition name="collapse">
-            <nav id="input" class="navbar is-fixed-bottom" role="navigation" v-show="isOverlayed && !isSuggested">
-                <div class=" navbar-item is-expanded columns is-desktop">
-                    <div class="column is-half has-content-centered is-mobile">
-                        <transition-group name="notification-list" class="control" tag="div">
-                            <nav class="level" v-for="notification in notifications" v-bind:key="notification.id">
-                                <div class="notification is-info is-light" v-cloak>
-                                    <article class="media" v-bind:style="{ backgroundColor: notification.accent }">
-                                        <figure class="media-left" v-if="notification.image" v-cloak>
-                                            <span class="image is-24x24">
-                                                <img class="is-rounded" v-bind:src="notification.image" alt="Avatar">
+        <nav id="input" class="navbar is-fixed-bottom" role="navigation">
+            <div class=" navbar-item is-expanded columns is-desktop">
+                <div class="column is-half has-content-centered is-mobile">
+                    <transition-group name="notification-list" class="control" tag="div" v-cloak>
+                        <nav class="level" v-for="notification in notifications" v-bind:key="notification.id">
+                            <div class="notification is-info is-light" v-cloak>
+                                <article class="media" v-bind:style="{ backgroundColor: notification.accent }" v-cloak>
+                                    <figure class="media-left" v-if="notification.image" v-cloak>
+                                        <span class="image is-24x24">
+                                            <img class="is-rounded" v-bind:src="notification.image" alt="Avatar" v-cloak>
+                                        </span>
+                                    </figure>
+                                    <div class="media-content" v-cloak>
+                                        <div class="content has-text-left">
+                                            <span class="has-text-weight-bold has-text-white" v-cloak>
+                                                {{ notification.text }}
                                             </span>
-                                        </figure>
-                                        <div class="media-content">
-                                            <div class="content has-text-left">
-                                                <span class="has-text-weight-bold has-text-white" v-cloak>
-                                                    {{ notification.text }}
-                                                </span>
-                                            </div>
                                         </div>
-                                    </article>
+                                    </div>
+                                </article>
+                            </div>
+                        </nav>
+                    </transition-group>
+                    <div class="control">
+                        <transition name="fade">
+                            <nav class="level" v-show="isExpanded">
+                                <div class="level-left">
+                                    <div class="level-item">
+                                        <div class="field">
+                                            <label class="checkbox" v-cloak>
+                                                <input type="radio" name="mode" checked="checked"
+                                                    @change="isLearning = false; isExpanded = false;">
+                                                <span class="custom"></span>
+                                                <span
+                                                    class="title is-size-6 has-text-weight-bold has-text-black">ニュースを投稿</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="level-item">
+                                        <div class="field">
+                                            <label class="checkbox" v-cloak>
+                                                <input type="radio" name="mode"
+                                                    @change="isLearning = true; isExpanded = false;">
+                                                <span class="custom"></span>
+                                                <span
+                                                    class="title is-size-6 has-text-weight-bold has-text-black">言葉を教える</span>
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
                             </nav>
-                        </transition-group>
-                        <div class="control">
-                            <transition name="fade">
-                                <nav class="level" v-show="isExpanded">
-                                    <div class="level-left">
-                                        <div class="level-item">
-                                            <div class="field">
-                                                <label class="checkbox" v-cloak>
-                                                    <input type="radio" name="mode" checked="checked"
-                                                        @change="isLearning = false; isExpanded = false;">
-                                                    <span class="custom"></span>
-                                                    <span
-                                                        class="title is-size-6 has-text-weight-bold has-text-black">ニュースを投稿</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                        <div class="level-item">
-                                            <div class="field">
-                                                <label class="checkbox" v-cloak>
-                                                    <input type="radio" name="mode"
-                                                        @change="isLearning = true; isExpanded = false;">
-                                                    <span class="custom"></span>
-                                                    <span
-                                                        class="title is-size-6 has-text-weight-bold has-text-black">言葉を教える</span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </nav>
-                            </transition>
-                            <nav class="level" ref="input">
-                                <form onsubmit="return false;">
-                                    <div class="field has-addons">
-                                        <div class="control">
-                                            <transition name="fade" mode="out-in">
-                                                <button class="button is-rounded" type="button"
-                                                    v-bind:disabled="user === null" @click="isExpanded = false"
-                                                    v-if="isExpanded" key="unexpand" v-cloak>
-                                                    <span class="icon is-small is-black">
-                                                        <i class="fas fa-angle-down"></i>
-                                                    </span>
-                                                </button>
-                                                <button class="button is-white" type="button"
-                                                    v-bind:disabled="user === null" @click="isExpanded = true" v-else
-                                                    key="expand" v-cloak>
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-angle-up"></i>
-                                                    </span>
-                                                </button>
-                                            </transition>
-                                        </div>
-                                        <div class="control is-expanded">
-                                            <input class="input is-rounded" type="text"
-                                                v-bind:class="{ 'is-danger': inputHasError }"
-                                                v-bind:placeholder="isLearning ? '教える言葉' : '投稿するニュース'"
-                                                v-bind:disabled="word !== null" v-model="input" @input="change" v-cloak>
-                                        </div>
-                                        <div class="control">
-                                            <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
-                                                {{ maxInputLength - animatedInputLength }}
-                                            </span>
-                                        </div>
-                                        <div class="control">
-                                            <button class="button is-rounded is-primary" type="submit"
-                                                v-bind:class="{ 'is-loading': isLoading, 'is-static': word !== null }"
-                                                v-bind:disabled="user === null" @click="send"><span
-                                                    class="icon is-small" v-cloak>
-                                                    <i class="fas fa-paper-plane"></i>
+                        </transition>
+                        <nav class="level" ref="input">
+                            <form onsubmit="return false;">
+                                <div class="field has-addons">
+                                    <div class="control">
+                                        <transition name="fade" mode="out-in">
+                                            <button class="button is-rounded" type="button"
+                                                v-bind:disabled="user === null" @click="isExpanded = false"
+                                                v-if="isExpanded" key="unexpand" v-cloak>
+                                                <span class="icon is-small is-black">
+                                                    <i class="fas fa-angle-down"></i>
                                                 </span>
                                             </button>
-                                        </div>
+                                            <button class="button is-white" type="button"
+                                                v-bind:disabled="user === null" @click="isExpanded = true" v-else
+                                                key="expand" v-cloak>
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-angle-up"></i>
+                                                </span>
+                                            </button>
+                                        </transition>
                                     </div>
-                                </form>
-                            </nav>
-                        </div>
+                                    <div class="control is-expanded">
+                                        <input class="input is-rounded" type="text"
+                                            v-bind:class="{ 'is-danger': inputHasError }"
+                                            v-bind:placeholder="isLearning ? '教える言葉' : '投稿するニュース'"
+                                            v-bind:disabled="word !== null" v-model="input" @input="change" v-cloak>
+                                    </div>
+                                    <div class="control">
+                                        <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
+                                            {{ maxInputLength - animatedInputLength }}
+                                        </span>
+                                    </div>
+                                    <div class="control">
+                                        <button class="button is-rounded is-primary" type="submit"
+                                            v-bind:class="{ 'is-loading': isLoading, 'is-static': word !== null }"
+                                            v-bind:disabled="user === null" @click="send"><span class="icon is-small"
+                                                v-cloak>
+                                                <i class="fas fa-paper-plane"></i>
+                                            </span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </nav>
                     </div>
                 </div>
-            </nav>
-        </transition>
+            </div>
+        </nav>
         <audio preload="auto" ref="alert">
             <source src="/sounds/float_001.mp3" type="audio/mpeg" />
             <source src="/sounds/float_001.wav" type="audio/wav" />
