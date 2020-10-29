@@ -121,62 +121,6 @@
             animation: progress 0.5s linear 0s infinite;
         }
 
-        .background {
-            position: fixed;
-            z-index: -1;
-            overflow: hidden;
-            width: 100%;
-            height: 100%;
-            background-color: transparent;
-            background-position: 50% 50%;
-            background-size: contain;
-            background-repeat: no-repeat;
-        }
-
-        .background>div {
-            position: fixed;
-            overflow: hidden;
-            background-color: transparent;
-            background-position: 50% 50%;
-            background-size: cover;
-            background-repeat: no-repeat;
-            width: 100%;
-            height: 100%;
-        }
-
-        .background>img {
-            position: fixed;
-            object-fit: cover;
-            width: 100%;
-            height: 100%;
-        }
-
-        .background .ticker-wrap .ticker .item span {
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 100vh;
-        }
-
-        #three {
-            position: fixed;
-            width: 100%;
-            height: 100vh;
-            overflow: hidden;
-        }
-
-        #three>canvas {
-            overflow: hidden;
-            outline: none;
-        }
-
-        #particles-js {
-            position: fixed;
-            z-index: -1;
-            width: 100%;
-            height: 100vh;
-            background-color: transparent;
-            overflow: hidden;
-        }
-
         .ticker-wrap {
             padding: 0;
             width: 100%;
@@ -210,9 +154,74 @@
             margin: 0px 8px 0px 0px;
         }
 
+        .background {
+            position: fixed;
+            z-index: -1;
+            overflow: hidden;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            background-position: 50% 50%;
+            background-size: contain;
+            background-repeat: no-repeat;
+        }
+
+        .background>div {
+            position: fixed;
+            overflow: hidden;
+            background-color: transparent;
+            background-position: 50% 50%;
+            background-size: cover;
+            background-repeat: no-repeat;
+            width: 100%;
+            height: 100%;
+        }
+
+        .background>img {
+            position: fixed;
+            object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .background .ticker-wrap {
+            position: fixed;
+            bottom: 0;
+            height: 100vh;
+        }
+
+        .background .ticker-wrap .ticker {
+            position: fixed;
+            bottom: 0;
+            height: 100vh;
+            line-height: 100vh;
+        }
+
         .background .ticker-wrap .ticker .item {
             padding: 0px 10vmin;
-            line-height: 100vh;
+            color: rgba(255, 255, 255, 1.0);
+            font-size: 100vh;
+        }
+
+        #three {
+            position: fixed;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #three>canvas {
+            overflow: hidden;
+            outline: none;
+        }
+
+        #particles-js {
+            position: fixed;
+            z-index: -1;
+            width: 100%;
+            height: 100vh;
+            background-color: transparent;
+            overflow: hidden;
         }
 
         .has-content-centered {
@@ -1105,7 +1114,7 @@
         <transition name="blind" v-on:after-enter="blinded">
             <div class="blind" v-if="isBlinded" v-cloak></div>
         </transition>
-        <div id="three" ref="three"></div>
+        <div id="three" class="is-hidden" ref="three"></div>
         <transition name="fade">
             <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
                 v-cloak>
