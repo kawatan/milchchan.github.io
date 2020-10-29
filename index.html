@@ -1000,6 +1000,16 @@
 
         @media screen and (-webkit-min-device-pixel-ratio:2),
         (min-resolution: 2dppx) {
+            @keyframes loop {
+                0% {
+                    background-position: 0 0;
+                }
+
+                100% {
+                    background-position: -200px 0px;
+                }
+            }
+
             body::before {
                 background: url('/images/Background@2x.png') repeat;
             }
@@ -1038,6 +1048,16 @@
 
         @media screen and (-webkit-min-device-pixel-ratio:3),
         (min-resolution: 3dppx) {
+            @keyframes loop {
+                0% {
+                    background-position: 0 0;
+                }
+
+                100% {
+                    background-position: -300px 0px;
+                }
+            }
+
             body::before {
                 background: url('/images/Background@3x.png') repeat;
             }
