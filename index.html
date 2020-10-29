@@ -1815,7 +1815,8 @@
         const stats = new Stats();
 
         stats.domElement.style.position = "fixed";
-        stats.domElement.style.top = "0px";
+        stats.domElement.style.top = "auto";
+        stats.domElement.style.bottom = "0";
 
         if (!debug) {
             stats.domElement.classList.add("is-hidden");
