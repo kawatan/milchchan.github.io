@@ -59,6 +59,21 @@
                     "type": "Message",
                     "speed": 25,
                     "duration": 5,
+                    "text": "ミルヒ、お友達少ないからお友達になってくれると嬉しいなぁ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
                     "text": "メルクちゃんはちょっと変わっているけど大切なお友達だよ"
                 },
                 {
@@ -74,7 +89,7 @@
                     "type": "Message",
                     "speed": 25,
                     "duration": 5,
-                    "text": "メルクちゃんといっしょに食べるご飯は楽しいなぁ"
+                    "text": "メルクちゃんがまた怪しげなこと企んでる・・・"
                 },
                 {
                     "type": "Sequence",
@@ -89,7 +104,7 @@
                     "type": "Message",
                     "speed": 25,
                     "duration": 5,
-                    "text": "メルクちゃんといっしょに入るお風呂は楽しいなぁ"
+                    "text": "メルクちゃんといっしょにアフタヌーンティーしたよ"
                 },
                 {
                     "type": "Sequence",
@@ -165,6 +180,186 @@
                     "speed": 25,
                     "duration": 5,
                     "text": "メルクちゃんはお裁縫が得意なんだよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "愚者は己を賢いと思っているけど、賢者は己が愚かなことを知っているよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "能力の低い人物が自らの容姿や発言や行動などについて、実際よりも高い評価を行ってしまうよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "あらゆる経験の快苦の記憶は、ほぼ完全にピーク時と終了時の快苦の度合いで決まるよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "十分に発達した科学は、魔法と区別がつかないよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "未来を予想する最良の方法は、未来を創りだすことだよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "言語はウィルスだよ！"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "奴隷は、奴隷の境遇に慣れ過ぎると、驚いた事に自分の足を繋いでいる鎖の自慢をお互いに始めるよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "リーダーシップとは、生産的流れから間抜けを取り除く自然の摂理だよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "外部で起こっている変化が内部の変化よりも早くなったら、もう終わりの日は近いよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "今までと同じ考えや行動を繰り返して、異なる結果を期待するのは凶器だよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "何かを始めるためには、しゃべるのをやめて行動し始めなければならないよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "多くの人は、見たいと欲する現実しか見ていないよ"
                 },
                 {
                     "type": "Sequence",
@@ -305,21 +500,6 @@
                     "duration": 1.0,
                     "start": 0.0,
                     "end": 4.0
-                }
-            ]
-        },
-        {
-            "name": "Activate",
-            "sequence": [
-                {
-                    "type": "Message",
-                    "speed": 25,
-                    "duration": 5,
-                    "text": "やめて・・・ミルヒに乱暴する気でしょう？エロ同人みたいに！エロ同人みたいに！"
-                },
-                {
-                    "type": "Sequence",
-                    "name": "Say"
                 }
             ]
         },
