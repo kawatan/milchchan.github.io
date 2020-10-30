@@ -2699,26 +2699,6 @@
                         this.isBlinded = false;
                     }
                 },
-                fetch: async function (url) {
-                    try {
-                        const response = await fetch(url, {
-                            mode: "cors",
-                            method: "GET",
-                            headers: {
-                                "Content-Type": "application/x-www-form-urlencoded"
-                            }
-                        });
-
-                        if (response.ok) {
-                            console.log(response);
-                        }
-                        else {
-                            throw new Error(response.statusText);
-                        }
-                    } catch (e) {
-                        console.error(e);
-                    }
-                },
                 update: async function (data, max) {
                     this.isUpdating = true;
 
@@ -4163,8 +4143,6 @@
                 } catch (e) {
                     console.error(e);
                 }
-
-                self.fetch("https://news.google.com/news/rss/headlines/section/topic/NATION?hl=ja&gl=JP&ceid=JP:ja");
 
                 firebase.auth().signInAnonymously().catch(function (error) {
                     console.error(error.code, error.message);
