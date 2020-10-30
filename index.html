@@ -3061,8 +3061,8 @@
 
                     return sequenceStack;
                 },
-                render: function () {
-                    requestAnimationFrame(this.render);
+                animate: function () {
+                    requestAnimationFrame(this.animate);
 
                     const deltaTime = clock.getDelta();
                     const app = this;
@@ -4021,7 +4021,7 @@
                 this.$refs.three.appendChild(renderer.domElement);
                 this.$refs.three.appendChild(stats.domElement);
 
-                this.render();
+                this.animate();
 
                 container.style.paddingTop = this.$refs.indicator.getBoundingClientRect().height + 'px'
                 container.style.paddingBottom = this.$refs.input.getBoundingClientRect().height + 'px'
