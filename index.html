@@ -140,6 +140,28 @@
             color: #64dafe !important;
         }
 
+        .start {
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .start h1 {
+            margin: 0;
+            padding: 0;
+            color: #000000;
+            font-family: 'Gotham', 'Alata', 'Roboto', 'Helvetica', 'Segoe UI', 'Arial', sans-serif;
+            font-size: 10vmin;
+            font-weight: bold;
+            line-height: 10vmin;
+        }
+
         .progress {
             position: fixed;
             margin: 0;
@@ -1140,13 +1162,13 @@
 
         @font-face {
             font-family: "Gotham";
-            src: url('/fonts/GothamRnd-Book.woff') format('woff');
+            src: url('/fonts/Gotham-Book.woff') format('woff');
             font-weight: normal;
         }
 
         @font-face {
             font-family: "Gotham";
-            src: url('/fonts/GothamRnd-Bold.woff') format('woff');
+            src: url('/fonts/Gotham-Bold.woff') format('woff');
             font-weight: bold;
         }
     </style>
@@ -1178,6 +1200,11 @@
             <div class="blind" v-if="isBlinded" v-cloak></div>
         </transition>
         <div id="three" ref="three"></div>
+        <transition name="fade">
+            <div class="start" v-if="progress !== 0.0">
+                <h1 v-cloak>milchchan.com</h1>
+            </div>
+        </transition>
         <transition name="fade">
             <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
                 v-cloak>
