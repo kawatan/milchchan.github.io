@@ -33,7 +33,7 @@
             scroll-behavior: smooth;
             /*background: #f5f5f5;*/
             /*background: #9095bd;*/
-            background: #64dafe;
+            background: #ffeeb2;
         }
 
         body::before {
@@ -102,7 +102,7 @@
 
         label.checkbox input[type=checkbox]:checked+.custom:before,
         label.checkbox input[type=radio]:checked+.custom:before {
-            color: #ffc547;
+            color: #64dafe;
         }
 
         .navbar {
@@ -137,7 +137,7 @@
 
         .is-primary {
             /*color: #fef6a5 !important;*/
-            color: #ffc547 !important;
+            color: #64dafe !important;
         }
 
         .progress {
@@ -347,7 +347,7 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .title {
             font-family: 'Alata', sans-serif;
-            font-size: 4rem !important;
+            font-size: 5rem !important;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .subtitle {
@@ -1364,7 +1364,7 @@
                                                 <div class="media-content">
                                                     <div class="content">
                                                         <h1
-                                                            class="is-size-3 is-uppercase has-text-weight-bold has-text-black">
+                                                            class="is-size-1 is-uppercase has-text-weight-bold has-text-black">
                                                             #milchchannel</h1>
                                                         <h2 class="is-size-6 has-text-weight-bold has-text-black">
                                                             milchchan.com</h2>
@@ -4040,6 +4040,7 @@
                 let container = this.$refs.container;
                 let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
                 const loader = new GLTFLoader();
+                let sequences = [];
 
                 this.$refs.three.appendChild(renderer.domElement);
                 this.$refs.three.appendChild(stats.domElement);
@@ -4111,7 +4112,6 @@
                                     win: '/models/animations/animation-win.json'
                                 };
                                 let animationDictionary = {};
-                                let sequences = [];
 
                                 try {
                                     if (channel.length == 0) {
@@ -4150,14 +4150,6 @@
                                 } catch (e) {
                                     console.error(e);
                                 }
-
-                                for (const sequence of self.character.sequences) {
-                                    if (sequence.name == "Start") {
-                                        sequences.push(sequence);
-                                    }
-                                }
-
-                                self.sequenceQueue.push(this.prepare(sequences));
                             });
                         },
                         (progress) => self.progress = progress.loaded / progress.total,
@@ -4166,6 +4158,14 @@
                 } catch (e) {
                     console.error(e);
                 }
+
+                for (const sequence of self.character.sequences) {
+                    if (sequence.name == "Start") {
+                        sequences.push(sequence);
+                    }
+                }
+
+                self.sequenceQueue.push(this.prepare(sequences));
 
                 firebase.auth().signInAnonymously().catch(function (error) {
                     console.error(error.code, error.message);
