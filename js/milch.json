@@ -23,11 +23,26 @@
             ]
         },
         {
+            "name": "Alert",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "ミルヒちゃんねるのニュースだよ！\n{0}"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
             "name": "Learn",
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "{0}って何かな？"
                 },
@@ -42,7 +57,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "メルクちゃんはちょっと変わっているけど大切なお友達だよ"
                 },
@@ -57,7 +72,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "メルクちゃんといっしょに食べるご飯は楽しいなぁ"
                 },
@@ -72,7 +87,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "メルクちゃんといっしょに入るお風呂は楽しいなぁ"
                 },
@@ -87,7 +102,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "お金がないけどiPhoneが欲しいなぁ"
                 },
@@ -102,7 +117,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "お鼻を触っているとムズムズするよ"
                 },
@@ -117,7 +132,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "メルクちゃんといっしょに原宿に行ってクレープを食べたよ"
                 },
@@ -132,7 +147,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "この前メルクちゃんが学校のロッカーの中からミルヒを覗いてたよ...ちょっと怖かったよ..."
                 },
@@ -147,7 +162,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "メルクちゃんはお裁縫が得意なんだよ"
                 },
@@ -162,7 +177,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "女の人は恋をすると綺麗になるってメルクちゃんが言ってたよ！恋ってすごいね！"
                 },
@@ -177,7 +192,22 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
+                    "duration": 5,
+                    "text": "眠れないときは羊を数えるといいってメルクちゃんが言ってたよ"
+                },
+                {
+                    "type": "Sequence",
+                    "name": "Say"
+                }
+            ]
+        },
+        {
+            "name": "Activate",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "speed": 25,
                     "duration": 5,
                     "text": "筋肉は裏切らない！"
                 },
@@ -192,7 +222,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "夜、寂しくなったらミルヒを呼んでね"
                 },
@@ -207,7 +237,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "話は通じないが弾は通じるってメルクちゃんが言ってたよ"
                 },
@@ -222,7 +252,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "やはり暴力...！！暴力は全てを解決する...！！ってメルクちゃんが言ってたよ"
                 },
@@ -283,7 +313,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "speed": 50,
+                    "speed": 25,
                     "duration": 5,
                     "text": "やめて・・・ミルヒに乱暴する気でしょう？エロ同人みたいに！エロ同人みたいに！"
                 },
