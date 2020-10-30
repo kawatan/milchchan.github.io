@@ -6,7 +6,7 @@
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
     <meta name="theme-color" content="#f6f6f6">
-    <title>#ミルヒちゃんねる</title>
+    <title>ミルヒちゃんねる</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
@@ -1793,7 +1793,7 @@
         const channel = decodeURIComponent(window.location.hash.substring(1));
         const databaseRoot = 'bot';
         const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
-        const databaseMessages = databaseChannel + '/statuses';
+        const databaseMessages = databaseChannel + '/feed';
         let database = firebase.database();
         const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
