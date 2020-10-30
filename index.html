@@ -638,6 +638,7 @@
 
         #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media span.break {
             display: block;
+            margin: 0;
         }
 
         #input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(2) .level-left {
@@ -3605,18 +3606,18 @@
                                 if (app.message.type.count > 0) {
                                     app.message.type.elapsed += deltaTime;
 
-                                    if (app.message.type.elapsed >= app.message.type.speed / 1000.0) {
+                                    if (app.message.type.elapsed >= 1.0 / app.message.type.speed) {
                                         let index = app.message.type.count - 1;
 
                                         if (index < app.message.text.length) {
                                             let width = Math.floor(app.message.text.length / 2);
 
-                                            if (app.message.type.buffer.length <= width) {
+                                            if (app.message.type.buffer.length <= width && app.message.type.count > 0) {
                                                 app.message.type.count -= 1;
                                             }
 
                                             if (app.message.type.buffer.length > 0) {
-                                                app.message.type.buffer = app.message.type.buffer.substring(app.message.type.buffer.length - 2, app.message.type.buffer.length - 1);
+                                                app.message.type.buffer = app.message.type.buffer.substring(0, app.message.type.buffer.length - 1);
                                             }
                                         }
 
@@ -3689,7 +3690,7 @@
                                     }
                                 }
 
-                                if (app.message.type.elapsed >= app.message.type.speed / 1000.0) {
+                                if (app.message.type.elapsed >= 1.0 / app.message.type.speed) {
                                     let index = app.message.type.buffer.length;
                                     let width = Math.floor(app.message.text.length / 2);
                                     let length = app.message.text.length;
@@ -4224,9 +4225,17 @@
                         });
                         database.ref(databaseMessages).limitToLast(100).on('value', snapshot => {
                             if (snapshot.exists()) {
+                                function format(format) {
+                                    var args = arguments;
+
+                                    return format.replace(/\{(\d)\}/g, function (m, c) { return args[parseInt(c) + 1] });
+                                }
+
                                 const messageDictionary = snapshot.val();
                                 let keys = Object.keys(messageDictionary);
                                 let received = null;
+                                let sequences = [];
+                                let sequence = [];
 
                                 if (keys.length > app.maxMessages) {
                                     keys.splice(0, keys.length - app.maxMessages);
@@ -4316,6 +4325,26 @@
                                 }
 
                                 app.update(messageDictionary, app.maxTags);
+
+                                for (const sequence of app.character.sequences) {
+                                    if (sequence.name == "Alert") {
+                                        sequences.push(sequence);
+                                    }
+                                }
+
+                                for (const obj of app.prepare(sequences)) {
+                                    if (obj.type == "Message") {
+                                        sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: format(obj.text, app.feedQueue[0].text) });
+                                    } else {
+                                        sequence.push(obj);
+                                    }
+                                }
+
+                                if (sequence.length > 0) {
+                                    app.sequenceQueue.push(sequence);
+                                }
+
+                                app.feedQueue.push(app.feedQueue.shift());
                             }
                         });
                     } else {
