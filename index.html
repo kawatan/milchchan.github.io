@@ -162,6 +162,13 @@
             line-height: 10vmin;
         }
 
+        .start img {
+            margin: 0;
+            padding: 0;
+            color: #000000;
+            height: 10vmin;
+        }
+
         .progress {
             position: fixed;
             margin: 0;
@@ -364,7 +371,7 @@
             padding: 16px 16px 16px 16px;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control>.level:nth-last-of-type(2) {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control>.level:nth-last-of-type(1) {
             margin: 0;
             padding: 0px 0px 8px 0px;
         }
@@ -378,7 +385,7 @@
             font-family: 'Nico Moji', sans-serif;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item {
+        /*#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item {
             padding: 0px 16px 16px 16px;
         }
 
@@ -388,14 +395,9 @@
             background-color: #30c0f5;
             background-color: #f5f5f5;
             background-color: rgba(255, 255, 255, 1.0);
-            /*background-image: url('/images/Stripes.png');
-            background-repeat: repeat;*/
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
-            /*box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;*/
             box-sizing: border-box;
-            /*backdrop-filter: blur(8px);*/
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip {
@@ -406,7 +408,7 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             padding: 0px 16px;
-        }
+        }*/
 
         #heading>.columns>.column>.columns:last-child {
             justify-content: center;
@@ -1207,7 +1209,7 @@
         <div id="three" ref="three"></div>
         <transition name="fade">
             <div class="start" v-if="progress !== 0.0">
-                <h1 v-cloak>milchchan.com</h1>
+                <img src="/images/Logo.svg" v-cloak>
             </div>
         </transition>
         <transition name="fade">
@@ -1230,13 +1232,6 @@
                                 </div>
                                 <div class="column is-6 is-mobile">
                                     <div class="control has-text-centered">
-                                        <nav class="level is-hidden">
-                                            <div class="level-item has-text-centered image">
-                                                <a href="/"><img src="/images/Logo.png"
-                                                        srcset="/images/Logo.png 1x, /images/Logo@2x.png 2x, /images/Logo@3x.png 3x"
-                                                        alt="milchchan.com"></a>
-                                            </div>
-                                        </nav>
                                         <nav class="level">
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
@@ -1397,7 +1392,7 @@
                                                     <div class="content">
                                                         <h1
                                                             class="is-size-1 is-uppercase has-text-weight-bold has-text-black">
-                                                            #milchchannel</h1>
+                                                            #milchchan</h1>
                                                         <h2 class="is-size-6 has-text-weight-bold has-text-black">
                                                             milchchan.com</h2>
                                                         <hr>
