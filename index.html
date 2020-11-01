@@ -2383,7 +2383,23 @@
                     const attribute = event.target.dataset.attribute;
 
                     database.ref(databaseRoot + "/words/" + event.target.dataset.word).transaction(function (current) {
-                        if (!current) {
+                        if (current) {
+                            if (!isChecked) {
+                                let deleteRequired = true;
+
+                                for (const a in current) {
+                                    if (a != attribute && typeof current[a] === "boolean" && current[a]) {
+                                        deleteRequired = false;
+
+                                        break;
+                                    }
+                                }
+
+                                if (deleteRequired) {
+                                    return null;
+                                }
+                            }
+                        } else {
                             current = {};
 
                             for (const a of self.attributes) {
@@ -2422,7 +2438,7 @@
                                     return (count || 0) + 1;
                                 });
 
-                                self.notify({ text: format(channel.length == 0 ? '「{0}」をおぼえたよぉ' : '「{0}」をおぼえたよ', snapshot.key), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                self.notify({ text: format(channel.length == 0 ? '{0}をおぼえたよぉ' : '{0}をおぼえたよ', snapshot.key), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
                                 self.$refs.twinkle.play();
                             }
 
