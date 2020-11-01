@@ -34,6 +34,7 @@
             /*background: #f5f5f5;*/
             /*background: #9095bd;*/
             background: #ffef8c;
+            /*background: #F5C044;*/
         }
 
         body::before {
@@ -260,7 +261,7 @@
 
         .background .ticker-wrap .ticker .item {
             padding: 0px 10vmin;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 1.0);
             font-size: 100vh;
         }
 
@@ -302,7 +303,7 @@
             height: 100vh;
             transform: translate3d(0, 0%, 0);
             overflow: hidden;
-            background: #64dafe;
+            background: #ffef8c;
             /*background: #64dafe url('/images/Background.png') 50% 50% repeat;
             animation: progress 0.5s linear 0s infinite;*/
         }
@@ -1206,10 +1207,10 @@
             <div class="ticker-wrap">
                 <transition-group name="ticker-item-list" class="ticker" tag="div"
                     v-bind:style="{ animationPlayState: 'running' }">
-                    <div class="item" v-for="word in take(words, 10)" v-bind:key="word">
+                    <div class="item" v-for="word in take(words, 5)" v-bind:key="word">
                         <span class="has-text-weight-bold" v-cloak>{{ word }}</span>
                     </div>
-                    <div class="item" v-for="word in words" v-bind:key="word + '-alt'">
+                    <div class="item" v-for="word in take(words, 5)" v-bind:key="word + '-alt'">
                         <span class="has-text-weight-bold" v-cloak>{{ word }}</span>
                     </div>
                 </transition-group>
@@ -2970,7 +2971,11 @@
                 },
                 take: function (collection, count) {
                     if (collection.length > count) {
-                        return collection.splice(count);
+                        let temp = [].concat(collection);
+                        
+                        temp.splice(count);
+
+                        return temp;
                     }
 
                     return collection;
@@ -3671,7 +3676,7 @@
                         if (app.message !== null) {
                             if (app.message.type.reverse) {
                                 if (app.message.type.count > 0) {
-                                    app.message.type.elapsed += deltaTime;
+                                    app.message.type.elapsed += deltaTime * 2;
 
                                     if (app.message.type.elapsed >= 1.0 / app.message.type.speed) {
                                         let index = app.message.type.count - 1;
