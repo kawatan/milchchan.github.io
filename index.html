@@ -33,11 +33,11 @@
             overflow-x: hidden;
             overflow-y: auto;
             scroll-behavior: smooth;
-            /*background: #f5f5f5;*/
+            background: #f5f5f5;
             /*background: #9095bd;*/
             /*background: #ffef8c;*/
             /*background: #F5C044;*/
-            background: #ffe47a;
+            /*background: #ffe47a;*/
         }
 
         body::before {
@@ -106,7 +106,7 @@
 
         label.checkbox input[type=checkbox]:checked+.custom:before,
         label.checkbox input[type=radio]:checked+.custom:before {
-            color: #64dafe;
+            color: #f5c044;
         }
 
         .navbar {
@@ -141,7 +141,7 @@
 
         .is-primary {
             /*color: #fef6a5 !important;*/
-            color: #64dafe !important;
+            color: #f5c044 !important;
         }
 
         .logo {
@@ -311,7 +311,7 @@
             height: 100vh;
             transform: translate3d(0, 0%, 0);
             overflow: hidden;
-            background: #ffe47a;
+            background: #64dafe;
             /*background: #64dafe url('/images/Background.png') 50% 50% repeat;
             animation: progress 0.5s linear 0s infinite;*/
         }
@@ -1102,10 +1102,6 @@
                 background: #ffc547 url('/images/Stripes@2x.png') repeat;
             }
 
-            /*.blind {
-                background: #64dafe url('/images/Stripes@2x.png') 50% 50% repeat 20px 20px;
-            }*/
-
             #container .columns .column .media .media-content .has-text-left .balloon {
                 background: url('/images/Stripes@2x.png') repeat;
             }
@@ -1158,10 +1154,6 @@
                 background: #ffc547 url('/images/Stripes@3x.png') repeat;
             }
 
-            /*.blind {
-                background: #64dafe url('/images/Stripes@3x.png') 50% 50% repeat 20px 20px;
-            }*/
-
             #container .columns .column .media .media-content .has-text-left .balloon {
                 background: url('/images/Stripes@3x.png') repeat;
             }
@@ -1206,12 +1198,6 @@
     <div id="particles-js"></div>
     <div id="app">
         <div class="background">
-            <div v-bind:style="{ backgroundImage: 'url(' + image.url + ')', marginLeft: image.index * 100 + '%' }"
-                v-for="image in backgroundImages" v-bind:key="image" v-cloak></div>
-            <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
-                v-bind:key="image.url" alt="Background" v-cloak>
-        </div>
-        <div class="background">
             <div class="ticker-wrap">
                 <transition-group name="ticker-item-list" class="ticker" tag="div"
                     v-bind:style="{ animationPlayState: 'running' }">
@@ -1223,6 +1209,12 @@
                     </div>
                 </transition-group>
             </div>
+        </div>
+        <div class="background">
+            <div v-bind:style="{ backgroundImage: 'url(' + image.url + ')', marginLeft: image.index * 100 + '%' }"
+                v-for="image in backgroundImages" v-bind:key="image" v-cloak></div>
+            <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
+                v-bind:key="image.url" alt="Background" v-cloak>
         </div>
         <transition name="blind" v-on:after-enter="blinded">
             <div class="blind" v-if="isBlinded" v-cloak></div>
@@ -3295,7 +3287,7 @@
                                 app.talk();
 
                                 idleTime = activateTime = 0.0;
-                            } else if (idleTime >= blinkThreshold) {
+                            } else if (idleTime >= blinkThreshold || messageData === null) {
                                 let sequences = [];
 
                                 for (const sequence of this.character.sequences) {
@@ -3332,6 +3324,8 @@
                                             for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
                                                 app.currentAnimations.push(animations[offset + i]);
                                             }*/
+
+                                            app.currentAnimations.splice(0);
 
                                             for (let animation of app.animations[sequence[0].name]) {
                                                 app.currentAnimations.push(animation);
@@ -3703,18 +3697,6 @@
                                 idleTime += deltaTime;
                                 activateTime += deltaTime;
                             }*/
-                        }
-
-                        if (messageData === null) {
-                            app.currentAnimations.splice(0);
-
-                            for (let animation of app.animations["idle1"]) {
-                                app.currentAnimations.push(animation);
-                            }
-
-                            animationIndex = 0;
-                            messageData = app.currentAnimations[animationIndex];
-                            animationIndex += animationSkipFrames;
                         }
 
                         if (app.message !== null) {
