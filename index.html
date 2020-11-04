@@ -2615,7 +2615,7 @@
                     }
 
                     let segmenter = new TinySegmenter();
-                    let tokens = segmenter.segment(message);
+                    let tokens = Array.isArray(message) ? message : segmenter.segment(message);
                     let tokenSet = [];
                     let regex = new RegExp('[.#$\\[\\]]');
                     let cachDictionary = {};
