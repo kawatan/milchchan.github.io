@@ -1859,19 +1859,6 @@
         const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
 
-        //databaseRoot.remove();
-
-        /*databaseRoot.remove().orderByChild('timestamp')
-            .startAt(1).limitToFirst(2)
-            .once('value', function (snapshot) { console.log(snapshot.val()) })*/
-
-        function random(min, max) {
-            min = Math.ceil(min);
-            max = Math.floor(max);
-
-            return Math.floor(Math.random() * (max - min + 1)) + min;
-        }
-
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
 
@@ -1897,10 +1884,6 @@
         renderer.setSize(window.innerWidth, window.outerHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setClearColor(0xffffff, 0);
-
-        if (channel.length > 0) {
-            renderer.domElement.classList.add("is-hidden");
-        }
 
         const CAMERA_FOV = 60.0;
         const CAMERA_Z = 1.0;
@@ -1994,7 +1977,6 @@
                     tags: [],
                     maxTags: 10,
                     scrollTimeoutID: undefined,
-                    isScrolling: false,
                     stars: -1,
                     animatedStars: 0,
                     notifications: [],
@@ -2298,7 +2280,7 @@
                             }
                             catch (e) {
                                 app.isLoading = false;
-                                app.notify({ text: channel.length == 0 ? 'もう一度試してほしいよぉ' : 'もう一度試してみてね', accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                app.notify({ text: 'もう一度試してほしいよぉ', accent: merku.accent, image: merku.image });
 
                                 console.error(e.message);
                             }
@@ -2430,7 +2412,7 @@
                                     return (count || 0) + 1;
                                 });
 
-                                self.notify({ text: format(channel.length == 0 ? '{0}をおぼえたよぉ' : '{0}をおぼえたよ', snapshot.key), accent: merku.accent, image: channel.length == 0 ? merku.image : null });
+                                self.notify({ text: format('{0}をおぼえたよぉ', snapshot.key), accent: merku.accent, image: merku.image });
                                 self.$refs.twinkle.play();
                             }
 
@@ -2557,22 +2539,9 @@
                         }
                     }
 
-                    /*const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
-                    { animation: 'jump', name: THREE.VRMSchema.BlendShapePresetName.Joy },
-                    { animation: 'win', name: THREE.VRMSchema.BlendShapePresetName.Joy },
-                    { animation: 'lose', name: THREE.VRMSchema.BlendShapePresetName.Sorrow }];
-                    const item = presets[random(0, 3)];*/
-
                     if (sequence.length > 0) {
                         this.sequenceQueue.push(sequence);
                     }
-                    //{ messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: generatedText }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
-
-                    /*this.messages.push({ id: generateUuid(), text: generatedText, timestamp: new Date(), user: { id: null, name: milch.name, accent: milch.accent, image: milch.image } });
-
-                    if (this.messages.length > this.maxMessages) {
-                        this.messages.shift();
-                    }*/
                 },
                 generate: async function (message) {
                     function choice(probabilities) {
@@ -3017,6 +2986,13 @@
                     return collection;
                 },
                 prepare: function (sequences) {
+                    function _random(min, max) {
+                        min = Math.ceil(min);
+                        max = Math.floor(max);
+
+                        return Math.floor(Math.random() * (max - min)) + min;
+                    }
+
                     let choosedSequences = [];
                     let flattenedSequence = [];
 
@@ -3035,7 +3011,7 @@
                     if (choosedSequences.length > 0) {
                         let queue = [];
 
-                        for (const s of choosedSequences[random(0, choosedSequences.length - 1)].sequence) {
+                        for (const s of choosedSequences[_random(0, choosedSequences.length)].sequence) {
                             queue.push(s);
                         }
 
@@ -3147,7 +3123,7 @@
                                     if (callableSequences.length > 0) {
                                         let index = 0;
 
-                                        for (const o of callableSequences[random(0, callableSequences.length - 1)].sequence) {
+                                        for (const o of callableSequences[_random(0, callableSequences.length)].sequence) {
                                             queue.splice(index, 0, o);
                                             index++;
                                         }
@@ -3196,33 +3172,30 @@
                     requestAnimationFrame(this.animate);
 
                     const deltaTime = clock.getDelta();
-                    const app = this;
-
+                    
                     if (vrmModel) {
+                        function _random(min, max) {
+                            min = Math.ceil(min);
+                            max = Math.floor(max);
+
+                            return Math.floor(Math.random() * (max - min)) + min;
+                        }
+
                         let isActive = false;
                         let isAnimating = false;
                         let isDeforming = false;
-                        let messageData = null;
+                        let animationData = null;
                         let updatedBlendShapeNames = [];
 
-                        if (app.currentAnimations.length > 0 && animationIndex < app.currentAnimations.length) {
-                            messageData = app.currentAnimations[animationIndex];
+                        if (this.currentAnimations.length > 0 && animationIndex < this.currentAnimations.length) {
+                            animationData = this.currentAnimations[animationIndex];
                             animationIndex += animationSkipFrames;
                             isActive = true;
                             isAnimating = true;
                         }
 
-                        /*if (app.blendShapeAnimations.length == 0 && app.blendShapeAnimationQueue.length > 0) {
-                            for (let blendShapeAnimation of app.blendShapeAnimationQueue.shift()) {
-                                app.blendShapeAnimations.unshift(blendShapeAnimation);
-                            }
-
-                            isActive = true;
-                            isDeforming = true;
-                        }*/
-
-                        for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                            let blendShapeAnimation = app.blendShapeAnimations[i];
+                        for (let i = this.blendShapeAnimations.length - 1; i >= 0; i--) {
+                            let blendShapeAnimation = this.blendShapeAnimations[i];
 
                             if (!updatedBlendShapeNames.includes(blendShapeAnimation.name)) {
                                 if (blendShapeAnimation.time <= blendShapeAnimation.duration) {
@@ -3230,7 +3203,7 @@
 
                                     if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
                                         vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
-                                        app.blendShapeAnimations.splice(i, 1);
+                                        this.blendShapeAnimations.splice(i, 1);
                                     } else {
                                         vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
                                     }
@@ -3243,7 +3216,7 @@
                             }
                         }
 
-                        if (app.sequenceQueue.length > 0) {
+                        if (this.sequenceQueue.length > 0) {
                             idleTime = 0.0;
                         } else {
                             idleTime += deltaTime;
@@ -3251,7 +3224,7 @@
                             alertTime += deltaTime;
 
                             if (alertTime >= alertThreshold) {
-                                if (app.feedQueue.length > 0) {
+                                if (this.feedQueue.length > 0) {
                                     function format(format) {
                                         var args = arguments;
 
@@ -3269,7 +3242,7 @@
 
                                     for (const obj of this.prepare(sequences)) {
                                         if (obj.type == "Message") {
-                                            sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: format(obj.text, app.feedQueue[0].text) });
+                                            sequence.push({ type: obj.type, speed: obj.speed, duration: obj.duration, text: format(obj.text, this.feedQueue[0].text) });
                                         } else {
                                             sequence.push(obj);
                                         }
@@ -3279,15 +3252,15 @@
                                         this.sequenceQueue.push(sequence);
                                     }
 
-                                    app.feedQueue.push(app.feedQueue.shift());
+                                    this.feedQueue.push(this.feedQueue.shift());
                                 }
 
                                 idleTime = activateTime = alertTime = 0.0;
                             } else if (activateTime >= activateThreshold) {
-                                app.talk();
+                                this.talk();
 
                                 idleTime = activateTime = 0.0;
-                            } else if (idleTime >= blinkThreshold || messageData === null) {
+                            } else if (idleTime >= blinkThreshold || animationData === null) {
                                 let sequences = [];
 
                                 for (const sequence of this.character.sequences) {
@@ -3302,58 +3275,58 @@
                             }
                         }
 
-                        if (app.sequenceQueue.length > 0) {
-                            const sequence = app.sequenceQueue[0];
+                        if (this.sequenceQueue.length > 0) {
+                            const sequence = this.sequenceQueue[0];
 
                             if (sequence.length > 0) {
                                 if (sequence[0].type == "Animation") {
-                                    if (sequence[0].name in app.animations) {
+                                    if (sequence[0].name in this.animations) {
                                         if (!isAnimating) {
                                             /*const skipFrames = 60 / 12;
-                                            let animations = app.animations[suggestion.animation];
+                                            let animations = this.animations[suggestion.animation];
                                             let maxFrames = Math.min(animations.length, 60);
                                             let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
                                             let length = Math.round(90 / 24);
                 
                                             for (let i = 0; i < maxFrames; i += skipFrames) {
                                                 for (let j = 0; j < length; j++) {
-                                                    app.currentAnimations.push(animations[offset + i]);
+                                                    this.currentAnimations.push(animations[offset + i]);
                                                 }
                                             }
                 
-                                            for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                                app.currentAnimations.push(animations[offset + i]);
+                                            for (let i = this.currentAnimations.length - 1; i >= 0; i--) {
+                                                this.currentAnimations.push(animations[offset + i]);
                                             }*/
 
-                                            app.currentAnimations.splice(0);
+                                            this.currentAnimations.splice(0);
 
-                                            for (let animation of app.animations[sequence[0].name]) {
-                                                app.currentAnimations.push(animation);
+                                            for (let animation of this.animations[sequence[0].name]) {
+                                                this.currentAnimations.push(animation);
                                             }
 
                                             sequence.shift();
 
                                             animationIndex = 0;
-                                            messageData = app.currentAnimations[animationIndex];
+                                            animationData = this.currentAnimations[animationIndex];
                                             animationIndex += animationSkipFrames;
                                         }
                                     } else if (!isDeforming) {
                                         let nameSet = [];
 
-                                        app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
+                                        this.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
                                         sequence.shift();
 
                                         while (sequence.length > 0) {
-                                            if (sequence[0].type != "Animation" || sequence[0].name in app.animations) {
+                                            if (sequence[0].type != "Animation" || sequence[0].name in this.animations) {
                                                 break;
                                             }
 
-                                            app.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
+                                            this.blendShapeAnimations.unshift({ name: sequence[0].name, time: 0.0, duration: sequence[0].duration, start: sequence[0].start, end: sequence[0].end });
                                             sequence.shift();
                                         }
 
-                                        for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                            let blendShapeAnimation = app.blendShapeAnimations[i];
+                                        for (let i = this.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                            let blendShapeAnimation = this.blendShapeAnimations[i];
 
                                             if (!nameSet.includes(blendShapeAnimation.name)) {
                                                 vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
@@ -3365,14 +3338,14 @@
                                     if (lookAtTarget.position.x != 0.0 || lookAtTarget.position.y != 0.0) {
                                         lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: 0.0, y: 0.0 } };
                                     }
-                                } else if (sequence[0].type == "Message" && app.message === null && !isAnimating && !isDeforming) {
-                                    app.message = { time: 0, duration: sequence[0].duration, type: { elapsed: -1, speed: sequence[0].speed, reverse: false, buffer: '', count: 0 }, text: sequence[0].text };
+                                } else if (sequence[0].type == "Message" && this.message === null && !isAnimating && !isDeforming) {
+                                    this.message = { time: 0, duration: sequence[0].duration, type: { elapsed: -1, speed: sequence[0].speed, reverse: false, buffer: '', count: 0 }, text: sequence[0].text };
                                     sequence.shift();
                                 }
-                            } else if (app.message === null && !isAnimating && !isDeforming) {
-                                app.sequenceQueue.shift();
+                            } else if (this.message === null && !isAnimating && !isDeforming) {
+                                this.sequenceQueue.shift();
                             }
-                        } else if (app.suggestionQueue.length > 0) {
+                        /*} else if (app.suggestionQueue.length > 0) {
                             const suggestion = app.suggestionQueue[0];
                             const message = suggestion.messages[0];
                             let loopRequired = true;
@@ -3399,18 +3372,6 @@
                                         message.type.elapsed = 0;
                                     }
                                 } else if (app.isSuggested) {
-                                    /*suggestion.time = 0;
-                                    suggestion.type.elapsed = -1;
-                                    suggestion.type.reverse = false;
-                                    suggestion.type.buffer = '';
-                                    suggestion.type.count = 0;
-        
-                                    if ('morphs' in suggestion) {
-                                        for (let blendShapeAnimation of suggestion.morphs.animations) {
-                                            blendShapeAnimation.time = 0;
-                                        }
-                                    }*/
-
                                     if (suggestion.messages.length > 1) {
                                         suggestion.messages.shift();
                                     } else {
@@ -3460,7 +3421,7 @@
                                             const skipFrames = 60 / 12;
                                             let animations = app.animations[suggestion.animation];
                                             let maxFrames = Math.min(animations.length, 60);
-                                            let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
+                                            let offset = Math.floor(Math.max(0, _random(0, animations.length - maxFrames)) / 2);
                                             let length = Math.round(90 / 24);
 
                                             for (let i = 0; i < maxFrames; i += skipFrames) {
@@ -3544,7 +3505,7 @@
 
                                 for (let i = 0; i < message.type.count; i++) {
                                     if (charArray.length > 0) {
-                                        randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                                        randomBuffer += charArray[~~_random(0, charArray.length)];
                                     }
                                 }
 
@@ -3567,13 +3528,13 @@
                                 }
                             }
 
-                            if (loopRequired && messageData === null) {
+                            if (loopRequired && animationData === null) {
                                 animationIndex = 0;
-                                messageData = app.currentAnimations[animationIndex];
+                                animationData = app.currentAnimations[animationIndex];
                                 animationIndex += animationSkipFrames;
-                            }
-                        } else {
-                            if (app.isSuggested && app.suggestionQueue.length == 0 && !app.isComputing) {
+                            }*/
+                        //} else {
+                            /*if (app.isSuggested && app.suggestionQueue.length == 0 && !app.isComputing) {
                                 const tempMessages1 = [].concat(app.messages);
                                 const tempTags = [].concat(app.tags);
 
@@ -3608,7 +3569,7 @@
                                                 if (thread === null) {
                                                     tempMessages2.push(message);
                                                 } else {
-                                                    const item = presets[random(0, 3)];
+                                                    const item = presets[_random(0, 2)];
 
                                                     suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: thread.text }, { time: 0, duration: 5, type: { elapsed: 0, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
 
@@ -3624,7 +3585,7 @@
 
                                     for (const message of tempMessages2) {
                                         if (!ids2.includes(message.id)) {
-                                            const item = presets[random(0, 3)];
+                                            const item = presets[_random(0, 2)];
 
                                             suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
                                         }
@@ -3654,9 +3615,9 @@
 
                                     app.isComputing = false;
                                 });
-                            }
+                            }*/
 
-                            /*if (messageData === null) {
+                            /*if (animationData === null) {
                                 if (app.sequenceQueue.length > 0) {
                                     idleTime = activateTime = 0.0;
                                 } else {
@@ -3689,7 +3650,7 @@
                                 }
 
                                 animationIndex = 0;
-                                messageData = app.currentAnimations[animationIndex];
+                                animationData = app.currentAnimations[animationIndex];
                                 animationIndex += animationSkipFrames;
                             } else if (app.sequenceQueue.length > 0) {
                                 idleTime = activateTime = 0.0;
@@ -3699,161 +3660,108 @@
                             }*/
                         }
 
-                        if (app.message !== null) {
-                            if (app.message.type.reverse) {
-                                if (app.message.type.count > 0) {
-                                    app.message.type.elapsed += deltaTime * 2;
+                        if (this.message !== null) {
+                            if (this.message.type.reverse) {
+                                if (this.message.type.count > 0) {
+                                    this.message.type.elapsed += deltaTime * 2;
 
-                                    if (app.message.type.elapsed >= 1.0 / app.message.type.speed) {
-                                        let index = app.message.type.count - 1;
+                                    if (this.message.type.elapsed >= 1.0 / this.message.type.speed) {
+                                        let index = this.message.type.count - 1;
 
-                                        if (index < app.message.text.length) {
-                                            let width = Math.floor(app.message.text.length / 2);
+                                        if (index < this.message.text.length) {
+                                            let width = Math.floor(this.message.text.length / 2);
 
-                                            if (app.message.type.buffer.length <= width && app.message.type.count > 0) {
-                                                app.message.type.count -= 1;
+                                            if (this.message.type.buffer.length <= width && this.message.type.count > 0) {
+                                                this.message.type.count -= 1;
                                             }
 
-                                            if (app.message.type.buffer.length > 0) {
-                                                app.message.type.buffer = app.message.type.buffer.substring(0, app.message.type.buffer.length - 1);
+                                            if (this.message.type.buffer.length > 0) {
+                                                this.message.type.buffer = this.message.type.buffer.substring(0, this.message.type.buffer.length - 1);
                                             }
                                         }
 
-                                        app.message.type.elapsed = 0;
+                                        this.message.type.elapsed = 0;
                                     }
                                 } else {
-                                    /*if (suggestion.messages.length > 1) {
-                                        suggestion.messages.shift();
-                                    } else {
-                                        if ('morphs' in suggestion) {
-                                            for (let blendShape of suggestion.morphs.defaults) {
-                                                vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                            }
-                                        }
-        
-        
-                                    }*/
-
-                                    app.isPopup = false;
+                                    this.isPopup = false;
                                 }
-                            } else if (app.message.type.buffer.length < app.message.text.length) {
-                                if (app.message.type.elapsed >= 0) {
-                                    app.message.type.elapsed += deltaTime;
-                                } else if (!app.isAnimating) {
-                                    if (app.isPopup) {
-                                        app.message.type.elapsed = deltaTime;
-                                        //app.isBlinded = false;
-                                        //app.currentAnimations.splice(0);
-
-                                        /*if ('animation' in suggestion && suggestion.animation in app.animations) {
-                                            const skipFrames = 60 / 12;
-                                            let animations = app.animations[suggestion.animation];
-                                            let maxFrames = Math.min(animations.length, 60);
-                                            let offset = Math.floor(Math.max(0, random(0, animations.length - maxFrames - 1)) / 2);
-                                            let length = Math.round(90 / 24);
-        
-                                            for (let i = 0; i < maxFrames; i += skipFrames) {
-                                                for (let j = 0; j < length; j++) {
-                                                    app.currentAnimations.push(animations[offset + i]);
-                                                }
-                                            }
-        
-                                            for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                                app.currentAnimations.push(animations[offset + i]);
-                                            }
-                                        }
-        
-                                        if ('morphs' in suggestion) {
-                                            let nameSet = [];
-        
-                                            for (let blendShape of suggestion.morphs.defaults) {
-                                                vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                            }
-        
-                                            for (let blendShapeAnimation of suggestion.morphs.animations) {
-                                                app.blendShapeAnimations.unshift(blendShapeAnimation);
-                                            }
-        
-                                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                                let blendShapeAnimation = app.blendShapeAnimations[i];
-        
-                                                if (!nameSet.includes(blendShapeAnimation.name)) {
-                                                    vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                                    nameSet.push(blendShapeAnimation.name);
-                                                }
-                                            }
-                                        }*/
+                            } else if (this.message.type.buffer.length < this.message.text.length) {
+                                if (this.message.type.elapsed >= 0) {
+                                    this.message.type.elapsed += deltaTime;
+                                } else if (!this.isAnimating) {
+                                    if (this.isPopup) {
+                                        this.message.type.elapsed = deltaTime;
                                     } else {
-                                        app.isPopup = true;
+                                        this.isPopup = true;
                                     }
                                 }
 
-                                if (app.message.type.elapsed >= 1.0 / app.message.type.speed) {
-                                    let index = app.message.type.buffer.length;
-                                    let width = Math.floor(app.message.text.length / 2);
-                                    let length = app.message.text.length;
+                                if (this.message.type.elapsed >= 1.0 / this.message.type.speed) {
+                                    let index = this.message.type.buffer.length;
+                                    let width = Math.floor(this.message.text.length / 2);
+                                    let length = this.message.text.length;
 
-                                    if (app.message.type.count >= width) {
-                                        app.message.type.buffer += app.message.text.charAt(index);
+                                    if (this.message.type.count >= width) {
+                                        this.message.type.buffer += this.message.text.charAt(index);
                                     }
 
-                                    if (app.message.type.count < length) {
-                                        app.message.type.count += 1;
+                                    if (this.message.type.count < length) {
+                                        this.message.type.count += 1;
                                     }
 
-                                    app.message.type.elapsed = 0;
+                                    this.message.type.elapsed = 0;
                                 }
                             } else {
-                                app.message.time += deltaTime;
+                                this.message.time += deltaTime;
 
-                                if (app.message.time >= app.message.duration) {
-                                    app.message.type.reverse = true;
+                                if (this.message.time >= this.message.duration) {
+                                    this.message.type.reverse = true;
                                 }
                             }
 
-                            if (app.message.text.length === app.message.type.buffer.length) {
-                                const characters = app.message.text.split('');
+                            if (this.message.text.length === this.message.type.buffer.length) {
+                                const characters = this.message.text.split('');
 
-                                app.text.splice(0);
+                                this.text.splice(0);
 
                                 for (let i = 0; i < characters.length; i++) {
-                                    app.text.push({ key: i, value: characters[i] });
+                                    this.text.push({ key: i, value: characters[i] });
                                 }
                             } else {
                                 let charArray = new Array();
                                 let randomBuffer = '';
 
-                                for (let i = 0; i < app.message.text.length; i++) {
-                                    if (charArray.indexOf(app.message.text.charAt(i)) == -1 && app.message.text.charAt(i) != "\n" && app.message.text.charAt(i).match(/\s/) == null) {
-                                        charArray.push(app.message.text.charAt(i));
+                                for (let i = 0; i < this.message.text.length; i++) {
+                                    if (charArray.indexOf(this.message.text.charAt(i)) == -1 && this.message.text.charAt(i) != "\n" && this.message.text.charAt(i).match(/\s/) == null) {
+                                        charArray.push(this.message.text.charAt(i));
                                     }
                                 }
 
                                 if (charArray.length > 0) {
-                                    for (let i = 0; i < app.message.type.count; i++) {
-                                        if (app.message.text.charAt(i) == "\n") {
+                                    for (let i = 0; i < this.message.type.count; i++) {
+                                        if (this.message.text.charAt(i) == "\n") {
                                             randomBuffer += "\n";
                                         } else {
-                                            randomBuffer += charArray[~~random(0, charArray.length - 1)];
+                                            randomBuffer += charArray[~~_random(0, charArray.length)];
                                         }
                                     }
                                 }
 
-                                if (randomBuffer.length > app.message.type.buffer.length) {
-                                    const characters = (app.message.type.buffer + randomBuffer.substring(app.message.type.buffer.length, randomBuffer.length)).split('');
+                                if (randomBuffer.length > this.message.type.buffer.length) {
+                                    const characters = (this.message.type.buffer + randomBuffer.substring(this.message.type.buffer.length, randomBuffer.length)).split('');
 
-                                    app.text.splice(0);
+                                    this.text.splice(0);
 
                                     for (let i = 0; i < characters.length; i++) {
-                                        app.text.push({ key: i, value: characters[i] });
+                                        this.text.push({ key: i, value: characters[i] });
                                     }
-                                } else if (app.text.length !== app.message.type.buffer.length) {
-                                    const characters = app.message.type.buffer.split('');
+                                } else if (this.text.length !== this.message.type.buffer.length) {
+                                    const characters = this.message.type.buffer.split('');
 
-                                    app.text.splice(0);
+                                    this.text.splice(0);
 
                                     for (let i = 0; i < characters.length; i++) {
-                                        app.text.push({ key: i, value: characters[i] });
+                                        this.text.push({ key: i, value: characters[i] });
                                     }
                                 }
                             }
@@ -3874,8 +3782,8 @@
                             }
                         }
 
-                        if (messageData) {
-                            for (let animation of messageData.animations) {
+                        if (animationData) {
+                            for (let animation of animationData.animations) {
                                 switch (animation.bone) {
                                     case 'chest':
                                     case 'head':
@@ -4212,24 +4120,22 @@
                                 let animationDictionary = {};
 
                                 try {
-                                    if (channel.length == 0) {
-                                        for (let key in urls) {
-                                            const response3 = await fetch(encodeURI(urls[key]), {
-                                                mode: "cors",
-                                                method: "GET",
-                                                headers: {
-                                                    "Content-Type": "application/x-www-form-urlencoded"
-                                                }
-                                            });
-
-                                            if (response3.ok) {
-                                                const json = await response3.json();
-
-                                                animationDictionary[key] = json.data;
+                                    for (let key in urls) {
+                                        const response3 = await fetch(encodeURI(urls[key]), {
+                                            mode: "cors",
+                                            method: "GET",
+                                            headers: {
+                                                "Content-Type": "application/x-www-form-urlencoded"
                                             }
-                                            else {
-                                                throw new Error(response3.statusText);
-                                            }
+                                        });
+
+                                        if (response3.ok) {
+                                            const json = await response3.json();
+
+                                            animationDictionary[key] = json.data;
+                                        }
+                                        else {
+                                            throw new Error(response3.statusText);
                                         }
                                     }
 
@@ -4359,11 +4265,6 @@
 
                                     if (!message.user.accent) {
                                         message.user.accent = '#30c0f5';
-                                    }
-
-                                    if (channel.length > 0 && !message.user.id) {
-                                        message.user.name = null;
-                                        message.user.image = null;
                                     }
 
                                     if (index >= 0) {
@@ -4527,7 +4428,7 @@
         window.addEventListener('dblclick', (event) => {
             raycaster.setFromCamera(mouse, camera);
 
-            if (raycaster.intersectObjects(scene.children, true).length > 0 && channel.length == 0) {
+            if (raycaster.intersectObjects(scene.children, true).length > 0) {
                 app.talk();
             }
         });
