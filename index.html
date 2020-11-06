@@ -1318,14 +1318,13 @@
                                 </div>
                                 <div class="column is-3 is-mobile">
                                     <transition name="fade" mode="out-in">
-                                        <button class="button is-white" type="button" v-bind:disabled="user === null"
-                                            @click="like" v-if="isSuggested" key="cancel">
+                                        <button class="button is-white" type="button" @click="like" v-if="isLoading" key="wait" disabled>
                                             <span class="icon is-small">
-                                                <i class="fas fa-times"></i>
+                                                <i class="fas fa-spinner updating"></i>
                                             </span>
                                         </button>
                                         <button class="button is-white" type="button" v-bind:disabled="user === null"
-                                            @click="talk" v-else key="suggest">
+                                            @click="talk" v-else key="talk">
                                             <span class="icon is-small">
                                                 <i class="fas fa-comment"></i>
                                             </span>
@@ -1792,7 +1791,7 @@
                                     </div>
                                     <div class="control">
                                         <button class="button is-rounded is-primary" type="submit"
-                                            v-bind:class="{ 'is-loading': isLoading, 'is-static': word !== null }"
+                                            v-bind:class="{ 'is-static': word !== null }"
                                             v-bind:disabled="user === null" @click="send"><span class="icon is-small"
                                                 v-cloak>
                                                 <i class="fas fa-paper-plane"></i>
@@ -1955,8 +1954,6 @@
                     isRevealed: false,
                     isUpdating: false,
                     isBlinded: false,
-                    isOverlayed: true,
-                    isSuggested: false,
                     isPopup: false,
                     isExpanded: false,
                     isLearning: true,
@@ -1986,10 +1983,6 @@
                     animations: null,
                     currentAnimations: [],
                     blendShapeAnimations: [],
-                    highlight: null,
-                    cover: null,
-                    isPreloading: false,
-                    isComputing: false,
                     text: [],
                     popupTextHeight: 0,
                     animatedPopupTextHeight: 0,
@@ -2297,6 +2290,8 @@
                     }
                 },
                 like: function () {
+                    return;
+
                     if (this.isSuggested) {
                         if (this.suggestionQueue.length > 0) {
                             this.suggestionQueue[0].messages[0].type.reverse = true;
@@ -2313,7 +2308,7 @@
                         this.$refs.twinkle.play();
                     }
 
-                    return;
+                    
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
@@ -2520,6 +2515,8 @@
                     let sequences = [];
                     let sequence = [];
 
+                    this.isLoading = true;
+
                     for (const sequence of this.character.sequences) {
                         if (sequence.name == "Activate") {
                             sequences.push(sequence);
@@ -2542,6 +2539,8 @@
                     if (sequence.length > 0) {
                         this.sequenceQueue.push(sequence);
                     }
+
+                    this.isLoading = false;
                 },
                 generate: async function (message) {
                     function choice(probabilities) {
