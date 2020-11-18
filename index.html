@@ -464,7 +464,23 @@
             text-align: center !important;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .icon {
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button {
+            margin: -4px;
+            padding: 0px 8px 0px 8px;
+            padding: 12px 24px 12px 24px;
+            border: 0px solid transparent;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            border-radius: 500px 500px 500px 500px;
+            background: #ffffff;
+            background-clip: padding-box;
+            height: initial;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button>.icon {
+            margin: 0px 8px 0px 0px;
+        }
+
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level>.level-item .icon {
             margin: -4px;
             border: 4px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
@@ -562,18 +578,6 @@
 
         #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item button span {
             margin: 0;
-        }
-
-        #input form .field {
-            margin: -4px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
-            border-radius: 500px 500px 500px 500px;
-            padding: 8px 16px 8px 16px;
-            background: #ffffff;
-            background-clip: padding-box;
-            /*background: #f5f5f5;
-            box-shadow: 10px 10px 30px #d0d0d0,
-                -10px -10px 30px #ffffff;*/
         }
 
         /*.media-content .level {
@@ -678,8 +682,42 @@
             margin: 0;
         }
 
-        #input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(2) .level-left {
-            margin: 12px -4px -4px -4px;
+        #input>.columns>.column>.control:last-child .level .level-item {
+            margin: 0;
+            padding: 0;
+        }
+
+        #input>.columns>.column>.control:last-child>.level:nth-last-of-type(1)>.level-item button {
+            border-radius: 290486px;
+            padding: 16px;
+            background: transparent;
+            background-clip: padding-box;
+            /*background: #f5f5f5;
+            background: linear-gradient(145deg, #ffffff, #dddddd);
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
+            height: initial;
+        }
+
+
+        #input>.columns>.column>.control:last-child>.level:nth-last-of-type(1)>.level-item button>span {
+            margin: 0;
+        }
+
+        #input form .field {
+            margin: -4px;
+            border: 4px solid rgba(255, 255, 255, 0.5);
+            border-radius: 500px 500px 500px 500px;
+            padding: 8px 16px 8px 16px;
+            background: #ffffff;
+            background-clip: padding-box;
+            /*background: #f5f5f5;
+            box-shadow: 10px 10px 30px #d0d0d0,
+                -10px -10px 30px #ffffff;*/
+        }
+
+        #input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(3) .level-left {
+            margin: -4px -4px -4px -4px;
             padding: 16px 32px 16px 32px;
             border: 4px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
@@ -779,25 +817,42 @@
             margin: 0px 8px 0px 0px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
-            margin: 0;
-            padding: 0px 16px 0px 16px;
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) {
+            display: flex;
+            padding: 16px 16px 0px 16px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(1) {
+        #input .navbar-item .control:last-child .level:nth-last-of-type(2) {
+            padding: 16px 16px 0px 16px;
+        }
+
+        #input .navbar-item .control:last-child .level {
             display: block;
             margin: 0;
             padding: 16px 16px 16px 16px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(1) button {
+        /*#input .navbar-item .control:last-child .level:nth-last-of-type(2) {
+            display: inline;
+        }
+
+        #input .navbar-item .control:last-child .level:nth-last-of-type(3) {
+            display: inline;
+        }
+
+        #input .navbar-item .control:last-child>.level {
+            margin: 0;
+            padding: 16px 16px 0px 16px;
+        }*/
+
+        #input .navbar-item .control:last-child form .field .control:nth-of-type(1) button {
             padding: 8px 16px 8px 16px;
             border: 0px solid transparent;
             border-radius: 290486px;
             background-color: transparent;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(2) input {
+        #input .navbar-item .control:last-child form .field .control:nth-of-type(2) input {
             border: 0px solid transparent;
             padding-top: 8px;
             padding-bottom: 8px;
@@ -805,17 +860,17 @@
             box-shadow: none;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(3) {
+        #input .navbar-item .control:last-child form .field .control:nth-of-type(3) {
             display: flex;
             align-items: center;
             padding: 0px 8px 0px 8px;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(3) span {
+        #input .navbar-item .control:last-child form .field .control:nth-of-type(3) span {
             font-family: 'Hind', 'Josefin Sans', sans-serif;
         }
 
-        #input .navbar-item .control:last-child .level:nth-last-of-type(1) form .field .control:nth-of-type(4) button {
+        #input .navbar-item .control:last-child form .field .control:nth-of-type(4) button {
             border: 0px solid transparent;
             border-radius: 290486px;
             background-color: transparent;
@@ -1318,7 +1373,8 @@
                                 </div>
                                 <div class="column is-3 is-mobile">
                                     <transition name="fade" mode="out-in">
-                                        <button class="button is-white" type="button" @click="like" v-if="isLoading" key="wait" disabled>
+                                        <button class="button is-white" type="button" @click="like" v-if="isLoading"
+                                            key="wait" disabled>
                                             <span class="icon is-small">
                                                 <i class="fas fa-spinner updating"></i>
                                             </span>
@@ -1487,6 +1543,21 @@
                                                                 class="fab fa-github"></i></span></a>
                                                 </div>
                                             </div>
+                                        </div>
+                                        <div class="level-item">
+                                            <article class="media">
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <button class="button is-rounded is-size-6 has-text-weight-bold"
+                                                            type="button"
+                                                            @click="isLearning = true; isCollapsed = false; isRevealed = false;">
+                                                            <span class="icon">
+                                                                <i class="fas fa-star"></i>
+                                                            </span>
+                                                            言葉を教える</button>
+                                                    </div>
+                                                </div>
+                                            </article>
                                         </div>
                                         <transition name="fade" mode="out-in">
                                             <div class="level-item" v-if="isUpdating" key="updating">
@@ -1705,7 +1776,7 @@
             </nav>
         </transition>
         <nav id="input" class="navbar is-fixed-bottom" role="navigation">
-            <div class=" navbar-item is-expanded columns is-desktop">
+            <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered is-mobile">
                     <transition-group name="notification-list" class="control" tag="div" v-cloak>
                         <nav class="level" v-for="notification in notifications" v-bind:key="notification.id">
@@ -1729,8 +1800,8 @@
                         </nav>
                     </transition-group>
                     <div class="control">
-                        <transition name="fade">
-                            <nav class="level" v-show="isExpanded">
+                        <transition name="fade" v-cloak>
+                            <nav class="level" v-show="!isCollapsed && isExpanded">
                                 <div class="level-left">
                                     <div class="level-item">
                                         <div class="field">
@@ -1757,49 +1828,70 @@
                                 </div>
                             </nav>
                         </transition>
-                        <nav class="level" ref="input">
-                            <form onsubmit="return false;">
-                                <div class="field has-addons">
-                                    <div class="control">
-                                        <transition name="fade" mode="out-in">
-                                            <button class="button is-rounded" type="button"
-                                                v-bind:disabled="user === null" @click="isExpanded = false"
-                                                v-if="isExpanded" key="unexpand" v-cloak>
-                                                <span class="icon is-small is-black">
-                                                    <i class="fas fa-angle-down"></i>
-                                                </span>
-                                            </button>
-                                            <button class="button is-white" type="button"
-                                                v-bind:disabled="user === null" @click="isExpanded = true" v-else
-                                                key="expand" v-cloak>
-                                                <span class="icon is-small">
-                                                    <i class="fas fa-angle-up"></i>
-                                                </span>
-                                            </button>
-                                        </transition>
-                                    </div>
-                                    <div class="control is-expanded">
-                                        <input class="input is-rounded" type="text"
-                                            v-bind:class="{ 'is-danger': inputHasError }"
-                                            v-bind:placeholder="isLearning ? '教える言葉' : '投稿するニュース'"
-                                            v-bind:disabled="word !== null" v-model="input" @input="change" v-cloak>
-                                    </div>
-                                    <div class="control">
-                                        <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
-                                            {{ maxInputLength - animatedInputLength }}
-                                        </span>
-                                    </div>
-                                    <div class="control">
-                                        <button class="button is-rounded is-primary" type="submit"
-                                            v-bind:class="{ 'is-static': word !== null }"
-                                            v-bind:disabled="user === null" @click="send"><span class="icon is-small"
-                                                v-cloak>
-                                                <i class="fas fa-paper-plane"></i>
+                        <transition name="fade">
+                            <nav class="level" v-show="!isCollapsed">
+                                <form onsubmit="return false;" v-cloak>
+                                    <div class="field has-addons">
+                                        <div class="control">
+                                            <transition name="fade" mode="out-in">
+                                                <button class="button is-rounded" type="button"
+                                                    v-bind:disabled="user === null" @click="isExpanded = false"
+                                                    v-if="isExpanded" key="unexpand" v-cloak>
+                                                    <span class="icon is-small is-black">
+                                                        <i class="fas fa-angle-down"></i>
+                                                    </span>
+                                                </button>
+                                                <button class="button is-white" type="button"
+                                                    v-bind:disabled="user === null" @click="isExpanded = true" v-else
+                                                    key="expand" v-cloak>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-angle-up"></i>
+                                                    </span>
+                                                </button>
+                                            </transition>
+                                        </div>
+                                        <div class="control is-expanded">
+                                            <input class="input is-rounded" type="text"
+                                                v-bind:class="{ 'is-danger': inputHasError }"
+                                                v-bind:placeholder="isLearning ? '教える言葉' : '投稿するニュース'"
+                                                v-bind:disabled="word !== null" v-model="input" @input="change" v-cloak>
+                                        </div>
+                                        <div class="control">
+                                            <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
+                                                {{ maxInputLength - animatedInputLength }}
                                             </span>
-                                        </button>
+                                        </div>
+                                        <div class="control">
+                                            <button class="button is-rounded is-primary" type="submit"
+                                                v-bind:class="{ 'is-static': word !== null }"
+                                                v-bind:disabled="user === null"
+                                                @click="send(); isCollapsed = true;"><span class="icon is-small"
+                                                    v-cloak>
+                                                    <i class="fas fa-paper-plane"></i>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </nav>
+                        </transition>
+                        <nav class="level" ref="input">
+                            <div class="level-item">
+                                <transition name="fade" mode="out-in">
+                                    <button class="button is-white" type="button" @click="isCollapsed = false;"
+                                        v-if="isCollapsed" key="invisible">
+                                        <span class="icon is-small">
+                                            <i class="fas fa-angle-up"></i>
+                                        </span>
+                                    </button>
+                                    <button class="button is-white" type="button" @click="isCollapsed = true;" v-else
+                                        key="visible" v-cloak>
+                                        <span class="icon is-small">
+                                            <i class="fas fa-angle-down"></i>
+                                        </span>
+                                    </button>
+                                </transition>
+                            </div>
                         </nav>
                     </div>
                 </div>
@@ -1952,6 +2044,7 @@
                     isReady: false,
                     isLoading: false,
                     isRevealed: false,
+                    isCollapsed: true,
                     isUpdating: false,
                     isBlinded: false,
                     isPopup: false,
@@ -2307,7 +2400,7 @@
                         this.$refs.twinkle.play();
                     }
 
-                    
+
                     /*if (this.isLearning) {
                         this.messages.push({ id: this.messages.length, text: 'また今度教えてね', tint: merku.tint, avatar: merku.avatar, author: merku.name, timestamp: new Date() });
                         this.isLearning = false;
@@ -3170,7 +3263,7 @@
                     requestAnimationFrame(this.animate);
 
                     const deltaTime = clock.getDelta();
-                    
+
                     if (vrmModel) {
                         function _random(min, max) {
                             min = Math.ceil(min);
@@ -3343,195 +3436,195 @@
                             } else if (this.message === null && !isAnimating && !isDeforming) {
                                 this.sequenceQueue.shift();
                             }
-                        /*} else if (app.suggestionQueue.length > 0) {
-                            const suggestion = app.suggestionQueue[0];
-                            const message = suggestion.messages[0];
-                            let loopRequired = true;
-
-                            if (message.type.reverse) {
-                                if (message.type.count > 0) {
-                                    message.type.elapsed += deltaTime;
-
-                                    if (message.type.elapsed >= message.type.speed / 1000.0) {
-                                        let index = message.type.count - 1;
-
-                                        if (index < message.text.length) {
-                                            let width = Math.floor(message.text.length / 2);
-
-                                            if (message.type.buffer.length <= width) {
-                                                message.type.count -= 1;
-                                            }
-
-                                            if (message.type.buffer.length > 0) {
-                                                message.type.buffer = message.type.buffer.substring(message.type.buffer.length - 2, message.type.buffer.length - 1);
-                                            }
-                                        }
-
-                                        message.type.elapsed = 0;
-                                    }
-                                } else if (app.isSuggested) {
-                                    if (suggestion.messages.length > 1) {
-                                        suggestion.messages.shift();
-                                    } else {
-                                        app.suggestionQueue.shift();
-
-                                        if (app.suggestionQueue.length > 0 && 'highlight' in app.suggestionQueue[0]) {
-                                            if ('text' in app.suggestionQueue[0].highlight) {
-                                                app.highlight = app.suggestionQueue[0].highlight.text;
-                                            } else {
-                                                app.highlight = null;
-                                            }
-
-                                            if ('image' in app.suggestionQueue[0].highlight) {
-                                                app.cover = app.suggestionQueue[0].highlight.image;
-                                            } else {
-                                                app.cover = app;
-                                            }
-                                        }
-
-                                        app.isBlinded = true;
-                                    }
-                                } else if (app.isBlinded && !isActive) {
-                                    if ('morphs' in suggestion) {
-                                        for (let blendShape of suggestion.morphs.defaults) {
-                                            vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
-                                        }
-                                    }
-
-                                    app.suggestionQueue.splice(0);
-                                    app.isBlinded = false;
-                                    loopRequired = false;
-                                }
-                            } else if (message.type.buffer.length < message.text.length) {
-                                if (message.type.elapsed >= 0) {
-                                    message.type.elapsed += deltaTime;
-                                } else if (!isActive) {
-                                    if (!app.isPreloading) {
-                                        waitTime += deltaTime;
-                                    }
-
-                                    if (app.highlight === null && app.cover === null || waitTime >= waitThreshold) {
-                                        message.type.elapsed = deltaTime;
-                                        app.isBlinded = false;
-                                        app.currentAnimations.splice(0);
-
-                                        if ('animation' in suggestion && suggestion.animation in app.animations) {
-                                            const skipFrames = 60 / 12;
-                                            let animations = app.animations[suggestion.animation];
-                                            let maxFrames = Math.min(animations.length, 60);
-                                            let offset = Math.floor(Math.max(0, _random(0, animations.length - maxFrames)) / 2);
-                                            let length = Math.round(90 / 24);
-
-                                            for (let i = 0; i < maxFrames; i += skipFrames) {
-                                                for (let j = 0; j < length; j++) {
-                                                    app.currentAnimations.push(animations[offset + i]);
+                            /*} else if (app.suggestionQueue.length > 0) {
+                                const suggestion = app.suggestionQueue[0];
+                                const message = suggestion.messages[0];
+                                let loopRequired = true;
+    
+                                if (message.type.reverse) {
+                                    if (message.type.count > 0) {
+                                        message.type.elapsed += deltaTime;
+    
+                                        if (message.type.elapsed >= message.type.speed / 1000.0) {
+                                            let index = message.type.count - 1;
+    
+                                            if (index < message.text.length) {
+                                                let width = Math.floor(message.text.length / 2);
+    
+                                                if (message.type.buffer.length <= width) {
+                                                    message.type.count -= 1;
+                                                }
+    
+                                                if (message.type.buffer.length > 0) {
+                                                    message.type.buffer = message.type.buffer.substring(message.type.buffer.length - 2, message.type.buffer.length - 1);
                                                 }
                                             }
-
-                                            for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
-                                                app.currentAnimations.push(animations[offset + i]);
-                                            }
+    
+                                            message.type.elapsed = 0;
                                         }
-
+                                    } else if (app.isSuggested) {
+                                        if (suggestion.messages.length > 1) {
+                                            suggestion.messages.shift();
+                                        } else {
+                                            app.suggestionQueue.shift();
+    
+                                            if (app.suggestionQueue.length > 0 && 'highlight' in app.suggestionQueue[0]) {
+                                                if ('text' in app.suggestionQueue[0].highlight) {
+                                                    app.highlight = app.suggestionQueue[0].highlight.text;
+                                                } else {
+                                                    app.highlight = null;
+                                                }
+    
+                                                if ('image' in app.suggestionQueue[0].highlight) {
+                                                    app.cover = app.suggestionQueue[0].highlight.image;
+                                                } else {
+                                                    app.cover = app;
+                                                }
+                                            }
+    
+                                            app.isBlinded = true;
+                                        }
+                                    } else if (app.isBlinded && !isActive) {
                                         if ('morphs' in suggestion) {
-                                            let nameSet = [];
-
                                             for (let blendShape of suggestion.morphs.defaults) {
                                                 vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
                                             }
-
-                                            for (let blendShapeAnimation of suggestion.morphs.animations) {
-                                                app.blendShapeAnimations.unshift(blendShapeAnimation);
-                                            }
-
-                                            for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
-                                                let blendShapeAnimation = app.blendShapeAnimations[i];
-
-                                                if (!nameSet.includes(blendShapeAnimation.name)) {
-                                                    vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
-                                                    nameSet.push(blendShapeAnimation.name);
-                                                }
-                                            }
                                         }
-
-                                        waitTime = 0.0;
-                                    } else {
+    
+                                        app.suggestionQueue.splice(0);
+                                        app.isBlinded = false;
                                         loopRequired = false;
                                     }
-                                }
-
-                                if (message.type.elapsed >= message.type.speed / 1000.0) {
-                                    let index = message.type.buffer.length;
-                                    let width = Math.floor(message.text.length / 2);
-                                    let length = message.text.length;
-
-                                    if (message.type.count >= width) {
-                                        message.type.buffer += message.text.charAt(index);
+                                } else if (message.type.buffer.length < message.text.length) {
+                                    if (message.type.elapsed >= 0) {
+                                        message.type.elapsed += deltaTime;
+                                    } else if (!isActive) {
+                                        if (!app.isPreloading) {
+                                            waitTime += deltaTime;
+                                        }
+    
+                                        if (app.highlight === null && app.cover === null || waitTime >= waitThreshold) {
+                                            message.type.elapsed = deltaTime;
+                                            app.isBlinded = false;
+                                            app.currentAnimations.splice(0);
+    
+                                            if ('animation' in suggestion && suggestion.animation in app.animations) {
+                                                const skipFrames = 60 / 12;
+                                                let animations = app.animations[suggestion.animation];
+                                                let maxFrames = Math.min(animations.length, 60);
+                                                let offset = Math.floor(Math.max(0, _random(0, animations.length - maxFrames)) / 2);
+                                                let length = Math.round(90 / 24);
+    
+                                                for (let i = 0; i < maxFrames; i += skipFrames) {
+                                                    for (let j = 0; j < length; j++) {
+                                                        app.currentAnimations.push(animations[offset + i]);
+                                                    }
+                                                }
+    
+                                                for (let i = app.currentAnimations.length - 1; i >= 0; i--) {
+                                                    app.currentAnimations.push(animations[offset + i]);
+                                                }
+                                            }
+    
+                                            if ('morphs' in suggestion) {
+                                                let nameSet = [];
+    
+                                                for (let blendShape of suggestion.morphs.defaults) {
+                                                    vrmModel.blendShapeProxy.setValue(blendShape.name, Math.abs(Math.sin(blendShape.weight / 2 * Math.PI)));
+                                                }
+    
+                                                for (let blendShapeAnimation of suggestion.morphs.animations) {
+                                                    app.blendShapeAnimations.unshift(blendShapeAnimation);
+                                                }
+    
+                                                for (let i = app.blendShapeAnimations.length - 1; i >= 0; i--) {
+                                                    let blendShapeAnimation = app.blendShapeAnimations[i];
+    
+                                                    if (!nameSet.includes(blendShapeAnimation.name)) {
+                                                        vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.start / 2 * Math.PI)));
+                                                        nameSet.push(blendShapeAnimation.name);
+                                                    }
+                                                }
+                                            }
+    
+                                            waitTime = 0.0;
+                                        } else {
+                                            loopRequired = false;
+                                        }
                                     }
-
-                                    if (message.type.count < length) {
-                                        message.type.count += 1;
+    
+                                    if (message.type.elapsed >= message.type.speed / 1000.0) {
+                                        let index = message.type.buffer.length;
+                                        let width = Math.floor(message.text.length / 2);
+                                        let length = message.text.length;
+    
+                                        if (message.type.count >= width) {
+                                            message.type.buffer += message.text.charAt(index);
+                                        }
+    
+                                        if (message.type.count < length) {
+                                            message.type.count += 1;
+                                        }
+    
+                                        message.type.elapsed = 0;
                                     }
-
-                                    message.type.elapsed = 0;
-                                }
-                            } else {
-                                message.time += deltaTime;
-
-                                if (message.time >= message.duration) {
-                                    message.type.reverse = true;
-                                }
-                            }
-
-                            if (message.text.length === message.type.buffer.length) {
-                                const characters = message.text.split('');
-
-                                app.text.splice(0);
-
-                                for (let i = 0; i < characters.length; i++) {
-                                    app.text.push({ key: i, value: characters[i] });
-                                }
-                            } else {
-                                let charArray = new Array();
-                                let randomBuffer = '';
-
-                                for (let i = 0; i < message.text.length; i++) {
-                                    if (charArray.indexOf(message.text.charAt(i)) == -1 && message.text.charAt(i) != "\n" && message.text.charAt(i).match(/\s/) == null) {
-                                        charArray.push(message.text.charAt(i));
+                                } else {
+                                    message.time += deltaTime;
+    
+                                    if (message.time >= message.duration) {
+                                        message.type.reverse = true;
                                     }
                                 }
-
-                                for (let i = 0; i < message.type.count; i++) {
-                                    if (charArray.length > 0) {
-                                        randomBuffer += charArray[~~_random(0, charArray.length)];
-                                    }
-                                }
-
-                                if (randomBuffer.length > message.type.buffer.length) {
-                                    const characters = (message.type.buffer + randomBuffer.substring(message.type.buffer.length, randomBuffer.length)).split('');
-
+    
+                                if (message.text.length === message.type.buffer.length) {
+                                    const characters = message.text.split('');
+    
                                     app.text.splice(0);
-
+    
                                     for (let i = 0; i < characters.length; i++) {
                                         app.text.push({ key: i, value: characters[i] });
                                     }
-                                } else if (app.text.length !== message.type.buffer.length) {
-                                    const characters = message.type.buffer.split('');
-
-                                    app.text.splice(0);
-
-                                    for (let i = 0; i < characters.length; i++) {
-                                        app.text.push({ key: i, value: characters[i] });
+                                } else {
+                                    let charArray = new Array();
+                                    let randomBuffer = '';
+    
+                                    for (let i = 0; i < message.text.length; i++) {
+                                        if (charArray.indexOf(message.text.charAt(i)) == -1 && message.text.charAt(i) != "\n" && message.text.charAt(i).match(/\s/) == null) {
+                                            charArray.push(message.text.charAt(i));
+                                        }
+                                    }
+    
+                                    for (let i = 0; i < message.type.count; i++) {
+                                        if (charArray.length > 0) {
+                                            randomBuffer += charArray[~~_random(0, charArray.length)];
+                                        }
+                                    }
+    
+                                    if (randomBuffer.length > message.type.buffer.length) {
+                                        const characters = (message.type.buffer + randomBuffer.substring(message.type.buffer.length, randomBuffer.length)).split('');
+    
+                                        app.text.splice(0);
+    
+                                        for (let i = 0; i < characters.length; i++) {
+                                            app.text.push({ key: i, value: characters[i] });
+                                        }
+                                    } else if (app.text.length !== message.type.buffer.length) {
+                                        const characters = message.type.buffer.split('');
+    
+                                        app.text.splice(0);
+    
+                                        for (let i = 0; i < characters.length; i++) {
+                                            app.text.push({ key: i, value: characters[i] });
+                                        }
                                     }
                                 }
-                            }
-
-                            if (loopRequired && animationData === null) {
-                                animationIndex = 0;
-                                animationData = app.currentAnimations[animationIndex];
-                                animationIndex += animationSkipFrames;
-                            }*/
-                        //} else {
+    
+                                if (loopRequired && animationData === null) {
+                                    animationIndex = 0;
+                                    animationData = app.currentAnimations[animationIndex];
+                                    animationIndex += animationSkipFrames;
+                                }*/
+                            //} else {
                             /*if (app.isSuggested && app.suggestionQueue.length == 0 && !app.isComputing) {
                                 const tempMessages1 = [].concat(app.messages);
                                 const tempTags = [].concat(app.tags);
