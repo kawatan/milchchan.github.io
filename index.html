@@ -141,11 +141,10 @@
         }
 
         .tags>.tag {
-            margin: -4px;
+            margin: 0px;
             padding: 0px 8px 0px 8px;
             padding: 12px 24px 12px 24px;
-            border: 0px solid transparent;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
             background: #ffffff;
             background-clip: padding-box;
@@ -242,6 +241,18 @@
             background-position: 50% 50%;
             background-size: contain;
             background-repeat: no-repeat;
+        }
+
+        .background:nth-last-of-type(2)>div::after {
+            display: block;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100vh;
+            background: url('/images/Overlay.png') repeat;
+            content: "";
+            animation: fade 0.5s ease-out;
         }
 
         .background>div {
@@ -342,8 +353,8 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child button {
-            margin: -4px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            margin: 0px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
             padding: 16px;
             background: #ffffff;
@@ -366,8 +377,8 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child button {
-            margin: -4px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            margin: 0px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
             padding: 16px;
             background: #ffffff;
@@ -489,11 +500,10 @@
         }
 
         #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button {
-            margin: -4px;
+            margin: 0px;
             padding: 0px 8px 0px 8px;
             padding: 12px 24px 12px 24px;
-            border: 0px solid transparent;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
             background: #ffffff;
             background-clip: padding-box;
@@ -505,8 +515,8 @@
         }
 
         #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level>.level-item .icon {
-            margin: -4px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            margin: 0px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
             padding: 24px;
             background: #ffffff;
@@ -587,8 +597,8 @@
         }
 
         #container .columns .column .media .media-content .level:nth-last-of-type(1) .level-item button {
-            margin: -4px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            margin: 0px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
             padding: 16px;
             background: #ffffff;
@@ -729,8 +739,8 @@
         }
 
         #input form .field {
-            margin: -4px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            margin: 0px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
             background: #ffffff;
@@ -741,9 +751,9 @@
         }
 
         #input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(3) .level-left {
-            margin: -4px -4px -4px -4px;
+            margin: 0px;
             padding: 16px 32px 16px 32px;
-            border: 4px solid rgba(255, 255, 255, 0.5);
+            border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
             background: #ffffff;
             background-clip: padding-box;
@@ -1282,6 +1292,12 @@
     <div id="particles-js"></div>
     <div id="app">
         <div class="background">
+            <div v-bind:style="{ backgroundImage: 'url(' + image.url + ')', marginLeft: image.index * 100 + '%' }"
+                v-for="image in backgroundImages" v-bind:key="image" v-cloak></div>
+            <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
+                v-bind:key="image.url" alt="Background" v-cloak>
+        </div>
+        <div class="background">
             <div class="ticker-wrap">
                 <transition-group name="ticker-item-list" class="ticker" tag="div"
                     v-bind:style="{ animationPlayState: 'running' }">
@@ -1293,12 +1309,6 @@
                     </div>
                 </transition-group>
             </div>
-        </div>
-        <div class="background">
-            <div v-bind:style="{ backgroundImage: 'url(' + image.url + ')', marginLeft: image.index * 100 + '%' }"
-                v-for="image in backgroundImages" v-bind:key="image" v-cloak></div>
-            <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
-                v-bind:key="image.url" alt="Background" v-cloak>
         </div>
         <transition name="blind" v-on:after-enter="blinded">
             <div class="blind" v-if="isBlinded" v-cloak></div>
