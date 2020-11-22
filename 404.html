@@ -48,6 +48,18 @@
       animation: load 0.5s ease-out;
     }
 
+    body::after {
+      display: block;
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      background: url('/images/Overlay.png') repeat;
+      content: "";
+      animation: fade 0.5s ease-out;
+    }
+
     body {
       position: relative;
       margin: 0;
