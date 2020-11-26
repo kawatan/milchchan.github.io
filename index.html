@@ -80,7 +80,8 @@
         h2,
         p,
         span,
-        input {
+        input,
+        button {
             font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
         }
 
@@ -120,6 +121,23 @@
         label.checkbox input[type=checkbox]:checked+.custom:before,
         label.checkbox input[type=radio]:checked+.custom:before {
             color: #ffef8c;
+        }
+
+        button .scrollable {
+            display: inline-block;
+            box-sizing: content-box;
+            transform: translate3d(0%, 0%, 0);
+            transition: .5s ease-in;
+        }
+
+        button .scrollable:hover {
+            transform: translate3d(0%, -50%, 0);
+            transition: .5s ease-out;
+        }
+
+        button .scrollable>div {
+            box-sizing: content-box;
+            vertical-align: middle;
         }
 
         .navbar {
@@ -243,7 +261,7 @@
             background-repeat: no-repeat;
         }
 
-        .background:nth-last-of-type(1)>div::after {
+        .background:first-child::after {
             display: block;
             position: fixed;
             left: 0;
@@ -252,7 +270,6 @@
             height: 100vh;
             background: url('/images/Overlay.png') repeat;
             content: "";
-            animation: fade 0.5s ease-out;
         }
 
         .background>div {
@@ -287,7 +304,7 @@
         }
 
         .background .ticker-wrap .ticker .item {
-            padding: 0px 10vmin;
+            padding: 0px 25vmin;
             color: rgba(255, 255, 255, 1.0);
             font-size: 100vh;
         }
@@ -514,6 +531,13 @@
             margin: 0px 8px 0px 0px;
         }
 
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button>.clip {
+            display: inline-block;
+            overflow: hidden;
+            box-sizing: content-box;
+            height: calc(1.25rem * 1.5);
+        }
+
         #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level>.level-item .icon {
             margin: 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
@@ -526,6 +550,13 @@
         #heading .navbar-item .tags>.control {
             margin: 0px 0px 0px 0px;
             padding: 8px 8px 8px 8px;
+        }
+
+        #heading .navbar-item .tags button>.clip {
+            display: inline-block;
+            overflow: hidden;
+            box-sizing: content-box;
+            height: calc(0.75rem * 1.5);
         }
 
         #heading .tags {
@@ -1393,8 +1424,7 @@
                                                     <span class="icon is-small">
                                                         <i class="fas fa-star"></i>
                                                     </span>
-                                                    <span
-                                                        class="is-size-1 is-uppercase">{{ animatedStars }}</span>
+                                                    <span class="is-size-1 is-uppercase">{{ animatedStars }}</span>
                                                 </div>
                                             </div>
                                         </nav>
@@ -1545,8 +1575,7 @@
                                             <article class="media">
                                                 <div class="media-content">
                                                     <div class="content">
-                                                        <h1
-                                                            class="is-size-1 is-uppercase has-text-weight-bold">
+                                                        <h1 class="is-size-1 is-uppercase has-text-weight-bold">
                                                             #milchchan</h1>
                                                         <h2 class="is-size-6 has-text-weight-bold">
                                                             milchchan.com</h2>
@@ -1593,7 +1622,14 @@
                                                             <span class="icon">
                                                                 <i class="fas fa-star"></i>
                                                             </span>
-                                                            言葉を教える</button>
+                                                            <div class="clip">
+                                                                <div class="scrollable">
+                                                                    <div>言葉を教える</div>
+                                                                    <div>言葉を教える</div>
+                                                                </div>
+                                                            </div>
+
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </article>
@@ -1635,7 +1671,14 @@
                                                                 class="button tag is-rounded is-size-7 has-text-weight-bold"
                                                                 type="button"
                                                                 v-bind:style="{ color: 'rgba(0, 0, 0, ' + (0.25 + 0.75 * tag.score) + ')' }"
-                                                                @click="learn(tag.name); isRevealed = false;">{{ tag.name }}</button>
+                                                                @click="learn(tag.name); isRevealed = false;">
+                                                                <div class="clip">
+                                                                    <div class="scrollable">
+                                                                        <div>{{ tag.name }}</div>
+                                                                        <div>{{ tag.name }}</div>
+                                                                    </div>
+                                                                    <div>
+                                                            </button>
                                                         </div>
                                                     </div>
                                                 </div>
