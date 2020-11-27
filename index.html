@@ -5,8 +5,7 @@
     <meta charset="utf-8" />
     <meta name="viewport"
         content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta name="description"
-        content="ミルヒちゃんねる">
+    <meta name="description" content="ミルヒちゃんねる">
     <meta name="theme-color" content="#f5f5f5">
     <title>ミルヒちゃんねる</title>
     <link rel="icon" type="image/png" href="/favicon.png">
@@ -3369,6 +3368,31 @@
                         let animationData = null;
                         let updatedBlendShapeNames = [];
 
+                        if (lookAnimation === null) {
+                            lookAnimation = { time: 0.0, duration: 0.5, base: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: lookAtTarget.position.x + _random(-1.0, 1.0) * 0.1, y: lookAtTarget.position.y + _random(-1.0, 1.0) * 0.1 } };
+                        }
+
+                        lookAnimation.time += deltaTime;
+
+                        if (lookAnimation.time >= lookAnimation.duration) {
+                            lookAtTarget.position.x = lookAnimation.target.x;
+                            lookAtTarget.position.y = lookAnimation.target.y;
+
+                            if (lookAnimation.base) {
+                                lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: lookAnimation.base.x, y: lookAnimation.base.y } };
+                            } else {
+                                lookAnimation = null;
+                            }
+                        } else {
+                            const rate = lookAnimation.time / lookAnimation.duration;
+
+                            lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
+                            lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
+                        }
+
+                        let blinkOffset = Math.max(0, Math.min(-lookAtTarget.position.y, 1));
+                        let blinkRequired = true;
+
                         if (this.currentAnimations.length > 0 && animationIndex < this.currentAnimations.length) {
                             animationData = this.currentAnimations[animationIndex];
                             animationIndex += animationSkipFrames;
@@ -3384,8 +3408,17 @@
                                     blendShapeAnimation.time += deltaTime;
 
                                     if (blendShapeAnimation.time >= blendShapeAnimation.duration) {
-                                        vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+                                        if (blendShapeAnimation.name == "blink") {
+                                            vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, 0.1 * blinkOffset + (1 - 0.1) * Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+                                            blinkRequired = false;
+                                        } else {
+                                            vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin(blendShapeAnimation.end / 2 * Math.PI)));
+                                        }
+
                                         this.blendShapeAnimations.splice(i, 1);
+                                    } else if (blendShapeAnimation.name == "blink") {
+                                        vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, 0.1 * blinkOffset + (1 - 0.1) * Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
+                                        blinkRequired = false;
                                     } else {
                                         vrmModel.blendShapeProxy.setValue(blendShapeAnimation.name, Math.abs(Math.sin((blendShapeAnimation.time / blendShapeAnimation.duration * (blendShapeAnimation.end - blendShapeAnimation.start) + blendShapeAnimation.start) / 2 * Math.PI)));
                                     }
@@ -3396,6 +3429,10 @@
 
                                 updatedBlendShapeNames.push(blendShapeAnimation.name);
                             }
+                        }
+
+                        if (blinkRequired) {
+                            vrmModel.blendShapeProxy.setValue("blink", 0.1 * blinkOffset);
                         }
 
                         if (this.sequenceQueue.length > 0) {
@@ -3517,9 +3554,9 @@
                                         }
                                     }
 
-                                    if (lookAtTarget.position.x != 0.0 || lookAtTarget.position.y != 0.0) {
+                                    /*if (lookAtTarget.position.x != 0.0 || lookAtTarget.position.y != 0.0) {
                                         lookAnimation = { time: 0.0, duration: 0.5, source: { x: lookAtTarget.position.x, y: lookAtTarget.position.y }, target: { x: 0.0, y: 0.0 } };
-                                    }
+                                    }*/
                                 } else if (sequence[0].type == "Message" && this.message === null && !isAnimating && !isDeforming) {
                                     this.message = { time: 0, duration: sequence[0].duration, type: { elapsed: -1, speed: sequence[0].speed, reverse: false, buffer: '', count: 0 }, text: sequence[0].text };
                                     sequence.shift();
@@ -3946,21 +3983,6 @@
                                         this.text.push({ key: i, value: characters[i] });
                                     }
                                 }
-                            }
-                        }
-
-                        if (lookAnimation !== null) {
-                            lookAnimation.time += deltaTime;
-
-                            if (lookAnimation.time >= lookAnimation.duration) {
-                                lookAtTarget.position.x = lookAnimation.target.x;
-                                lookAtTarget.position.y = lookAnimation.target.y;
-                                lookAnimation = null;
-                            } else {
-                                const rate = lookAnimation.time / lookAnimation.duration;
-
-                                lookAtTarget.position.x = lookAnimation.source.x + (lookAnimation.target.x - lookAnimation.source.x) * rate;
-                                lookAtTarget.position.y = lookAnimation.source.y + (lookAnimation.target.y - lookAnimation.source.y) * rate;
                             }
                         }
 
