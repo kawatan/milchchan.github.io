@@ -2006,7 +2006,7 @@
     <script src="https://unpkg.com/three@0.121.1/build/three.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/stats-js@1.0.1/build/stats.min.js"></script>
     <!--<script src="https://unpkg.com/vue@next"></script>-->
-    <script src="https://unpkg.com/vue@3.0.2/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue@3.0.3/dist/vue.global.prod.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.0/lib/anime.min.js"></script>
     <script src="/js/moment-with-locales.js"></script>
     <script src="/js/three-vrm.js"></script>
@@ -2115,6 +2115,7 @@
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
         let vrmModel = null;
+        let vrmSpringBones = [];
         let animationIndex = 0;
         const animationSkipFrames = 2;
         let idleTime = 0.0;
@@ -2127,6 +2128,7 @@
         const alertThreshold = 30.0;
         let lookAnimation = null;
         let timeoutID = undefined;
+        let randomWind = null;
 
         var app = Vue.createApp({
             data() {
@@ -4207,6 +4209,48 @@
                             }
                         }
 
+                        if (vrmSpringBones.length > 0) {
+                            let springBoneIndex = 0;
+
+                            if (randomWind === null) {
+                                randomWind = { time: 0, duration: 1.0, direction: new THREE.Vector3(1, 0, 0), force: 0.1 * Math.random(), sources: [] };
+
+                                for (const springBoneGroup of vrmModel.springBoneManager.springBoneGroupList) {
+                                    for (const springBone of springBoneGroup) {
+                                        randomWind.sources.push(springBone.gravityPower - vrmSpringBones[springBoneIndex].gravityPower);
+                                    }
+                                }
+                            } else {
+                                randomWind.time += deltaTime;
+
+                                if (randomWind.time >= randomWind.duration) {
+                                    for (const springBoneGroup of vrmModel.springBoneManager.springBoneGroupList) {
+                                        for (const springBone of springBoneGroup) {
+                                            const vector = new THREE.Vector3(vrmSpringBones[springBoneIndex].gravityDir.x + randomWind.direction.x, vrmSpringBones[springBoneIndex].gravityDir.y + randomWind.direction.y, vrmSpringBones[springBoneIndex].gravityDir.z + randomWind.direction.z);
+
+                                            springBone.gravityDir = vector.normalize();
+                                            springBone.gravityPower = vrmSpringBones[springBoneIndex].gravityPower + randomWind.force;
+
+                                            springBoneIndex++;
+                                        }
+                                    }
+
+                                    randomWind = null;
+                                } else {
+                                    for (const springBoneGroup of vrmModel.springBoneManager.springBoneGroupList) {
+                                        for (const springBone of springBoneGroup) {
+                                            const vector = new THREE.Vector3(vrmSpringBones[springBoneIndex].gravityDir.x + randomWind.direction.x, vrmSpringBones[springBoneIndex].gravityDir.y + randomWind.direction.y, vrmSpringBones[springBoneIndex].gravityDir.z + randomWind.direction.z);
+
+                                            springBone.gravityDir = vector.normalize();
+                                            springBone.gravityPower = vrmSpringBones[springBoneIndex].gravityPower + randomWind.sources[springBoneIndex] + randomWind.time / randomWind.duration * (randomWind.force - randomWind.sources[springBoneIndex]);
+
+                                            springBoneIndex++;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
                         vrmModel.update(deltaTime);
                         /*if (currentMixer) {
                             currentMixer.update(deltaTime);
@@ -4350,6 +4394,14 @@
 
                                     vrm.scene.rotation.y = Math.PI;
                                     vrm.lookAt.target = lookAtTarget;
+
+                                    vrmSpringBones.splice(0);
+
+                                    for (const springBoneGroup of vrmModel.springBoneManager.springBoneGroupList) {
+                                        for (const springBone of springBoneGroup) {
+                                            vrmSpringBones.push({ gravityDir: springBone.gravityDir.clone(), gravityPower: springBone.gravityPower });
+                                        }
+                                    }
 
                                     //vrm.humanoid.getBoneNode(THREE.VRMSchema.HumanoidBoneName.Hips).rotation.y = Math.PI;
                                     //currentMixer = prepareAnimation(vrm);
@@ -4715,6 +4767,14 @@
 
                                 vrm.scene.rotation.y = Math.PI;
                                 vrm.lookAt.target = lookAtTarget;
+
+                                vrmSpringBones.splice(0);
+
+                                for (const springBoneGroup of vrmModel.springBoneManager.springBoneGroupList) {
+                                    for (const springBone of springBoneGroup) {
+                                        vrmSpringBones.push({ gravityDir: springBone.gravityDir.clone(), gravityPower: springBone.gravityPower });
+                                    }
+                                }
 
                                 app.progress = 0.0;
 
