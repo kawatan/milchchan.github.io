@@ -2138,7 +2138,7 @@
         renderer.setClearColor(0xffffff, 0);
 
         const CAMERA_FOV = 60.0;
-        const CAMERA_Z = 1.0;
+        const CAMERA_Z = 1.25;
         const camera = new THREE.PerspectiveCamera(CAMERA_FOV, window.innerWidth / window.outerHeight, 0.1, 1000);
 
         camera.position.set(0.0, 1.25, CAMERA_Z);
@@ -2155,7 +2155,7 @@
         controls.maxAzimuthAngle = 45 * Math.PI / 180;*/
         controls.minDistance = 0.75;
         controls.maxDistance = 1.5;
-        controls.target.set(0.0, 0.95, 0.025);
+        controls.target.set(0.0, 1.0, 0.025);
         controls.update();
 
         const scene = new THREE.Scene();
@@ -2760,7 +2760,6 @@
                     element.style.removeProperty("height");
 
                     canvas.toBlob(blob => {
-                        console.log(blob);
                         app.screenshot = { blobUrl: window.URL.createObjectURL(blob), filename: `${document.title}.png` };
                     });
 
@@ -4835,53 +4834,55 @@
             event.preventDefault();
 
             for (let file of event.dataTransfer.files) {
-                let reader = new FileReader();
+                if (file.name.toLowerCase().endsWith(".vrm")) {
+                    let reader = new FileReader();
 
-                reader.addEventListener("load", (e) => {
-                    const loader = new GLTFLoader();
+                    reader.addEventListener("load", (e) => {
+                        const loader = new GLTFLoader();
 
-                    loader.crossOrigin = "anonymous";
-                    loader.load(
-                        e.target.result,
-                        (gltf) => {
-                            THREE.VRM.from(gltf).then((vrm) => {
-                                let sequences = [];
+                        loader.crossOrigin = "anonymous";
+                        loader.load(
+                            e.target.result,
+                            (gltf) => {
+                                THREE.VRM.from(gltf).then((vrm) => {
+                                    let sequences = [];
 
-                                if (vrmModel !== null) {
-                                    scene.remove(vrmModel.scene);
-                                }
-
-                                vrmModel = vrm;
-
-                                scene.add(vrm.scene);
-
-                                vrm.scene.rotation.y = Math.PI;
-                                vrm.lookAt.target = lookAtTarget;
-
-                                vrmSpringBones.splice(0);
-
-                                for (const springBoneGroup of vrmModel.springBoneManager.springBoneGroupList) {
-                                    for (const springBone of springBoneGroup) {
-                                        vrmSpringBones.push({ gravityDir: springBone.gravityDir.clone(), gravityPower: springBone.gravityPower });
+                                    if (vrmModel !== null) {
+                                        scene.remove(vrmModel.scene);
                                     }
-                                }
 
-                                app.progress = 0.0;
+                                    vrmModel = vrm;
 
-                                for (const sequence of app.character.sequences) {
-                                    if (sequence.name == "Start") {
-                                        sequences.push(sequence);
+                                    scene.add(vrm.scene);
+
+                                    vrm.scene.rotation.y = Math.PI;
+                                    vrm.lookAt.target = lookAtTarget;
+
+                                    vrmSpringBones.splice(0);
+
+                                    for (const springBoneGroup of vrmModel.springBoneManager.springBoneGroupList) {
+                                        for (const springBone of springBoneGroup) {
+                                            vrmSpringBones.push({ gravityDir: springBone.gravityDir.clone(), gravityPower: springBone.gravityPower });
+                                        }
                                     }
-                                }
 
-                                app.sequenceQueue.push(this.prepare(sequences));
-                            });
-                        },
-                        (progress) => app.progress = progress.loaded / progress.total,
-                        (error) => console.error(error)
-                    );
-                });
-                reader.readAsDataURL(file);
+                                    app.progress = 0.0;
+
+                                    for (const sequence of app.character.sequences) {
+                                        if (sequence.name == "Start") {
+                                            sequences.push(sequence);
+                                        }
+                                    }
+
+                                    app.sequenceQueue.push(app.prepare(sequences));
+                                });
+                            },
+                            (progress) => app.progress = progress.loaded / progress.total,
+                            (error) => console.error(error)
+                        );
+                    });
+                    reader.readAsDataURL(file);
+                }
 
                 break;
             }
