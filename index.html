@@ -4834,7 +4834,9 @@
             event.preventDefault();
 
             for (let file of event.dataTransfer.files) {
-                if (file.name.toLowerCase().endsWith(".vrm")) {
+                const name = file.name.toLowerCase();
+
+                if (name.endsWith(".vrm")) {
                     let reader = new FileReader();
 
                     reader.addEventListener("load", (e) => {
@@ -4845,8 +4847,6 @@
                             e.target.result,
                             (gltf) => {
                                 THREE.VRM.from(gltf).then((vrm) => {
-                                    let sequences = [];
-
                                     if (vrmModel !== null) {
                                         scene.remove(vrmModel.scene);
                                     }
@@ -4867,14 +4867,6 @@
                                     }
 
                                     app.progress = 0.0;
-
-                                    for (const sequence of app.character.sequences) {
-                                        if (sequence.name == "Start") {
-                                            sequences.push(sequence);
-                                        }
-                                    }
-
-                                    app.sequenceQueue.push(app.prepare(sequences));
                                 });
                             },
                             (progress) => app.progress = progress.loaded / progress.total,
@@ -4882,9 +4874,31 @@
                         );
                     });
                     reader.readAsDataURL(file);
-                }
+                } else if (name.endsWith(".json")) {
+                    let reader = new FileReader();
 
-                break;
+                    reader.addEventListener("load", (e) => {
+                        let sequences = [];
+
+                        try {
+                            app.character = JSON.parse(e.target.result);
+                        } catch (e) {
+                            console.error(e);
+
+                            return;
+                        }
+                        
+                        for (const sequence of app.character.sequences) {
+                            if (sequence.name == "Start") {
+                                sequences.push(sequence);
+                            }
+                        }
+
+                        app.sequenceQueue.splice(0);
+                        app.sequenceQueue.push(app.prepare(sequences));
+                    });
+                    reader.readAsText(file);
+                }
             }
 
         }, false);
