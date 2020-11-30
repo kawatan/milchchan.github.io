@@ -444,7 +444,7 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
             margin: 0;
-            padding: 16px 16px 16px 16px;
+            padding: 16px 16px 0px 16px;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control>.level:nth-last-of-type(1) {
@@ -465,28 +465,33 @@
 
         /*#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item {
             padding: 0px 16px 16px 16px;
-        }
+        }*/
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child>.column>.control {
             margin: 0;
-            width: 100%;
-            background-color: #30c0f5;
-            background-color: #f5f5f5;
-            background-color: rgba(255, 255, 255, 1.0);
-            border-radius: 500px 500px 500px 500px;
-            padding: 8px 16px 8px 16px;
-            box-sizing: border-box;
+            padding: 0px 16px 16px 16px;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip {
             margin: 0;
-            padding: 0;
+            border: 1px solid var(--foreground-color);
+            padding: 8px 16px 8px 16px;
+            background-color: transparent;
+            border-radius: 500px 500px 500px 500px;
             overflow: hidden;
+            width: 100%;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
+            margin: 0;
+            width: 100%;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             padding: 0px 16px;
-        }*/
+            color: var(--foreground-color);
+        }
 
         #heading>.columns>.column>.columns:last-child {
             justify-content: center;
@@ -1367,7 +1372,7 @@
             <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
                 v-bind:key="image.url" alt="Background" v-cloak>
         </div>
-        <div class="background">
+        <!--<div class="background">
             <div class="ticker-wrap">
                 <transition-group name="ticker-item-list" class="ticker" tag="div"
                     v-bind:style="{ animationPlayState: 'running' }">
@@ -1379,7 +1384,7 @@
                     </div>
                 </transition-group>
             </div>
-        </div>
+        </div>-->
         <transition name="blind" v-on:after-enter="blinded">
             <div class="blind" v-if="isBlinded" v-cloak></div>
         </transition>
@@ -1517,19 +1522,18 @@
                                     </nav>
                                 </div>
                             </div>
-                            <!--<div class="columns">
+                            <div class="columns">
                                 <div class="column is-half is-mobile has-content-centered">
                                     <div class="control has-text-centered">
                                         <nav class="level">
                                             <div class="level-item has-text-centered">
-                                                <div class="field" ref="ticker">
-                                                    <div class="clip">
+                                                <div class="field" v-cloak>
+                                                    <div class="clip" v-show="words.length > 0">
                                                         <div class="ticker-wrap">
                                                             <transition-group name="ticker-item-list" class="ticker"
                                                                 tag="div"
                                                                 v-bind:style="{ animationPlayState: 'running' }">
-                                                                <div class="item" v-show="messages.length > 0"
-                                                                    key="merku-statuses" v-cloak>
+                                                                <div class="item" key="merku-statuses" v-cloak>
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <span class="image is-24x24">
@@ -1541,19 +1545,18 @@
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
                                                                                 <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-gray">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                                    class="is-size-6 has-text-weight-bold has-text-gray">最近みんなに教えてもらった言葉だよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
                                                                 </div>
-                                                                <div class="item" v-for="message in messages"
-                                                                    v-bind:key="message.id">
+                                                                <div class="item" v-for="word in take(words, 5)"
+                                                                    v-bind:key="word">
                                                                     <span
                                                                         class="is-size-6 has-text-weight-bold has-text-gray"
-                                                                        v-cloak>{{ message.text }}</span>
+                                                                        v-cloak>{{ word }}</span>
                                                                 </div>
-                                                                <div class="item" v-show="messages.length > 0"
-                                                                    key="merku-statuses-alt" v-cloak>
+                                                                <div class="item" key="merku-statuses-alt" v-cloak>
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <span class="image is-24x24">
@@ -1565,16 +1568,16 @@
                                                                         <div class="media-content">
                                                                             <div class="content has-text-left">
                                                                                 <span
-                                                                                    class="is-size-6 has-text-weight-bold has-text-gray">ミルヒちゃんねるのニュースだよぉ</span>
+                                                                                    class="is-size-6 has-text-weight-bold has-text-gray">最近みんなに教えてもらった言葉だよぉ</span>
                                                                             </div>
                                                                         </div>
                                                                     </article>
                                                                 </div>
-                                                                <div class="item" v-for="message in messages"
-                                                                    v-bind:key="message.id + '-alt'">
+                                                                <div class="item" v-for="word in take(words, 5)"
+                                                                    v-bind:key="word + '-alt'">
                                                                     <span
                                                                         class="is-size-6 has-text-weight-bold has-text-gray"
-                                                                        v-cloak>{{ message.text }}</span>
+                                                                        v-cloak>{{ word }}</span>
                                                                 </div>
                                                             </transition-group>
                                                         </div>
@@ -1584,7 +1587,7 @@
                                         </nav>
                                     </div>
                                 </div>
-                            </div>-->
+                            </div>
                         </div>
                     </div>
                     <div class="columns">
@@ -2281,12 +2284,13 @@
                         app.$nextTick(() => {
                             let width = 0;
 
-                            for (const element of document.body.querySelectorAll(".background .ticker-wrap .ticker .item")) {
+                            for (const element of document.body.querySelectorAll(".columns .column .ticker-wrap .ticker .item")) {
                                 width += element.getBoundingClientRect().width;
                             }
 
-                            document.body.querySelector(".background .ticker-wrap .ticker").style.width = width + 'px';
-                            document.body.querySelector(".background .ticker-wrap .ticker").animate([
+                            document.body.querySelector(".columns .column .clip").style.width = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-of-type(2)>.control>.level").getBoundingClientRect().width + 'px';
+                            document.body.querySelector(".columns .column .ticker-wrap .ticker").style.width = width + 'px';
+                            document.body.querySelector(".columns .column .ticker-wrap .ticker").animate([
                                 {
                                     transform: "translate3d(0, 0, 0)"
                                 },
@@ -2294,7 +2298,7 @@
                                     transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                                 }
                             ], {
-                                duration: 5 * 60 * 1000,
+                                duration: 60 * 1000,
                                 iterations: Infinity
                             });
                         });
@@ -4733,12 +4737,13 @@
             app.$nextTick(() => {
                 let width = 0;
 
-                for (const element of document.body.querySelectorAll(".background .ticker-wrap .ticker .item")) {
+                for (const element of document.body.querySelectorAll(".columns .column .ticker-wrap .ticker .item")) {
                     width += element.getBoundingClientRect().width;
                 }
 
-                document.body.querySelector(".background .ticker-wrap .ticker").style.width = width + 'px';
-                document.body.querySelector(".background .ticker-wrap .ticker").animate([
+                document.body.querySelector(".columns .column .clip").style.width = document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-of-type(2)>.control>.level").getBoundingClientRect().width + 'px';
+                document.body.querySelector(".columns .column .ticker-wrap .ticker").style.width = width + 'px';
+                document.body.querySelector(".columns .column .ticker-wrap .ticker").animate([
                     {
                         transform: "translate3d(0, 0, 0)"
                     },
@@ -4746,7 +4751,7 @@
                         transform: "translate3d(-" + width / 2 + "px, 0, 0)"
                     }
                 ], {
-                    duration: 5 * 60 * 1000,
+                    duration: 60 * 1000,
                     iterations: Infinity
                 });
             });
