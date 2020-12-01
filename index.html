@@ -2912,7 +2912,7 @@
                                     }
                                 }
 
-                                if (terms.length > 0) {
+                                if (terms.length > 0 && scores.length > 0) {
                                     const probabilities = softmax(scores);
                                     let candidates = [];
 
