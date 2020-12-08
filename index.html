@@ -32,7 +32,7 @@
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --background-color: #64dafe;
+                --background-color: #f5f5f5;
                 --foreground-color: #ffffff;
             }
         }
@@ -124,19 +124,22 @@
             color: #ffef8c;
         }
 
-        button .scrollable {
+        button .scrollable,
+        label .scrollable {
             display: inline-block;
             box-sizing: content-box;
             transform: translate3d(0%, 0%, 0);
             transition: .5s ease-in;
         }
 
-        button .scrollable:hover {
+        button .scrollable:hover,
+        label .scrollable:hover {
             transform: translate3d(0%, -50%, 0);
             transition: .5s ease-out;
         }
 
-        button .scrollable>div {
+        button .scrollable>div,
+        label .scrollable>div {
             box-sizing: content-box;
             vertical-align: middle;
         }
@@ -167,6 +170,14 @@
             border-radius: 500px 500px 500px 500px;
             background: #ffffff;
             background-clip: padding-box;
+            height: initial;
+        }
+
+        .file-input,
+        .file-cta {
+            background-color: transparent !important;
+            border: 0px solid transparent !important;
+            padding: 0;
             height: initial;
         }
 
@@ -268,7 +279,7 @@
             background-repeat: no-repeat;
         }
 
-        /*.background:first-child::after {
+        .background:first-child::after {
             display: block;
             position: fixed;
             left: 0;
@@ -277,7 +288,7 @@
             height: 100%;
             background: url('/images/Overlay.png') repeat;
             content: "";
-        }*/
+        }
 
         .background>div {
             position: fixed;
@@ -546,7 +557,8 @@
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button {
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button,
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>.button {
             margin: 0px;
             padding: 0px 8px 0px 8px;
             padding: 12px 24px 12px 24px;
@@ -557,15 +569,17 @@
             height: initial;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button>.icon {
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button>.icon,
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>.button .icon {
             margin: 0px 8px 0px 0px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button>.clip {
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button>.clip,
+        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>.button .clip {
             display: inline-block;
             overflow: hidden;
             box-sizing: content-box;
-            height: calc(1.25rem * 1.5);
+            height: calc(1.0rem * 1.5);
         }
 
         #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level>.level-item .icon {
@@ -1271,6 +1285,10 @@
                 background: #ffc547 url('/images/Stripes@2x.png') repeat;
             }
 
+            .background:first-child::after {
+                background: url('/images/Overlay@2x.png') repeat;
+            }
+
             #container .columns .column .media .media-content .has-text-left .balloon {
                 background: url('/images/Stripes@2x.png') repeat;
             }
@@ -1321,6 +1339,10 @@
 
             .progress {
                 background: #ffc547 url('/images/Stripes@3x.png') repeat;
+            }
+
+            .background:first-child::after {
+                background: url('/images/Overlay@3x.png') repeat;
             }
 
             #container .columns .column .media .media-content .has-text-left .balloon {
@@ -1487,6 +1509,25 @@
                                 <div class="column is-3 is-mobile">
                                     <nav class="level">
                                         <div class="level-item">
+                                            <transition name="fade" mode="out-in">
+                                                <button class="button is-white" type="button"
+                                                    v-bind:disabled="user === null" @click="isMuted = false"
+                                                    v-if="isMuted" key="off">
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-volume-mute"></i>
+                                                    </span>
+                                                </button>
+                                                <button class="button is-white" type="button"
+                                                    v-bind:disabled="user === null" @click="isMuted = true" v-else
+                                                    key="on">
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-volume-off" v-if="user === null"></i>
+                                                        <i class="fas fa-volume-up" v-else></i>
+                                                    </span>
+                                                </button>
+                                            </transition>
+                                        </div>
+                                        <!--<div class="level-item">
                                             <button class="button is-white" type="button"
                                                 v-bind:disabled="user === null" @click="capture" v-else key="talk">
                                                 <span class="icon is-small">
@@ -1518,7 +1559,7 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                        </transition>
+                                        </transition>-->
                                     </nav>
                                 </div>
                             </div>
@@ -1679,7 +1720,7 @@
                                             <article class="media">
                                                 <div class="media-content">
                                                     <div class="content">
-                                                        <button class="button is-rounded is-size-5 has-text-weight-bold"
+                                                        <button class="button is-rounded is-size-6 has-text-weight-bold"
                                                             type="button"
                                                             @click="isLearning = true; isCollapsed = false; isRevealed = false;">
                                                             <span class="icon">
@@ -1692,6 +1733,40 @@
                                                                 </div>
                                                             </div>
                                                         </button>
+                                                    </div>
+                                                </div>
+                                            </article>
+                                        </div>
+                                        <div class="level-item">
+                                            <article class="media">
+                                                <div class="media-content">
+                                                    <div class="content">
+                                                        <div class="file button is-rounded is-size-6 has-text-weight-bold"
+                                                            v-bind:class="{ 'is-static': user === null }">
+                                                            <label class="file-label">
+                                                                <input class="file-input" type="file" name="upload"
+                                                                    accept="image/png, image/jpeg" @change="upload">
+                                                                <span class="file-cta">
+                                                                    <transition name="fade" mode="out-in">
+                                                                        <span class="icon" v-if="isUploading"
+                                                                            key="uploading">
+                                                                            <i class="fas fa-spinner updating"></i>
+                                                                        </span>
+                                                                        <span class="icon" v-else key="ready">
+                                                                            <i class="fas fa-image"></i>
+                                                                        </span>
+                                                                    </transition>
+                                                                    <span class="file-label">
+                                                                        <div class="clip">
+                                                                            <div class="scrollable">
+                                                                                <div>背景をアップロード</div>
+                                                                                <div>背景をアップロード</div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </span>
+                                                                </span>
+                                                            </label>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </article>
@@ -2072,6 +2147,7 @@
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-storage.js"></script>
     <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
@@ -2110,6 +2186,7 @@
         const databaseChannel = channel.length > 0 ? databaseRoot + '/channels/' + channel : databaseRoot;
         const databaseMessages = databaseChannel + '/feed';
         let database = firebase.database();
+        let storage = firebase.storage();
         const milch = { name: 'ミルヒちゃん', accent: '#ffa6bb', image: '/images/Milch.png' };
         const merku = { name: 'メルクちゃん', accent: '#5bcbe1', image: '/images/Merku.png' };
 
@@ -2203,12 +2280,15 @@
         let lookAnimation = null;
         let timeoutID = undefined;
         let randomWind = null;
+        let backgroundTime = 30.0;
+        const backgroundThreshold = 30.0;
 
         var app = Vue.createApp({
             data() {
                 return {
                     isReady: false,
                     isLoading: false,
+                    isMuted: false,
                     isRevealed: false,
                     isCollapsed: true,
                     isUpdating: false,
@@ -2236,9 +2316,11 @@
                     animatedStars: 0,
                     screenshot: null,
                     notifications: [],
-                    presetImages: null,
+                    presetImages: [],
+                    backgroundImagesQueue: [],
                     backgroundImages: [],
                     preloadImages: [],
+                    isUploading: false,
                     animations: null,
                     currentAnimations: [],
                     blendShapeAnimations: [],
@@ -2252,6 +2334,13 @@
                 }
             },
             watch: {
+                isMuted(newValue) {
+                    try {
+                        localStorage.setItem('bot', JSON.stringify({ mute: newValue }));
+                    } catch (e) {
+                        localStorage.removeItem('bot');
+                    }
+                },
                 messages: {
                     handler: () => {
                         app.$nextTick(() => {
@@ -2309,23 +2398,26 @@
                     handler: () => {
                         app.$nextTick(() => {
                             const elements = document.body.querySelectorAll("#app>.background>div");
-                            const offset = elements.length - 1;
-                            const frameRate = 15;
 
-                            for (const element of elements) {
-                                element.animate([
-                                    {
-                                        transform: "translate3d(0, 0, 0)"
-                                    },
-                                    {
-                                        transform: "translate3d(-" + offset * 100 + "%, 0, 0)"
-                                    }
-                                ], {
-                                    fill: 'forwards',
-                                    easing: 'steps(' + offset + ')',
-                                    duration: 1000 / frameRate * elements.length,
-                                    iterations: Infinity
-                                });
+                            if (elements.length > 1) {
+                                const offset = elements.length - 1;
+                                const frameRate = 15;
+
+                                for (const element of elements) {
+                                    element.animate([
+                                        {
+                                            transform: "translate3d(0, 0, 0)"
+                                        },
+                                        {
+                                            transform: "translate3d(-" + offset * 100 + "%, 0, 0)"
+                                        }
+                                    ], {
+                                        fill: 'forwards',
+                                        easing: 'steps(' + offset + ')',
+                                        duration: 1000 / frameRate * elements.length,
+                                        iterations: Infinity
+                                    });
+                                }
                             }
                         });
                     },
@@ -2431,7 +2523,10 @@
                             database.ref(databaseMessages).push({ text: this.input, timestamp: Math.floor(new Date() / 1000), user: { id: app.user.uid, name: null, accent: null, image: null } });
 
                             this.input = "";
-                            this.$refs.alert.play();
+
+                            if (!this.isMuted) {
+                                this.$refs.alert.play();
+                            }
 
                             if (tokens.length > 5) {
                                 tokens.splice(5);
@@ -2463,7 +2558,9 @@
 
                         this.input = '';
 
-                        document.body.querySelector("#alert").play();
+                        if (!this.isMuted) {
+                            document.body.querySelector("#alert").play();
+                        }
 
                         let completed = 0;
                         let learnedWords = [];
@@ -2549,6 +2646,47 @@
                         this.inputHasError = true;
                     }
                 },
+                upload: function (event) {
+                    function generateUuid() {
+                        // https://github.com/GoogleChrome/chrome-platform-analytics/blob/master/src/internal/identifier.js
+                        // const FORMAT: string = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx";
+                        let chars = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".split("");
+
+                        for (let i = 0, len = chars.length; i < len; i++) {
+                            switch (chars[i]) {
+                                case "x":
+                                    chars[i] = Math.floor(Math.random() * 16).toString(16);
+                                    break;
+                                case "y":
+                                    chars[i] = (Math.floor(Math.random() * 4) + 8).toString(16);
+                                    break;
+                            }
+                        }
+
+                        return chars.join("");
+                    }
+
+                    const self = this;
+                    const storageRef = storage.ref()
+
+                    for (const file of event.target.files) {
+                        if (confirm(file.name)) {
+                            const uploadTask = storageRef.child(`images/${generateUuid()}`).put(file);
+
+                            self.isUploading = true;
+
+                            uploadTask.on('state_changed', function (snapshot) {
+                                if (snapshot.bytesTransferred == snapshot.totalBytes) {
+                                    self.isUploading = false;
+                                }
+                            }, function (error) {
+                                console.error(error);
+                            }, function () {
+                                database.ref(databaseChannel + '/images').push({ name: uploadTask.snapshot.ref.name, timestamp: Math.floor(new Date() / 1000) });
+                            });
+                        }
+                    }
+                },
                 like: function () {
                     return;
 
@@ -2565,7 +2703,10 @@
                         this.suggestionQueue.splice(0);
                         this.isBlinded = true;
                         this.isSuggested = true;
-                        this.$refs.twinkle.play();
+
+                        if (!this.isMuted) {
+                            this.$refs.twinkle.play();
+                        }
                     }
 
 
@@ -2597,7 +2738,9 @@
                         }
                     });*/
 
-                    document.body.querySelector("#twinkle").play();
+                    if (!this.isMuted) {
+                        document.body.querySelector("#twinkle").play();
+                    }
                 },
                 check: function (event) {
                     function format(format) {
@@ -2668,7 +2811,10 @@
                                 });
 
                                 self.notify({ text: format('{0}をおぼえたよぉ', snapshot.key), accent: merku.accent, image: merku.image });
-                                self.$refs.twinkle.play();
+
+                                if (!self.isMuted) {
+                                    self.$refs.twinkle.play();
+                                }
                             }
 
                             self.word = null;
@@ -2758,7 +2904,15 @@
                     element.style.height = document.body.scrollHeight + "px";
 
                     const canvas = await html2canvas(document.documentElement, {
-                        windowHeight: document.body.scrollHeight
+                        windowWidth: window.innerWidth,
+                        windowHeight: document.body.scrollHeight,
+                        scale: 1,
+                        onrendered: (canvas) => {
+                            const context = canvas.getContext("2d");
+
+                            context.scale(1, 1);
+                            context.imageSmoothingEnabled = false;
+                        }
                     });
 
                     element.style.removeProperty("height");
@@ -3005,19 +3159,56 @@
                         return Math.floor(Math.random() * (max - min)) + min;
                     }
 
+                    if (this.backgroundImagesQueue.length == 0) {
+                        function shuffle(array) {
+                            function _random(min, max) {
+                                min = Math.ceil(min);
+                                max = Math.floor(max);
+
+                                return Math.floor(Math.random() * (max - min)) + min;
+                            }
+
+                            let a = [].concat(array);
+                            let n = array.length;
+
+                            while (n > 1) {
+                                const k = _random(0, n);
+
+                                n--;
+
+                                const temp = a[n];
+
+                                a[n] = a[k];
+                                a[k] = temp;
+                            }
+
+                            return a;
+                        }
+
+                        for (const images of shuffle(this.presetImages)) {
+                            this.backgroundImagesQueue.push(images);
+                        }
+                    }
+
+                    const images = this.backgroundImagesQueue.shift();
+                    let urls = [];
+
+                    for (const image of images) {
+                        try {
+                            urls.push(await storage.ref().child(image).getDownloadURL());
+
+                        } catch (e) {
+                            console.error(e.message);
+                        }
+                    }
+
                     this.preloadImages.splice(0);
                     this.backgroundImages.splice(0);
 
-                    for (const image of this.presetImages[_random(0, this.presetImages.length)]) {
+                    for (const url of urls) {
                         this.preloadImages.push({
-                            url: image
+                            url: url
                         });
-                    }
-
-                    if (this.presetImages.length > 1) {
-                        setTimeout(() => {
-                            this.isBlinded = true;
-                        }, 50000);
                     }
                 },
                 load: function (url) {
@@ -3851,9 +4042,9 @@
                             /*if (app.isSuggested && app.suggestionQueue.length == 0 && !app.isComputing) {
                                 const tempMessages1 = [].concat(app.messages);
                                 const tempTags = [].concat(app.tags);
-
+ 
                                 app.isComputing = true;
-
+ 
                                 new Promise(resolve => {
                                     let segmenter = new TinySegmenter();
                                     const presets = [{ animation: 'idle2', name: THREE.VRMSchema.BlendShapePresetName.Fun },
@@ -3864,61 +4055,61 @@
                                     let tempMessages2 = [];
                                     let ids1 = [];
                                     let ids2 = [];
-
+ 
                                     for (let tag of tempTags.sort((x, y) => y.score - x.score)) {
                                         for (let message of tempMessages1.reverse()) {
                                             if (!ids1.includes(message.id) && segmenter.segment(message.text).includes(tag.name)) {
                                                 let thread = null;
-
+ 
                                                 if ('thread' in message) {
                                                     for (let m of tempMessages1) {
                                                         if (message.thread == m.id) {
                                                             thread = m;
-
+ 
                                                             break;
                                                         }
                                                     }
                                                 }
-
+ 
                                                 if (thread === null) {
                                                     tempMessages2.push(message);
                                                 } else {
                                                     const item = presets[_random(0, 2)];
-
+ 
                                                     suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: thread.text }, { time: 0, duration: 5, type: { elapsed: 0, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
-
+ 
                                                     if (!ids2.includes(thread.id)) {
                                                         ids2.push(thread.id);
                                                     }
                                                 }
-
+ 
                                                 ids1.push(message.id);
                                             }
                                         }
                                     }
-
+ 
                                     for (const message of tempMessages2) {
                                         if (!ids2.includes(message.id)) {
                                             const item = presets[_random(0, 2)];
-
+ 
                                             suggestions.push({ highlight: { text: '今日の' + document.title, image: '/images/Cover.png' }, messages: [{ time: 0, duration: 5, type: { elapsed: -1, speed: 50, reverse: false, buffer: '', count: 0 }, text: message.text }], animation: item.animation, morphs: { animations: [{ name: item.name, time: 0.0, duration: 1.0, start: 1.0, end: 1.0 }], defaults: [{ name: THREE.VRMSchema.BlendShapePresetName.Joy, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Sorrow, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Fun, weight: 0.0 }, { name: THREE.VRMSchema.BlendShapePresetName.Blink, weight: 0.0 }] } });
                                         }
                                     }
-
+ 
                                     resolve(suggestions);
                                 }).then((result) => {
                                     if (app.isSuggested && result.length > 0) {
                                         for (const suggestion of result) {
                                             app.suggestionQueue.push(suggestion);
                                         }
-
+ 
                                         if ('highlight' in app.suggestionQueue[0]) {
                                             if ('text' in app.suggestionQueue[0].highlight) {
                                                 app.highlight = app.suggestionQueue[0].highlight.text;
                                             } else {
                                                 app.highlight = null;
                                             }
-
+ 
                                             if ('image' in app.suggestionQueue[0].highlight) {
                                                 app.cover = app.suggestionQueue[0].highlight.image;
                                             } else {
@@ -3926,7 +4117,7 @@
                                             }
                                         }
                                     }
-
+ 
                                     app.isComputing = false;
                                 });
                             }*/
@@ -3937,32 +4128,32 @@
                                 } else {
                                     idleTime += deltaTime;
                                     activateTime += deltaTime;
-
+ 
                                     if (activateTime >= activateThreshold) {
                                         app.talk();
-
+ 
                                         idleTime = activateTime = 0.0;
                                     } else if (idleTime >= blinkThreshold) {
                                         let sequences = [];
-
+ 
                                         for (const sequence of this.character.sequences) {
                                             if (sequence.name == "Idle") {
                                                 sequences.push(sequence);
                                             }
                                         }
-
+ 
                                         this.sequenceQueue.push(this.prepare(sequences));
-
+ 
                                         idleTime = 0.0;
                                     }
                                 }
-
+ 
                                 app.currentAnimations.splice(0);
-
+ 
                                 for (let animation of app.animations["idle1"]) {
                                     app.currentAnimations.push(animation);
                                 }
-
+ 
                                 animationIndex = 0;
                                 animationData = app.currentAnimations[animationIndex];
                                 animationIndex += animationSkipFrames;
@@ -4355,6 +4546,15 @@
                     renderer.render(scene, camera);
 
                     stats.update();
+
+                    if (this.presetImages.length > 0) {
+                        backgroundTime += deltaTime;
+
+                        if (backgroundTime >= backgroundThreshold) {
+                            this.isBlinded = true;
+                            backgroundTime = 0;
+                        }
+                    }
                 }
             },
             updated: function () {
@@ -4370,11 +4570,11 @@
                 /*this.$refs.ticker.style.width = document.body.querySelector("#input .columns>.column .control:nth-last-of-type(1) .level:nth-last-of-type(1) form").getBoundingClientRect().width + 'px';
                 this.$nextTick(() => {
                     let width = 0;
-
+ 
                     for (const item of document.body.querySelectorAll("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker .item")) {
                         width += item.getBoundingClientRect().width;
                     }
-
+ 
                     document.body.querySelector("#heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker").style.width = width + 'px';
                 });*/
 
@@ -4384,10 +4584,23 @@
             },
             mounted: async function () {
                 const self = this;
+                const storageItem = localStorage.getItem('bot');
                 let container = this.$refs.container;
                 let popup = document.body.querySelector(".navbar:nth-of-type(2) .navbar-item .control:last-child .level:nth-last-of-type(1)");
                 const loader = new GLTFLoader();
                 let sequences = [];
+
+                if (storageItem) {
+                    try {
+                        const bot = JSON.parse(storageItem);
+
+                        if (bot !== null) {
+                            this.isMuted = bot.mute;
+                        }
+                    } catch (e) {
+                        localStorage.removeItem('bot');
+                    }
+                }
 
                 this.$refs.three.appendChild(renderer.domElement);
                 this.$refs.three.appendChild(stats.domElement);
@@ -4403,7 +4616,7 @@
                     popup.style.paddingBottom = container.style.paddingBottom;
                 }
 
-                try {
+                /*try {
                     const response1 = await fetch('/js/images.json', {
                         mode: "cors",
                         method: "GET",
@@ -4415,6 +4628,8 @@
                     if (response1.ok) {
                         this.presetImages = await response1.json();
 
+                        this.presetImages.push(["images/Luna1.png"]);
+
                         if (this.presetImages !== null && this.presetImages.length > 0) {
                             this.isBlinded = true;
                         }
@@ -4424,10 +4639,10 @@
                     }
                 } catch (e) {
                     console.error(e);
-                }
+                }*/
 
                 try {
-                    const response2 = await fetch('/js/milch.json', {
+                    const response = await fetch('/js/milch.json', {
                         mode: "cors",
                         method: "GET",
                         headers: {
@@ -4435,11 +4650,11 @@
                         }
                     });
 
-                    if (response2.ok) {
-                        self.character = await response2.json();
+                    if (response.ok) {
+                        self.character = await response.json();
                     }
                     else {
-                        throw new Error(response2.statusText);
+                        throw new Error(response.statusText);
                     }
 
                     loader.crossOrigin = "anonymous";
@@ -4528,6 +4743,37 @@
                         // User is signed in.
                         self.user = user;
 
+                        database.ref(databaseChannel + "/images").limitToLast(10).on('value', snapshot => {
+                            if (snapshot.exists()) {
+                                const images = snapshot.val();
+                                let tempImages = [];
+                                let index = 0;
+
+                                for (const key in images) {
+                                    tempImages.push({ name: "images/" + images[key].name, timestamp: images[key].timestamp });
+                                }
+
+                                for (const image of tempImages.sort((x, y) => y.timestamp - x.timestamp)) {
+                                    let removeIndex = -1;
+
+                                    for (let i = 0; i < self.presetImages.length; i++) {
+                                        if (self.presetImages.length == 1 && self.presetImages[0][i] == image.name) {
+                                            removeIndex = i;
+
+                                            break;
+                                        }
+                                    }
+
+                                    if (removeIndex >= 0) {
+                                        self.presetImages.splice(removeIndex, 1);
+                                    }
+
+                                    self.presetImages.splice(index, 0, [image.name]);
+
+                                    index++;
+                                }
+                            }
+                        });
                         database.ref(databaseChannel + "/stars").on('value', snapshot => {
                             const count = snapshot.val();
 
@@ -4892,7 +5138,7 @@
 
                             return;
                         }
-                        
+
                         for (const sequence of app.character.sequences) {
                             if (sequence.name == "Start") {
                                 sequences.push(sequence);
