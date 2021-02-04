@@ -9,14 +9,12 @@
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
   <style media="screen">
     :root {
-      --background-color: #f5f5f5;
-      --foreground-color: #000000;
+      --text-color: #000000;
     }
 
     @media (prefers-color-scheme: dark) {
       :root {
-        --background-color: #f5f5f5;
-        --foreground-color: #ffffff;
+        --text-color: #ffffff;
       }
     }
 
@@ -29,7 +27,7 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      background: var(--background-color) url('/images/Background.png') repeat;
+      background: #64dafe url('/images/Background.png') repeat;
       animation: fade 0.5s ease-out, loop 10s linear infinite;
       transition: .5s;
     }
@@ -62,7 +60,7 @@
     h1 {
       margin: 0;
       padding: 0;
-      color: var(--foreground-color);
+      color: var(--text-color);
       font-family: 'Roboto', 'Helvetica', 'Segoe UI', 'Arial', sans-serif;
       font-size: 50vmin;
       font-weight: bold;
