@@ -982,7 +982,6 @@
         }
 
         #input .navbar-item .control:last-child>.level>.level-item:first-child button>span.icon {
-            color: var(--foreground-color);
             transition: .5s;
         }
 
@@ -1087,7 +1086,7 @@
                 -10px -10px 30px #ffffff;*/
             box-shadow: none;
             height: initial;
-            color: var(--foreground-color);
+            color: #ffffff;
         }
 
         #input>.columns>.column>.control:last-child>.level:nth-last-of-type(1)>.level-item button>span {
@@ -1605,7 +1604,7 @@
                                     </figure>
                                     <div class="media-content" v-cloak>
                                         <div class="content has-text-left">
-                                            <span class="has-text-weight-bold has-text-white" v-cloak>
+                                            <span class="has-text-weight-bold" v-cloak>
                                                 {{ notification.text }}
                                             </span>
                                         </div>
@@ -1680,13 +1679,13 @@
                                     </transition>
                                 </div>
                             </transition>
-                            <div class="level-item">
+                            <div class="level-item" v-cloak>
                                 <div class="level is-mobile">
                                     <div class="level-item">
                                         <article class="media">
                                             <div class="media-content">
                                                 <div class="content">
-                                                    <span class="is-uppercase has-text-weight-bold has-text-white" v-cloak>
+                                                    <span class="is-uppercase has-text-weight-bold" v-cloak>
                                                         {{ timeElapsed - 60 }} sec
                                                     </span>
                                                 </div>
