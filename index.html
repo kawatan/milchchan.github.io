@@ -1034,38 +1034,44 @@
             margin: 0px 0px 16px 0px;
         }
 
-        #input>.columns>.column>.control:last-child .level>.level-item:nth-last-of-type(2) .level {
+        #input>.columns>.column>.control:last-child>.level>.level-item:not(:last-of-type)>.level {
+            margin: 0;
+            border: 0px solid rgba(255, 255, 255, 0.5);
+            border-radius: 500px 500px 500px 500px;
+            padding: 8px 8px 8px 8px;
+            background: var(--background-color);
+            background-clip: padding-box;
+        }
+
+        #input>.columns>.column>.control:last-child .level>.level-item:last-of-type .level>.level-item .media>.media-content .content {
+            font-size: 0.75em;
+            line-height: 0.75em;
+            color: var(--foreground-color);
+        }
+
+        #input>.columns>.column>.control:last-child>.level>.level-item:nth-last-of-type(1)>.level {
             margin: 0px -8px 0px -8px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
-            padding: 8px 4px 8px 4px;
+            padding: 16px 0px 16px 0px;
             background: var(--background-color);
             background-clip: padding-box;
             /*background: #f5f5f5;
             box-shadow: 10px 10px 30px #d0d0d0,
                 -10px -10px 30px #ffffff;*/
-            color: var(--foreground-color);
+            flex-direction: column;
         }
 
-        #input>.columns>.column>.control:last-child .level>.level-item:nth-last-of-type(2) .level .media>.media-content .content {
-            font-size: 0.75em;
-            line-height: 0.75em;
+        #input>.columns>.column>.control:last-child .level>.level-item:nth-last-of-type(1)>.level>.level-item:not(:first-of-type) {
+            padding: 8px 0px 0px 0px;
         }
 
-        #input>.columns>.column>.control:last-child .level>.level-item:nth-last-of-type(1) .level {
-            margin: 0px -8px 0px -8px;
-            border: 0px solid rgba(255, 255, 255, 0.5);
-            border-radius: 500px 500px 500px 500px;
-            padding: 8px 0px 8px 0px;
-            background: #5bcbe1;
-            background-clip: padding-box;
-            /*background: #f5f5f5;
-            box-shadow: 10px 10px 30px #d0d0d0,
-                -10px -10px 30px #ffffff;*/
+        #input>.columns>.column>.control:last-child .level>.level-item:nth-last-of-type(1)>.level>.level-item>.level {
+            flex-direction: row;
         }
 
-        #input>.columns>.column>.control:last-child .level>.level-item .level>.level-item {
-            padding: 0px 8px 0px 8px;
+        #input>.columns>.column>.control:last-child .level>.level-item:nth-last-of-type(1)>.level>.level-item>.level>.level-item {
+            padding: 0px 16px 0px 16px;
         }
 
         #input>.columns>.column>.control:last-child .level .level-left .level-item:not(:first-of-type) {
@@ -1078,7 +1084,7 @@
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
             padding: 8px;
-            background: #5bcbe1;
+            background: transparent;
             background-clip: padding-box;
             /*background: #f5f5f5;
             background: linear-gradient(145deg, #ffffff, #dddddd);
@@ -1086,7 +1092,7 @@
                 -10px -10px 30px #ffffff;*/
             box-shadow: none;
             height: initial;
-            color: #ffffff;
+            color: #5bcbe1;
         }
 
         #input>.columns>.column>.control:last-child>.level:nth-last-of-type(1)>.level-item button>span {
@@ -1663,80 +1669,88 @@
                             <transition name="fade">
                                 <div class="level-item"
                                     v-show="!isRecording && recordedData && recordedData.blobs.length > 0">
-                                    <transition name="fade" mode="out-in">
-                                        <button class="button is-white" type="button" v-if="isUploading" key="wait"
-                                            disabled v-cloak>
-                                            <span class="icon is-small">
-                                                <i class="fas fa-spinner updating"></i>
-                                            </span>
-                                        </button>
-                                        <button class="button is-white" type="button" v-bind:disabled="user === null"
-                                            @click="uploadSound" v-else key="upload" v-cloak>
-                                            <span class="icon is-small">
-                                                <i class="fas fa-cloud-upload-alt"></i>
-                                            </span>
-                                        </button>
-                                    </transition>
-                                </div>
-                            </transition>
-                            <div class="level-item" v-cloak>
-                                <div class="level is-mobile">
-                                    <div class="level-item">
-                                        <article class="media">
-                                            <div class="media-content">
-                                                <div class="content">
-                                                    <span class="is-uppercase has-text-weight-bold" v-cloak>
-                                                        {{ timeElapsed - 60 }} sec
+                                    <div class="level is-mobile">
+                                        <div class="level-item">
+                                            <transition name="fade" mode="out-in">
+                                                <button class="button is-white" type="button" v-if="isUploading" key="wait"
+                                                    disabled v-cloak>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-spinner updating"></i>
                                                     </span>
-                                                </div>
-                                            </div>
-                                        </article>
+                                                </button>
+                                                <button class="button is-white" type="button" v-bind:disabled="user === null"
+                                                    @click="uploadSound" v-else key="upload" v-cloak>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-cloud-upload-alt"></i>
+                                                    </span>
+                                                </button>
+                                            </transition>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            </transition>
                             <div class="level-item">
                                 <div class="level is-mobile">
                                     <div class="level-item">
-                                        <button class="button" type="button" v-bind:disabled="user === null"
-                                            @click="locate()">
-                                            <span class="icon is-small">
-                                                <i class="fas fa-location-arrow"></i>
-                                            </span>
-                                        </button>
-                                    </div>
-                                    <div class="level-item">
-                                        <transition name="fade" mode="out-in">
-                                            <button class="button" type="button" @click="stopSound()" v-if="isPlaying"
-                                                key="playing" v-cloak>
-                                                <span class="icon is-small">
-                                                    <i class="fas fa-stop"></i>
-                                                </span>
-                                            </button>
-                                            <button class="button" type="button" v-bind:disabled="playData === null"
-                                                @click="playSound()" v-else key="stopped">
-                                                <span class="icon is-small">
-                                                    <i class="fas fa-play"></i>
-                                                </span>
-                                            </button>
-                                        </transition>
-                                    </div>
-                                    <div class="level-item">
-                                        <transition name="fade" mode="out-in">
-                                            <div class="level-item" v-if="isRecording" key="recording">
-                                                <button class="button has-text-danger" type="button"
-                                                    v-bind:disabled="user === null" @click="stopRecording" v-cloak>
+                                        <div class="level is-mobile">
+                                            <div class="level-item">
+                                                <button class="button" type="button" v-bind:disabled="user === null"
+                                                    @click="locate()">
                                                     <span class="icon is-small">
-                                                        <i class="fas fa-circle"></i>
+                                                        <i class="fas fa-location-arrow"></i>
                                                     </span>
                                                 </button>
                                             </div>
-                                            <button class="button" type="button" v-bind:disabled="user === null"
-                                                @click="startRecording" v-else key="start">
-                                                <span class="icon is-small">
-                                                    <i class="fas fa-microphone"></i>
-                                                </span>
-                                            </button>
-                                        </transition>
+                                            <div class="level-item">
+                                                <transition name="fade" mode="out-in">
+                                                    <button class="button" type="button" @click="stopSound()" v-if="isPlaying"
+                                                        key="playing" v-cloak>
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-stop"></i>
+                                                        </span>
+                                                    </button>
+                                                    <button class="button" type="button" v-bind:disabled="playData === null"
+                                                        @click="playSound()" v-else key="stopped">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-play"></i>
+                                                        </span>
+                                                    </button>
+                                                </transition>
+                                            </div>
+                                            <div class="level-item">
+                                                <transition name="fade" mode="out-in">
+                                                    <div class="level-item" v-if="isRecording" key="recording">
+                                                        <button class="button has-text-danger" type="button"
+                                                            v-bind:disabled="user === null" @click="stopRecording" v-cloak>
+                                                            <span class="icon is-small">
+                                                                <i class="fas fa-circle"></i>
+                                                            </span>
+                                                        </button>
+                                                    </div>
+                                                    <button class="button" type="button" v-bind:disabled="user === null"
+                                                        @click="startRecording" v-else key="start">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-microphone"></i>
+                                                        </span>
+                                                    </button>
+                                                </transition>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="level-item">
+                                        <div class="level is-mobile">
+                                            <div class="level-item">
+                                                <article class="media">
+                                                    <div class="media-content">
+                                                        <div class="content">
+                                                            <span class="is-uppercase has-text-weight-bold" v-cloak>
+                                                                {{ timeElapsed - 60 }} sec
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
