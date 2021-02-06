@@ -64,7 +64,7 @@
             height: 100vh;
             background: url('/images/Background.png') repeat;
             content: "";
-            animation: fade 0.5s ease-out, loop 10s linear infinite;
+            animation: fade 0.5s ease-out;
         }
 
         body {
@@ -155,6 +155,10 @@
 
         .navbar-item {
             padding: 0 !important;
+        }
+
+        .navbar-item img {
+            max-height: none;
         }
 
         .columns {
@@ -672,6 +676,37 @@
             padding: 0;
         }
 
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column .control {
+            margin: -8px 0px -8px 0px;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column .control .level {
+            margin: 0;
+            padding: 8px 0px 8px 0px;
+        }
+
+        #heading .notification {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: transparent;
+            margin: 0;
+            padding: 0;
+        }
+
+        #heading .notification .media {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 500px 500px 500px 500px;
+            padding: 8px 16px 8px 16px;
+            background: #5bcbe1 url('/images/Stripes.png') repeat;
+        }
+
+        #heading .notification .media .media-left {
+            margin: 0px 8px 0px 0px;
+        }
+
         #container {
             z-index: 0;
             position: relative;
@@ -746,41 +781,6 @@
             margin: 0;
         }
 
-        /*.media-content .level {
-            margin: 0px 0px 4px 0px;
-        }*/
-
-        /*.media-content .content div:last-child {
-            margin: 4px 0px 0px 0px;
-        }*/
-
-        /*.media-content .has-text-right .balloon {
-            display: inline-block;
-            padding: 16px 32px 16px 32px;
-            border-radius: 500px 500px 0px 500px;
-            background: url('/images/Stripes.png') repeat;
-            background: #f5f5f5;
-            box-shadow: 20px 20px 60px #d0d0d0,
-                -20px -20px 60px #ffffff;
-        }
-
-        .media-content>.level span {
-            font-family: 'Noto Sans JP', sans-serif;
-        }
-
-        .media-content .balloon span {
-            font-family: 'Noto Sans JP', sans-serif;
-        }
-
-        .media-content .has-text-left div:nth-last-of-type(1)>p {
-            font-family: 'Alata', 'Josefin Sans', sans-serif;
-        }
-
-        .media-content .has-text-right div:nth-last-of-type(1)>p {
-            font-family: 'Alata', 'Josefin Sans', sans-serif;
-            font-family: 'Fredoka One', cursive;
-        }*/
-
         #heading {
             margin: 0;
             padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) 0px env(safe-area-inset-left, 0px);
@@ -788,64 +788,6 @@
 
         #heading .navbar-item .control nav.level:nth-last-child(1) {
             display: block;
-        }
-
-        #popup {
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
-            /*backdrop-filter: blur(8px);*/
-        }
-
-        #popup .columns>.column>.control:last-child {
-            margin: 0;
-            padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
-        }
-
-        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) {
-            display: block;
-            margin: 0;
-            padding: 0px 16px 16px 16px;
-        }
-
-        #popup .columns>.column>.control:last-child .level:nth-last-of-type(2) {
-            margin: 0;
-            padding: 16px 16px 32px 16px;
-        }
-
-        #popup .columns>.column>.control:first-child .level:nth-last-of-type(2) .media {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 500px 500px 500px 500px;
-            padding: 8px 16px 8px 16px;
-            background: url('/images/Stripes.png') repeat;
-            /*box-shadow: 10px 10px 30px #d0d0d0,
-                -10px -10px 30px #ffffff;*/
-        }
-
-        #popup .columns>.column>.control:first-child .level:nth-last-of-type(2) .media .media-left {
-            margin: 0px 8px 0px 0px;
-            padding: 0;
-        }
-
-        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media {
-            margin: 0;
-            padding: 0px 16px 0px 16px;
-        }
-
-        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media .media-content {
-            overflow: hidden;
-        }
-
-        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media span {
-            display: inline-block;
-            line-height: 1.25rem;
-        }
-
-        #popup .columns>.column>.control:last-child .level:nth-last-of-type(1) .media span.break {
-            display: block;
-            margin: 0;
         }
 
         #input>.columns>.column>.control:last-child .level>.level-item {
@@ -882,35 +824,6 @@
             background: linear-gradient(145deg, #ffffff, #dddddd);
             box-shadow: 10px 10px 30px #d0d0d0,
                 -10px -10px 30px #ffffff;*/
-        }
-
-        #container .columns .column .media {
-            border: 0px solid transparent;
-        }
-
-        #container .columns .column .media:nth-last-of-type(1) .media-content {
-            margin: -16px 0px 0px 0px;
-            padding: 0;
-        }
-
-        #container .columns .column .media .media-content .columns {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-        }
-
-        #container .columns .column .media .media-content .columns .column .field {
-            margin: 0;
-            padding: 0px -8px 0px -8px;
-            display: flex;
-            align-items: center;
-            justify-content: start;
-        }
-
-        #input .navbar-item .control:first-child .level {
-            display: block;
-            margin: 0;
-            padding: 16px 0px 0px 0px;
         }
 
         #input .navbar-item .control:first-child .level .notification {
@@ -986,19 +899,6 @@
             transition: .5s;
         }
 
-        /*#input .navbar-item .control:last-child .level:nth-last-of-type(2) {
-            display: inline;
-        }
-
-        #input .navbar-item .control:last-child .level:nth-last-of-type(3) {
-            display: inline;
-        }
-
-        #input .navbar-item .control:last-child>.level {
-            margin: 0;
-            padding: 16px 16px 0px 16px;
-        }*/
-
         #input .navbar-item .control:last-child form .field .control:nth-of-type(1) button {
             padding: 8px 16px 8px 16px;
             border: 0px solid transparent;
@@ -1035,7 +935,7 @@
             margin: 0px 0px 32px 0px;
         }
 
-        #input>.columns>.column>.control:last-child>.level:not(:last-of-type)>.level-item:nth-last-of-type(3) {
+        #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(3) {
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
             padding: 8px 8px 8px 8px;
@@ -1043,11 +943,11 @@
             background-clip: padding-box;
         }
 
-        #input>.columns>.column>.control:last-child>.level>.level-item:not(:last-of-type)>.level {
+        #input>.columns>.column>.control:last-of-type>.level>.level-item:not(:last-of-type)>.level {
             margin: 0px -8px 0px -8px;
         }
 
-        #input>.columns>.column>.control:last-child>.level:not(:last-of-type)>.level-item:nth-last-of-type(1)>.level>.level-item {
+        #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(1)>.level>.level-item {
             margin: 0px 8px 0px 8px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
@@ -1056,22 +956,21 @@
             background-clip: padding-box;
         }
 
-        #input>.columns>.column>.control:last-child>.level:not(:last-of-type)>.level-item:nth-last-of-type(2)>.level>.level-item button>span {
+        #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(2)>.level>.level-item button>span {
             color: var(--foreground-color);
         }
 
-        #input>.columns>.column>.control:last-child .level>.level-item:last-of-type .level>.level-item .media>.media-content .content {
-            font-family: 'Alata', sans-serif;
+        #input>.columns>.column>.control:last-of-type .level>.level-item:last-of-type .level>.level-item .media>.media-content .content {
             font-size: 0.75em;
             line-height: 0.75em;
             color: var(--foreground-color);
         }
 
-        #input>.columns>.column>.control:last-child .level>.level-item:last-of-type .level>.level-item .media>.media-content .content span {
+        #input>.columns>.column>.control:last-of-type .level>.level-item:last-of-type .level>.level-item .media>.media-content .content span {
             font-family: 'Alata', sans-serif;
         }
 
-        #input>.columns>.column>.control:last-child>.level:nth-last-of-type(1)>.level-item>.level {
+        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level {
             margin: 0px -8px 0px -8px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
@@ -1084,28 +983,30 @@
             flex-direction: column;
         }
 
-        #input>.columns>.column>.control:last-child>.level:nth-last-of-type(2)>.level-item>.level {
+        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level {
+            display: flex;
             flex-direction: row;
         }
 
-        #input>.columns>.column>.control:last-child .level:nth-last-of-type(1)>.level-item>.level>.level-item:not(:first-of-type) {
+        #input>.columns>.column>.control:last-of-type .level:nth-last-of-type(1)>.level-item>.level>.level-item:not(:first-of-type) {
             padding: 8px 0px 0px 0px;
         }
 
-        #input>.columns>.column>.control:last-child .level:nth-last-of-type(1)>.level-item>.level>.level-item>.level {
+        #input>.columns>.column>.control:last-of-type .level:nth-last-of-type(1)>.level-item>.level>.level-item>.level {
+            display: flex;
             flex-direction: row;
         }
 
-        #input>.columns>.column>.control:last-child .level:nth-last-of-type(1)>.level-item>.level>.level-item>.level>.level-item {
+        #input>.columns>.column>.control:last-of-type .level:nth-last-of-type(1)>.level-item>.level>.level-item>.level>.level-item {
             padding: 0px 16px 0px 16px;
         }
 
-        #input>.columns>.column>.control:last-child .level .level-left .level-item:not(:first-of-type) {
+        #input>.columns>.column>.control:last-of-type .level .level-left .level-item:not(:first-of-type) {
             margin: 0px 0px 0px 8px;
             padding: 0;
         }
 
-        #input>.columns>.column>.control:last-child>.level .level-item button {
+        #input>.columns>.column>.control:last-of-type>.level .level-item button {
             margin: 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
@@ -1121,12 +1022,8 @@
             color: #5bcbe1;
         }
 
-        #input>.columns>.column>.control:last-child>.level>.level-item button>span {
+        #input>.columns>.column>.control:last-of-type>.level>.level-item button>span {
             margin: 0;
-        }
-
-        .navbar-item img {
-            max-height: none;
         }
 
         .updating {
@@ -1196,31 +1093,6 @@
             transform: translate3d(0, -100%, 0);
         }
 
-        .message-list-enter-active,
-        .message-list-leave-active {
-            transition: all 0.5s ease;
-        }
-
-        .message-list-move {
-            transition: transform 0.5s ease;
-        }
-
-        .message-list-enter-from {
-            opacity: 0;
-            transform: translate3d(0%, 50%, 0);
-        }
-
-        .message-list-enter-to,
-        .message-list-leave-from {
-            opacity: 1;
-            transform: translate3d(0%, 0%, 0);
-        }
-
-        .message-list-leave-to {
-            opacity: 0;
-            transform: translate3d(0%, -50%, 0);
-        }
-
         .notification-list-enter-active,
         .notification-list-leave-active {
             transition: all 0.5s ease;
@@ -1232,7 +1104,7 @@
 
         .notification-list-enter-from {
             opacity: 0;
-            transform: translate3d(0%, 50%, 0);
+            transform: translate3d(0%, -50%, 0);
         }
 
         .notification-list-enter-to,
@@ -1246,60 +1118,10 @@
             transform: translate3d(0%, 0%, 0);
         }
 
-        .type-list-enter-active,
-        .type-list-leave-active {
-            transition: all 0s ease;
-        }
-
-        .type-list-move {
-            transition: transform 0s ease;
-        }
-
-        .type-list-enter-from,
-        .type-list-leave-to {
-            opacity: 0;
-            transform: translate3d(0%, 25%, 0);
-        }
-
-        .type-list-enter-to,
-        .type-list-leave-from {
-            opacity: 1;
-            transform: translate3d(0%, 0%, 0);
-        }
-
-        .popup-enter-active,
-        .popup-leave-active {
-            transition: all .5s ease;
-        }
-
-        .popup-enter-from {
-            opacity: 0;
-            transform: translate3d(0, 100%, 0);
-        }
-
-        .popup-enter-to {
-            opacity: 1;
-            transform: translate3d(0, 0%, 0);
-        }
-
-        .popup-leave-from {
-            opacity: 1;
-            transform: translate3d(0, 0%, 0);
-        }
-
-        .popup-leave-to {
-            opacity: 0;
-            transform: translate3d(0, 100%, 0);
-        }
-
         .ticker-item-list-enter-active,
         .ticker-item-list-leave-active {
             transition: all 0.5s ease;
         }
-
-        /*.ticker-item-list-move {
-            transition: transform 0.5s ease;
-        }*/
 
         .ticker-item-list-enter-from,
         .ticker-item-list-leave-to {
@@ -1331,16 +1153,6 @@
 
             to {
                 opacity: 1;
-            }
-        }
-
-        @keyframes loop {
-            0% {
-                background-position: 0 0;
-            }
-
-            100% {
-                background-position: -100px 0px;
             }
         }
 
@@ -1377,16 +1189,6 @@
 
         @media screen and (-webkit-min-device-pixel-ratio:2),
         (min-resolution: 2dppx) {
-            @keyframes loop {
-                0% {
-                    background-position: 0 0;
-                }
-
-                100% {
-                    background-position: -200px 0px;
-                }
-            }
-
             @keyframes progress {
                 0% {
                     background-position: 0px 0px;
@@ -1405,44 +1207,17 @@
                 background: #ffc547 url('/images/Stripes@2x.png') repeat;
             }
 
-            /*.background:first-child::after {
-                background: url('/images/Overlay@2x.png') repeat;
-            }*/
-
             #container .columns .column .media .media-content .has-text-left .balloon {
-                background: url('/images/Stripes@2x.png') repeat;
-            }
-
-            .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
                 background: url('/images/Stripes@2x.png') repeat;
             }
 
             #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
                 background: #5bcbe1 url('/images/Stripes@2x.png') repeat;
             }
-
-            /*.tags>.tag {
-                background-image: url('/images/Stripes@2x.png');
-                background-size: 20px 20px;
-            }
-
-            .media-content .has-text-right .balloon {
-                background: url('/images/Stripes@2x.png') repeat 20px 20px;
-            }*/
         }
 
         @media screen and (-webkit-min-device-pixel-ratio:3),
         (min-resolution: 3dppx) {
-            @keyframes loop {
-                0% {
-                    background-position: 0 0;
-                }
-
-                100% {
-                    background-position: -300px 0px;
-                }
-            }
-
             @keyframes progress {
                 0% {
                     background-position: 0px 0px;
@@ -1461,34 +1236,13 @@
                 background: #ffc547 url('/images/Stripes@3x.png') repeat;
             }
 
-            /*.background:first-child::after {
-                background: url('/images/Overlay@3x.png') repeat;
-            }*/
-
             #container .columns .column .media .media-content .has-text-left .balloon {
-                background: url('/images/Stripes@3x.png') repeat;
-            }
-
-            .navbar:nth-of-type(2) .navbar-item .control:first-child .level:first-child .media {
                 background: url('/images/Stripes@3x.png') repeat;
             }
 
             #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
                 background-image: #5bcbe1 url('/images/Stripes@3x.png') repeat;
             }
-
-            /*.tags>.tag {
-                background-image: url('/images/Stripes@3x.png');
-                background-size: 20px 20px;
-            }
-
-            .media-content .has-text-left .balloon {
-                background: url('/images/Stripes@3x.png') repeat 20px 20px;
-            }
-
-            .media-content .has-text-right .balloon {
-                background: url('/images/Stripes@3x.png') repeat 20px 20px;
-            }*/
         }
 
         @font-face {
@@ -1536,7 +1290,7 @@
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-full has-content-centered" v-cloak>
-                    <div class="columns is-mobile" ref="indicator">
+                    <div class="columns is-mobile">
                         <div class="column is-full">
                             <div class="columns is-mobile">
                                 <div class="column is-3 is-mobile">
@@ -1618,6 +1372,33 @@
                                     </nav>
                                 </div>
                             </div>
+                            <div class="columns">
+                                <div class="column is-half is-mobile has-content-centered">
+                                    <transition-group name="notification-list" class="control" tag="div" v-cloak>
+                                        <nav class="level" v-for="notification in notifications"
+                                            v-bind:key="notification.id">
+                                            <div class="notification is-info is-light" v-cloak>
+                                                <article class="media"
+                                                    v-bind:style="{ backgroundColor: notification.accent }" v-cloak>
+                                                    <figure class="media-left" v-if="notification.image" v-cloak>
+                                                        <span class="image is-24x24">
+                                                            <img class="is-rounded" v-bind:src="notification.image"
+                                                                alt="Avatar" v-cloak>
+                                                        </span>
+                                                    </figure>
+                                                    <div class="media-content" v-cloak>
+                                                        <div class="content has-text-left">
+                                                            <span class="is-size-7 has-text-weight-bold has-text-white" v-cloak>
+                                                                {{ notification.text }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </nav>
+                                    </transition-group>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -1626,73 +1407,7 @@
         <nav id="input" class="navbar is-fixed-bottom" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered is-mobile">
-                    <transition-group name="notification-list" class="control" tag="div" v-cloak>
-                        <nav class="level" v-for="notification in notifications" v-bind:key="notification.id">
-                            <div class="notification is-info is-light" v-cloak>
-                                <article class="media" v-bind:style="{ backgroundColor: notification.accent }" v-cloak>
-                                    <figure class="media-left" v-if="notification.image" v-cloak>
-                                        <span class="image is-24x24">
-                                            <img class="is-rounded" v-bind:src="notification.image" alt="Avatar"
-                                                v-cloak>
-                                        </span>
-                                    </figure>
-                                    <div class="media-content" v-cloak>
-                                        <div class="content has-text-left">
-                                            <span class="has-text-weight-bold" v-cloak>
-                                                {{ notification.text }}
-                                            </span>
-                                        </div>
-                                    </div>
-                                </article>
-                            </div>
-                        </nav>
-                    </transition-group>
                     <div class="control">
-                        <nav class="level is-hidden">
-                            <form onsubmit="return false;" v-cloak>
-                                <div class="field has-addons">
-                                    <div class="control">
-                                        <transition name="fade" mode="out-in">
-                                            <button class="button is-rounded" type="button"
-                                                v-bind:disabled="user === null" @click="isExpanded = false"
-                                                v-if="isExpanded" key="unexpand" v-cloak>
-                                                <span class="icon is-small is-black">
-                                                    <i class="fas fa-angle-down"></i>
-                                                </span>
-                                            </button>
-                                            <button class="button is-white" type="button"
-                                                v-bind:disabled="user === null" @click="isExpanded = true" v-else
-                                                key="expand" v-cloak>
-                                                <span class="icon is-small">
-                                                    <i class="fas fa-angle-up"></i>
-                                                </span>
-                                            </button>
-                                        </transition>
-                                    </div>
-                                    <div class="control is-expanded">
-                                        <input class="input is-rounded" type="text"
-                                            v-bind:class="{ 'is-danger': inputHasError }"
-                                            v-bind:placeholder="isLearning ? '教える言葉' : '投稿するニュース'"
-                                            v-bind:disabled="word !== null" v-model="input" @input="change" ref="text"
-                                            v-cloak>
-                                    </div>
-                                    <div class="control">
-                                        <span class="is-size-7 has-text-weight-bold has-text-grey" v-cloak>
-                                            {{ maxInputLength - animatedInputLength }}
-                                        </span>
-                                    </div>
-                                    <div class="control">
-                                        <button class="button is-rounded is-primary" type="submit"
-                                            v-bind:class="{ 'is-static': word !== null }"
-                                            v-bind:disabled="user === null" @click="playSound()"><span
-                                                class="icon is-small" v-cloak>
-                                                <i class="fas fa-paper-plane"></i>
-                                            </span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </form>
-                        </nav>
                         <transition name="fade">
                             <nav class="level" v-show="!isRecording && recordedData && recordedData.blobs.length > 0">
                                 <transition name="fade">
@@ -1702,7 +1417,8 @@
                                                 <div class="control is-expanded has-icons-left">
                                                     <input class="input is-rounded" type="text"
                                                         v-bind:class="{ 'is-danger': inputHasError }"
-                                                        placeholder="Café Starbucks" v-model="input" v-cloak>
+                                                        placeholder="Café Starbucks" v-model="input"
+                                                        @input="inputChanged" v-cloak>
                                                     <span class="icon is-small is-left">
                                                         <i class="fas fa-tags"></i>
                                                     </span>
@@ -1771,7 +1487,7 @@
                                         <div class="level is-mobile">
                                             <div class="level-item">
                                                 <button class="button" type="button" v-bind:disabled="user === null"
-                                                    @click="locate()">
+                                                    @click="locate()" v-cloak>
                                                     <span class="icon is-small">
                                                         <i class="fas fa-location-arrow"></i>
                                                     </span>
@@ -1787,7 +1503,7 @@
                                                     </button>
                                                     <button class="button" type="button"
                                                         v-bind:disabled="playData === null" @click="playSound()" v-else
-                                                        key="stopped">
+                                                        key="stopped" v-cloak>
                                                         <span class="icon is-small">
                                                             <i class="fas fa-play"></i>
                                                         </span>
@@ -1806,7 +1522,7 @@
                                                         </button>
                                                     </div>
                                                     <button class="button" type="button" v-bind:disabled="user === null"
-                                                        @click="startRecording" v-else key="start">
+                                                        @click="startRecording" v-else key="start" v-cloak>
                                                         <span class="icon is-small">
                                                             <i class="fas fa-microphone"></i>
                                                         </span>
@@ -1822,7 +1538,8 @@
                                                     <div class="media-content">
                                                         <div class="content">
                                                             <span class="is-uppercase has-text-weight-bold" v-cloak>
-                                                                {{ isRecording ? "-" + formatTime(maxRecordTime - timeElapsed) : formatTime(timeElapsed) }}
+                                                                {{ isRecording ? "-" + formatTime(maxRecordTime -
+                                                                timeElapsed) : formatTime(timeElapsed) }}
                                                             </span>
                                                         </div>
                                                     </div>
@@ -1838,14 +1555,6 @@
             </div>
         </nav>
         <audio preload="auto" ref="player"></audio>
-        <audio preload="auto" ref="alert">
-            <source src="/sounds/float_001.mp3" type="audio/mpeg" />
-            <source src="/sounds/float_001.wav" type="audio/wav" />
-        </audio>
-        <audio preload="auto" ref="twinkle">
-            <source src="/sounds/plastic_up_hi.mp3" type="audio/mpeg" />
-            <source src="/sounds/plastic_up_hi.wav" type="audio/wav" />
-        </audio>
     </div>
     <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-app.js"></script>
@@ -1860,7 +1569,6 @@
     <script type="text/javascript"
         src="https://www.bing.com/api/maps/mapcontrol?callback=GetMap&key=AqtU8nXtdnRHFfPmWICfOHBtcPzPOoJueZtb2D_Rkbsx6dyuhx_xaH7G-hfB2Ylb&setLang=ja&setMkt=ja-JP"></script>
     <script src="https://cdn.webrtc-experiment.com/MediaStreamRecorder.js"> </script>
-    <script src="/js/moment-with-locales.js"></script>
     <script src="/js/index.js"></script>
 </body>
 
