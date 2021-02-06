@@ -1444,7 +1444,7 @@
                                                             <i class="fas fa-stop"></i>
                                                         </span>
                                                     </button>
-                                                    <button class="button" type="button" v-bind:disabled="user === null"
+                                                    <button class="button" type="button" v-bind:disabled="user === null || isRecording"
                                                         @click="playSound()" v-else key="stopped" disabled>
                                                         <span class="icon is-small">
                                                             <i class="fas fa-play"></i>
