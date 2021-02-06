@@ -918,7 +918,6 @@
             border: 0px solid transparent;
             border-radius: 290486px;
             background-color: transparent;
-            /*color: #30c0f5;*/
         }
 
         #input>.columns>.column>.control:last-child>.level>.level-item:not(:last-of-type) {
@@ -1045,21 +1044,6 @@
         .reveal-leave-from {
             opacity: 1;
             transform: translate3d(0, 0%, 0);
-        }
-
-        .collapse-enter-active,
-        .collapse-leave-active {
-            transition: all .5s ease;
-        }
-
-        .collapse-enter-from,
-        .collapse-leave-to {
-            opacity: 0;
-        }
-
-        .collapse-enter-to,
-        .collapse-leave-from {
-            opacity: 1;
         }
 
         .blind-enter-active,
@@ -1346,7 +1330,8 @@
                                                     </figure>
                                                     <div class="media-content" v-cloak>
                                                         <div class="content has-text-left">
-                                                            <span class="is-size-7 has-text-weight-bold has-text-white" v-cloak>
+                                                            <span class="is-size-7 has-text-weight-bold has-text-white"
+                                                                v-cloak>
                                                                 {{ notification.text }}
                                                             </span>
                                                         </div>
@@ -1451,7 +1436,7 @@
                                                     </span>
                                                 </button>
                                             </div>
-                                            <div class="level-item">
+                                            <div class="level-item" ref="playback">
                                                 <transition name="fade" mode="out-in">
                                                     <button class="button" type="button" @click="stopSound()"
                                                         v-if="isPlaying" key="playing" v-cloak>
@@ -1459,9 +1444,8 @@
                                                             <i class="fas fa-stop"></i>
                                                         </span>
                                                     </button>
-                                                    <button class="button" type="button"
-                                                        v-bind:disabled="playData === null" @click="playSound()" v-else
-                                                        key="stopped" disabled>
+                                                    <button class="button" type="button" v-bind:disabled="user === null"
+                                                        @click="playSound()" v-else key="stopped" disabled>
                                                         <span class="icon is-small">
                                                             <i class="fas fa-play"></i>
                                                         </span>
@@ -1495,7 +1479,8 @@
                                                 <article class="media">
                                                     <div class="media-content">
                                                         <div class="content">
-                                                            <span class="is-uppercase has-text-weight-bold" v-html="isRecording ? '-' + formatTime(maxRecordTime -timeElapsed) : formatTime(timeElapsed)">
+                                                            <span class="is-uppercase has-text-weight-bold"
+                                                                v-html="isRecording ? '-' + formatTime(maxRecordTime -timeElapsed) : formatTime(timeElapsed)">
                                                                 N/A
                                                             </span>
                                                         </div>
