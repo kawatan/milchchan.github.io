@@ -1822,7 +1822,7 @@
                                                     <div class="media-content">
                                                         <div class="content">
                                                             <span class="is-uppercase has-text-weight-bold" v-cloak>
-                                                                -{{ formatTime(maxRecordTime - timeElapsed) }}
+                                                                {{ isRecording ? "-" + formatTime(maxRecordTime - timeElapsed) : formatTime(timeElapsed) }}
                                                             </span>
                                                         </div>
                                                     </div>
