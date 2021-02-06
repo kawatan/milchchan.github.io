@@ -956,8 +956,8 @@
             color: var(--foreground-color);
         }
 
-        #input>.columns>.column>.control:last-of-type .level>.level-item:last-of-type .level>.level-item .media>.media-content .content span {
-            font-family: 'Alata', sans-serif;
+        #input>.columns>.column>.control:last-of-type .level>.level-item:last-of-type .level>.level-item .media>.media-content .content>span {
+            font-family: "Alata", sans-serif;
         }
 
         #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level {
@@ -1495,9 +1495,8 @@
                                                 <article class="media">
                                                     <div class="media-content">
                                                         <div class="content">
-                                                            <span class="is-uppercase has-text-weight-bold" v-cloak>
-                                                                {{ isRecording ? "-" + formatTime(maxRecordTime -
-                                                                timeElapsed) : formatTime(timeElapsed) }}
+                                                            <span class="is-uppercase has-text-weight-bold" v-html="isRecording ? '-' + formatTime(maxRecordTime -timeElapsed) : formatTime(timeElapsed)">
+                                                                N/A
                                                             </span>
                                                         </div>
                                                     </div>
