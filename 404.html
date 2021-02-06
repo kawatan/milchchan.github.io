@@ -27,8 +27,8 @@
       overflow-x: hidden;
       overflow-y: auto;
       scroll-behavior: smooth;
-      background: #64dafe url('/images/Background.png') repeat;
-      animation: fade 0.5s ease-out, loop 10s linear infinite;
+      background: #f5f5f5 url('/images/Background.png') repeat;
+      animation: fade 0.5s ease-out;
       transition: .5s;
     }
 
@@ -89,16 +89,6 @@
       }
     }
 
-    @keyframes loop {
-      0% {
-        background-position: 0 0;
-      }
-
-      100% {
-        background-position: -100px 0px;
-      }
-    }
-
     @keyframes load {
       from {
         opacity: 0;
@@ -113,16 +103,6 @@
 
     @media screen and (-webkit-min-device-pixel-ratio:2),
     (min-resolution: 2dppx) {
-      @keyframes loop {
-        0% {
-          background-position: 0 0;
-        }
-
-        100% {
-          background-position: -200px 0px;
-        }
-      }
-
       body::before {
         background: url('/images/Background@2x.png') repeat;
       }
@@ -130,16 +110,6 @@
 
     @media screen and (-webkit-min-device-pixel-ratio:3),
     (min-resolution: 3dppx) {
-      @keyframes loop {
-        0% {
-          background-position: 0 0;
-        }
-
-        100% {
-          background-position: -300px 0px;
-        }
-      }
-
       body::before {
         background: url('/images/Background@3x.png') repeat;
       }
