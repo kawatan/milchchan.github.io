@@ -1163,7 +1163,7 @@
     <div id="app">
         <div id="map" ref="map"></div>
         <transition name="fade">
-            <div class="overlay" v-show="!isRecording && recordedData && recordedData.blobs.length > 0"></div>
+            <div class="overlay" v-show="!isRecording && recordedData && recordedData.blobs.length > 0" v-cloak></div>
         </transition>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
