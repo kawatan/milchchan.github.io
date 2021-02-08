@@ -474,10 +474,8 @@
             margin: 0;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field span.icon {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field picture.icon {
             margin: 0px 8px 0px 0px;
-            color: var(--foreground-color);
-            transition: .5s;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
@@ -487,7 +485,7 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control>.level:nth-last-of-type(1) {
             margin: 0;
-            padding: 0px 0px 8px 0px;
+            padding: 0;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field span:last-child {
@@ -1181,12 +1179,15 @@
                                 </div>
                                 <div class="column is-6 is-mobile">
                                     <div class="control has-text-centered">
-                                        <nav class="level is-hidden">
+                                        <nav class="level">
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-star"></i>
-                                                    </span>
+                                                    <picture class="icon is-small">
+                                                        <source srcset="images/Star-Light.svg" media="(prefers-color-scheme: dark)">
+                                                        <img src="images/Star-Dark.svg" width="32" height="32"
+                                                            alt="Star">
+                                                    </picture>
+                                                    <span class="is-size-2 is-uppercase">{{ animatedStars }}</span>
                                                 </div>
                                             </div>
                                         </nav>
@@ -1370,7 +1371,8 @@
                                                             <i class="fas fa-stop"></i>
                                                         </span>
                                                     </button>
-                                                    <button class="button" type="button" v-bind:disabled="user === null || isRecording"
+                                                    <button class="button" type="button"
+                                                        v-bind:disabled="user === null || isRecording"
                                                         @click="playSound()" v-else key="stopped" disabled>
                                                         <span class="icon is-small">
                                                             <i class="fas fa-play"></i>
