@@ -649,19 +649,30 @@
             padding: 0;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column .control {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column {
+            display: flex;
+            justify-content: center;
+            align-items: flex-end;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column>div {
+            margin: 0;
+            padding: 0;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column>div .control {
             margin: -8px 0px -8px 0px;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column .control .level {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column>div .control .level {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             margin: 0;
             padding: 8px 0px 8px 0px;
         }
 
         #heading .notification {
-            display: flex;
-            align-items: center;
-            justify-content: center;
             background-color: transparent;
             margin: 0;
             padding: 0;
@@ -1144,7 +1155,7 @@
 
 <body>
     <div id="app">
-        <div id="map" ref="map"></div>    
+        <div id="map" ref="map"></div>
         <transition name="fade">
             <div class="overlay" v-show="!isRecording && recordedData && recordedData.blobs.length > 0" v-cloak></div>
         </transition>
@@ -1173,7 +1184,8 @@
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
                                                     <picture class="icon is-small">
-                                                        <source srcset="images/Star-Dark.svg" media="(prefers-color-scheme: dark)">
+                                                        <source srcset="images/Star-Dark.svg"
+                                                            media="(prefers-color-scheme: dark)">
                                                         <img src="images/Star-Light.svg" width="32" height="32"
                                                             alt="Star">
                                                     </picture>
@@ -1232,31 +1244,37 @@
                                 </div>
                             </div>
                             <div class="columns">
-                                <div class="column is-half is-mobile has-content-centered">
-                                    <transition-group name="notification-list" class="control" tag="div" v-cloak>
-                                        <nav class="level" v-for="notification in notifications"
-                                            v-bind:key="notification.id">
-                                            <div class="notification is-info is-light" v-cloak>
-                                                <article class="media"
-                                                    v-bind:style="{ backgroundColor: notification.accent }" v-cloak>
-                                                    <figure class="media-left" v-if="notification.image" v-cloak>
-                                                        <span class="image is-24x24">
-                                                            <img class="is-rounded" v-bind:src="notification.image"
-                                                                alt="Avatar" v-cloak>
-                                                        </span>
-                                                    </figure>
-                                                    <div class="media-content" v-cloak>
-                                                        <div class="content has-text-left">
-                                                            <span class="is-size-7 has-text-weight-bold has-text-white"
-                                                                v-cloak>
-                                                                {{ notification.text }}
+                                <div class="column is-half is-mobile has-content-centered"
+                                    v-bind:style="{ height: animatedNotificationsHeight + 'px' }">
+                                    <div ref="notifications">
+                                        <transition-group name="notification-list" class="control" tag="div" v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
+                                        v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart" v-on:after-leave="animationEnd"
+                                        v-on:leave-cancelled="animationEnd" v-cloak>
+                                            <nav class="level" v-for="notification in notifications"
+                                                v-bind:key="notification.id">
+                                                <div class="notification is-info is-light" v-cloak>
+                                                    <article class="media"
+                                                        v-bind:style="{ backgroundColor: notification.accent }" v-cloak>
+                                                        <figure class="media-left" v-if="notification.image" v-cloak>
+                                                            <span class="image is-24x24">
+                                                                <img class="is-rounded" v-bind:src="notification.image"
+                                                                    alt="Avatar" v-cloak>
                                                             </span>
+                                                        </figure>
+                                                        <div class="media-content" v-cloak>
+                                                            <div class="content has-text-left">
+                                                                <span
+                                                                    class="is-size-7 has-text-weight-bold has-text-white"
+                                                                    v-cloak>
+                                                                    {{ notification.text }}
+                                                                </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                        </nav>
-                                    </transition-group>
+                                                    </article>
+                                                </div>
+                                            </nav>
+                                        </transition-group>
+                                    </div>
                                 </div>
                             </div>
                         </div>
