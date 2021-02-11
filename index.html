@@ -468,6 +468,7 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field picture.icon {
             margin: 0px 8px 0px 0px;
+            opacity: 0.75;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
@@ -484,7 +485,7 @@
             font-family: 'Alata', sans-serif;
             font-size: 4rem !important;
             line-height: 4rem !important;
-            color: #ffc547;
+            color: var(--background-color);
             transition: .5s;
         }
 
@@ -1141,7 +1142,9 @@
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
                                                     <picture class="icon is-small">
-                                                        <img src="/images/Star.svg" width="32" height="32"
+                                                        <source srcset="/images/Star-Dark.svg"
+                                                            media="(prefers-color-scheme: dark)">
+                                                        <img src="/images/Star-Light.svg" width="32" height="32"
                                                             alt="Star">
                                                     </picture>
                                                     <span class="is-uppercase">{{ animatedStars }}</span>
