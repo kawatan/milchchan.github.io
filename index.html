@@ -468,7 +468,6 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field picture.icon {
             margin: 0px 8px 0px 0px;
-            opacity: 0.75;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
@@ -485,7 +484,7 @@
             font-family: 'Alata', sans-serif;
             font-size: 4rem !important;
             line-height: 4rem !important;
-            color: var(--background-color);
+            color: #64dafe;
             transition: .5s;
         }
 
@@ -685,7 +684,7 @@
             justify-content: center;
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
-            background: #5bcbe1 url('/images/Stripes.png') repeat;
+            background: #64dafe url('/images/Stripes.png') repeat;
         }
 
         #heading .notification .media .media-left {
@@ -737,32 +736,6 @@
                 -10px -10px 30px #ffffff;*/
         }
 
-        #input .navbar-item .control:first-child .level .notification {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: transparent;
-            margin: 0;
-            padding: 0;
-        }
-
-        #input .navbar-item .control:first-child .level .is-info {
-            color: #ffffff;
-        }
-
-        #input .navbar-item .control:first-child .level .notification .media {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 500px 500px 500px 500px;
-            padding: 16px 32px 16px 32px;
-            background: url('/images/Stripes.png') repeat;
-        }
-
-        #input .notification .media .media-left {
-            margin: 0px 8px 0px 0px;
-        }
-
         #input .navbar-item>div>.control:last-child {
             margin: 0;
             padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
@@ -780,15 +753,6 @@
             background-color: transparent;
             margin: 0;
             padding: 0;
-        }
-
-        #input .columns>.column>.control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 500px 500px 500px 500px;
-            padding: 16px 32px 16px 32px;
-            background: #5bcbe1 url('/images/Stripes.png') repeat;
         }
 
         #input .columns>.column>.control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media .media-left {
@@ -887,9 +851,9 @@
             padding: 16px 0px 16px 0px;
             background: var(--background-color);
             background-clip: padding-box;
-            /*background: #f5f5f5;
+            /*background: #f5f5f5;*/
             box-shadow: 10px 10px 30px #d0d0d0,
-                -10px -10px 30px #ffffff;*/
+                -10px -10px 30px #d0d0d0;
             flex-direction: column;
         }
 
@@ -1105,10 +1069,6 @@
             #container .columns .column .media .media-content .has-text-left .balloon {
                 background: url('/images/Stripes@2x.png') repeat;
             }
-
-            #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
-                background: #5bcbe1 url('/images/Stripes@2x.png') repeat;
-            }
         }
 
         @media screen and (-webkit-min-device-pixel-ratio:3),
@@ -1133,10 +1093,6 @@
 
             #container .columns .column .media .media-content .has-text-left .balloon {
                 background: url('/images/Stripes@3x.png') repeat;
-            }
-
-            #input .columns>.column .control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media {
-                background-image: #5bcbe1 url('/images/Stripes@3x.png') repeat;
             }
         }
 
@@ -1185,9 +1141,7 @@
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
                                                     <picture class="icon is-small">
-                                                        <source srcset="/images/Star-Dark.svg"
-                                                            media="(prefers-color-scheme: dark)">
-                                                        <img src="/images/Star-Light.svg" width="32" height="32"
+                                                        <img src="/images/Star.svg" width="32" height="32"
                                                             alt="Star">
                                                     </picture>
                                                     <span class="is-uppercase">{{ animatedStars }}</span>
