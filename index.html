@@ -489,30 +489,39 @@
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child>.column>.control {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2)>.column>.control {
             margin: 0;
             padding: 0px 16px 16px 16px;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip {
             margin: 0;
-            border: 1px solid var(--foreground-color);
-            padding: 8px 16px 8px 16px;
+            border: 1px solid var(--background-color);
+            padding: 4px 16px 4px 16px;
             background-color: transparent;
             border-radius: 500px 500px 500px 500px;
             overflow: hidden;
             width: 100%;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .ticker-wrap {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .ticker-wrap {
             margin: 0;
             width: 100%;
+            font-size: 0.75rem !important;
+            line-height: 0.75rem !important;
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:last-child .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             padding: 0px 16px;
-            color: var(--foreground-color);
+            color: var(--background-color);
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,        
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
+            font-size: 0.75rem !important;
+            line-height: 0.75rem !important;
+            vertical-align: middle;
         }
 
         #heading>.columns>.column>.columns:last-child {
@@ -1142,9 +1151,7 @@
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
                                                     <picture class="icon is-small">
-                                                        <source srcset="/images/Star-Dark.svg"
-                                                            media="(prefers-color-scheme: dark)">
-                                                        <img src="/images/Star-Light.svg" width="32" height="32"
+                                                        <img src="/images/Star.svg" width="32" height="32"
                                                             alt="Star">
                                                     </picture>
                                                     <span class="is-uppercase">{{ animatedStars }}</span>
@@ -1199,6 +1206,72 @@
                                             </div>
                                         </transition>
                                     </nav>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-half is-mobile has-content-centered">
+                                    <div class="control has-text-centered" v-show="words.length > 0">
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered">
+                                                <div class="field" v-cloak>
+                                                    <div class="clip">
+                                                        <div class="ticker-wrap">
+                                                            <transition-group name="ticker-item-list" class="ticker"
+                                                                tag="div"
+                                                                v-bind:style="{ animationPlayState: 'running' }">
+                                                                <div class="item" key="merku-statuses" v-cloak>
+                                                                    <article class="media">
+                                                                        <figure class="media-left">
+                                                                            <span class="image is-24x24">
+                                                                                <img class="is-rounded"
+                                                                                    src="/images/Merku.png"
+                                                                                    alt="メルクちゃん">
+                                                                            </span>
+                                                                        </figure>
+                                                                        <div class="media-content">
+                                                                            <div class="content has-text-left">
+                                                                                <span
+                                                                                    class="has-text-weight-bold has-text-gray">みんなに教えてもらった言葉だよぉ</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </article>
+                                                                </div>
+                                                                <div class="item" v-for="word in take(words, 10)"
+                                                                    v-bind:key="word">
+                                                                    <span
+                                                                        class="has-text-weight-bold has-text-gray"
+                                                                        v-cloak>{{ word }}</span>
+                                                                </div>
+                                                                <div class="item" key="merku-statuses-alt" v-cloak>
+                                                                    <article class="media">
+                                                                        <figure class="media-left">
+                                                                            <span class="image is-24x24">
+                                                                                <img class="is-rounded"
+                                                                                    src="/images/Merku.png"
+                                                                                    alt="メルクちゃん">
+                                                                            </span>
+                                                                        </figure>
+                                                                        <div class="media-content">
+                                                                            <div class="content has-text-left">
+                                                                                <span
+                                                                                    class="has-text-weight-bold has-text-gray">みんなに教えてもらった言葉だよぉ</span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </article>
+                                                                </div>
+                                                                <div class="item" v-for="word in take(words, 10)"
+                                                                    v-bind:key="word + '-alt'">
+                                                                    <span
+                                                                        class="has-text-weight-bold has-text-gray"
+                                                                        v-cloak>{{ word }}</span>
+                                                                </div>
+                                                            </transition-group>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </nav>
+                                    </div>
                                 </div>
                             </div>
                             <div class="columns">
