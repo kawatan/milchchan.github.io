@@ -513,11 +513,19 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
-            padding: 0px 16px;
+            padding: 0px 8px;
             color: var(--background-color);
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,        
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
+            margin: 0;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
+            height: 24px;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             font-size: 0.75rem !important;
             line-height: 0.75rem !important;
@@ -1151,8 +1159,7 @@
                                             <div class="level-item has-text-centered">
                                                 <div class="field is-grouped is-vcentered">
                                                     <picture class="icon is-small">
-                                                        <img src="/images/Star.svg" width="32" height="32"
-                                                            alt="Star">
+                                                        <img src="/images/Star.svg" width="32" height="32" alt="Star">
                                                     </picture>
                                                     <span class="is-uppercase">{{ animatedStars }}</span>
                                                 </div>
@@ -1222,47 +1229,35 @@
                                                                 <div class="item" key="merku-statuses" v-cloak>
                                                                     <article class="media">
                                                                         <figure class="media-left">
-                                                                            <span class="image is-24x24">
-                                                                                <img class="is-rounded"
-                                                                                    src="/images/Merku.png"
-                                                                                    alt="メルクちゃん">
-                                                                            </span>
+                                                                            <picture class="image has-ratio">
+                                                                                <source srcset="/images/Fire-Dark.svg"
+                                                                                    media="(prefers-color-scheme: dark)">
+                                                                                <img src="/images/Fire-Light.svg"
+                                                                                width="26" height="34" alt="Fire">
+                                                                            </picture>
                                                                         </figure>
-                                                                        <div class="media-content">
-                                                                            <div class="content has-text-left">
-                                                                                <span
-                                                                                    class="has-text-weight-bold has-text-gray">みんなに教えてもらった言葉だよぉ</span>
-                                                                            </div>
-                                                                        </div>
                                                                     </article>
                                                                 </div>
                                                                 <div class="item" v-for="word in take(words, 10)"
                                                                     v-bind:key="word">
-                                                                    <span
-                                                                        class="has-text-weight-bold has-text-gray"
+                                                                    <span class="has-text-weight-bold"
                                                                         v-cloak>{{ word }}</span>
                                                                 </div>
                                                                 <div class="item" key="merku-statuses-alt" v-cloak>
                                                                     <article class="media">
                                                                         <figure class="media-left">
-                                                                            <span class="image is-24x24">
-                                                                                <img class="is-rounded"
-                                                                                    src="/images/Merku.png"
-                                                                                    alt="メルクちゃん">
-                                                                            </span>
+                                                                            <picture class="image has-ratio">
+                                                                                <source srcset="/images/Fire-Dark.svg"
+                                                                                    media="(prefers-color-scheme: dark)">
+                                                                                    <img src="/images/Fire-Light.svg"
+                                                                                    width="26" height="34" alt="Fire">
+                                                                            </picture>
                                                                         </figure>
-                                                                        <div class="media-content">
-                                                                            <div class="content has-text-left">
-                                                                                <span
-                                                                                    class="has-text-weight-bold has-text-gray">みんなに教えてもらった言葉だよぉ</span>
-                                                                            </div>
-                                                                        </div>
                                                                     </article>
                                                                 </div>
                                                                 <div class="item" v-for="word in take(words, 10)"
                                                                     v-bind:key="word + '-alt'">
-                                                                    <span
-                                                                        class="has-text-weight-bold has-text-gray"
+                                                                    <span class="has-text-weight-bold"
                                                                         v-cloak>{{ word }}</span>
                                                                 </div>
                                                             </transition-group>
@@ -1278,9 +1273,10 @@
                                 <div class="column is-half is-mobile has-content-centered"
                                     v-bind:style="{ height: animatedNotificationsHeight + 'px' }">
                                     <div ref="notifications">
-                                        <transition-group name="notification-list" class="control" tag="div" v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
-                                        v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart" v-on:after-leave="animationEnd"
-                                        v-on:leave-cancelled="animationEnd" v-cloak>
+                                        <transition-group name="notification-list" class="control" tag="div"
+                                            v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
+                                            v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart"
+                                            v-on:after-leave="animationEnd" v-on:leave-cancelled="animationEnd" v-cloak>
                                             <nav class="level" v-for="notification in notifications"
                                                 v-bind:key="notification.id">
                                                 <div class="notification is-info is-light" v-cloak>
