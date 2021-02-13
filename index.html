@@ -27,13 +27,14 @@
         }
 
         :root {
-            --background-color: rgba(255, 255, 255, 0.75);
+            --background-color: #f1f1f1;
             --foreground-color: #000000;
+            --overlay-color: rgba(0, 0, 0, 0.75);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --background-color: rgba(0, 0, 0, 0.75);
+                /*--background-color: #6f6f6f;*/
                 --foreground-color: #ffffff;
             }
         }
@@ -196,6 +197,10 @@
             box-shadow: none !important;
         }
 
+        .has-text-danger {
+            color: #e26971 !important;
+        }
+
         .logo {
             position: fixed;
             display: flex;
@@ -247,7 +252,7 @@
             height: 100vh;
             transform: translate3d(0, 0%, 0);
             overflow: hidden;
-            background: var(--background-color);
+            background: var(--overlay-color);
             backdrop-filter: blur(8px);
         }
 
@@ -467,8 +472,7 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field picture.icon {
-            margin: 0px 8px 0px 0px;
-            opacity: 0.75;
+            margin: 0px 4px 0px 0px;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
@@ -485,7 +489,7 @@
             font-family: 'Alata', sans-serif;
             font-size: 4rem !important;
             line-height: 4rem !important;
-            color: var(--background-color);
+            color: #ffc547;
             transition: .5s;
         }
 
@@ -496,9 +500,10 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip {
             margin: 0;
-            border: 1px solid var(--background-color);
+            border: 1px solid var(--foreground-color);
             padding: 4px 16px 4px 16px;
             background-color: transparent;
+            background-clip: padding-box;
             border-radius: 500px 500px 500px 500px;
             overflow: hidden;
             width: 100%;
@@ -514,7 +519,7 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             padding: 0px 8px;
-            color: var(--background-color);
+            color: var(--foreground-color);
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
@@ -700,9 +705,12 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            border: 0px solid rgba(255, 255, 255, 1.0);
             border-radius: 500px 500px 500px 500px;
             padding: 8px 16px 8px 16px;
-            background: #64dafe url('/images/Stripes.png') repeat;
+            background: #ffffff;
+            background-clip: padding-box;
+            color: #000000;
         }
 
         #heading .notification .media .media-left {
@@ -830,8 +838,8 @@
         #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(3) {
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
-            padding: 8px 8px 8px 8px;
-            background: var(--background-color);
+            padding: 0;
+            background: transparent;
             background-clip: padding-box;
         }
 
@@ -844,34 +852,35 @@
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
             padding: 8px 8px 8px 8px;
-            background: var(--background-color);
+            background: transparent;
             background-clip: padding-box;
         }
 
         #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(2)>.level>.level-item button>span {
-            color: var(--foreground-color);
+            color: #ffffff;
         }
 
         #input>.columns>.column>.control:last-of-type .level>.level-item:last-of-type .level>.level-item .media>.media-content .content {
             font-size: 0.75em;
             line-height: 0.75em;
-            color: var(--foreground-color);
+            color: #ffffff;
         }
 
         #input>.columns>.column>.control:last-of-type .level>.level-item:last-of-type .level>.level-item .media>.media-content .content>span {
             font-family: "Alata", sans-serif;
+            padding: 0;
         }
 
         #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level {
             margin: 0px -8px 0px -8px;
-            border: 0px solid rgba(255, 255, 255, 0.5);
-            border-radius: 500px 500px 500px 500px;
-            padding: 16px 0px 16px 0px;
-            background: var(--background-color);
+            border: 4px solid rgba(255, 255, 255, 1.0);
+            border-radius: 32px;
+            padding: 4px 16px 8px 16px;
+            background-color: var(--background-color);
             background-clip: padding-box;
             /*background: #f5f5f5;*/
-            box-shadow: 10px 10px 30px #d0d0d0,
-                -10px -10px 30px #d0d0d0;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.1),
+                -10px -10px 30px rgba(0, 0, 0, 0.1);
             flex-direction: column;
         }
 
@@ -1230,26 +1239,26 @@
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <picture class="image has-ratio">
-                                                                                <source srcset="/images/Fire-Dark.svg"
+                                                                                <source srcset="/images/Fire-Light.svg"
                                                                                     media="(prefers-color-scheme: dark)">
-                                                                                <img src="/images/Fire-Light.svg"
-                                                                                width="26" height="34" alt="Fire">
+                                                                                <img src="/images/Fire-Dark.svg"
+                                                                                    width="26" height="34" alt="Fire">
                                                                             </picture>
                                                                         </figure>
                                                                     </article>
                                                                 </div>
                                                                 <div class="item" v-for="word in take(words, 10)"
                                                                     v-bind:key="word">
-                                                                    <span class="has-text-weight-bold"
-                                                                        v-cloak>{{ word }}</span>
+                                                                    <span class="has-text-weight-bold" v-cloak>{{ word
+                                                                        }}</span>
                                                                 </div>
                                                                 <div class="item" key="merku-statuses-alt" v-cloak>
                                                                     <article class="media">
                                                                         <figure class="media-left">
                                                                             <picture class="image has-ratio">
-                                                                                <source srcset="/images/Fire-Dark.svg"
+                                                                                <source srcset="/images/Fire-Light.svg"
                                                                                     media="(prefers-color-scheme: dark)">
-                                                                                    <img src="/images/Fire-Light.svg"
+                                                                                <img src="/images/Fire-Dark.svg"
                                                                                     width="26" height="34" alt="Fire">
                                                                             </picture>
                                                                         </figure>
@@ -1257,8 +1266,8 @@
                                                                 </div>
                                                                 <div class="item" v-for="word in take(words, 10)"
                                                                     v-bind:key="word + '-alt'">
-                                                                    <span class="has-text-weight-bold"
-                                                                        v-cloak>{{ word }}</span>
+                                                                    <span class="has-text-weight-bold" v-cloak>{{ word
+                                                                        }}</span>
                                                                 </div>
                                                             </transition-group>
                                                         </div>
@@ -1279,9 +1288,8 @@
                                             v-on:after-leave="animationEnd" v-on:leave-cancelled="animationEnd" v-cloak>
                                             <nav class="level" v-for="notification in notifications"
                                                 v-bind:key="notification.id">
-                                                <div class="notification is-info is-light" v-cloak>
-                                                    <article class="media"
-                                                        v-bind:style="{ backgroundColor: notification.accent }" v-cloak>
+                                                <div class="notification is-info is-light">
+                                                    <article class="media">
                                                         <figure class="media-left" v-if="notification.image" v-cloak>
                                                             <span class="image is-24x24">
                                                                 <img class="is-rounded" v-bind:src="notification.image"
@@ -1289,10 +1297,15 @@
                                                             </span>
                                                         </figure>
                                                         <div class="media-content" v-cloak>
-                                                            <div class="content has-text-left">
+                                                            <div class="content has-text-left" v-if="notification.accent">
                                                                 <span
-                                                                    class="is-size-7 has-text-weight-bold has-text-white"
-                                                                    v-cloak>
+                                                                    class="is-size-7 has-text-weight-bold" v-bind:style="{ color: notification.accent }" v-cloak>
+                                                                    {{ notification.text }}
+                                                                </span>
+                                                            </div>
+                                                            <div class="content has-text-left" v-else>
+                                                                <span
+                                                                    class="is-size-7 has-text-weight-bold" v-cloak>
                                                                     {{ notification.text }}
                                                                 </span>
                                                             </div>
