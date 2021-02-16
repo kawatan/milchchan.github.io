@@ -506,50 +506,6 @@
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2)>.column>.control {
-            margin: 0;
-            padding: 0px 16px 16px 16px;
-        }
-
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip {
-            margin: 0;
-            border: 1px solid var(--foreground-color);
-            padding: 4px 16px 4px 16px;
-            background-color: transparent;
-            background-clip: padding-box;
-            border-radius: 500px 500px 500px 500px;
-            overflow: hidden;
-            width: 100%;
-        }
-
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .ticker-wrap {
-            margin: 0;
-            width: 100%;
-            font-size: 0.75rem !important;
-            line-height: 0.75rem !important;
-            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-        }
-
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
-            padding: 0px 8px;
-            color: var(--foreground-color);
-        }
-
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
-            margin: 0;
-        }
-
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
-            height: 24px;
-        }
-
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,
-        #heading>.columns>.column>.columns:first-child>.column>.columns:nth-of-type(2) .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
-            font-size: 0.75rem !important;
-            line-height: 0.75rem !important;
-            vertical-align: middle;
-        }
-
         #heading>.columns>.column>.columns:last-child {
             justify-content: center;
         }
@@ -739,6 +695,13 @@
             display: block;
         }
 
+        #input {
+            margin: 0;
+            padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+            display: flex;
+            flex-direction: column;
+        }
+
         #input>.columns>.column>.control:last-of-type .level>.level-item {
             margin: 0;
             padding: 0;
@@ -770,12 +733,12 @@
                 -10px -10px 30px #ffffff;*/
         }
 
-        #input>.columns>.column>.control:last-of-type {
+        #input>.columns:first-of-type>.column>.control:last-of-type {
             margin: 0;
-            padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
+            padding: 0;
         }
 
-        #input .columns>.column>.control:nth-last-of-type(2) {
+        #input .columns:first-of-type>.column>.control:nth-last-of-type(2) {
             margin: 0;
             padding: 0px 16px 0px 16px;
         }
@@ -789,32 +752,32 @@
             padding: 0;
         }
 
-        #input>.columns>.column>.control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media .media-left {
+        #input>.columns:first-of-type>.column>.control:nth-last-of-type(2) .level:nth-last-of-type(2) .notification .media .media-left {
             margin: 0px 8px 0px 0px;
         }
 
-        #input>.columns>.column>.control:last-of-type .level:nth-last-of-type(3) {
+        #input>.columns:first-of-type>.column>.control:last-of-type .level:nth-last-of-type(3) {
             display: flex;
             padding: 16px 16px 0px 16px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level {
             display: block;
             margin: 0;
             padding: 16px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type) {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:not(:last-of-type) {
             display: block;
             margin: 0;
             padding: 16px 16px 0px 16px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level>.level-item:not(:last-of-type) {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:not(:last-of-type) {
             margin: 0px 0px 16px 0px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(3) {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(3) {
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
             padding: 0;
@@ -822,12 +785,12 @@
             background-clip: padding-box;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level>.level-item:nth-last-child(1)>.level {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level>.level-item:nth-last-child(1)>.level {
             margin: 0px -16px 0px -16px;
             padding: 0px 8px 0px 8px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level>.level-item:nth-last-child(1)>.level>.level-item {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level>.level-item:nth-last-child(1)>.level>.level-item {
             margin: 0;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 500px 500px 500px 500px;
@@ -836,7 +799,7 @@
             background-clip: padding-box;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level {
             margin: 0px -8px 0px -8px;
             border: 6px solid rgba(255, 255, 255, 1.0);
             border-radius: 16px;
@@ -849,7 +812,7 @@
             flex-direction: column;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level {
             display: flex;
             flex-direction: column;
             border: 6px solid rgba(255, 255, 255, 1.0);
@@ -862,27 +825,27 @@
                 -10px -10px 30px rgba(0, 0, 0, 0.1);
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level>.level-item:not(:last-of-type) {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(2)>.level-item>.level>.level-item:not(:last-of-type) {
             padding: 0px 0px 8px 0px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item>.level {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item>.level {
             display: flex;
             flex-direction: row;
             margin: 0px -16px 0px -16px;
             padding: 0px 8px 0px 8px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item:nth-of-type(1)>.level>.level-item {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item:nth-of-type(1)>.level>.level-item {
             margin: 0;
             padding: 0px 16px 0px 16px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item:nth-last-of-type(1)>.level>.level-item {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item:nth-last-of-type(1)>.level>.level-item {
             padding: 4px 0px 0px 0px;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level .level-item button {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level .level-item button {
             margin: 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
@@ -898,23 +861,77 @@
             color: #64dafe;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level>.level-item button>span {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item button>span {
             margin: 0;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(2)>.level>.level-item button>span {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(2)>.level>.level-item button>span {
             color: #ffffff;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content {
             font-size: 0.75em;
             line-height: 0.75em;
             color: #ffffff;
         }
 
-        #input>.columns>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content>span {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content>span {
             font-family: "Alata", sans-serif;
             padding: 0;
+        }
+
+        #input>.columns:last-of-type {
+            background-color: rgba(255, 255, 255, 1);
+        }
+        
+        #input>.columns:last-of-type>.column>.control {
+            margin: 16px 16px 16px 16px;
+            height: max(24px, 0.75rem);
+        }
+
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item {
+            display: flex;
+            justify-content: center;
+        }
+
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip {
+            margin: 0;
+            border: 0px solid var(--foreground-color);
+            padding: 0px;
+            background-color: transparent;
+            background-clip: padding-box;
+            /*border-radius: 500px 500px 500px 500px;*/
+            overflow: hidden;
+            width: 100%;
+        }
+
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .ticker-wrap {
+            display: flex;
+            margin: 0;
+            width: 100%;
+            font-size: 0.75rem !important;
+            line-height: 0.75rem !important;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
+            padding: 0px 8px;
+            color: #000000;
+        }
+
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
+            margin: 0;
+        }
+
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
+            height: 24px;
+        }
+
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
+            font-size: 0.75rem !important;
+            line-height: 0.75rem !important;
+            vertical-align: middle;
         }
 
         .updating {
@@ -1142,7 +1159,8 @@
                 v-cloak>
             </div>
         </transition>
-        <transition name="fade" v-on:after-leave="backgroundImages.splice(0);" v-on:leave-cancelled="backgroundImages.splice(0);">
+        <transition name="fade" v-on:after-leave="backgroundImages.splice(0);"
+            v-on:leave-cancelled="backgroundImages.splice(0);">
             <div class="sunrise" v-show="isCompleted" v-cloak>
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" x="0px"
                     y="0px" width="100%" height="100%" viewBox="0 0 586.016 575.146"
@@ -1157,8 +1175,8 @@
                 <div class="background" ref="background">
                     <div v-bind:style="{ backgroundImage: 'url(' + image.url + ')', marginLeft: image.index * 100 + '%' }"
                         v-for="image in backgroundImages" v-bind:key="image" v-cloak></div>
-                    <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)" v-for="image in preloadImages"
-                        v-bind:key="image.url" alt="Background" v-cloak>
+                    <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)"
+                        v-for="image in preloadImages" v-bind:key="image.url" alt="Background" v-cloak>
                 </div>
             </div>
         </transition>
@@ -1239,60 +1257,6 @@
                                             </div>
                                         </transition>
                                     </nav>
-                                </div>
-                            </div>
-                            <div class="columns">
-                                <div class="column is-half is-mobile has-content-centered">
-                                    <div class="control has-text-centered" v-show="words.length >= 10">
-                                        <nav class="level">
-                                            <div class="level-item has-text-centered">
-                                                <div class="field" v-cloak>
-                                                    <div class="clip">
-                                                        <div class="ticker-wrap">
-                                                            <transition-group name="ticker-item-list" class="ticker"
-                                                                tag="div"
-                                                                v-bind:style="{ animationPlayState: 'running' }">
-                                                                <div class="item" key="merku-statuses" v-cloak>
-                                                                    <article class="media">
-                                                                        <figure class="media-left">
-                                                                            <picture class="image has-ratio">
-                                                                                <source srcset="/images/Fire-Light.svg"
-                                                                                    media="(prefers-color-scheme: dark)">
-                                                                                <img src="/images/Fire-Dark.svg"
-                                                                                    width="26" height="34" alt="Fire">
-                                                                            </picture>
-                                                                        </figure>
-                                                                    </article>
-                                                                </div>
-                                                                <div class="item" v-for="word in take(words, 10)"
-                                                                    v-bind:key="word">
-                                                                    <span class="has-text-weight-bold" v-cloak>{{ word
-                                                                        }}</span>
-                                                                </div>
-                                                                <div class="item" key="merku-statuses-alt" v-cloak>
-                                                                    <article class="media">
-                                                                        <figure class="media-left">
-                                                                            <picture class="image has-ratio">
-                                                                                <source srcset="/images/Fire-Light.svg"
-                                                                                    media="(prefers-color-scheme: dark)">
-                                                                                <img src="/images/Fire-Dark.svg"
-                                                                                    width="26" height="34" alt="Fire">
-                                                                            </picture>
-                                                                        </figure>
-                                                                    </article>
-                                                                </div>
-                                                                <div class="item" v-for="word in take(words, 10)"
-                                                                    v-bind:key="word + '-alt'">
-                                                                    <span class="has-text-weight-bold" v-cloak>{{ word
-                                                                        }}</span>
-                                                                </div>
-                                                            </transition-group>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </nav>
-                                    </div>
                                 </div>
                             </div>
                             <div class="columns">
@@ -1486,6 +1450,60 @@
                                                     </div>
                                                 </article>
                                             </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <div class="navbar-item is-expanded columns is-mobile">
+                <div class="column is-full has-content-centered is-mobile" v-show="words.length > 0" v-cloak>
+                    <div class="control has-text-centered">
+                        <nav class="level" v-cloak>
+                            <div class="level-item has-text-centered">
+                                <div class="field">
+                                    <div class="clip">
+                                        <div class="ticker-wrap">
+                                            <transition-group name="ticker-item-list" class="ticker"
+                                                tag="div"
+                                                v-bind:style="{ animationPlayState: 'running' }">
+                                                <div class="item" key="merku-statuses" v-show="words.length > 0" v-cloak>
+                                                    <article class="media">
+                                                        <figure class="media-left">
+                                                            <picture class="image has-ratio">
+                                                                <source srcset="/images/Fire-Light.svg"
+                                                                    media="(prefers-color-scheme: dark)">
+                                                                <img src="/images/Fire-Dark.svg"
+                                                                    width="26" height="34" alt="Fire">
+                                                            </picture>
+                                                        </figure>
+                                                    </article>
+                                                </div>
+                                                <div class="item" v-for="word in take(words, 10)"
+                                                    v-bind:key="word">
+                                                    <span class="has-text-weight-bold" v-cloak>{{ word
+                                                        }}</span>
+                                                </div>
+                                                <div class="item" key="merku-statuses-alt" v-show="words.length > 0" v-cloak>
+                                                    <article class="media">
+                                                        <figure class="media-left">
+                                                            <picture class="image has-ratio">
+                                                                <source srcset="/images/Fire-Light.svg"
+                                                                    media="(prefers-color-scheme: dark)">
+                                                                <img src="/images/Fire-Dark.svg"
+                                                                    width="26" height="34" alt="Fire">
+                                                            </picture>
+                                                        </figure>
+                                                    </article>
+                                                </div>
+                                                <div class="item" v-for="word in take(words, 10)"
+                                                    v-bind:key="word + '-alt'">
+                                                    <span class="has-text-weight-bold" v-cloak>{{ word
+                                                        }}</span>
+                                                </div>
+                                            </transition-group>
                                         </div>
                                     </div>
                                 </div>
