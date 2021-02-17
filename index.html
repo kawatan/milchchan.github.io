@@ -60,7 +60,7 @@
             top: 0;
             width: 100%;
             height: 100vh;
-            background: url('/images/Background.png') repeat;
+            background: url('/images/Background-Light.png') repeat;
             content: "";
             animation: fade 0.5s ease-out;
         }
@@ -386,6 +386,17 @@
         .sunrise>svg {
             position: fixed;
             object-fit: cover;
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading {
+            position: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('/images/Background-Dark.png') repeat;
+            animation: loop 10s linear infinite;
             width: 100%;
             height: 100%;
         }
@@ -764,7 +775,7 @@
         #input>.columns:first-of-type>.column>.control:last-of-type>.level {
             display: block;
             margin: 0;
-            padding: 16px;
+            padding: 16px 16px 32px 16px;
         }
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level:not(:last-of-type) {
@@ -883,10 +894,10 @@
         #input>.columns:last-of-type {
             background-color: rgba(255, 255, 255, 1);
         }
-        
+
         #input>.columns:last-of-type>.column>.control {
-            margin: 16px 16px 16px 16px;
-            height: max(24px, 0.75rem);
+            margin: 8px 16px 8px 16px;
+            height: max(16px, 0.5rem);
         }
 
         #input>.columns:last-of-type>.column>.control .level:first-child .level-item {
@@ -909,8 +920,8 @@
             display: flex;
             margin: 0;
             width: 100%;
-            font-size: 0.75rem !important;
-            line-height: 0.75rem !important;
+            font-size: 0.5rem !important;
+            line-height: 0.5rem !important;
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
@@ -924,7 +935,8 @@
         }
 
         #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
-            height: 24px;
+            width: 16px;
+            height: 16px;
         }
 
         #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,
@@ -1061,6 +1073,16 @@
             }
         }
 
+        @keyframes loop {
+            0% {
+                background-position: 0 0;
+            }
+
+            100% {
+                background-position: -100px 0px;
+            }
+        }
+
         @keyframes progress {
             0% {
                 background-position: 0px 0px;
@@ -1105,11 +1127,15 @@
             }
 
             body::before {
-                background: url('/images/Background@2x.png') repeat;
+                background: url('/images/Background-Light@2x.png') repeat;
             }
 
             .progress {
                 background: #ffc547 url('/images/Stripes@2x.png') repeat;
+            }
+
+            .loading {
+                background: url('/images/Background-Dark@2x.png') repeat;
             }
         }
 
@@ -1126,11 +1152,15 @@
             }
 
             body::before {
-                background: url('/images/Background@3x.png') repeat;
+                background: url('/images/Background-Light@3x.png') repeat;
             }
 
             .progress {
                 background: #ffc547 url('/images/Stripes@3x.png') repeat;
+            }
+
+            .loading {
+                background: url('/images/Background-Dark@3x.png') repeat;
             }
         }
 
@@ -1152,7 +1182,7 @@
     <div id="app">
         <div id="map" ref="map"></div>
         <transition name="fade">
-            <div class="overlay" v-show="!isRecording && recordedData && recordedData.blobs.length > 0" v-cloak></div>
+            <div class="overlay" v-show="recordedData !== null" v-cloak></div>
         </transition>
         <transition name="fade">
             <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
@@ -1178,6 +1208,18 @@
                     <img v-bind:src="image.url" @load="load(image.url)" @error="error(image.url)"
                         v-for="image in preloadImages" v-bind:key="image.url" alt="Background" v-cloak>
                 </div>
+            </div>
+        </transition>
+        <transition name="fade" v-cloak>
+            <div class="loading" v-if="isRecording">
+                <picture class="image has-ratio">
+                    <source
+                        srcset="/images/Luna-Witch.gif 1x, /images/Luna-Witch@2x.gif 2x, /images/Luna-Witch@3x.gif 3x"
+                        media="(prefers-color-scheme: dark)">
+                    <img src="/images/Fire-Dark.svg"
+                        srcset="/images/Milch-LittleRedRidingHood.gif 1x, /images/Milch-LittleRedRidingHood@2x.gif 2x, /images/Milch-LittleRedRidingHood@3x.gif 3x"
+                        width="128px" height="128px" alt="Fire">
+                </picture>
             </div>
         </transition>
         <transition name="blind" v-on:after-enter="blinded">
@@ -1466,34 +1508,30 @@
                                 <div class="field">
                                     <div class="clip">
                                         <div class="ticker-wrap">
-                                            <transition-group name="ticker-item-list" class="ticker"
-                                                tag="div"
+                                            <transition-group name="ticker-item-list" class="ticker" tag="div"
                                                 v-bind:style="{ animationPlayState: 'running' }">
-                                                <div class="item" key="merku-statuses" v-show="words.length > 0" v-cloak>
+                                                <div class="item" key="merku-statuses" v-show="words.length > 0"
+                                                    v-cloak>
                                                     <article class="media">
                                                         <figure class="media-left">
-                                                            <picture class="image has-ratio">
-                                                                <source srcset="/images/Fire-Light.svg"
-                                                                    media="(prefers-color-scheme: dark)">
-                                                                <img src="/images/Fire-Dark.svg"
-                                                                    width="26" height="34" alt="Fire">
+                                                            <picture class="image has-ratio is-16x16">
+                                                                <img class="is-rounded" src="/images/Milch.png" width="16px" height="16px"
+                                                                    alt="Milch">
                                                             </picture>
                                                         </figure>
                                                     </article>
                                                 </div>
-                                                <div class="item" v-for="word in take(words, 10)"
-                                                    v-bind:key="word">
+                                                <div class="item" v-for="word in take(words, 10)" v-bind:key="word">
                                                     <span class="has-text-weight-bold" v-cloak>{{ word
                                                         }}</span>
                                                 </div>
-                                                <div class="item" key="merku-statuses-alt" v-show="words.length > 0" v-cloak>
+                                                <div class="item" key="merku-statuses-alt" v-show="words.length > 0"
+                                                    v-cloak>
                                                     <article class="media">
                                                         <figure class="media-left">
-                                                            <picture class="image has-ratio">
-                                                                <source srcset="/images/Fire-Light.svg"
-                                                                    media="(prefers-color-scheme: dark)">
-                                                                <img src="/images/Fire-Dark.svg"
-                                                                    width="26" height="34" alt="Fire">
+                                                            <picture class="image has-ratio is-16x16">
+                                                                <img class="is-rounded" src="/images/Milch.png" width="16px" height="16px"
+                                                                    alt="Milch">
                                                             </picture>
                                                         </figure>
                                                     </article>
