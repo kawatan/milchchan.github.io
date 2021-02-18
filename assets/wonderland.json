@@ -1,0 +1,27 @@
+{
+    "name": "ルナ",
+    "accent": "#5bcbe1",
+    "image": "/images/Luna.png",
+    "ticker": [
+        {
+            "name": "Alert",
+            "state": "^(?!0)$",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "text": "このエリアで話題になっていることだよ"
+                }
+            ]
+        },
+        {
+            "name": "Alert",
+            "state": "^0$",
+            "sequence": [
+                {
+                    "type": "Message",
+                    "text": "このエリアにはまだ話題がないみたいだよ"
+                }
+            ]
+        }
+    ]
+}
