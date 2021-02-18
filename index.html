@@ -61,6 +61,7 @@
             width: 100%;
             height: 100vh;
             background: url('/images/Background-Light.png') 50% 50% repeat;
+            background-size: 100px 100px;
             content: "";
             animation: fade 0.5s ease-out;
         }
@@ -239,7 +240,8 @@
             top: 0;
             left: 0;
             overflow: hidden;
-            background: #ffc547 url('/images/Stripes.png') repeat;
+            background: #ffc547 url('/images/Stripes.png') 50% 50% no-repeat;
+            background-size: 20px 20px;
             animation: progress 0.5s linear 0s infinite;
         }
 
@@ -394,6 +396,7 @@
             justify-content: center;
             align-items: center;
             background: url('/images/Background-Dark.png') 50% 50% repeat;
+            background-size: 100px 100px;
             animation: loop 10s linear infinite;
             width: 100%;
             height: 100%;
@@ -936,6 +939,10 @@
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
+        #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker {
+            animation: ticker 30s linear infinite;
+        }
+
         #input>.columns:last-of-type>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             padding: 0px 8px;
             color: #000000;
@@ -1135,71 +1142,37 @@
 
         @media screen and (-webkit-min-device-pixel-ratio:2),
         (min-resolution: 2dppx) {
-            @keyframes loop {
-                0% {
-                    background-position: 0 0;
-                }
-
-                100% {
-                    background-position: -200px 0px;
-                }
-            }
-
-            @keyframes progress {
-                0% {
-                    background-position: 0px 0px;
-                }
-
-                100% {
-                    background-position: -40px 0px;
-                }
-            }
-
             body::before {
                 background: url('/images/Background-Light@2x.png') 50% 50% repeat;
+                background-size: 100px 100px;
             }
 
             .progress {
-                background: #ffc547 url('/images/Stripes@2x.png') repeat;
+                background: #ffc547 url('/images/Stripes@2x.png') 50% 50% no-repeat;
+                background-size: 20px 20px;
             }
 
             .loading {
                 background: url('/images/Background-Dark@2x.png') 50% 50% repeat;
+                background-size: 100px 100px;
             }
         }
 
         @media screen and (-webkit-min-device-pixel-ratio:3),
         (min-resolution: 3dppx) {
-            @keyframes loop {
-                0% {
-                    background-position: 0 0;
-                }
-
-                100% {
-                    background-position: -300px 0px;
-                }
-            }
-
-            @keyframes progress {
-                0% {
-                    background-position: 0px 0px;
-                }
-
-                100% {
-                    background-position: -60px 0px;
-                }
-            }
-
             body::before {
                 background: url('/images/Background-Light@3x.png') 50% 50% repeat;
+                background-size: 100px 100px;
             }
 
             .progress {
-                background: #ffc547 url('/images/Stripes@3x.png') repeat;
+                background: #ffc547 url('/images/Stripes@3x.png') 50% 50% no-repeat;
+                background-size: 20px 20px;
             }
 
             .loading {
                 background: url('/images/Background-Dark@3x.png') 50% 50% repeat;
+                background-size: 100px 100px;
             }
         }
 
@@ -1253,7 +1226,7 @@
             <div class="loading" v-if="isRecording">
                 <picture class="image has-ratio is-64x64">
                     <source
-                    srcset="/images/PixelatedLuna-Witch.png 1x, /images/PixelatedLuna-Witch@2x.png 2x, /images/PixelatedLuna-Witch@3x.png 3x"
+                        srcset="/images/PixelatedLuna-Witch.png 1x, /images/PixelatedLuna-Witch@2x.png 2x, /images/PixelatedLuna-Witch@3x.png 3x"
                         media="(prefers-color-scheme: dark)">
                     <img src="/images/PixelatedLuna-Lolita.png"
                         srcset="/images/PixelatedLuna-Lolita.png 1x, /images/PixelatedLuna-Lolita@2x.png 2x, /images/PixelatedLuna-Lolita@3x.png 3x"
@@ -1393,44 +1366,20 @@
                             <nav class="level" v-show="!isRecording && recordedData && recordedData.blobs.length > 0">
                                 <div class="level-item">
                                     <div class="level is-mobile">
-                                        <transition name="fade">
-                                            <div class="level-item" v-show="isExpanded">
-                                                <form onsubmit="return false;" v-cloak>
-                                                    <div class="field has-addons">
-                                                        <div class="control is-expanded has-icons-left">
-                                                            <input class="input is-rounded" type="text"
-                                                                v-bind:class="{ 'is-danger': inputHasError }"
-                                                                placeholder="Café Starbucks" v-model="input"
-                                                                @input="inputChanged" v-cloak>
-                                                            <span class="icon is-small is-left">
-                                                                <i class="fas fa-tags"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </transition>
                                         <div class="level-item">
-                                            <div class="level is-mobile">
-                                                <div class="level-item">
-                                                    <transition name="fade" mode="out-in">
-                                                        <button class="button" type="button"
-                                                            @click="isExpanded = false;" v-if="isExpanded" key="show"
-                                                            v-cloak>
-                                                            <span class="icon is-small">
-                                                                <i class="fas fa-chevron-down"></i>
-                                                            </span>
-                                                        </button>
-                                                        <button class="button" type="button"
-                                                            v-bind:disabled="user === null || isRecording"
-                                                            @click="isExpanded = true;" v-else key="hide" v-cloak>
-                                                            <span class="icon is-small">
-                                                                <i class="fas fa-chevron-up"></i>
-                                                            </span>
-                                                        </button>
-                                                    </transition>
+                                            <form onsubmit="return false;" v-cloak>
+                                                <div class="field has-addons">
+                                                    <div class="control is-expanded has-icons-left">
+                                                        <input class="input is-rounded" type="text"
+                                                            v-bind:class="{ 'is-danger': inputHasError }"
+                                                            placeholder="Café Starbucks" v-model="input"
+                                                            @input="inputChanged" v-cloak>
+                                                        <span class="icon is-small is-left">
+                                                            <i class="fas fa-tags"></i>
+                                                        </span>
+                                                    </div>
                                                 </div>
-                                            </div>
+                                            </form>
                                         </div>
                                         <div class="level-item">
                                             <div class="level is-mobile">
@@ -1540,50 +1489,50 @@
                 </div>
             </div>
             <div class="navbar-item is-expanded columns is-mobile">
-                <div class="column is-full has-content-centered is-mobile" v-show="words.length > 0" v-cloak>
+                <div class="column is-full has-content-centered is-mobile">
                     <div class="control has-text-centered">
                         <nav class="level" v-cloak>
                             <div class="level-item has-text-centered">
-                                <div class="field">
-                                    <div class="clip">
-                                        <div class="ticker-wrap">
-                                            <transition-group name="ticker-item-list" class="ticker" tag="div"
-                                                v-bind:style="{ animationPlayState: 'running' }">
-                                                <div class="item" key="statuses" v-show="words.length > 0"
-                                                    v-cloak>
-                                                    <article class="media">
-                                                        <figure class="media-left">
-                                                            <picture class="image has-ratio is-16x16">
-                                                                <img class="is-rounded" src="/images/Luna.png"
-                                                                    width="16px" height="16px" alt="Luna">
-                                                            </picture>
-                                                        </figure>
-                                                    </article>
-                                                </div>
-                                                <div class="item" v-for="word in take(words, 10)" v-bind:key="word">
-                                                    <span class="has-text-weight-bold" v-cloak>{{ word
-                                                        }}</span>
-                                                </div>
-                                                <div class="item" key="statuses-alt" v-show="words.length > 0"
-                                                    v-cloak>
-                                                    <article class="media">
-                                                        <figure class="media-left">
-                                                            <picture class="image has-ratio is-16x16">
-                                                                <img class="is-rounded" src="/images/Luna.png"
-                                                                    width="16px" height="16px" alt="Luna">
-                                                            </picture>
-                                                        </figure>
-                                                    </article>
-                                                </div>
-                                                <div class="item" v-for="word in take(words, 10)"
-                                                    v-bind:key="word + '-alt'">
-                                                    <span class="has-text-weight-bold" v-cloak>{{ word
-                                                        }}</span>
-                                                </div>
-                                            </transition-group>
+                                <transition name="fade" mode="out-in">
+                                    <div class="field" v-show="words.length > 0">
+                                        <div class="clip">
+                                            <div class="ticker-wrap">
+                                                <transition-group name="ticker-item-list" class="ticker" tag="div"
+                                                    v-bind:style="{ animationPlayState: 'running' }">
+                                                    <div class="item" key="statuses" v-cloak>
+                                                        <article class="media">
+                                                            <figure class="media-left">
+                                                                <picture class="image has-ratio is-16x16">
+                                                                    <img class="is-rounded" src="/images/Luna.png"
+                                                                        width="16px" height="16px" alt="Luna">
+                                                                </picture>
+                                                            </figure>
+                                                        </article>
+                                                    </div>
+                                                    <div class="item" v-for="word in take(words, 10)" v-bind:key="word.name">
+                                                        <span class="has-text-weight-bold" v-cloak>{{ word.name
+                                                            }}</span>
+                                                    </div>
+                                                    <div class="item" key="statuses-alt" v-cloak>
+                                                        <article class="media">
+                                                            <figure class="media-left">
+                                                                <picture class="image has-ratio is-16x16">
+                                                                    <img class="is-rounded" src="/images/Luna.png"
+                                                                        width="16px" height="16px" alt="Luna">
+                                                                </picture>
+                                                            </figure>
+                                                        </article>
+                                                    </div>
+                                                    <div class="item" v-for="word in take(words, 10)"
+                                                        v-bind:key="word.name + '-alt'">
+                                                        <span class="has-text-weight-bold" v-cloak>{{ word.name
+                                                            }}</span>
+                                                    </div>
+                                                </transition-group>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                </transition>
                             </div>
                         </nav>
                     </div>
