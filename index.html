@@ -1493,12 +1493,14 @@
                     <div class="control has-text-centered">
                         <nav class="level" v-cloak>
                             <div class="level-item has-text-centered">
-                                <transition name="fade" mode="out-in">
+                                <transition name="fade">
                                     <div class="field" v-show="words.length > 0">
-                                        <div class="clip">
+                                        <div class="clip" v-bind:style="{ width: animatedTickerWidth + 'px' }">
                                             <div class="ticker-wrap">
-                                                <transition-group name="ticker-item-list" class="ticker" tag="div"
-                                                    v-bind:style="{ animationPlayState: 'running' }">
+                                                <transition-group name="ticker-item-list" class="ticker has-text-right" tag="div"
+                                                    v-bind:style="{ animationPlayState: 'running' }" v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
+                                                    v-on:enter-cancelled="tickerUpdated" v-on:before-leave="animationStart"
+                                                    v-on:after-leave="tickerUpdated" v-on:leave-cancelled="tickerUpdated">
                                                     <div class="item" key="statuses" v-cloak>
                                                         <article class="media">
                                                             <figure class="media-left">
