@@ -5,7 +5,7 @@
     "ticker": [
         {
             "name": "Alert",
-            "state": "^(?!0)$",
+            "state": "^[^0]$",
             "sequence": [
                 {
                     "type": "Message",
