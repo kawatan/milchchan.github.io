@@ -547,6 +547,16 @@
             height: 100%;
         }
 
+        #menu>.columns {
+            flex: none;
+            width: 100%;
+        }
+
+        #menu>.columns>.column>.control>.level:first-child {
+            display: flex;
+            flex-direction: column;
+        }
+
         #menu>.columns>.column>.control>.level:first-child>.level-item:nth-child(1) {
             padding: 0px 16px 16px 16px;
         }
@@ -1341,8 +1351,8 @@
         </nav>
         <transition name="reveal">
             <div id="menu" v-if="isRevealed">
-                <div class="columns">
-                    <div class="column is-half is-mobile">
+                <div class="columns is-mobile is-centered">
+                    <div class="column is-half">
                         <div class="control" v-cloak>
                             <nav class="level">
                                 <div class="level-item is-hidden">
