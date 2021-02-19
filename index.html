@@ -861,7 +861,7 @@
             padding: 0px 0px 8px 0px;
         }
 
-        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item>.level {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item:first-of-type>.level {
             display: flex;
             flex-direction: row;
             margin: 0px -16px 0px -16px;
@@ -897,19 +897,12 @@
             margin: 0;
         }
 
-        #input>.columns:first-of-type>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item:nth-last-of-type(2)>.level>.level-item button>span {
-            color: #ffffff;
-        }
-
-        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content {
-            font-size: 0.75em;
-            line-height: 0.75em;
-            color: #ffffff;
-        }
-
-        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content>span {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content span {
             font-family: "Alata", sans-serif;
             padding: 0;
+            font-size: 1.0rem;
+            line-height: 1.0rem;
+            color: #ffffff;
         }
 
         #input>.columns:last-of-type {
@@ -1483,7 +1476,7 @@
                                                     <div class="media-content">
                                                         <div class="content">
                                                             <span class="is-uppercase has-text-weight-bold"
-                                                                v-html="isRecording ? '-' + formatTime(maxRecordTime -timeElapsed) : formatTime(timeElapsed)">
+                                                                v-html="isRecording ? '-' + formatTime(maxRecordTime - timeElapsed) : formatTime(timeElapsed)">
                                                                 N/A
                                                             </span>
                                                         </div>
@@ -1507,10 +1500,12 @@
                                     <div class="field" v-show="words.length > 0">
                                         <div class="clip" v-bind:style="{ width: animatedTickerWidth + 'px' }">
                                             <div class="ticker-wrap">
-                                                <transition-group name="ticker-item-list" class="ticker has-text-right" tag="div"
-                                                    v-bind:style="{ animationPlayState: 'running' }" v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
-                                                    v-on:enter-cancelled="tickerUpdated" v-on:before-leave="animationStart"
-                                                    v-on:after-leave="tickerUpdated" v-on:leave-cancelled="tickerUpdated">
+                                                <transition-group name="ticker-item-list" class="ticker has-text-right"
+                                                    tag="div" v-bind:style="{ animationPlayState: 'running' }"
+                                                    v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
+                                                    v-on:enter-cancelled="tickerUpdated"
+                                                    v-on:before-leave="animationStart" v-on:after-leave="tickerUpdated"
+                                                    v-on:leave-cancelled="tickerUpdated">
                                                     <div class="item" key="statuses" v-cloak>
                                                         <article class="media">
                                                             <figure class="media-left">
@@ -1521,7 +1516,8 @@
                                                             </figure>
                                                         </article>
                                                     </div>
-                                                    <div class="item" v-for="word in take(words, 10)" v-bind:key="word.name">
+                                                    <div class="item" v-for="word in take(words, 10)"
+                                                        v-bind:key="word.name">
                                                         <span class="has-text-weight-bold" v-cloak>{{ word.name
                                                             }}</span>
                                                     </div>
