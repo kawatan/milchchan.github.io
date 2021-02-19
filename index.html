@@ -438,8 +438,8 @@
             margin: 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
-            padding: 16px;
-            background: var(--background-color);
+            padding: 12px;
+            background: transparent;
             background-clip: padding-box;
             /*background: #f5f5f5;
             background: linear-gradient(145deg, #ffffff, #dddddd);
@@ -447,7 +447,7 @@
                 -10px -10px 30px #ffffff;*/
             box-shadow: none;
             height: initial;
-            color: var(--foreground-color);
+            color: #000000;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:first-child button>span {
@@ -488,10 +488,10 @@
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child .level>.level-item:first-child button {
             margin: 0px;
-            border: 0px solid rgba(255, 255, 255, 0.5);
+            border: 0px solid rgba(255, 255, 255, 1);
             border-radius: 290486px;
-            padding: 16px;
-            background: var(--background-color);
+            padding: 12px;
+            background: transparent;
             background-clip: padding-box;
             /*background: #f5f5f5;
             background: linear-gradient(145deg, #ffffff, #dddddd);
@@ -499,7 +499,7 @@
                 -10px -10px 30px #ffffff;*/
             box-shadow: none;
             height: initial;
-            color: var(--foreground-color);
+            color: #000000;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:last-child .level .level-item:nth-of-type(2) {
@@ -538,45 +538,50 @@
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:last-child {
+        #menu {
+            position: fixed;
+            display: flex;
             justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item:nth-child(1) {
+        #menu>.columns>.column>.control>.level:first-child>.level-item:nth-child(1) {
             padding: 0px 16px 16px 16px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item {
+        #menu>.columns>.column>.control>.level:first-child>.level-item {
             margin: 0;
             padding: 0px 16px 16px 16px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level {
+        #menu>.columns>.column>.control>.level:first-child>.level-item>.level {
             margin: 0px -16px 0px -16px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.level>.level-item {
+        #menu>.columns>.column>.control>.level:first-child>.level-item>.level>.level-item {
             margin: 0;
             padding: 0px 16px 0px 16px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child h1 {
+        #menu>.columns>.column>.control>.level:first-child h1 {
             margin: 0px 0px 8px 0px;
             font-size: 1.25rem;
             font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
-            color: var(--foreground-color);
+            color: #ffffff;
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child h2 {
+        #menu>.columns>.column>.control>.level:first-child h2 {
             margin: 0;
             font-size: 0.75rem;
             font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
-            color: var(--foreground-color);
+            color: #ffffff;
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child p {
+        #menu>.columns>.column>.columns:last-child>.column>.control>.level:first-child p {
             font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
             font-size: 1.25rem;
             line-height: 2.5rem;
@@ -584,19 +589,28 @@
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child hr {
+        #menu>.columns>.column>.control>.level:first-child hr {
             margin: 16px auto 16px auto;
             border-width: 0;
             padding: 0;
             width: 32px;
             height: 4px;
-            background-color: var(--foreground-color);
+            background-color: #ffffff;
             text-align: center !important;
             transition: .5s;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button,
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>.button {
+        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item .icon {
+            margin: 0px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
+            border-radius: 290486px;
+            padding: 24px;
+            background: #ffffff;
+            background-clip: padding-box;
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button,
+        #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>.button {
             margin: 0px;
             padding: 0px 8px 0px 8px;
             padding: 12px 24px 12px 24px;
@@ -607,8 +621,8 @@
             height: initial;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item:last-child:not(:first-child)>.media>.media-content>.content>button,
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child>.level-item:last-child:not(:first-child)>.media>.media-content>.content>.button {
+        #heading>.columns>.column>.control>.level:first-child>.level-item:last-child:not(:first-child)>.media>.media-content>.content>button,
+        #heading>.columns>.column>.control>.level:first-child>.level-item:last-child:not(:first-child)>.media>.media-content>.content>.button {
             margin: 16px 0px 0px 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
@@ -617,30 +631,30 @@
             background-clip: padding-box;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item:last-child:not(:first-child)>.media>.media-content>.content>button span,
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item:last-child:not(:first-child)>.media>.media-content>.content>.button span {
+        #heading>.columns>.column>.control>.level:first-child .level-item:last-child:not(:first-child)>.media>.media-content>.content>button span,
+        #heading>.columns>.column>.control>.level:first-child .level-item:last-child:not(:first-child)>.media>.media-content>.content>.button span {
             margin: 0px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item>.media>.media-content>.content>button>.icon:first-child+div,
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item>.media>.media-content>.content>.button .icon:first-child+div {
+        #heading>.columns>.column>.control>.level:first-child .level-item>.media>.media-content>.content>button>.icon:first-child+div,
+        #heading>.columns>.column>.control>.level:first-child .level-item>.media>.media-content>.content>.button .icon:first-child+div {
             margin: 0px 8px 0px 0px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item>.media>.media-content>.content>button>.icon:last-child:not(:first-child),
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item>.media>.media-content>.content>.button .icon:last-child:not(:first-child) {
+        #heading>.columns>.column>.control>.level:first-child .level-item>.media>.media-content>.content>button>.icon:last-child:not(:first-child),
+        #heading>.columns>.column>.control>.level:first-child .level-item>.media>.media-content>.content>.button .icon:last-child:not(:first-child) {
             margin: 0px 0px 0px 8px;
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item>.media>.media-content>.content>button>.clip,
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item>.media>.media-content>.content>.button .clip {
+        #heading>.columns>.column>.control>.level:first-child .level-item>.media>.media-content>.content>button>.clip,
+        #heading>.columns>.column>.control>.level:first-child .level-item>.media>.media-content>.content>.button .clip {
             display: inline-block;
             overflow: hidden;
             box-sizing: content-box;
             height: calc(0.75rem * 1.5);
         }
 
-        #heading>.columns>.column>.columns:last-child>.column>.control>.level:first-child .level-item>.level>.level-item .icon {
+        #heading>.columns>.column>.control>.level:first-child .level-item>.level>.level-item .icon {
             margin: 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
@@ -1195,7 +1209,7 @@
     <div id="app">
         <div id="map" ref="map"></div>
         <transition name="fade">
-            <div class="overlay" v-show="recordedData !== null" v-cloak></div>
+            <div class="overlay" v-show="isRevealed || recordedData !== null" v-cloak></div>
         </transition>
         <transition name="fade">
             <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
@@ -1247,8 +1261,7 @@
                         <div class="column is-full">
                             <div class="columns is-mobile">
                                 <div class="column is-3 is-mobile">
-                                    <button class="button is-white is-hidden" type="button"
-                                        @click="isRevealed = !isRevealed; mode = null;">
+                                    <button class="button is-white" type="button" @click="isRevealed = !isRevealed;">
                                         <span class="icon is-small">
                                             <i class="fas fa-bars"></i>
                                         </span>
@@ -1269,50 +1282,15 @@
                                     </div>
                                 </div>
                                 <div class="column is-3 is-mobile">
-                                    <nav class="level is-hidden">
-                                        <transition name="fade" mode="out-in">
-                                            <div class="level-item" v-if="isRecording" key="recording">
-                                                <button class="button has-text-danger" type="button"
-                                                    v-bind:disabled="user === null" @click="stopRecording">
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-circle"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
-                                            <div class="level-item" v-else key="ready">
-                                                <div class="field has-addons">
-                                                    <p class="control">
-                                                        <button class="button is-white" type="button"
-                                                            v-bind:disabled="user === null" @click="startRecording"
-                                                            v-else key="start">
-                                                            <span class="icon is-small">
-                                                                <i class="fas fa-microphone"></i>
-                                                            </span>
-                                                        </button>
-                                                    </p>
-                                                    <transition name="fade">
-                                                        <p class="control"
-                                                            v-show="recordedData && recordedData.blobs.length > 0">
-                                                            <transition name="fade" mode="out-in">
-                                                                <button class="button is-white" type="button"
-                                                                    v-if="isUploading" key="wait" disabled>
-                                                                    <span class="icon is-small">
-                                                                        <i class="fas fa-spinner updating"></i>
-                                                                    </span>
-                                                                </button>
-                                                                <button class="button is-white" type="button"
-                                                                    v-bind:disabled="user === null" @click="uploadSound"
-                                                                    v-else key="upload">
-                                                                    <span class="icon is-small">
-                                                                        <i class="fas fa-cloud-upload-alt"></i>
-                                                                    </span>
-                                                                </button>
-                                                            </transition>
-                                                        </p>
-                                                    </transition>
-                                                </div>
-                                            </div>
-                                        </transition>
+                                    <nav class="level">
+                                        <div class="level-item">
+                                            <button class="button" type="button" v-bind:disabled="user === null"
+                                                @click="locate()" disabled>
+                                                <span class="icon is-small">
+                                                    <i class="fas fa-location-arrow"></i>
+                                                </span>
+                                            </button>
+                                        </div>
                                     </nav>
                                 </div>
                             </div>
@@ -1361,6 +1339,63 @@
                 </div>
             </div>
         </nav>
+        <transition name="reveal">
+            <div id="menu" v-if="isRevealed">
+                <div class="columns">
+                    <div class="column is-half is-mobile">
+                        <div class="control" v-cloak>
+                            <nav class="level">
+                                <div class="level-item is-hidden">
+                                    <article class="media">
+                                        <figure class="media-content">
+                                            <p class="image is-64x64">
+                                                <img class="is-rounded" src="/images/Milch.png" alt="ミルヒちゃん">
+                                            </p>
+                                        </figure>
+                                    </article>
+                                </div>
+                                <div class="level-item">
+                                    <article class="media">
+                                        <div class="media-content">
+                                            <div class="content">
+                                                <h1 class="has-text-weight-bold">
+                                                    wonderland.milchchan.com</h1>
+                                            </div>
+                                        </div>
+                                    </article>
+                                </div>
+                                <div class="level-item">
+                                    <article class="media">
+                                        <div class="media-content">
+                                            <hr>
+                                        </div>
+                                    </article>
+                                </div>
+                                <div class="level-item">
+                                    <div class="level is-mobile">
+                                        <div class="level-item">
+                                            <a href="https://twitter.com/milchchan" target="_blank"><span
+                                                    class="icon is-small has-text-black"><i
+                                                        class="fab fa-twitter"></i></span></a>
+                                        </div>
+                                        <div class="level-item">
+                                            <a href="https://instagram.com/milchchan" target="_blank"><span
+                                                    class="icon is-small has-text-black"><i
+                                                        class="fab fa-instagram"></i></span></a>
+                                        </div>
+                                        <div class="level-item">
+                                            <a href="https://github.com/milchchan" target="_blank"><span
+                                                    class="icon is-small has-text-black"><i
+                                                        class="fab fa-github"></i></span></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
         <nav id="input" class="navbar is-fixed-bottom" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
                 <div class="column is-half has-content-centered is-mobile">
@@ -1424,10 +1459,11 @@
                                     <div class="level-item">
                                         <div class="level is-mobile">
                                             <div class="level-item">
-                                                <button class="button" type="button" v-bind:disabled="user === null"
-                                                    @click="locate()" disabled>
+                                                <button class="button" type="button"
+                                                    v-bind:disabled="recentSounds.length === 0" @click="backward()"
+                                                    disabled>
                                                     <span class="icon is-small">
-                                                        <i class="fas fa-location-arrow"></i>
+                                                        <i class="fas fa-history"></i>
                                                     </span>
                                                 </button>
                                             </div>
