@@ -29,12 +29,12 @@
         :root {
             --background-color: #f1f1f1;
             --foreground-color: #000000;
-            --overlay-color: rgba(0, 0, 0, 0.75);
+            --overlay-color: rgba(255, 255, 255, 0.75);
         }
 
         @media (prefers-color-scheme: dark) {
             :root {
-                --background-color: #6f6f6f;
+                /*--background-color: #6f6f6f;*/
                 --foreground-color: #ffffff;
             }
         }
@@ -373,7 +373,8 @@
             height: 100vh;
             transform: translate3d(0, 0%, 0);
             overflow: hidden;
-            background: #64dafe;
+            /*background: #64dafe;*/
+            background: #ffffff;
         }
 
         .sunrise {
@@ -395,7 +396,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('/images/Background-Dark.png') 50% 50% repeat;
+            background: url('/images/Background-Light.png') 50% 50% repeat;
             background-size: 100px 100px;
             animation: loop 10s linear infinite;
             width: 100%;
@@ -534,7 +535,7 @@
             font-family: 'Alata', sans-serif;
             font-size: 4rem !important;
             line-height: 4rem !important;
-            color: #ffc547;
+            color: #000000;
             transition: .5s;
         }
 
@@ -579,7 +580,7 @@
             margin: 0px 0px 8px 0px;
             font-size: 1.25rem;
             font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
-            color: #ffffff;
+            color: #000000;
             transition: .5s;
         }
 
@@ -587,7 +588,7 @@
             margin: 0;
             font-size: 0.75rem;
             font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
-            color: #ffffff;
+            color: #000000;
             transition: .5s;
         }
 
@@ -605,7 +606,7 @@
             padding: 0;
             width: 32px;
             height: 4px;
-            background-color: #ffffff;
+            background-color: #000000;
             text-align: center !important;
             transition: .5s;
         }
@@ -914,7 +915,7 @@
                 -10px -10px 30px #ffffff;*/
             box-shadow: none;
             height: initial;
-            color: #64dafe;
+            color: #cba9e1;
         }
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item button>span {
@@ -999,6 +1000,7 @@
         .fade-enter-from,
         .fade-leave-to {
             opacity: 0;
+            visibility: hidden;
         }
 
         .reveal-enter-active,
@@ -1178,7 +1180,7 @@
             }
 
             .loading {
-                background: url('/images/Background-Dark@2x.png') 50% 50% repeat;
+                background: url('/images/Background-Light@2x.png') 50% 50% repeat;
                 background-size: 100px 100px;
             }
         }
@@ -1196,7 +1198,7 @@
             }
 
             .loading {
-                background: url('/images/Background-Dark@3x.png') 50% 50% repeat;
+                background: url('/images/Background-Light@3x.png') 50% 50% repeat;
                 background-size: 100px 100px;
             }
         }
@@ -1248,7 +1250,7 @@
             </div>
         </transition>
         <transition name="fade" v-cloak>
-            <div class="loading" v-if="isRecording">
+            <div class="loading" v-show="isRecording">
                 <div class="wrapper image is-64x64">
                     <picture class="image has-ratio">
                         <source
@@ -1367,9 +1369,11 @@
                                 <div class="level-item">
                                     <article class="media">
                                         <div class="media-content">
-                                            <div class="content">
-                                                <h1 class="has-text-weight-bold">
-                                                    wonderland.milchchan.com</h1>
+                                            <div class="content has-text-centered">
+                                                <h1 class="is-uppercase has-text-weight-bold">
+                                                    Wonderland</h1>
+                                                <h2 class="has-text-weight-bold">
+                                                    wonderland.milchchan.com</h2>
                                             </div>
                                         </div>
                                     </article>
