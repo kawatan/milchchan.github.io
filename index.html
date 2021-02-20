@@ -392,6 +392,7 @@
         }
 
         .loading {
+            pointer-events: none;
             position: fixed;
             display: flex;
             justify-content: center;
@@ -994,13 +995,17 @@
 
         .fade-enter-active,
         .fade-leave-active {
-            transition: opacity 0.5s;
+            transition: all 0.5s;
         }
 
         .fade-enter-from,
         .fade-leave-to {
             opacity: 0;
-            visibility: hidden;
+        }
+
+        .fade-enter-to,
+        .fade-leave-from {
+            opacity: 1;
         }
 
         .reveal-enter-active,
@@ -1264,7 +1269,7 @@
             </div>
         </transition>
         <transition name="blind" v-on:after-enter="blinded">
-            <div class="blind" v-if="isBlinded" v-cloak></div>
+            <div class="blind" v-show="isBlinded" v-cloak></div>
         </transition>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
@@ -1608,7 +1613,7 @@
      https://firebase.google.com/docs/web/setup#available-libraries -->
     <script src="https://www.gstatic.com/firebasejs/7.14.4/firebase-analytics.js"></script>
     <!--<script src="https://unpkg.com/vue@next"></script>-->
-    <script src="https://unpkg.com/vue@3.0.3/dist/vue.global.prod.js"></script>
+    <script src="https://unpkg.com/vue@3.0.5/dist/vue.global.prod.js"></script>
     <script src="/js/recorder.js"></script>
     <script src="/js/index.js"></script>
 </body>
