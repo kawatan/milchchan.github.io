@@ -70,7 +70,7 @@ var Recorder = exports.Recorder = (function () {
         };
 
         source.connect(this.node);
-        this.node.connect(this.context.destination); //this should not be necessary
+        //this.node.connect(this.context.destination); //this should not be necessary
 
         var self = {};
         this.worker = new _inlineWorker2.default(function () {
