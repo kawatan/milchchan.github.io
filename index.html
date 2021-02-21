@@ -947,19 +947,19 @@
             line-height: 0.75rem !important;
         }
 
-        #ticker>div>.control {
+        #ticker>.columns>.column>.control {
             margin: 4px 16px 4px 16px;
             height: max(16px, 0.5rem);
             font-size: 0.75rem !important;
             line-height: 0.75rem !important;
         }
 
-        #ticker>div>.control .level:first-child .level-item {
+        #ticker>.columns>.column>.control .level:first-child .level-item {
             display: flex;
             justify-content: center;
         }
 
-        #ticker>div>.control .level:first-child .level-item .field .clip {
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip {
             margin: 0;
             border: 0px solid var(--foreground-color);
             padding: 0px;
@@ -970,33 +970,33 @@
             width: 100%;
         }
 
-        #ticker>div>.control .level:first-child .level-item .field .ticker-wrap {
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .ticker-wrap {
             display: flex;
             margin: 0;
             width: 100%;
             mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
         }
 
-        #ticker>div>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker {
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker {
             animation: ticker 30s linear infinite;
         }
 
-        #ticker>div>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             padding: 0px 8px;
             color: #ffffff;
         }
 
-        #ticker>div>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
             margin: 0;
         }
 
-        #ticker>div>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
             width: 16px;
             height: 16px;
         }
 
-        #ticker>div>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,
-        #ticker>div>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content,
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             vertical-align: middle;
         }
 
@@ -1244,56 +1244,58 @@
             <div class="overlay" v-show="isRevealed || recordedData !== null" v-cloak></div>
         </transition>
         <div id="ticker" class="navbar is-fixed-top">
-            <div class="navbar-item is-expanded">
-                <div class="control has-text-centered">
-                    <nav class="level" v-cloak>
-                        <div class="level-item has-text-centered">
-                            <transition name="fade">
-                                <div class="field" v-show="words.length > 0">
-                                    <div class="clip" v-bind:style="{ width: animatedTickerWidth + 'px' }">
-                                        <div class="ticker-wrap">
-                                            <transition-group name="ticker-item-list" class="ticker has-text-right"
-                                                tag="div" v-bind:style="{ animationPlayState: 'running' }"
-                                                v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
-                                                v-on:enter-cancelled="tickerUpdated" v-on:before-leave="animationStart"
-                                                v-on:after-leave="tickerUpdated" v-on:leave-cancelled="tickerUpdated">
-                                                <div class="item" key="statuses" v-cloak>
-                                                    <article class="media">
-                                                        <figure class="media-left">
-                                                            <picture class="image has-ratio is-16x16">
-                                                                <img class="is-rounded" src="/images/Luna.png"
-                                                                    width="16px" height="16px" alt="Luna">
-                                                            </picture>
-                                                        </figure>
-                                                    </article>
-                                                </div>
-                                                <div class="item" v-for="word in take(words, 10)"
-                                                    v-bind:key="word.name">
-                                                    <span class="has-text-weight-bold" v-cloak>{{ word.name
-                                                        }}</span>
-                                                </div>
-                                                <div class="item" key="statuses-alt" v-cloak>
-                                                    <article class="media">
-                                                        <figure class="media-left">
-                                                            <picture class="image has-ratio is-16x16">
-                                                                <img class="is-rounded" src="/images/Luna.png"
-                                                                    width="16px" height="16px" alt="Luna">
-                                                            </picture>
-                                                        </figure>
-                                                    </article>
-                                                </div>
-                                                <div class="item" v-for="word in take(words, 10)"
-                                                    v-bind:key="word.name + '-alt'">
-                                                    <span class="has-text-weight-bold" v-cloak>{{ word.name
-                                                        }}</span>
-                                                </div>
-                                            </transition-group>
+            <div class="navbar-item is-expanded columns is-desktop">
+                <div class="column is-full has-content-centered" v-cloak>
+                    <div class="control has-text-centered">
+                        <div class="level">
+                            <div class="level-item has-text-centered">
+                                <transition name="fade">
+                                    <div class="field" v-show="words.length > 0">
+                                        <div class="clip" v-bind:style="{ width: animatedTickerWidth + 'px' }">
+                                            <div class="ticker-wrap">
+                                                <transition-group name="ticker-item-list" class="ticker has-text-right"
+                                                    tag="div" v-bind:style="{ animationPlayState: 'running' }"
+                                                    v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
+                                                    v-on:enter-cancelled="tickerUpdated" v-on:before-leave="animationStart"
+                                                    v-on:after-leave="tickerUpdated" v-on:leave-cancelled="tickerUpdated">
+                                                    <div class="item" key="statuses" v-cloak>
+                                                        <article class="media">
+                                                            <figure class="media-left">
+                                                                <picture class="image has-ratio is-16x16">
+                                                                    <img class="is-rounded" src="/images/Luna.png"
+                                                                        width="16px" height="16px" alt="Luna">
+                                                                </picture>
+                                                            </figure>
+                                                        </article>
+                                                    </div>
+                                                    <div class="item" v-for="word in take(words, 10)"
+                                                        v-bind:key="word.name">
+                                                        <span class="has-text-weight-bold" v-cloak>{{ word.name
+                                                            }}</span>
+                                                    </div>
+                                                    <div class="item" key="statuses-alt" v-cloak>
+                                                        <article class="media">
+                                                            <figure class="media-left">
+                                                                <picture class="image has-ratio is-16x16">
+                                                                    <img class="is-rounded" src="/images/Luna.png"
+                                                                        width="16px" height="16px" alt="Luna">
+                                                                </picture>
+                                                            </figure>
+                                                        </article>
+                                                    </div>
+                                                    <div class="item" v-for="word in take(words, 10)"
+                                                        v-bind:key="word.name + '-alt'">
+                                                        <span class="has-text-weight-bold" v-cloak>{{ word.name
+                                                            }}</span>
+                                                    </div>
+                                                </transition-group>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </transition>
+                                </transition>
+                            </div>
                         </div>
-                    </nav>
+                    </div>
                 </div>
             </div>
         </div>
