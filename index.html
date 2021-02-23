@@ -245,7 +245,7 @@
 
         .progress {
             position: fixed;
-            margin: 0;
+            margin: calc(max(16px, 0.5rem) + 8px) 0px 0px 0px;
             padding: 0;
             border-radius: 0px;
             width: 0%;
@@ -1311,11 +1311,6 @@
                 </div>
             </div>
         </div>
-        <transition name="fade">
-            <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
-                v-cloak>
-            </div>
-        </transition>
         <transition name="fade" v-on:after-leave="backgroundImages.splice(0);"
             v-on:leave-cancelled="backgroundImages.splice(0);">
             <div class="sunrise" v-show="isCompleted" v-cloak>
@@ -1353,6 +1348,11 @@
         </transition>
         <transition name="blind" v-on:after-enter="blinded">
             <div class="blind" v-show="isBlinded" v-cloak></div>
+        </transition>
+        <transition name="fade">
+            <div class="progress" v-if="progress !== 0.0" v-bind:style="{width: String(100.0 * progress) + '%'}"
+                v-cloak>
+            </div>
         </transition>
         <nav id="heading" class="navbar is-fixed-top" role="navigation">
             <div class="navbar-item is-expanded columns is-desktop">
