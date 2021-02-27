@@ -536,13 +536,14 @@
             margin: 0;
         }
 
-        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field picture.icon {
-            margin: 0px 4px 0px 0px;
-        }
-
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
+            pointer-events: none;
             margin: 0;
             padding: 16px;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field picture.icon {
+            margin: 0px 4px 0px 0px;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control>.level:nth-last-of-type(1) {
@@ -959,6 +960,7 @@
         }
 
         #ticker>.columns>.column>.control {
+            pointer-events: none;
             margin: 4px 16px 4px 16px;
             height: max(16px, 0.5rem);
             font-size: 0.75rem !important;
