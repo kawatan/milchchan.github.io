@@ -991,6 +991,7 @@
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker {
+            transform: translate3d(0%, 0, 0);
             animation: ticker 30s linear 0s infinite;
         }
 
@@ -1171,7 +1172,7 @@
 
         @keyframes ticker {
             0% {
-                transform: translate3d(0, 0, 0);
+                transform: translate3d(0%, 0, 0);
                 visibility: visible;
             }
 
