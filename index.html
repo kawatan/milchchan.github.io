@@ -993,6 +993,7 @@
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker {
             transform: translate3d(0%, 0, 0);
             animation: ticker 30s linear 0s infinite;
+            animation-play-state: paused;
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
@@ -1268,10 +1269,12 @@
                                         <div class="clip" v-bind:style="{ width: animatedTickerWidth + 'px' }">
                                             <div class="ticker-wrap">
                                                 <transition-group name="ticker-item-list" class="ticker has-text-right"
-                                                    tag="div" v-bind:style="{ animationPlayState: 'running' }"
+                                                    tag="div"
+                                                    v-bind:style="{ animationPlayState: words.length > 0 ? 'running' : 'paused' }"
                                                     v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
-                                                    v-on:enter-cancelled="tickerUpdated" v-on:before-leave="animationStart"
-                                                    v-on:after-leave="tickerUpdated" v-on:leave-cancelled="tickerUpdated">
+                                                    v-on:enter-cancelled="tickerUpdated"
+                                                    v-on:before-leave="animationStart" v-on:after-leave="tickerUpdated"
+                                                    v-on:leave-cancelled="tickerUpdated">
                                                     <div class="item" key="statuses" v-cloak>
                                                         <article class="media">
                                                             <figure class="media-left">
