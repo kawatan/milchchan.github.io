@@ -44,17 +44,7 @@
       transition: .5s;
     }
 
-    h1 {
-      margin: 0;
-      padding: 0;
-      color: var(--text-color);
-      font-family: 'Roboto', 'Helvetica', 'Segoe UI', 'Arial', sans-serif;
-      font-size: 50vmin;
-      font-weight: bold;
-      line-height: 50vmin;
-    }
-
-    .background {
+    body::before {
       z-index: 0;
       display: block;
       position: fixed;
@@ -64,8 +54,19 @@
       min-height: 100%;
       background: url('/images/404.png') 50% 50% no-repeat;
       background-size: cover;
+      content: "";
       transform-origin: 50% 50%;
       animation: load 0.5s ease-out;
+    }
+
+    h1 {
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+      font-family: 'Roboto', 'Helvetica', 'Segoe UI', 'Arial', sans-serif;
+      font-size: 50vmin;
+      font-weight: bold;
+      line-height: 50vmin;
     }
 
     #message {
@@ -134,7 +135,6 @@
 </head>
 
 <body>
-  <div class="background"></div>
   <div id="message">
     <h1>404</h1>
   </div>
