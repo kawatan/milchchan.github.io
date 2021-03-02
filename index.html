@@ -1390,7 +1390,8 @@
                                                     <article class="media">
                                                         <figure class="media-left" v-if="notification.image" v-cloak>
                                                             <span class="image is-24x24">
-                                                                <img class="is-rounded" v-bind:src="notification.image"
+                                                                <img class="is-rounded"
+                                                                    v-bind:src="notification.image instanceof Object ? (isDarkMode ? notification.image.dark : notification.image.light) : notification.image"
                                                                     alt="Avatar" v-cloak>
                                                             </span>
                                                         </figure>
@@ -1398,7 +1399,7 @@
                                                             <div class="content has-text-left"
                                                                 v-if="notification.accent">
                                                                 <span class="is-size-7 has-text-weight-bold"
-                                                                    v-bind:style="{ color: notification.accent }"
+                                                                    v-bind:style="{ color: notification.accent instanceof Object ? (isDarkMode ? notification.accent.dark : notification.accent.light) : notification.accent }"
                                                                     v-cloak>
                                                                     {{ notification.text }}
                                                                 </span>
