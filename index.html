@@ -22,13 +22,12 @@
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <!--<link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">-->
+    <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/922939073a.js" crossorigin="anonymous"></script>
     <script type="text/javascript"
         src="https://www.bing.com/api/maps/mapcontrol?key=AqtU8nXtdnRHFfPmWICfOHBtcPzPOoJueZtb2D_Rkbsx6dyuhx_xaH7G-hfB2Ylb&setLang=ja&setMkt=ja-JP"></script>
@@ -86,8 +85,7 @@
         span,
         input,
         button {
-            /*font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;*/
-            font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "M PLUS Rounded 1c", sans-serif;
+            font-family: "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Noto Sans JP", sans-serif;
         }
 
         input::placeholder {
@@ -291,7 +289,7 @@
         }
 
         .ticker-wrap .ticker .item .media {
-            align-items: center;
+            align-items: baseline;
         }
 
         .ticker-wrap .ticker .item .media .media-left {
@@ -1269,14 +1267,12 @@
                                                         v-bind:key="word.name">
                                                         <article class="media" v-if="word.image" v-cloak>
                                                             <figure class="media-left">
-                                                                <span class="image is-16x16">
-                                                                    <picture v-if="word.image instanceof Object">
-                                                                        <source v-bind:srcset="word.image.dark"
-                                                                            media="(prefers-color-scheme: dark)">
-                                                                        <img class="is-rounded" v-bind:src="word.image.light" width="16"
-                                                                            height="16" v-bind:alt="word.name">
-                                                                    </picture>
-                                                                </span>
+                                                                <picture class="image has-ratio is-16x16" v-if="word.image instanceof Object">
+                                                                    <source v-bind:srcset="word.image.dark"
+                                                                        media="(prefers-color-scheme: dark)">
+                                                                    <img class="is-rounded" v-bind:src="word.image.light" width="16"
+                                                                        height="16" v-bind:alt="word.name">
+                                                                </picture>
                                                             </figure>
                                                             <div class="media-content">
                                                                 <div class="content has-text-left">
@@ -1303,14 +1299,12 @@
                                                         v-bind:key="word.name + '-alt'">
                                                         <article class="media" v-if="word.image" v-cloak>
                                                             <figure class="media-left">
-                                                                <span class="image is-16x16">
-                                                                    <picture v-if="word.image instanceof Object">
-                                                                        <source v-bind:srcset="word.image.dark"
-                                                                            media="(prefers-color-scheme: dark)">
-                                                                        <img class="is-rounded" v-bind:src="word.image.light" width="16"
-                                                                            height="16" v-bind:alt="word.name">
-                                                                    </picture>
-                                                                </span>
+                                                                <picture class="image has-ratio is-16x16" v-if="word.image instanceof Object">
+                                                                    <source v-bind:srcset="word.image.dark"
+                                                                        media="(prefers-color-scheme: dark)">
+                                                                    <img class="is-rounded" v-bind:src="word.image.light" width="16"
+                                                                        height="16" v-bind:alt="word.name">
+                                                                </picture>
                                                             </figure>
                                                             <div class="media-content">
                                                                 <div class="content has-text-left">
