@@ -21,12 +21,14 @@
     <title>Wonderland</title>
     <link rel="icon" type="image/png" href="/favicon.png">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Noto+Sans+JP" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Alata&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@400;700&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/922939073a.js" crossorigin="anonymous"></script>
     <script type="text/javascript"
         src="https://www.bing.com/api/maps/mapcontrol?key=AqtU8nXtdnRHFfPmWICfOHBtcPzPOoJueZtb2D_Rkbsx6dyuhx_xaH7G-hfB2Ylb&setLang=ja&setMkt=ja-JP"></script>
@@ -979,7 +981,7 @@
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
-            margin: 0;
+            margin: 0px 16px 0px 0px;
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
@@ -1254,7 +1256,7 @@
                                                     v-on:leave-cancelled="tickerUpdated">
                                                     <div class="item" key="statuses" v-cloak>
                                                         <article class="media">
-                                                            <figure class="media-left">
+                                                            <figure class="media-content">
                                                                 <picture class="image has-ratio is-16x16">
                                                                     <img class="is-rounded" src="/images/Luna.png"
                                                                         width="16px" height="16px" alt="Luna">
@@ -1264,12 +1266,31 @@
                                                     </div>
                                                     <div class="item" v-for="word in take(words, 10)"
                                                         v-bind:key="word.name">
-                                                        <span class="has-text-weight-bold" v-cloak>{{ word.name
+                                                        <article class="media" v-if="word.image" v-cloak>
+                                                            <figure class="media-left">
+                                                                <span class="image is-16x16">
+                                                                    <picture v-if="word.image instanceof Object">
+                                                                        <source v-bind:srcset="word.image.dark"
+                                                                            media="(prefers-color-scheme: dark)">
+                                                                        <img class="is-rounded" v-bind:src="word.image.light" width="16"
+                                                                            height="16" v-bind:alt="word.name">
+                                                                    </picture>
+                                                                </span>
+                                                            </figure>
+                                                            <div class="media-content">
+                                                                <div class="content has-text-left">
+                                                                    <span
+                                                                        class="has-text-weight-bold">{{ word
+                                                                        }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                        <span class="has-text-weight-bold" v-else v-cloak>{{ word.name
                                                             }}</span>
                                                     </div>
                                                     <div class="item" key="statuses-alt" v-cloak>
                                                         <article class="media">
-                                                            <figure class="media-left">
+                                                            <figure class="media-content">
                                                                 <picture class="image has-ratio is-16x16">
                                                                     <img class="is-rounded" src="/images/Luna.png"
                                                                         width="16px" height="16px" alt="Luna">
@@ -1279,7 +1300,26 @@
                                                     </div>
                                                     <div class="item" v-for="word in take(words, 10)"
                                                         v-bind:key="word.name + '-alt'">
-                                                        <span class="has-text-weight-bold" v-cloak>{{ word.name
+                                                        <article class="media" v-if="word.image" v-cloak>
+                                                            <figure class="media-left">
+                                                                <span class="image is-16x16">
+                                                                    <picture v-if="word.image instanceof Object">
+                                                                        <source v-bind:srcset="word.image.dark"
+                                                                            media="(prefers-color-scheme: dark)">
+                                                                        <img class="is-rounded" v-bind:src="word.image.light" width="16"
+                                                                            height="16" v-bind:alt="word.name">
+                                                                    </picture>
+                                                                </span>
+                                                            </figure>
+                                                            <div class="media-content">
+                                                                <div class="content has-text-left">
+                                                                    <span
+                                                                        class="has-text-weight-bold">{{ word
+                                                                        }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </article>
+                                                        <span class="has-text-weight-bold" v-else v-cloak>{{ word.name
                                                             }}</span>
                                                     </div>
                                                 </transition-group>
