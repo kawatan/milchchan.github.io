@@ -28,6 +28,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Hind:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/922939073a.js" crossorigin="anonymous"></script>
     <script type="text/javascript"
         src="https://www.bing.com/api/maps/mapcontrol?key=AqtU8nXtdnRHFfPmWICfOHBtcPzPOoJueZtb2D_Rkbsx6dyuhx_xaH7G-hfB2Ylb&setLang=ja&setMkt=ja-JP"></script>
@@ -993,6 +994,11 @@
             vertical-align: middle;
         }
 
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content .content {
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
+            transform: rotate(0.03deg);
+        }
+
         .updating {
             animation: updating 1s linear infinite;
         }
@@ -1265,8 +1271,8 @@
                                                     </div>
                                                     <div class="item" v-for="word in take(words, 10)"
                                                         v-bind:key="word.name">
-                                                        <article class="media" v-if="word.image" v-cloak>
-                                                            <figure class="media-left">
+                                                        <article class="media" v-cloak>
+                                                            <figure class="media-left" v-if="word.image">
                                                                 <picture class="image has-ratio is-16x16" v-if="word.image instanceof Object">
                                                                     <source v-bind:srcset="word.image.dark"
                                                                         media="(prefers-color-scheme: dark)">
@@ -1277,13 +1283,11 @@
                                                             <div class="media-content">
                                                                 <div class="content has-text-left">
                                                                     <span
-                                                                        class="has-text-weight-bold">{{ word
+                                                                        class="has-text-weight-bold">{{ word.name
                                                                         }}</span>
                                                                 </div>
                                                             </div>
                                                         </article>
-                                                        <span class="has-text-weight-bold" v-else v-cloak>{{ word.name
-                                                            }}</span>
                                                     </div>
                                                     <div class="item" key="statuses-alt" v-cloak>
                                                         <article class="media">
@@ -1297,8 +1301,8 @@
                                                     </div>
                                                     <div class="item" v-for="word in take(words, 10)"
                                                         v-bind:key="word.name + '-alt'">
-                                                        <article class="media" v-if="word.image" v-cloak>
-                                                            <figure class="media-left">
+                                                        <article class="media" v-cloak>
+                                                            <figure class="media-left" v-if="word.image">
                                                                 <picture class="image has-ratio is-16x16" v-if="word.image instanceof Object">
                                                                     <source v-bind:srcset="word.image.dark"
                                                                         media="(prefers-color-scheme: dark)">
@@ -1309,13 +1313,11 @@
                                                             <div class="media-content">
                                                                 <div class="content has-text-left">
                                                                     <span
-                                                                        class="has-text-weight-bold">{{ word
+                                                                        class="has-text-weight-bold">{{ word.name
                                                                         }}</span>
                                                                 </div>
                                                             </div>
                                                         </article>
-                                                        <span class="has-text-weight-bold" v-else v-cloak>{{ word.name
-                                                            }}</span>
                                                     </div>
                                                 </transition-group>
                                             </div>
