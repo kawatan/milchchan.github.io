@@ -290,7 +290,7 @@
         }
 
         .ticker-wrap .ticker .item .media {
-            align-items: baseline;
+            align-items: center;
         }
 
         .ticker-wrap .ticker .item .media .media-left {
@@ -1259,61 +1259,51 @@
                                                     v-on:enter-cancelled="tickerUpdated"
                                                     v-on:before-leave="animationStart" v-on:after-leave="tickerUpdated"
                                                     v-on:leave-cancelled="tickerUpdated">
-                                                    <div class="item" key="statuses" v-cloak>
-                                                        <article class="media">
-                                                            <figure class="media-content">
-                                                                <picture class="image has-ratio is-16x16">
-                                                                    <img class="is-rounded" src="/images/Luna.png"
-                                                                        width="16px" height="16px" alt="Luna">
-                                                                </picture>
-                                                            </figure>
-                                                        </article>
-                                                    </div>
                                                     <div class="item" v-for="word in take(words, 10)"
                                                         v-bind:key="word.name">
                                                         <article class="media" v-cloak>
                                                             <figure class="media-left" v-if="word.image">
-                                                                <picture class="image has-ratio is-16x16" v-if="word.image instanceof Object">
+                                                                <picture class="image has-ratio is-16x16"
+                                                                    v-if="word.image instanceof Object">
                                                                     <source v-bind:srcset="word.image.dark"
                                                                         media="(prefers-color-scheme: dark)">
-                                                                    <img class="is-rounded" v-bind:src="word.image.light" width="16"
+                                                                    <img class="is-rounded"
+                                                                        v-bind:src="word.image.light" width="16"
                                                                         height="16" v-bind:alt="word.name">
+                                                                </picture>
+                                                                <picture class="image has-ratio is-16x16" v-else>
+                                                                    <img class="is-rounded" v-bind:src="word.image"
+                                                                        width="16" height="16" v-bind:alt="word.name">
                                                                 </picture>
                                                             </figure>
                                                             <div class="media-content">
                                                                 <div class="content has-text-left">
-                                                                    <span
-                                                                        class="has-text-weight-bold">{{ word.name
+                                                                    <span class="has-text-weight-bold">{{ word.name
                                                                         }}</span>
                                                                 </div>
                                                             </div>
-                                                        </article>
-                                                    </div>
-                                                    <div class="item" key="statuses-alt" v-cloak>
-                                                        <article class="media">
-                                                            <figure class="media-content">
-                                                                <picture class="image has-ratio is-16x16">
-                                                                    <img class="is-rounded" src="/images/Luna.png"
-                                                                        width="16px" height="16px" alt="Luna">
-                                                                </picture>
-                                                            </figure>
                                                         </article>
                                                     </div>
                                                     <div class="item" v-for="word in take(words, 10)"
                                                         v-bind:key="word.name + '-alt'">
                                                         <article class="media" v-cloak>
                                                             <figure class="media-left" v-if="word.image">
-                                                                <picture class="image has-ratio is-16x16" v-if="word.image instanceof Object">
+                                                                <picture class="image has-ratio is-16x16"
+                                                                    v-if="word.image instanceof Object">
                                                                     <source v-bind:srcset="word.image.dark"
                                                                         media="(prefers-color-scheme: dark)">
-                                                                    <img class="is-rounded" v-bind:src="word.image.light" width="16"
+                                                                    <img class="is-rounded"
+                                                                        v-bind:src="word.image.light" width="16"
                                                                         height="16" v-bind:alt="word.name">
+                                                                </picture>
+                                                                <picture class="image has-ratio is-16x16" v-else>
+                                                                    <img class="is-rounded" v-bind:src="word.image"
+                                                                        width="16" height="16" v-bind:alt="word.name">
                                                                 </picture>
                                                             </figure>
                                                             <div class="media-content">
                                                                 <div class="content has-text-left">
-                                                                    <span
-                                                                        class="has-text-weight-bold">{{ word.name
+                                                                    <span class="has-text-weight-bold">{{ word.name
                                                                         }}</span>
                                                                 </div>
                                                             </div>
