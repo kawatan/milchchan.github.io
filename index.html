@@ -988,6 +988,9 @@
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .item {
             padding: 0px 8px;
             color: #ffffff;
+            height: max(16px, 0.75rem);
+            font-size: 0.75rem !important;
+            line-height: 1.0rem !important;
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media {
@@ -1012,7 +1015,7 @@
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content .content span {
             font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
-            height: 0.76rem !important;
+            height: 0.75rem !important;
         }
 
         .updating {
@@ -1586,15 +1589,6 @@
                                 <div class="level is-mobile">
                                     <div class="level-item">
                                         <div class="level is-mobile">
-                                            <div class="level-item">
-                                                <button class="button" type="button"
-                                                    v-bind:disabled="recentSounds.length === 0" @click="backward()"
-                                                    disabled>
-                                                    <span class="icon is-small">
-                                                        <i class="fas fa-history"></i>
-                                                    </span>
-                                                </button>
-                                            </div>
                                             <div class="level-item" ref="playback">
                                                 <transition name="fade" mode="out-in">
                                                     <button class="button" type="button" @click="stopSound()"
@@ -1611,6 +1605,24 @@
                                                         </span>
                                                     </button>
                                                 </transition>
+                                            </div>
+                                            <div class="level-item">
+                                                <button class="button" type="button"
+                                                    v-bind:disabled="recentSounds.length === 0" @click="backward()"
+                                                    disabled>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-history"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="level-item">
+                                                <button class="button" type="button"
+                                                    v-bind:disabled="recentSounds.length === 0" @click="shuffle()"
+                                                    disabled>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-random"></i>
+                                                    </span>
+                                                </button>
                                             </div>
                                             <div class="level-item">
                                                 <transition name="fade" mode="out-in">
