@@ -545,6 +545,11 @@
             width: 100%;
         }
 
+        #menu>.columns>.column>.control {
+            margin: 0;
+            padding: 16px 16px 16px 16px;
+        }
+
         #menu>.columns>.column>.control>.level:first-child {
             display: flex;
             flex-direction: column;
@@ -695,7 +700,7 @@
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column {
             display: flex;
             justify-content: center;
-            align-items: flex-end;
+            align-items: flex-start;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column>div {
@@ -704,8 +709,8 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column>div .control {
-            margin: -8px 0px -8px 0px;
-            padding: 16px 16px 16px 16px;
+            margin: 0;
+            padding: 0px 16px 0px 16px;
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:nth-last-of-type(1)>.column>div .control .level {
@@ -713,7 +718,7 @@
             align-items: center;
             justify-content: center;
             margin: 0;
-            padding: 8px 0px 8px 0px;
+            padding: 16px 0px 0px 0px;
         }
 
         #heading .notification {
@@ -824,13 +829,13 @@
         #input>.columns:first-of-type>.column>.control:last-of-type>.level {
             display: block;
             margin: 0;
-            padding: 16px 16px 24px 16px;
+            padding: 0px 16px 24px 16px;
         }
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level:not(:last-of-type) {
             display: block;
             margin: 0;
-            padding: 16px 16px 0px 16px;
+            padding: 0px 16px 16px 16px;
         }
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:not(:last-of-type) {
@@ -1075,13 +1080,13 @@
             transform: translate3d(0, -100%, 0);
         }
 
-        .notification-list-enter-active,
+        /*.notification-list-enter-active,
         .notification-list-leave-active {
             transition: all 0.5s ease;
-        }
+        }*/
 
-        .notification-list-move {
-            transition: transform 0.5s ease;
+        .notification-list-item {
+            transition: all 0.5s ease;
         }
 
         .notification-list-enter-from {
@@ -1100,10 +1105,10 @@
             transform: translate3d(0%, 0%, 0);
         }
 
-        .ticker-item-list-enter-active,
+        /*.ticker-item-list-enter-active,
         .ticker-item-list-leave-active {
             transition: all 0.5s ease;
-        }
+        }*/
 
         .ticker-item-list-item {
             transition: all 0.5s ease;
@@ -1278,7 +1283,7 @@
                                                     v-on:enter-cancelled="tickerUpdated"
                                                     v-on:before-leave="animationStart" v-on:after-leave="tickerUpdated"
                                                     v-on:leave-cancelled="tickerUpdated">
-                                                    <div class="item" v-for="word in take(words, 10)"
+                                                    <div class="item ticker-item-list-item" v-for="word in take(words, 10)"
                                                         v-bind:key="word.name">
                                                         <article class="media" v-cloak>
                                                             <figure class="media-left" v-if="word.image">
@@ -1430,7 +1435,7 @@
                                             v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
                                             v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart"
                                             v-on:after-leave="animationEnd" v-on:leave-cancelled="animationEnd" v-cloak>
-                                            <nav class="level" v-for="notification in notifications"
+                                            <nav class="level notification-list-item" v-for="notification in notifications"
                                                 v-bind:key="notification.id">
                                                 <div class="notification is-info is-light">
                                                     <article class="media">
@@ -1470,8 +1475,8 @@
         </nav>
         <transition name="reveal">
             <div id="menu" v-if="isRevealed">
-                <div class="columns is-mobile is-centered">
-                    <div class="column is-half">
+                <div class="columns is-desktop is-centered">
+                    <div class="column is-half is-mobile">
                         <div class="control" v-cloak>
                             <nav class="level">
                                 <div class="level-item is-hidden">
