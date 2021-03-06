@@ -553,15 +553,12 @@
         #menu>.columns>.column>.control>.level:first-child {
             display: flex;
             flex-direction: column;
-        }
-
-        #menu>.columns>.column>.control>.level:first-child>.level-item:nth-child(1) {
-            padding: 0px 16px 16px 16px;
+            margin: -8px 0px -8px 0px;
         }
 
         #menu>.columns>.column>.control>.level:first-child>.level-item {
             margin: 0;
-            padding: 0px 16px 16px 16px;
+            padding: 8px 16px 8px 16px;
         }
 
         #menu>.columns>.column>.control>.level:first-child>.level-item>.level {
@@ -608,6 +605,17 @@
             background-color: #000000;
             text-align: center !important;
             transition: .5s;
+        }
+
+        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item>button,
+        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item>.button {
+            border: 0px solid transparent;
+            padding: 0;
+            background: transparent;
+            border-radius: 290486px;
+            background-clip: padding-box;
+            width: fit-content;
+            height: fit-content;
         }
 
         #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item .icon {
@@ -1284,8 +1292,8 @@
                                                     v-on:enter-cancelled="tickerUpdated"
                                                     v-on:before-leave="animationStart" v-on:after-leave="tickerUpdated"
                                                     v-on:leave-cancelled="tickerUpdated">
-                                                    <div class="item ticker-item-list-item" v-for="word in take(words, 10)"
-                                                        v-bind:key="word.name">
+                                                    <div class="item ticker-item-list-item"
+                                                        v-for="word in take(words, 10)" v-bind:key="word.name">
                                                         <article class="media" v-cloak>
                                                             <figure class="media-left" v-if="word.image">
                                                                 <picture class="image has-ratio is-16x16"
@@ -1309,8 +1317,8 @@
                                                             </div>
                                                         </article>
                                                     </div>
-                                                    <div class="item ticker-item-list-item" v-for="word in take(words, 10)"
-                                                        v-bind:key="word.name + '-alt'">
+                                                    <div class="item ticker-item-list-item"
+                                                        v-for="word in take(words, 10)" v-bind:key="word.name + '-alt'">
                                                         <article class="media" v-cloak>
                                                             <figure class="media-left" v-if="word.image">
                                                                 <picture class="image has-ratio is-16x16"
@@ -1436,8 +1444,8 @@
                                             v-on:before-enter="animationStart" v-on:after-enter="animationEnd"
                                             v-on:enter-cancelled="animationEnd" v-on:before-leave="animationStart"
                                             v-on:after-leave="animationEnd" v-on:leave-cancelled="animationEnd" v-cloak>
-                                            <nav class="level notification-list-item" v-for="notification in notifications"
-                                                v-bind:key="notification.id">
+                                            <nav class="level notification-list-item"
+                                                v-for="notification in notifications" v-bind:key="notification.id">
                                                 <div class="notification is-info is-light">
                                                     <article class="media">
                                                         <figure class="media-left" v-if="notification.image" v-cloak>
@@ -1480,11 +1488,20 @@
                     <div class="column is-half is-mobile">
                         <div class="control" v-cloak>
                             <nav class="level">
-                                <div class="level-item is-hidden">
+                                <div class="level-item">
                                     <article class="media">
                                         <figure class="media-content">
                                             <p class="image is-64x64">
-                                                <img class="is-rounded" src="/images/Milch.png" alt="ミルヒちゃん">
+                                                <transition name="fade" mode="out-in">
+                                                    <picture v-if="user !== null && user.photoURL !== null">
+                                                        <img class="is-rounded" v-bind:src="user.photoURL" width="64"
+                                                            height="64" alt="Icon">
+                                                    </picture>
+                                                    <picture v-else>
+                                                        <img class="is-rounded" src="/images/Milch.png" width="64"
+                                                            height="64" alt="Icon">
+                                                    </picture>
+                                                </transition>
                                             </p>
                                         </figure>
                                     </article>
@@ -1500,6 +1517,25 @@
                                             </div>
                                         </div>
                                     </article>
+                                </div>
+                                <div class="level-item">
+                                    <div class="level is-mobile">
+                                        <div class="level-item">
+                                            <transition name="fade" mode="out-in">
+                                                <button class="button" type="button" @click="signOut()"
+                                                    v-if="user !== null && user.providerData.length > 0">
+                                                    <span class="icon">
+                                                        <i class="fas fa-sign-out-alt"></i>
+                                                    </span>
+                                                </button>
+                                                <button class="button" type="button" @click="signIn()" v-else>
+                                                    <span class="icon">
+                                                        <i class="fas fa-sign-in-alt"></i>
+                                                    </span>
+                                                </button>
+                                            </transition>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="level-item">
                                     <article class="media">
