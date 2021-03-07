@@ -607,8 +607,8 @@
             transition: .5s;
         }
 
-        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item>button,
-        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item>.button {
+        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item button,
+        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item .button {
             border: 0px solid transparent;
             padding: 0;
             background: transparent;
@@ -618,25 +618,37 @@
             height: fit-content;
         }
 
-        #menu>.columns>.column>.control>.level:first-child .level-item>.level>.level-item .icon {
+        #menu>.columns>.column>.control>.level .button>.icon,
+        #menu>.columns>.column>.control>.level a>.icon {
             margin: 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
             padding: 24px;
             background: #ffffff;
             background-clip: padding-box;
+            width: 1rem;
+            height: 1rem;
+        }
+
+        #menu>.columns>.column>.control>.level>.level-item:first-of-type>.media>.media-content>.content>.icon {
+            padding: 24px 0px 24px 0px;
+            width: fit-content;
+            height: max-content;
+        }
+
+        #menu>.columns>.column>.control>.level>.level-item:last-of-type>.media>.media-content {
+            padding: 16px 0px 0px 0px;
         }
 
         #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button,
         #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>.button {
-            margin: 0px;
-            padding: 0px 8px 0px 8px;
-            padding: 12px 24px 12px 24px;
-            border: 0px solid rgba(255, 255, 255, 0.5);
-            border-radius: 500px 500px 500px 500px;
-            background: #ffffff;
+            border: 0px solid transparent;
+            padding: 0;
+            background: transparent;
+            border-radius: 290486px;
             background-clip: padding-box;
-            height: initial;
+            width: fit-content;
+            height: fit-content;
         }
 
         #heading>.columns>.column>.control>.level:first-child>.level-item:last-child:not(:first-child)>.media>.media-content>.content>button,
@@ -1403,7 +1415,8 @@
                         <div class="column is-full">
                             <div class="columns is-mobile">
                                 <div class="column is-3 is-mobile">
-                                    <button class="button is-white" type="button" @click="isRevealed = !isRevealed;">
+                                    <button class="button is-white" type="button"
+                                        @click="isRevealed = !isRevealed; page = null;">
                                         <span class="icon is-small">
                                             <i class="fas fa-bars"></i>
                                         </span>
@@ -1487,83 +1500,137 @@
                 <div class="columns is-desktop is-centered">
                     <div class="column is-half is-mobile">
                         <div class="control" v-cloak>
-                            <nav class="level">
-                                <div class="level-item">
-                                    <article class="media">
-                                        <figure class="media-content">
-                                            <p class="image is-64x64">
-                                                <transition name="fade" mode="out-in">
-                                                    <picture v-if="user !== null && user.photoURL !== null">
-                                                        <img class="is-rounded" v-bind:src="user.photoURL" width="64"
-                                                            height="64" alt="Icon">
-                                                    </picture>
-                                                    <picture v-else>
-                                                        <img class="is-rounded" src="/images/Milch.png" width="64"
-                                                            height="64" alt="Icon">
-                                                    </picture>
-                                                </transition>
-                                            </p>
-                                        </figure>
-                                    </article>
-                                </div>
-                                <div class="level-item">
-                                    <article class="media">
-                                        <div class="media-content">
-                                            <div class="content has-text-centered">
-                                                <h1 class="is-uppercase has-text-weight-bold">
-                                                    Wonderland</h1>
-                                                <h2 class="has-text-weight-bold">
-                                                    wonderland.milchchan.com</h2>
+                            <transition name="fade" mode="out-in">
+                                <nav class="level" v-if="page == 'sign-in'" key="sign-in">
+                                    <div class="level-item">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="content">
+                                                    <span class="icon is-size-5">
+                                                        <i class="fas fa-user"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="level-item">
+                                        <div class="level is-mobile">
+                                            <div class="level-item">
+                                                <button class="button" type="button" @click="signIn('google.com')">
+                                                    <span class="icon">
+                                                        <i class="fab fa-google"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="level-item">
+                                                <button class="button" type="button" @click="signIn('facebook.com')">
+                                                    <span class="icon">
+                                                        <i class="fab fa-facebook"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="level-item">
+                                                <button class="button" type="button" @click="signIn('twitter.com')">
+                                                    <span class="icon">
+                                                        <i class="fab fa-twitter"></i>
+                                                    </span>
+                                                </button>
                                             </div>
                                         </div>
-                                    </article>
-                                </div>
-                                <div class="level-item">
-                                    <div class="level is-mobile">
-                                        <div class="level-item">
-                                            <transition name="fade" mode="out-in">
-                                                <button class="button" type="button" @click="signOut()"
-                                                    v-if="user !== null && user.providerData.length > 0">
-                                                    <span class="icon">
-                                                        <i class="fas fa-sign-out-alt"></i>
-                                                    </span>
-                                                </button>
-                                                <button class="button" type="button" @click="signIn()" v-else>
-                                                    <span class="icon">
-                                                        <i class="fas fa-sign-in-alt"></i>
-                                                    </span>
-                                                </button>
-                                            </transition>
+                                    </div>
+                                    <div class="level-item">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="content">
+                                                    <button class="button" type="button" @click="page = null">
+                                                        <span class="icon">
+                                                            <i class="fas fa-arrow-left"></i>
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                </nav>
+                                <nav class="level" v-else key="main">
+                                    <div class="level-item">
+                                        <article class="media">
+                                            <figure class="media-content">
+                                                <p class="image is-64x64">
+                                                    <transition name="fade" mode="out-in">
+                                                        <picture v-if="user !== null && user.photoURL !== null">
+                                                            <img class="is-rounded" v-bind:src="user.photoURL"
+                                                                width="64" height="64" alt="Icon">
+                                                        </picture>
+                                                        <picture v-else>
+                                                            <img class="is-rounded" src="/images/Milch.png" width="64"
+                                                                height="64" alt="Icon">
+                                                        </picture>
+                                                    </transition>
+                                                </p>
+                                            </figure>
+                                        </article>
+                                    </div>
+                                    <div class="level-item">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="content has-text-centered">
+                                                    <h1 class="is-uppercase has-text-weight-bold">
+                                                        Wonderland</h1>
+                                                    <h2 class="has-text-weight-bold">
+                                                        wonderland.milchchan.com</h2>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="level-item">
+                                        <div class="level is-mobile">
+                                            <div class="level-item">
+                                                <transition name="fade" mode="out-in">
+                                                    <button class="button" type="button" @click="signOut()"
+                                                        v-if="user !== null && user.providerData.length > 0">
+                                                        <span class="icon">
+                                                            <i class="fas fa-sign-out-alt"></i>
+                                                        </span>
+                                                    </button>
+                                                    <button class="button" type="button" @click="page = 'sign-in'"
+                                                        v-else>
+                                                        <span class="icon">
+                                                            <i class="fas fa-sign-in-alt"></i>
+                                                        </span>
+                                                    </button>
+                                                </transition>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="level-item">
-                                    <article class="media">
-                                        <div class="media-content">
-                                            <hr>
-                                        </div>
-                                    </article>
-                                </div>
-                                <div class="level-item">
-                                    <div class="level is-mobile">
-                                        <div class="level-item">
-                                            <a href="https://twitter.com/milchchan" target="_blank"><span
-                                                    class="icon is-small has-text-black"><i
-                                                        class="fab fa-twitter"></i></span></a>
-                                        </div>
-                                        <div class="level-item">
-                                            <a href="https://instagram.com/milchchan" target="_blank"><span
-                                                    class="icon is-small has-text-black"><i
-                                                        class="fab fa-instagram"></i></span></a>
-                                        </div>
-                                        <div class="level-item">
-                                            <a href="https://github.com/milchchan" target="_blank"><span
-                                                    class="icon is-small has-text-black"><i
-                                                        class="fab fa-github"></i></span></a>
+                                    <div class="level-item">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <hr>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="level-item">
+                                        <div class="level is-mobile">
+                                            <div class="level-item">
+                                                <a href="https://twitter.com/milchchan" target="_blank"><span
+                                                        class="icon is-small has-text-black"><i
+                                                            class="fab fa-twitter"></i></span></a>
+                                            </div>
+                                            <div class="level-item">
+                                                <a href="https://instagram.com/milchchan" target="_blank"><span
+                                                        class="icon is-small has-text-black"><i
+                                                            class="fab fa-instagram"></i></span></a>
+                                            </div>
+                                            <div class="level-item">
+                                                <a href="https://github.com/milchchan" target="_blank"><span
+                                                        class="icon is-small has-text-black"><i
+                                                            class="fab fa-github"></i></span></a>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </nav>
+                                </nav>
+                            </transition>
                         </div>
                     </div>
                 </div>
