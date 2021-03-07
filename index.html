@@ -1520,7 +1520,7 @@
                                                     </span>
                                                 </button>
                                             </div>
-                                            <div class="level-item">
+                                            <div class="level-item is-hidden">
                                                 <button class="button" type="button" @click="signIn('facebook.com')">
                                                     <span class="icon is-small">
                                                         <i class="fab fa-facebook"></i>
@@ -1555,20 +1555,9 @@
                                         <article class="media">
                                             <figure class="media-content">
                                                 <p class="image is-64x64 file">
-                                                    <!--<transition name="fade" mode="out-in">
-                                                        <picture v-if="user !== null && user.photoURL !== null">
-                                                            <img class="is-rounded" v-bind:src="user.photoURL"
-                                                                width="64" height="64" alt="Icon">
-                                                        </picture>
-                                                        <picture v-else>
-                                                            <img class="is-rounded" src="/images/Milch.png" width="64"
-                                                                height="64" alt="Icon">
-                                                        </picture>
-                                                    </transition>-->
-                                                    <label class="file-label"
-                                                        v-bind:class="{ 'is-static': user === null }">
+                                                    <label class="file-label">
                                                         <input class="file-input" type="file" name="upload"
-                                                            accept="image/png, image/jpeg" v-bind:disabled="progress > 0 && progress < 1"
+                                                            accept="image/png, image/jpeg" v-bind:disabled="!isDebug || user === null || progress > 0 && progress < 1"
                                                             @change="uploadImage">
                                                         <span class="file-cta_">
                                                             <transition name="fade" mode="out-in">
