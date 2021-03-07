@@ -1554,8 +1554,8 @@
                                     <div class="level-item">
                                         <article class="media">
                                             <figure class="media-content">
-                                                <p class="image is-64x64">
-                                                    <transition name="fade" mode="out-in">
+                                                <p class="image is-64x64 file">
+                                                    <!--<transition name="fade" mode="out-in">
                                                         <picture v-if="user !== null && user.photoURL !== null">
                                                             <img class="is-rounded" v-bind:src="user.photoURL"
                                                                 width="64" height="64" alt="Icon">
@@ -1564,7 +1564,25 @@
                                                             <img class="is-rounded" src="/images/Milch.png" width="64"
                                                                 height="64" alt="Icon">
                                                         </picture>
-                                                    </transition>
+                                                    </transition>-->
+                                                    <label class="file-label"
+                                                        v-bind:class="{ 'is-static': user === null }">
+                                                        <input class="file-input" type="file" name="upload"
+                                                            accept="image/png, image/jpeg" v-bind:disabled="progress > 0 && progress < 1"
+                                                            @change="uploadImage">
+                                                        <span class="file-cta_">
+                                                            <transition name="fade" mode="out-in">
+                                                                <picture class="image is-64x64" v-if="user !== null && 'resolvedPhotoURL' in user">
+                                                                    <img class="is-rounded" v-bind:src="user.resolvedPhotoURL"
+                                                                        width="64" height="64" alt="Icon">
+                                                                </picture>
+                                                                <picture class="image is-64x64" v-else>
+                                                                    <img class="is-rounded" src="/images/Milch.png"
+                                                                        width="64" height="64" alt="Icon">
+                                                                </picture>
+                                                            </transition>
+                                                        </span>
+                                                    </label>
                                                 </p>
                                             </figure>
                                         </article>
