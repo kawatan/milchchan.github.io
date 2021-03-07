@@ -30,8 +30,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Ropa+Sans&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap" rel="stylesheet">
     <script src="https://kit.fontawesome.com/922939073a.js" crossorigin="anonymous"></script>
+    <!--<script type="text/javascript"
+        src="https://www.bing.com/api/maps/mapcontrol?key=AqtU8nXtdnRHFfPmWICfOHBtcPzPOoJueZtb2D_Rkbsx6dyuhx_xaH7G-hfB2Ylb&setLang=ja&setMkt=ja-JP"></script>-->
     <script type="text/javascript"
-        src="https://www.bing.com/api/maps/mapcontrol?key=AqtU8nXtdnRHFfPmWICfOHBtcPzPOoJueZtb2D_Rkbsx6dyuhx_xaH7G-hfB2Ylb&setLang=ja&setMkt=ja-JP"></script>
+        src="https://www.bing.com/api/maps/mapcontrol?key=AqtU8nXtdnRHFfPmWICfOHBtcPzPOoJueZtb2D_Rkbsx6dyuhx_xaH7G-hfB2Ylb"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css" type="text/css"
         media="screen" />
     <style>
@@ -955,13 +957,57 @@
             margin: 0;
         }
 
-        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-content .content span {
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media {
+            display: flex;
+            align-items: center;
+        }
+
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-left {
+            margin: 0;
+            padding: 0px 8px 0px 0px;
+            font-size: 0.75rem !important;
+            line-height: 0.75rem !important;
+        }
+
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type .level>.level-item .media>.media-left span {
+            margin: 0;
+            color: #ffffff;
+            font-size: 0.5rem !important;
+            line-height: 0.5rem !important;
+            width: 0.75rem !important;
+            height: 0.75rem !important;
+        }
+
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type>.level>.level-item:nth-last-of-type(2) .media>.media-content .content span {
             font-family: "Alata", sans-serif;
             padding: 0;
             font-size: 1.0rem;
             line-height: 1.0rem;
             /*color: #a8b4b7;*/
             color: #ffffff;
+        }
+
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type>.level>.level-item:nth-last-of-type(1) .media>.media-content {
+            line-height: 1.0rem;
+        }
+
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type>.level>.level-item:nth-last-of-type(1) .media>.media-content .content {
+            display: flex;
+            align-items: center;
+        }
+
+        #input>.columns:first-of-type>.column>.control:last-of-type>.level>.level-item:last-of-type>.level>.level-item:nth-last-of-type(1) .media>.media-content .content span {
+            display: flex;
+            align-items: center;
+            font-family: "Alata", sans-serif;
+            padding: 0;
+            font-size: 0.75rem;
+            line-height: 0.75rem;
+            /*color: #a8b4b7;*/
+            color: #ffffff;
+            height: 0.8rem !important;
+            vertical-align: middle;
+            overflow: hidden;
         }
 
         #ticker {
@@ -1557,13 +1603,16 @@
                                                 <p class="image is-64x64 file">
                                                     <label class="file-label">
                                                         <input class="file-input" type="file" name="upload"
-                                                            accept="image/png, image/jpeg" v-bind:disabled="!isDebug || user === null || progress > 0 && progress < 1"
+                                                            accept="image/png, image/jpeg"
+                                                            v-bind:disabled="!isDebug || user === null || progress > 0 && progress < 1"
                                                             @change="uploadImage">
                                                         <span class="file-cta_">
                                                             <transition name="fade" mode="out-in">
-                                                                <picture class="image is-64x64" v-if="user !== null && 'resolvedPhotoURL' in user">
-                                                                    <img class="is-rounded" v-bind:src="user.resolvedPhotoURL"
-                                                                        width="64" height="64" alt="Icon">
+                                                                <picture class="image is-64x64"
+                                                                    v-if="user !== null && 'resolvedPhotoURL' in user">
+                                                                    <img class="is-rounded"
+                                                                        v-bind:src="user.resolvedPhotoURL" width="64"
+                                                                        height="64" alt="Icon">
                                                                 </picture>
                                                                 <picture class="image is-64x64" v-else>
                                                                     <img class="is-rounded" src="/images/Milch.png"
@@ -1767,6 +1816,27 @@
                                                         <div class="content">
                                                             <span class="is-uppercase has-text-weight-bold"
                                                                 v-html="isRecording ? '-' + formatTime(maxRecordTime - timeElapsed) : formatTime(timeElapsed)">
+                                                                N/A
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </article>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="level-item">
+                                        <div class="level is-mobile">
+                                            <div class="level-item">
+                                                <article class="media">
+                                                    <div class="media-left">
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-play"></i>
+                                                        </span>
+                                                    </div>
+                                                    <div class="media-content">
+                                                        <div class="content">
+                                                            <span class="is-uppercase has-text-weight-bold"
+                                                                v-html="playData === null ? 0 : 'plays' in playData ? playData.plays : 0">
                                                                 N/A
                                                             </span>
                                                         </div>
