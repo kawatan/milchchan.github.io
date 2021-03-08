@@ -636,10 +636,6 @@
             height: max-content;
         }
 
-        #menu>.columns>.column>.control>.level>.level-item:last-of-type>.media>.media-content {
-            padding: 16px 0px 0px 0px;
-        }
-
         #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>button,
         #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content>.button {
             border: 0px solid transparent;
@@ -1464,12 +1460,20 @@
                         <div class="column is-full">
                             <div class="columns is-mobile">
                                 <div class="column is-3 is-mobile">
-                                    <button class="button is-white" type="button"
-                                        @click="isRevealed = !isRevealed; page = null;">
-                                        <span class="icon is-small">
-                                            <i class="fas fa-bars"></i>
-                                        </span>
-                                    </button>
+                                    <transition name="fade" mode="out-in">
+                                        <button class="button is-white" type="button"
+                                            @click="isRevealed = !isRevealed" v-if="page === null" key="humberger">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-bars"></i>
+                                            </span>
+                                        </button>
+                                        <button class="button is-white" type="button"
+                                            @click="page = null" v-else key="back">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-arrow-left"></i>
+                                            </span>
+                                        </button>
+                                    </transition>
                                 </div>
                                 <div class="column is-6 is-mobile">
                                     <div class="control has-text-centered">
@@ -1594,19 +1598,6 @@
                                                 </button>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="level-item">
-                                        <article class="media">
-                                            <div class="media-content">
-                                                <div class="content">
-                                                    <button class="button" type="button" @click="page = null">
-                                                        <span class="icon is-small">
-                                                            <i class="fas fa-arrow-left"></i>
-                                                        </span>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </article>
                                     </div>
                                 </nav>
                                 <nav class="level" v-else key="main">
