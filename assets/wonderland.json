@@ -1,10 +1,10 @@
 {
     "name": "ルナ",
     "accent": "#5bcbe1",
-    "image": "/images/Luna.png",
+    "image": "/images/Fire-Light.svg",
     "ticker": [
         {
-            "name": "Alert",
+            "name": "Alert_",
             "state": "^[1-9][0-9]*$",
             "sequence": [
                 {
@@ -19,7 +19,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "text": "ここにはまだ話題がないみたいだよ"
+                    "text": "N/A"
                 }
             ]
         }
