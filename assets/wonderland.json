@@ -1,7 +1,8 @@
 {
     "name": "ルナ",
     "accent": "#5bcbe1",
-    "image": "/images/Fire-Light.svg",
+    "image": "/images/Luna.png",
+    "icon": "/images/Fire-Light.svg",
     "ticker": [
         {
             "name": "Alert_",
