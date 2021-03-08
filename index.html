@@ -1063,16 +1063,21 @@
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media {
+            margin: 0px -8px 0px -8px;
             height: max(16px, 0.75rem);
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-left {
-            margin: 0px 16px 0px 0px;
+            margin: 0px 8px 0px 8px;
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media picture img {
             width: 16px;
             height: 16px;
+        }
+
+        #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content {
+            margin: 0px 8px 0px 8px;
         }
 
         #ticker>.columns>.column>.control .level:first-child .level-item .field .clip .ticker-wrap .ticker .media .media-content .content {
@@ -1365,7 +1370,7 @@
                                                                         width="16" height="16" v-bind:alt="word.name">
                                                                 </picture>
                                                             </figure>
-                                                            <div class="media-content">
+                                                            <div class="media-content" v-if="word.name">
                                                                 <div class="content has-text-left">
                                                                     <span class="has-text-weight-bold">{{ word.name
                                                                         }}</span>
@@ -1390,7 +1395,7 @@
                                                                         width="16" height="16" v-bind:alt="word.name">
                                                                 </picture>
                                                             </figure>
-                                                            <div class="media-content">
+                                                            <div class="media-content" v-if="word.name">
                                                                 <div class="content has-text-left">
                                                                     <span class="has-text-weight-bold">{{ word.name
                                                                         }}</span>
