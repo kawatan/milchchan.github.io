@@ -542,6 +542,22 @@
             min-height: 100%;
         }
 
+        #menu::before {
+            display: block;
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 100%;
+            min-height: 100%;
+            content: "";
+            opacity: 0.25;
+            background-image: url("/images/160922.png");
+            background-size: contain;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            background-position: 50% 100%;
+        }
+
         #menu>.columns {
             flex: none;
             width: 100%;
@@ -575,27 +591,30 @@
         #menu>.columns>.column>.control>.level:first-child h1 {
             margin: 0px 0px 8px 0px;
             font-size: 1.25rem;
-            font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
             line-height: 1.25rem;
             color: #000000;
             transition: .5s;
+            transform: rotate(0.03deg);
         }
 
         #menu>.columns>.column>.control>.level:first-child h2 {
             margin: 0;
             font-size: 0.75rem;
-            font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
             line-height: 0.75rem;
             color: #000000;
             transition: .5s;
+            transform: rotate(0.03deg);
         }
 
         #menu>.columns>.column>.columns:last-child>.column>.control>.level:first-child p {
-            font-family: "Ropa Sans", "Noto Sans JP", sans-serif;
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
             font-size: 1.25rem;
             line-height: 2.5rem;
             color: var(--foreground-color);
             transition: .5s;
+            transform: rotate(0.03deg);
         }
 
         #menu>.columns>.column>.control>.level:first-child hr {
@@ -645,6 +664,23 @@
             background-clip: padding-box;
             width: fit-content;
             height: fit-content;
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content h2.tag {
+            margin: 0px 0px 16px 0px;
+            background-color: #64dafe;
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
+            color: #ffffff;
+            transform: rotate(0.03deg);
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content p {
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
+            font-size: 0.75rem;
+            line-height: 1.25rem;
+            color: var(--foreground-color);
+            transition: .5s;
+            transform: rotate(0.03deg);
         }
 
         #heading>.columns>.column>.control>.level:first-child>.level-item:last-child:not(:first-child)>.media>.media-content>.content>button,
@@ -1461,14 +1497,14 @@
                             <div class="columns is-mobile">
                                 <div class="column is-3 is-mobile">
                                     <transition name="fade" mode="out-in">
-                                        <button class="button is-white" type="button"
-                                            @click="isRevealed = !isRevealed" v-if="page === null" key="humberger">
+                                        <button class="button is-white" type="button" @click="isRevealed = !isRevealed"
+                                            v-if="page === null" key="humberger">
                                             <span class="icon is-small">
                                                 <i class="fas fa-bars"></i>
                                             </span>
                                         </button>
-                                        <button class="button is-white" type="button"
-                                            @click="page = null" v-else key="back">
+                                        <button class="button is-white" type="button" @click="page = null" v-else
+                                            key="back">
                                             <span class="icon is-small">
                                                 <i class="fas fa-arrow-left"></i>
                                             </span>
@@ -1548,7 +1584,7 @@
                 </div>
             </div>
         </nav>
-        <transition name="reveal">
+        <transition name="reveal" v-cloak>
             <div id="menu" v-if="isRevealed">
                 <div class="columns is-desktop is-centered">
                     <div class="column is-half is-mobile">
@@ -1660,6 +1696,19 @@
                                                 </transition>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="level-item">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="content has-text-centered">
+                                                    <h2 class="tag is-rounded">今週のキャンペーン</h2>
+                                                    <h1 class="is-uppercase has-text-weight-bold">
+                                                        みんなで鳥の声を投稿しよう</h1>
+                                                    <p class="has-text-weight-bold">
+                                                        鳥の声が聴きたいな！<br>鳥の声をみんなに集めてきて貰えると嬉しいな！</p>
+                                                </div>
+                                            </div>
+                                        </article>
                                     </div>
                                     <div class="level-item">
                                         <article class="media">
