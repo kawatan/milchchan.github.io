@@ -534,12 +534,15 @@
         }
 
         #menu {
+            z-index: 1;
             position: fixed;
             display: flex;
             justify-content: center;
             align-items: center;
             width: 100%;
-            min-height: 100%;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
         }
 
         #menu::before {
@@ -560,6 +563,7 @@
 
         #menu>.columns {
             flex: none;
+            margin: auto !important;
             width: 100%;
         }
 
@@ -669,9 +673,7 @@
         #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content h2.tag {
             margin: 0px 0px 16px 0px;
             background: #64dafe url('/images/Stripes.png') 50% 50% repeat;
-            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
             color: #ffffff;
-            transform: rotate(0.03deg);
         }
 
         #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content p {
@@ -1329,7 +1331,7 @@
                 background-size: 100px 100px;
             }
 
-            #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content h2.tag {
+            .tag {
                 background: #64dafe url('/images/Stripes@2x.png') 50% 50% repeat;
                 background-size: 20px 20px;
             }
@@ -1352,7 +1354,7 @@
                 background-size: 100px 100px;
             }
 
-            #menu>.columns>.column>.control>.level:first-child>.level-item>.media>.media-content>.content h2.tag {
+            .tag {
                 background: #64dafe url('/images/Stripes@3x.png') 50% 50% repeat;
                 background-size: 20px 20px;
             }
