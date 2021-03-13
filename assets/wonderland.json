@@ -5,7 +5,7 @@
     "icon": "/images/Milch.png",
     "ticker": [
         {
-            "name": "Alert_",
+            "name": "Alert",
             "state": "^[1-9][0-9]*$",
             "sequence": [
                 {
