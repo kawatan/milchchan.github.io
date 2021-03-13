@@ -1,8 +1,8 @@
 {
-    "name": "ルナ",
+    "name": "ミルヒ",
     "accent": "#5bcbe1",
-    "image": "/images/Luna.png",
-    "icon": "/images/Fire-Light.svg",
+    "image": "/images/Milch.png",
+    "icon": "/images/Milch.png",
     "ticker": [
         {
             "name": "Alert_",
@@ -10,7 +10,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "text": "ここで話題になっていることだよ"
+                    "text": "今週はみんなで鳥の鳴き声を投稿しようね"
                 }
             ]
         },
@@ -20,7 +20,7 @@
             "sequence": [
                 {
                     "type": "Message",
-                    "text": "N/A"
+                    "text": "今週はみんなで鳥の鳴き声を投稿しようね"
                 }
             ]
         }
