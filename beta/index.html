@@ -1638,7 +1638,7 @@
                     <div class="column is-half is-mobile">
                         <div class="control" v-cloak>
                             <transition name="fade" mode="out-in">
-                                <nav class="level" v-if="page == 'sign-in'" key="sign-in">
+                                <nav class="level" v-if="user === null || page === 'sign-in'" key="sign-in">
                                     <div class="level-item">
                                         <article class="media">
                                             <div class="media-content">
