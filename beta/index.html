@@ -1917,7 +1917,7 @@
                                                             </span>
                                                         </button>
                                                     </div>
-                                                    <button class="button" type="button" v-bind:disabled="user === null"
+                                                    <button class="button" type="button" v-bind:disabled="user === null || user.providerData.length === 0"
                                                         @click="isLive = true" v-else key="ready" disabled>
                                                         <span class="icon is-small">
                                                             <i class="fas fa-circle"></i>
