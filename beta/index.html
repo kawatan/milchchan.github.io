@@ -1538,8 +1538,14 @@
                             <div class="columns is-mobile" ref="indicator">
                                 <div class="column is-3 is-mobile">
                                     <transition name="fade" mode="out-in">
+                                        <button class="button is-white" type="button" @click="selectedTrack = null; isRevealed = false;" v-if="selectedTrack"
+                                            key="close">
+                                            <span class="icon is-small">
+                                                <i class="fas fa-times"></i>
+                                            </span>
+                                        </button>
                                         <button class="button is-white" type="button" @click="isRevealed = !isRevealed"
-                                            v-if="page === null" key="humberger">
+                                            v-else-if="page === null" key="humberger">
                                             <span class="icon is-small">
                                                 <i class="fas fa-bars"></i>
                                             </span>
@@ -1638,7 +1644,9 @@
                     <div class="column is-half is-mobile">
                         <div class="control" v-cloak>
                             <transition name="fade" mode="out-in">
-                                <nav class="level" v-if="user === null || user.providerData.length === 0 || page === 'sign-in'" key="sign-in">
+                                <nav class="level"
+                                    v-if="user === null || user.providerData.length === 0 || page === 'sign-in'"
+                                    key="sign-in">
                                     <div class="level-item">
                                         <article class="media">
                                             <div class="media-content">
@@ -1680,6 +1688,64 @@
                                                         <i class="fab fa-twitter"></i>
                                                     </span>
                                                 </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </nav>
+                                <nav class="level" v-else-if="selectedTrack !== null" key="track">
+                                    <div class="level-item">
+                                        <article class="media">
+                                            <figure class="media-content">
+                                                <picture class="image is-64x64">
+                                                    <img class="is-rounded" v-bind:src="selectedTrack.image"
+                                                        width="64" height="64" alt="Icon">
+                                                </picture>
+                                            </figure>
+                                        </article>
+                                    </div>
+                                    <div class="level-item" v-if="user.uid === selectedTrack.id">
+                                        <form onsubmit="return false;" v-cloak>
+                                            <div class="field has-addons">
+                                                <div class="control is-expanded has-icons-left">
+                                                    <input class="input is-rounded" type="text"
+                                                        v-bind:class="{ 'is-danger': inputHasError }"
+                                                        placeholder="Café Starbucks" v-model="input"
+                                                        @input="inputChanged" v-cloak>
+                                                    <span class="icon is-small is-left">
+                                                        <i class="fas fa-tags"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="level-item" v-else-if="'name' in selectedTrack">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="content has-text-centered">
+                                                    <h1 class="is-uppercase has-text-weight-bold">
+                                                        {{ selectedTrack.name }}</h1>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="level-item" v-if="user.uid === selectedTrack.id">
+                                        <div class="level is-mobile">
+                                            <div class="level-item">
+                                                <transition name="fade" mode="out-in">
+                                                    <button class="button is-white" type="button" v-if="isSubmiting"
+                                                        key="wait" disabled v-cloak>
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-spinner updating"></i>
+                                                        </span>
+                                                    </button>
+                                                    <button class="button is-white" type="button"
+                                                        v-bind:disabled="user === null"
+                                                        @click="ping(selectedTrack)" v-else key="ping" v-cloak>
+                                                        <span class="icon is-small">
+                                                            <i class="fas fa-plus"></i>
+                                                        </span>
+                                                    </button>
+                                                </transition>
                                             </div>
                                         </div>
                                     </div>
