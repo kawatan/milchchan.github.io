@@ -134,6 +134,7 @@
         label .scrollable {
             display: inline-block;
             box-sizing: content-box;
+            backface-visibility: hidden;
             transform: translate3d(0%, 0%, 0);
             transition: .5s ease-in;
         }
@@ -141,6 +142,9 @@
         a .scrollable:hover,
         button .scrollable:hover,
         label .scrollable:hover {
+            display: inline-block;
+            box-sizing: content-box;
+            backface-visibility: hidden;
             transform: translate3d(0%, -50%, 0);
             transition: .5s ease-out;
         }
@@ -416,6 +420,14 @@
             height: 100%;
         }
 
+        .live {
+            background-image: url('/images/Stripes.png');
+            background-position: 50% 50%;
+            background-repeat: repeat;
+            background-size: 20px 20px;
+            animation: progress 0.5s linear 0s infinite;
+        }
+
         #app {
             position: relative;
             margin: 0;
@@ -515,7 +527,6 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control {
-            pointer-events: none;
             margin: 16px 16px 0px 16px;
             padding: 0;
         }
@@ -530,11 +541,59 @@
         }
 
         #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .level .level-item .field span:last-child {
+            pointer-events: none;
             font-family: 'Alata', sans-serif;
             font-size: 4rem !important;
             line-height: 4rem !important;
             color: #00eeff;
             transition: .5s;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control button,
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .button {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 16px 32px 16px 32px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
+            border-radius: 500px 500px 500px 500px;
+            background-color: #00eeff;
+            background-clip: padding-box;
+            height: fit-content;
+            line-height: calc(0.75rem * 1.5);
+            backface-visibility: hidden;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control span.wrap {
+            height: calc(0.75rem * 1.5);
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control button .clip .scrollable div,
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .button .clip .scrollable div {
+            display: flex;
+            align-items: center;
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
+            transform: rotate(0.03deg);
+            line-height: 0.75rem !important;
+            height: calc(0.75rem * 1.5);
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control button .clip,
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .button .clip {
+            display: inline-block;
+            overflow: hidden;
+            box-sizing: content-box;
+            height: calc(0.75rem * 1.5);
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control button .icon:first-child:not(:last-child),
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .button .icon:first-child:not(:last-child) {
+            margin: 0px 8px 0px 0px;
+        }
+
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control button .icon:last-child:not(:first-child),
+        #heading>.columns>.column>.columns:first-child>.column>.columns:first-child>.column:nth-child(2)>.control .button .icon:last-child:not(:first-child) {
+            margin: 0px 0px 0px 8px;
         }
 
         #menu {
@@ -647,8 +706,8 @@
             height: fit-content;
         }
 
-        #menu>.columns>.column>.control>.level .button>.icon,
-        #menu>.columns>.column>.control>.level a>.icon {
+        #menu>.columns>.column>.control>.level>.level-item>.level>.level-item>.button>.icon,
+        #menu>.columns>.column>.control>.level>.level-item>.level>.level-item>a>.icon {
             margin: 0px;
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
@@ -687,6 +746,53 @@
             color: var(--foreground-color);
             transition: .5s;
             transform: rotate(0.03deg);
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item button,
+        #menu>.columns>.column>.control>.level:first-child>.level-item .button {
+            display: flex;
+            align-items: center;
+            margin: 0;
+            padding: 16px 32px 16px 32px;
+            border: 0px solid rgba(255, 255, 255, 0.5);
+            border-radius: 500px 500px 500px 500px;
+            background-color: #00eeff;
+            background-clip: padding-box;
+            height: fit-content;
+            line-height: calc(0.75rem * 1.5);
+            backface-visibility: hidden;
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item span.wrap {
+            height: calc(0.75rem * 1.5);
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item button .clip .scrollable div,
+        #menu>.columns>.column>.control>.level:first-child>.level-item .button .clip .scrollable div {
+            display: flex;
+            align-items: center;
+            font-family: "Ropa Sans", "M PLUS Rounded 1c", sans-serif;
+            transform: rotate(0.03deg);
+            line-height: 0.75rem !important;
+            height: calc(0.75rem * 1.5);
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item button .clip,
+        #menu>.columns>.column>.control>.level:first-child>.level-item .button .clip {
+            display: inline-block;
+            overflow: hidden;
+            box-sizing: content-box;
+            height: calc(0.75rem * 1.5);
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item button .icon:first-child:not(:last-child),
+        #menu>.columns>.column>.control>.level:first-child>.level-item .button .icon:first-child:not(:last-child) {
+            margin: 0px 8px 0px 0px;
+        }
+
+        #menu>.columns>.column>.control>.level:first-child>.level-item button .icon:last-child:not(:first-child),
+        #menu>.columns>.column>.control>.level:first-child>.level-item .button .icon:last-child:not(:first-child) {
+            margin: 0px 0px 0px 8px;
         }
 
         #heading>.columns>.column>.control>.level:first-child>.level-item:last-child:not(:first-child)>.media>.media-content>.content>button,
@@ -1364,6 +1470,11 @@
                 background: #00eeff url('/images/Stripes@2x.png') 50% 50% repeat;
                 background-size: 20px 20px;
             }
+
+            .live {
+                background-image: url('/images/Stripes@2x.png');
+                background-size: 20px 20px;
+            }
         }
 
         @media screen and (-webkit-min-device-pixel-ratio:3),
@@ -1385,6 +1496,11 @@
 
             .tag {
                 background: #00eeff url('/images/Stripes@3x.png') 50% 50% repeat;
+                background-size: 20px 20px;
+            }
+
+            .live {
+                background-image: url('/images/Stripes@3x.png');
                 background-size: 20px 20px;
             }
         }
@@ -1538,14 +1654,15 @@
                             <div class="columns is-mobile" ref="indicator">
                                 <div class="column is-3 is-mobile">
                                     <transition name="fade" mode="out-in">
-                                        <button class="button is-white" type="button" @click="selectedTrack = null; isRevealed = false;" v-if="selectedTrack"
+                                        <button class="button is-white" type="button"
+                                            @click="selectedTrack = null; isRevealed = false;" v-if="selectedTrack"
                                             key="close">
                                             <span class="icon is-small">
                                                 <i class="fas fa-times"></i>
                                             </span>
                                         </button>
-                                        <button class="button is-white" type="button" v-bind:disabled="user === null" @click="isRevealed = !isRevealed"
-                                            v-else-if="page === null" key="humberger">
+                                        <button class="button is-white" type="button" v-bind:disabled="user === null"
+                                            @click="isRevealed = !isRevealed" v-else-if="page === null" key="humberger">
                                             <span class="icon is-small">
                                                 <i class="fas fa-bars"></i>
                                             </span>
@@ -1560,14 +1677,48 @@
                                 </div>
                                 <div class="column is-6 is-mobile">
                                     <div class="control has-text-centered">
-                                        <nav class="level is-hidden">
-                                            <div class="level-item has-text-centered">
+                                        <nav class="level">
+                                            <div class="level-item has-text-centered is-hidden">
                                                 <div class="field is-grouped is-vcentered">
                                                     <picture class="icon is-small">
                                                         <img src="/images/Star.svg" width="32" height="32" alt="Star">
                                                     </picture>
                                                     <span class="is-uppercase">{{ animatedStars }}</span>
                                                 </div>
+                                            </div>
+                                            <div class="level-item">
+                                                <transition name="fade" mode="out-in">
+                                                    <button class="button is-rounded is-size-7 live" type="button"
+                                                        v-bind:disabled="user === null" @click="isLive = false"
+                                                        v-if="isLive" key="live">
+                                                        <span class="icon is-small has-text-danger">
+                                                            <i class="fas fa-circle"></i>
+                                                        </span>
+                                                        <span class="wrap has-text-weight-bold has-text-white">
+                                                            <div class="clip">
+                                                                <div class="scrollable">
+                                                                    <div>現在地をライブ配信中</div>
+                                                                    <div>現在地をライブ配信中</div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </button>
+                                                    <button class="button is-rounded is-size-7" type="button"
+                                                        v-bind:disabled="user === null || user.providerData.length === 0"
+                                                        @click="isLive = true" v-else key="ready" disabled>
+                                                        <span class="icon is-small has-text-white">
+                                                            <i class="fas fa-location-arrow"></i>
+                                                        </span>
+                                                        <span class="wrap has-text-weight-bold has-text-white">
+                                                            <div class="clip">
+                                                                <div class="scrollable">
+                                                                    <div>現在地をライブ配信</div>
+                                                                    <div>現在地をライブ配信</div>
+                                                                </div>
+                                                            </div>
+                                                        </span>
+                                                    </button>
+                                                </transition>
                                             </div>
                                         </nav>
                                     </div>
@@ -1697,8 +1848,8 @@
                                         <article class="media">
                                             <figure class="media-content">
                                                 <picture class="image is-64x64">
-                                                    <img class="is-rounded" v-bind:src="selectedTrack.image"
-                                                        width="64" height="64" alt="Icon">
+                                                    <img class="is-rounded" v-bind:src="selectedTrack.image" width="64"
+                                                        height="64" alt="Icon">
                                                 </picture>
                                             </figure>
                                         </article>
@@ -1729,25 +1880,37 @@
                                         </article>
                                     </div>
                                     <div class="level-item" v-if="user.uid === selectedTrack.id">
-                                        <div class="level is-mobile">
-                                            <div class="level-item">
-                                                <transition name="fade" mode="out-in">
-                                                    <button class="button is-white" type="button" v-if="isSubmiting"
-                                                        key="wait" disabled v-cloak>
-                                                        <span class="icon is-small">
-                                                            <i class="fas fa-spinner updating"></i>
-                                                        </span>
-                                                    </button>
-                                                    <button class="button is-white" type="button"
-                                                        v-bind:disabled="user === null"
-                                                        @click="ping(selectedTrack)" v-else key="ping" v-cloak>
-                                                        <span class="icon is-small">
-                                                            <i class="fas fa-plus"></i>
-                                                        </span>
-                                                    </button>
-                                                </transition>
-                                            </div>
-                                        </div>
+                                        <transition name="fade" mode="out-in">
+                                            <button class="button is-rounded is-size-7" type="button"
+                                                v-if="isSubmiting" key="wait" disabled v-cloak>
+                                                <span class="icon is-small has-text-white">
+                                                    <i class="fas fa-spinner updating"></i>
+                                                </span>
+                                                <span class="wrap has-text-weight-bold has-text-white">
+                                                    <div class="clip">
+                                                        <div class="scrollable">
+                                                            <div>ピンを追加</div>
+                                                            <div>ピンを追加</div>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </button>
+                                            <button class="button is-rounded is-size-7" type="button"
+                                                v-bind:disabled="user === null" @click="ping(selectedTrack)"
+                                                v-else key="ping" v-cloak>
+                                                <span class="icon is-small has-text-white">
+                                                    <i class="fas fa-plus"></i>
+                                                </span>
+                                                <span class="wrap has-text-weight-bold has-text-white">
+                                                    <div class="clip">
+                                                        <div class="scrollable">
+                                                            <div>ピンを追加</div>
+                                                            <div>ピンを追加</div>
+                                                        </div>
+                                                    </div>
+                                                </span>
+                                            </button>
+                                        </transition>
                                     </div>
                                 </nav>
                                 <nav class="level" v-else key="main">
@@ -1907,23 +2070,7 @@
                                     <div class="level-item">
                                         <div class="level is-mobile">
                                             <div class="level-item">
-                                                <transition name="fade" mode="out-in">
-                                                    <div class="level-item" v-if="isLive" key="live">
-                                                        <button class="button has-text-danger" type="button"
-                                                            v-bind:disabled="user === null" @click="isLive = false"
-                                                            v-cloak>
-                                                            <span class="icon is-small">
-                                                                <i class="fas fa-circle"></i>
-                                                            </span>
-                                                        </button>
-                                                    </div>
-                                                    <button class="button" type="button" v-bind:disabled="user === null || user.providerData.length === 0"
-                                                        @click="isLive = true" v-else key="ready" disabled>
-                                                        <span class="icon is-small">
-                                                            <i class="fas fa-circle"></i>
-                                                        </span>
-                                                    </button>
-                                                </transition>
+
                                             </div>
                                         </div>
                                     </div>
