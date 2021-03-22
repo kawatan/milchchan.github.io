@@ -974,9 +974,14 @@
 
         #input {
             margin: 0;
-            padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px) !important;
+            padding: 0;
             display: flex;
             flex-direction: column;
+            background: linear-gradient(0deg, rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0));
+        }
+
+        #input>.columns {
+            padding: 0px env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px) !important;
         }
 
         #input>.columns>.column>.control:last-of-type .level>.level-item {
@@ -1052,7 +1057,7 @@
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level:last-of-type>.level-item {
             margin: 0;
-            padding: 0px 0px 24px 0px;
+            padding: 16px 0px 24px 0px;
         }
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level:not(:last-of-type)>.level-item {
@@ -1125,7 +1130,7 @@
         }
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level:nth-last-of-type(1)>.level-item>.level>.level-item:nth-last-of-type(1)>.level>.level-item {
-            padding: 4px 0px 0px 0px;
+            padding: 0px 8px 0px 8px;
         }
 
         #input>.columns:first-of-type>.column>.control:last-of-type>.level .level-item input {
@@ -1139,7 +1144,7 @@
             border: 0px solid rgba(255, 255, 255, 0.5);
             border-radius: 290486px;
             padding: 12px;
-            background: #00eeff;
+            background: transparent;
             background-clip: padding-box;
             /*background: #f5f5f5;
             background: linear-gradient(145deg, #ffffff, #dddddd);
@@ -1147,7 +1152,7 @@
                 -10px -10px 30px #ffffff;*/
             box-shadow: none;
             height: initial;
-            color: #ffffff;
+            color: #000000;
             /*color: #4effea;*/
         }
 
@@ -2183,7 +2188,31 @@
                                     <div class="level-item">
                                         <div class="level is-mobile">
                                             <div class="level-item">
-
+                                                <button class="button" type="button"
+                                                    v-bind:disabled="recentTracks.length === 0" @click="backward()"
+                                                    disabled>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-history"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="level-item">
+                                                <button class="button" type="button"
+                                                    v-bind:disabled="recentTracks.length === 0" @click="shuffle()"
+                                                    disabled>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-random"></i>
+                                                    </span>
+                                                </button>
+                                            </div>
+                                            <div class="level-item">
+                                                <button class="button" type="button"
+                                                    v-bind:disabled="user === null" @click="locate()"
+                                                    disabled>
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-location-arrow"></i>
+                                                    </span>
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
