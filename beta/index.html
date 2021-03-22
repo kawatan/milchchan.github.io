@@ -373,6 +373,42 @@
             background: #00eeff;
         }
 
+        .tags {
+            margin: 0;
+            padding: 0;
+            align-items: flex-start;
+            justify-content: center !important;
+        }
+
+        .tags>.control {
+            margin: 0px 0px 0px 0px !important;
+            padding: 8px 8px 8px 8px;
+        }
+
+        .tags>.control>.tags {
+            margin: 0px 0px 0px 0px !important;
+        }
+
+        .tags button>.clip {
+            display: inline-block;
+            overflow: hidden;
+            box-sizing: content-box;
+            height: calc(0.75rem * 1.5);
+        }
+
+        .tags>span {
+            overflow: hidden;
+        }
+
+        .media>.media-content {
+            overflow: hidden;
+        }
+
+        .media>.media-content>.tags {
+            margin: -8px !important;
+            padding: 0;
+        }
+
         .sunrise {
             position: fixed;
             object-fit: cover;
@@ -1353,6 +1389,21 @@
             opacity: 1;
         }
 
+        .tagcloud-list-item {
+            display: inline-block;
+            transition: all 0.5s ease;
+        }
+
+        .tagcloud-list-enter-from,
+        .tagcloud-list-leave-to {
+            opacity: 0;
+        }
+
+        .tagcloud-list-enter-to,
+        .tagcloud-list-leave-from {
+            opacity: 1;
+        }
+
         @keyframes load {
             from {
                 opacity: 0;
@@ -1844,7 +1895,7 @@
                                     </div>
                                 </nav>
                                 <nav class="level" v-else-if="selectedTrack !== null" key="track">
-                                    <div class="level-item">
+                                    <div class="level-item" v-if="'image' in selectedTrack">
                                         <article class="media">
                                             <figure class="media-content">
                                                 <picture class="image is-64x64">
@@ -1854,22 +1905,18 @@
                                             </figure>
                                         </article>
                                     </div>
-                                    <div class="level-item" v-if="user.uid === selectedTrack.id">
-                                        <form onsubmit="return false;" v-cloak>
-                                            <div class="field has-addons">
-                                                <div class="control is-expanded has-icons-left">
-                                                    <input class="input is-rounded" type="text"
-                                                        v-bind:class="{ 'is-danger': inputHasError }"
-                                                        placeholder="Café Starbucks" v-model="input"
-                                                        @input="inputChanged" v-cloak>
-                                                    <span class="icon is-small is-left">
-                                                        <i class="fas fa-tags"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </form>
+                                    <div class="level-item"
+                                        v-if="'user' in selectedTrack && 'image' in selectedTrack.user">
+                                        <article class="media">
+                                            <figure class="media-content">
+                                                <picture class="image is-64x64">
+                                                    <img class="is-rounded" v-bind:src="selectedTrack.user.image"
+                                                        width="64" height="64" alt="Icon">
+                                                </picture>
+                                            </figure>
+                                        </article>
                                     </div>
-                                    <div class="level-item" v-else-if="'name' in selectedTrack">
+                                    <div class="level-item" v-if="'name' in selectedTrack">
                                         <article class="media">
                                             <div class="media-content">
                                                 <div class="content has-text-centered">
@@ -1879,10 +1926,64 @@
                                             </div>
                                         </article>
                                     </div>
+                                    <div class="level-item"
+                                        v-else-if="'user' in selectedTrack && 'name' in selectedTrack.user">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <div class="content has-text-centered">
+                                                    <h1 class="is-uppercase has-text-weight-bold">
+                                                        {{ selectedTrack.user.name }}</h1>
+                                                </div>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="level-item" v-if="'tags' in selectedTrack">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <transition-group name="tagcloud-list"
+                                                    class="tags are-medium field is-grouped is-grouped-multiline"
+                                                    tag="div">
+                                                    <div class="control tagcloud-list-item"
+                                                        v-for="(value, key, index) in selectedTrack.tags"
+                                                        v-bind:key="key">
+                                                        <div class="tags has-addons" v-cloak>
+                                                            <span class="tag is-rounded is-size-7 has-text-weight-bold">
+                                                                {{ value }}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </transition-group>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="level-item" v-if="user.uid === selectedTrack.id">
+                                        <article class="media">
+                                            <div class="media-content">
+                                                <p class="content is-size-7 has-text-weight-bold has-text-centered">
+                                                    何か発見したか？
+                                                </p>
+                                            </div>
+                                        </article>
+                                    </div>
+                                    <div class="level-item" v-if="user.uid === selectedTrack.id">
+                                        <form onsubmit="return false;" v-cloak>
+                                            <div class="field has-addons">
+                                                <div class="control is-expanded has-icons-left">
+                                                    <input class="input is-rounded" type="text"
+                                                        v-bind:class="{ 'is-danger': inputHasError }"
+                                                        placeholder="へんたいふしんしゃさん" v-model="input" @input="inputChanged"
+                                                        v-cloak>
+                                                    <span class="icon is-small is-left">
+                                                        <i class="fas fa-tags"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                     <div class="level-item" v-if="user.uid === selectedTrack.id">
                                         <transition name="fade" mode="out-in">
-                                            <button class="button is-rounded is-size-7" type="button"
-                                                v-if="isSubmiting" key="wait" disabled v-cloak>
+                                            <button class="button is-rounded is-size-7" type="button" v-if="isSubmiting"
+                                                key="wait" disabled v-cloak>
                                                 <span class="icon is-small has-text-white">
                                                     <i class="fas fa-spinner updating"></i>
                                                 </span>
@@ -1896,8 +1997,8 @@
                                                 </span>
                                             </button>
                                             <button class="button is-rounded is-size-7" type="button"
-                                                v-bind:disabled="user === null" @click="ping(selectedTrack)"
-                                                v-else key="ping" v-cloak>
+                                                v-bind:disabled="user === null" @click="ping(selectedTrack)" v-else
+                                                key="ping" v-cloak>
                                                 <span class="icon is-small has-text-white">
                                                     <i class="fas fa-plus"></i>
                                                 </span>
